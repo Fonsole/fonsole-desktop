@@ -1,0 +1,220 @@
+<!doctype html>
+<html>
+  <head>
+ <!-- Copyright (C) 2015 Christoph Kutza -->
+    <title>Socket.IO chat</title>
+    <style>
+      * { margin: 0; padding: 0; box-sizing: border-box; }
+      body { font: 13px Helvetica, Arial; }
+      #gameCanvas { padding: 2px;}
+      
+      #controldiv { background: #000; padding: 3px; width: 100%; color: white;}
+      #openroom  { margin-right: 100px;}
+      #msgform { background: #000; padding: 3px; position: fixed; bottom: 0; width: 100%; }
+      #msgform input { border: 0; padding: 10px; width: 90%; margin-right: .5%; }
+      #msgform button { width: 9%; border: none; padding: 10px; }
+      #messages { list-style-type: none; margin: 0; padding: 0; }
+      #messages li { padding: 5px 10px; }
+      #messages li:nth-child(odd) { background: #eee; }
+    </style>
+    <script src="https://cdn.socket.io/socket.io-1.2.0.js"></script>
+  <script src="http://code.jquery.com/jquery-1.11.1.js"></script>
+  <script src="SocketIoSignalingChan.js"></script>
+  </head>
+  <body>
+    <div id="controldiv" action="">
+      <button id="openroom">Start new group</button>
+      
+      <span id="connectedspan" hidden="true">
+        <button id="leaveroom">Disconnect</button>
+        <input id="gameid" autocomplete="off" />
+        
+      </span>
+      <span id="joinspan">
+        Enter the game code to join: <input id="roomname" autocomplete="off" />
+        <button id="joinroom">Join</button>
+      </div>
+    </div>
+    <div id="contentdiv">
+          <canvas id="gameCanvas" width="800" height="600"></canvas>
+    </div>
+    <ul id="messages" hidden="true"></ul>
+    <form id="msgform" action="" hidden="true">
+      <input id="messageinput" autocomplete="off" /><button>Send</button>
+    </form>
+<script>
+var SignalingMessageType = {
+    Invalid : 0,
+    Connected : 1,
+    Closed : 2,
+    UserMessage : 3
+};
+  
+  
+    function GetRandomKey()
+    {
+        
+        var result = "";
+        for(var i = 0; i < 6; i++)
+        {
+            result += String.fromCharCode(65 + Math.round(Math.random() * 25));
+        }
+        return result;
+    }
+    
+    var gConnected = false;
+    
+    var serverUrl = "http://because-why-not.com:3001";
+    if(window.location.href.indexOf("localhost") > -1) {
+        serverUrl = "http://localhost:3001";
+    }
+    
+    var sigChan = new SocketIoSignalingChan(serverUrl);
+    var gCanvas = $('#gameCanvas').get()[0];
+    var ctx = gCanvas.getContext("2d");
+    ctx.fillRect(0, 0, gCanvas.width, gCanvas.height);
+    var gStartDragX = 0;
+    var gStartDragY = 0;
+    
+    var gDrag = {startx:20, starty:20, endx:70, endy:100};
+    
+    //drawLine(20, 20, 70, 100);
+    drawLineObj(gDrag);
+
+    	
+      function startLine(lX, lY)
+      {
+          gDrag.startx = lX;
+          gDrag.starty = lY;
+          Log("start: " + JSON.stringify(gDrag));
+      }
+      
+      function endLine(lX, lY)
+      {
+          gDrag.endx = lX;
+          gDrag.endy = lY;
+          Log("end: " + JSON.stringify(gDrag));
+          //
+          if(gConnected) {
+            sigChan.SendMessage(JSON.stringify(gDrag));
+          }else{
+            drawLineObj(gDrag);
+          }
+      }
+    $('#gameCanvas').on("mousedown", function (lEvent){
+        lEvent.preventDefault();
+        var x = lEvent.offsetX;
+        var y = lEvent.offsetY;
+        startLine(x, y);
+    });
+    $('#gameCanvas').on("mouseup", function (lEvent){
+        lEvent.preventDefault();
+        var x = lEvent.offsetX;
+        var y = lEvent.offsetY;
+        endLine(x, y);
+    });
+    gCanvas.addEventListener("touchstart", function (lEvent){
+        Log("touchstart");
+        lEvent.preventDefault();
+        
+        var x = lEvent.touches[0].pageX - lEvent.touches[0].target.offsetLeft;
+        var y = lEvent.touches[0].pageY - lEvent.touches[0].target.offsetTop;
+        Log("" + x + " " + y);
+        startLine(x, y);
+    });
+    gCanvas.addEventListener("touchend", function (lEvent){
+        Log("end");
+        lEvent.preventDefault();
+        var x = lEvent.changedTouches[0].pageX - lEvent.changedTouches[0].target.offsetLeft;
+        var y = lEvent.changedTouches[0].pageY - lEvent.changedTouches[0].target.offsetTop;
+        Log("" + x + " " + y);
+        endLine(x, y);
+    });
+    
+    
+    
+    
+    function drawLineObj(lDrag)
+    {
+        drawLine(lDrag.startx, lDrag.starty, lDrag.endx, lDrag.endy);
+    }
+    function drawLine(lStartX, lStartY, lEndX, lEndY)
+    {
+        ctx.beginPath();
+        ctx.moveTo(lStartX,lStartY);
+        ctx.lineTo(lEndX,lEndY);
+        ctx.strokeStyle="red";
+        ctx.stroke();
+    }
+    
+    
+    function OnSignalingMessage(lType, lMsg)
+    {
+        if(lType == SignalingMessageType.Connected)
+        {
+            Log("Connected");
+            gConnected = true;
+          
+            ctx.fillRect(0, 0, gCanvas.width, gCanvas.height);
+            $('#openroom').attr("hidden", true);
+            $('#joinspan').attr("hidden", true);
+            $('#connectedspan').attr("hidden", false);
+        }else if(lType == SignalingMessageType.UserMessage)
+        {
+            Log("Message: " + lMsg);
+            
+            var recDrag = JSON.parse(lMsg);
+            drawLineObj(recDrag);
+        }else if(lType == SignalingMessageType.Closed)
+        {
+            $('#openroom').attr("hidden", false);
+            $('#joinspan').attr("hidden", false);
+            $('#connectedspan').attr("hidden", true);
+            gConnected = false;
+            Log("Disconnected");
+        }else{
+            Log("Invalid message received. type: " + lType + " content: " + lMsg);
+        }
+    }
+    
+    $('#openroom').click(function(){
+        var msg = GetRandomKey();
+        
+        $('#gameid').val(msg);
+        Log("Opening room " + msg + " ...");
+        sigChan.Open(msg, OnSignalingMessage);
+    });
+    
+    $('#joinroom').click(function(){
+        Log("Join room");
+        var msg = $('#roomname').val();
+        
+        $('#gameid').val(msg);
+        sigChan.Connect(msg, OnSignalingMessage);
+    });
+    
+    $('#leaveroom').click(function(){
+        Log("Closing");
+        sigChan.Close();
+    });
+    
+    $('#msgform').submit(function() {
+    
+        var msg = $('#messageinput').val();
+        $('#messageinput').val('');
+        sigChan.SendMessage(msg);
+        
+        return false;
+    });
+    
+    function Log(msg)
+    {
+        $('#messages').append($('<li>').text(msg));
+        console.debug(msg);
+    }
+    Log("1");
+    Log("2");
+    Log("3");
+</script>
+  </body>
+</html>

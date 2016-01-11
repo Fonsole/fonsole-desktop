@@ -1,0 +1,10 @@
+{
+  "name": "netgroup",
+  "version": "0.1.0",
+  "description": "Allows to group webusers via a code they can share",
+  "dependencies": {
+    "express": "4.10.2",
+    "socket.io": "1.3.7"
+  }
+}
+
