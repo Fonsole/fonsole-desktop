@@ -1,6 +1,6 @@
 //Copyright (C) 2015 Christoph Kutza
 
- function SocketIoSignalingChan(lUrl)
+ function Netgroup(lUrl)
     {
         var socket;
         var mHandler = null;
@@ -19,7 +19,7 @@
         * @param {type} lHandler a function(SignalingMessageType, messageContent(string));
         * @returns {undefined}
         */
-        this.Open = function(lName, lHandler)
+        this.open = function(lName, lHandler)
         {
             mHandler = lHandler;
             mConnecting = true;
@@ -40,7 +40,7 @@
         * @param {type} lHandler
         * @returns {undefined}
         */
-        this.Connect = function(lName, lHandler)
+        this.connect = function(lName, lHandler)
         {
             mHandler = lHandler;
             mConnecting = true;
@@ -118,7 +118,7 @@
         * @param {type} lMessage
         * @returns {undefined}
         */
-        this.SendMessage = function(lMessage)
+        this.sendMessage = function(lMessage)
         {
             socket.emit('msg', lMessage);
         };

@@ -19,7 +19,7 @@
     </style>
     <script src="https://cdn.socket.io/socket.io-1.2.0.js"></script>
   <script src="http://code.jquery.com/jquery-1.11.1.js"></script>
-  <script src="SocketIoSignalingChan.js"></script>
+  <script src="netgroupclient.js"></script>
   </head>
   <body>
     <div id="controldiv" action="">
@@ -69,7 +69,7 @@ var SignalingMessageType = {
         serverUrl = "http://localhost:3001";
     }
     
-    var sigChan = new SocketIoSignalingChan(serverUrl);
+    var sigChan = new Netgroup(serverUrl);
     var gCanvas = $('#gameCanvas').get()[0];
     var ctx = gCanvas.getContext("2d");
     ctx.fillRect(0, 0, gCanvas.width, gCanvas.height);
@@ -96,7 +96,7 @@ var SignalingMessageType = {
           Log("end: " + JSON.stringify(gDrag));
           //
           if(gConnected) {
-            sigChan.SendMessage(JSON.stringify(gDrag));
+            sigChan.sendMessage(JSON.stringify(gDrag));
           }else{
             drawLineObj(gDrag);
           }
@@ -182,7 +182,7 @@ var SignalingMessageType = {
         
         $('#gameid').val(msg);
         Log("Opening room " + msg + " ...");
-        sigChan.Open(msg, OnSignalingMessage);
+        sigChan.open(msg, OnSignalingMessage);
     });
     
     $('#joinroom').click(function(){
@@ -190,19 +190,19 @@ var SignalingMessageType = {
         var msg = $('#roomname').val();
         
         $('#gameid').val(msg);
-        sigChan.Connect(msg, OnSignalingMessage);
+        sigChan.connect(msg, OnSignalingMessage);
     });
     
     $('#leaveroom').click(function(){
         Log("Closing");
-        sigChan.Close();
+        sigChan.close();
     });
     
     $('#msgform').submit(function() {
     
         var msg = $('#messageinput').val();
         $('#messageinput').val('');
-        sigChan.SendMessage(msg);
+        sigChan.sendMessage(msg);
         
         return false;
     });
