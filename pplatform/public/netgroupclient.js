@@ -1,5 +1,11 @@
 //Copyright (C) 2015 Christoph Kutza
 
+var SignalingMessageType = {
+    Invalid : 0,
+    Connected : 1,
+    Closed : 2,
+    UserMessage : 3
+};
  function Netgroup(lUrl)
     {
         var socket;
@@ -79,7 +85,7 @@
         * 
         * @returns {undefined}
         */
-        this.Close = function()
+        this.close = function()
         {
             socket.disconnect();
             OnClose();

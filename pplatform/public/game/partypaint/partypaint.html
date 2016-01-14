@@ -1,0 +1,183 @@
+<!doctype html>
+<html>
+  <head>
+ <!-- Copyright (C) 2015 Christoph Kutza -->
+    <title>Party Paint</title>
+    <script src="https://cdn.socket.io/socket.io-1.2.0.js"></script>
+  <script src="http://code.jquery.com/jquery-1.11.1.js"></script>
+  <script src="netgroupclient.js"></script>
+  </head>
+  <body>
+    <div id="contentdiv">
+          <canvas id="gameCanvas" width="800" height="600"></canvas>
+    </div>
+<script>
+  
+  
+    function GetRandomKey()
+    {
+        
+        var result = "";
+        for(var i = 0; i < 6; i++)
+        {
+            result += String.fromCharCode(65 + Math.round(Math.random() * 25));
+        }
+        return result;
+    }
+    
+    var gConnected = false;
+    
+    var serverUrl = "http://because-why-not.com:3001";
+    if(window.location.href.indexOf("localhost") > -1) {
+        serverUrl = "http://localhost:3001";
+    }
+    
+    var sigChan = new Netgroup(serverUrl);
+    var gCanvas = $('#gameCanvas').get()[0];
+    var ctx = gCanvas.getContext("2d");
+    ctx.fillRect(0, 0, gCanvas.width, gCanvas.height);
+    var gStartDragX = 0;
+    var gStartDragY = 0;
+    
+    var gDrag = {startx:20, starty:20, endx:70, endy:100};
+    
+    //drawLine(20, 20, 70, 100);
+    drawLineObj(gDrag);
+
+    	
+      function startLine(lX, lY)
+      {
+          gDrag.startx = lX;
+          gDrag.starty = lY;
+          Log("start: " + JSON.stringify(gDrag));
+      }
+      
+      function endLine(lX, lY)
+      {
+          gDrag.endx = lX;
+          gDrag.endy = lY;
+          Log("end: " + JSON.stringify(gDrag));
+          //
+          if(gConnected) {
+            sigChan.sendMessage(JSON.stringify(gDrag));
+          }else{
+            drawLineObj(gDrag);
+          }
+      }
+    $('#gameCanvas').on("mousedown", function (lEvent){
+        lEvent.preventDefault();
+        var x = lEvent.offsetX;
+        var y = lEvent.offsetY;
+        startLine(x, y);
+    });
+    $('#gameCanvas').on("mouseup", function (lEvent){
+        lEvent.preventDefault();
+        var x = lEvent.offsetX;
+        var y = lEvent.offsetY;
+        endLine(x, y);
+    });
+    gCanvas.addEventListener("touchstart", function (lEvent){
+        Log("touchstart");
+        lEvent.preventDefault();
+        
+        var x = lEvent.touches[0].pageX - lEvent.touches[0].target.offsetLeft;
+        var y = lEvent.touches[0].pageY - lEvent.touches[0].target.offsetTop;
+        Log("" + x + " " + y);
+        startLine(x, y);
+    });
+    gCanvas.addEventListener("touchend", function (lEvent){
+        Log("end");
+        lEvent.preventDefault();
+        var x = lEvent.changedTouches[0].pageX - lEvent.changedTouches[0].target.offsetLeft;
+        var y = lEvent.changedTouches[0].pageY - lEvent.changedTouches[0].target.offsetTop;
+        Log("" + x + " " + y);
+        endLine(x, y);
+    });
+    
+    
+    
+    
+    function drawLineObj(lDrag)
+    {
+        drawLine(lDrag.startx, lDrag.starty, lDrag.endx, lDrag.endy);
+    }
+    function drawLine(lStartX, lStartY, lEndX, lEndY)
+    {
+        ctx.beginPath();
+        ctx.moveTo(lStartX,lStartY);
+        ctx.lineTo(lEndX,lEndY);
+        ctx.strokeStyle="red";
+        ctx.stroke();
+    }
+    
+    
+    function OnSignalingMessage(lType, lMsg)
+    {
+        if(lType == SignalingMessageType.Connected)
+        {
+            Log("Connected");
+            gConnected = true;
+          
+            ctx.fillRect(0, 0, gCanvas.width, gCanvas.height);
+            $('#openroom').attr("hidden", true);
+            $('#joinspan').attr("hidden", true);
+            $('#connectedspan').attr("hidden", false);
+        }else if(lType == SignalingMessageType.UserMessage)
+        {
+            Log("Message: " + lMsg);
+            
+            var recDrag = JSON.parse(lMsg);
+            drawLineObj(recDrag);
+        }else if(lType == SignalingMessageType.Closed)
+        {
+            $('#openroom').attr("hidden", false);
+            $('#joinspan').attr("hidden", false);
+            $('#connectedspan').attr("hidden", true);
+            gConnected = false;
+            Log("Disconnected");
+        }else{
+            Log("Invalid message received. type: " + lType + " content: " + lMsg);
+        }
+    }
+    
+    $('#openroom').click(function(){
+        var msg = GetRandomKey();
+        
+        $('#gameid').val(msg);
+        Log("Opening room " + msg + " ...");
+        sigChan.open(msg, OnSignalingMessage);
+    });
+    
+    $('#joinroom').click(function(){
+        Log("Join room");
+        var msg = $('#roomname').val();
+        
+        $('#gameid').val(msg);
+        sigChan.connect(msg, OnSignalingMessage);
+    });
+    
+    $('#leaveroom').click(function(){
+        Log("Closing");
+        sigChan.close();
+    });
+    
+    $('#msgform').submit(function() {
+    
+        var msg = $('#messageinput').val();
+        $('#messageinput').val('');
+        sigChan.sendMessage(msg);
+        
+        return false;
+    });
+    
+    function Log(msg)
+    {
+        $('#messages').append($('<li>').text(msg));
+        console.debug(msg);
+    }
+    Log("1");
+    Log("2");
+    Log("3");
+</script>
+  </body>
+</html>
