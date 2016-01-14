@@ -35,7 +35,7 @@
         <button id="joinroom">Join</button>
       </div>
     </div>
-    
+    <iframe id="contentframe" src="./notconnected.html"> </iframe>
     <form id="msgform" action="">
         <ul id="messages"></ul>
         <input id="messageinput" autocomplete="off" /><button>Send</button>
@@ -53,7 +53,7 @@
     });
     
     $('#joinroom').click(function(){
-        Log("Join room");
+        gPlatform.Log("Join room");
         var msg = $('#roomname').val();
         $('#gameid').val(msg);
         
@@ -61,7 +61,7 @@
     });
     
     $('#leaveroom').click(function(){
-        Log("Closing");
+        gPlatform.Log("Closing");
         gPlatform.disconnect();
     });
     
@@ -76,17 +76,12 @@
     });
     
     gPlatform.addMessageListener(function(lTag, lContent) {
-        Log(lTag + ": " + lContent);
+        gPlatform.Log(lTag + ": " + lContent);
     });
-    
-    function Log(msg)
-    {
-        $('#messages').append($('<li>').text(msg));
-        console.debug(msg);
-    }
-    Log("1");
-    Log("2");
-    Log("3");
+
+    gPlatform.Log("1");
+    gPlatform.Log("2");
+    gPlatform.Log("3");
     
     
 </script>
