@@ -31,8 +31,20 @@
     console.debug("game list opened");
     
     var gPlatform = parent.gPlatform;
+        $('#view').attr("hidden", true);
+        $('#hostcontroller').attr("hidden", true);
+        $('#controller').attr("hidden", true);
+    if(gPlatform.isView())
+    {
+        $('#view').attr("hidden", false);
+    }else if(gPlatform.isHostController())
+    {
+        $('#hostcontroller').attr("hidden", false);
+    }else{
+        
+        $('#controller').attr("hidden", false);
+    }
     
-    console.debug("viewer?" + gPlatform.isView());
     
     function sayanything()
     {

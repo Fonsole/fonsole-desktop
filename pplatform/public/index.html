@@ -35,7 +35,7 @@
         <button id="joinroom">Join</button>
       </div>
     </div>
-    <iframe id="contentframe" src="./notconnected.html"> </iframe>
+    <iframe id="contentframe" src="./notconnected.html" width="100%" height="100%"> </iframe>
     <form id="msgform" action="">
         <ul id="messages"></ul>
         <input id="messageinput" autocomplete="off" /><button>Send</button>
@@ -69,6 +69,7 @@
  //Debug UI / Console
     $('#msgform').submit(function() {
     
+        
         var msg = $('#messageinput').val();
         $('#messageinput').val('');
         gPlatform.sendMessage("chat", msg);
