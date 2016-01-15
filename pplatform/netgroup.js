@@ -25,12 +25,13 @@ module.exports = function()
         //wait for connections via socket.io. if a connection is etablished setup all the handlers for messages
         io.on('connection', function(socket) {
             
-            console.log('a user connected');
             connectionCount++;
+            console.log('a user ' + connectionCount + ' connected');
             
-            var lRoomName = null;
+            
             var lRoomOwner = false;
-            
+            var lOwnId = -1;
+            var lRoom = null;
 
             //event to open a new room and add the user
             //user will get disconnected immediately if there isn't a room available (part of the definition of SignalingChan)
@@ -38,13 +39,21 @@ module.exports = function()
                 //room name still free? 
                 if((msg in rooms) == false)
                 {
-                    //open the room
-                    rooms[msg] = [socket]; //room owner is always index 0
-                    lRoomName = msg;
                     lRoomOwner = true;
+                    lOwnId = connectionCount;
+                    //open the room
+                    lRoom = {};
+                    lRoom.connection = {};
+                    lRoom.connection[connectionCount] = socket;
+                    lRoom.name = msg;
+                    rooms[lRoom.name] = lRoom; //room owner is always index 0
                     
                     console.log('room opened: ' + msg);
-                    socket.emit('room opened', msg);
+                    
+                    var answer = {};
+                    answer.name = lRoom.name;
+                    answer.id = lOwnId;
+                    socket.emit('room opened', JSON.stringify(answer));
                 }
                 else
                 {
@@ -58,13 +67,18 @@ module.exports = function()
                 //does the room exist?
                 if(msg in rooms)
                 {
+                    lOwnId = connectionCount;
+                    lRoom = rooms[msg];
                     //join the room
-                    rooms[msg].push(socket);
-                    lRoomName = msg;
+                    lRoom.connection[lOwnId] = socket;
                     lRoomOwner = false;
                     
-                    console.log('joined room: ' + msg);
-                    socket.emit('room joined', msg);
+                    console.log('user ' + lOwnId + 'joined room: ' + msg);
+                    
+                    var answer = {};
+                    answer.name = lRoom.name;
+                    answer.id = lOwnId;
+                    socket.emit('room joined', JSON.stringify(answer));
                 }
                 else
                 {
@@ -74,14 +88,14 @@ module.exports = function()
             });
             
             //msg sends a message to everyone in the room
-            socket.on('msg', function(msg) {
+            socket.on('umsg', function(msg) {
                 
-                if(lRoomName != null) //check if user is actually in a room
+                if(lRoom != null) //check if user is actually in a room
                 {
-                    var socketsInRoom = rooms[lRoomName];
-                    for(var index = 0; index < socketsInRoom.length; index++)
+                    
+                    for(var id in lRoom.connection)
                     {
-                        socketsInRoom[index].emit('msg', msg);
+                        lRoom.connection[id].emit('umsg', msg);
                     }
                 }
             });
@@ -91,31 +105,34 @@ module.exports = function()
                 
                 if(lRoomOwner)
                 {
-                    console.log('TODO: disconnect every socket in the room and then remove the room');
-                    var socketsInRoom = rooms[lRoomName];
-                    delete rooms[lRoomName];
+                    console.log('Room owner ' + lOwnId + ' disconnecting. Cosing room ' + lRoom.name);
+                    delete rooms[lRoom.name];
                     
-                    for(var index = 1; index < socketsInRoom.length; index++)
+                    for(var id in lRoom.connection)
                     {
-                        socketsInRoom[index].disconnect();
-                    }
-                    
-                }else{
-                    console.log('remove own socket from room list');
-                    
-                    //room still exists or was closed?
-                    if(lRoomName != null && lRoomName in rooms)
-                    {
-                        //remove the element
-                        var index = rooms[lRoomName].indexOf(socket);
-                        if(index != -1)
+                        if(id != lOwnId)
                         {
-                            rooms[lRoomName].splice(index, 1);
+                            
+                            console.log('room ' + lRoom.name + ' closing. Disconnect user ' + id);
+                            lRoom.connection[id].disconnect();
+                            console.log('room ' + lRoom.name + ' closing. Disconnected user ' + id);
                         }
                     }
+                    
+                    console.log('Room ' + lRoom.name + ' closed');
+                }else{
+                console.log('user ' + lOwnId + ' disconnecting');
+                    
+                    //TODO: send broadcast that a user left
+                    //room still exists or was closed?
+                    if(lRoom != null && lRoom.name in rooms)
+                    {
+                        //remove the element
+                        delete lRoom.connection[lOwnId];
+                    }
                 }
-                console.log('user disconnected');
-                connectionCount--;
+                console.log('user ' + lOwnId + ' disconnected');
+                
             });
         });
     }

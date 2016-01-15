@@ -4,7 +4,8 @@ var SignalingMessageType = {
     Invalid : 0,
     Connected : 1,
     Closed : 2,
-    UserMessage : 3
+    UserMessage : 3,
+    System : 4
 };
  function Netgroup(lUrl)
     {
@@ -12,6 +13,9 @@ var SignalingMessageType = {
         var mHandler = null;
         var mConnecting = false;
         var mConnected = false;
+        
+        var mRoomName = null;
+        var mOwnId = -1;
         
         var mUrl = "http://localhost:3001";
         if(lUrl != null)
@@ -34,8 +38,10 @@ var SignalingMessageType = {
             socket.on('connect', function() {
                 socket.emit('open room', lName);
             });
-            socket.on("room opened", function() {
-                OnConnect();
+            socket.on("room opened", function(msg) {
+                
+                var obj = JSON.parse(msg);
+                OnConnect(obj.name, obj.id);
             });
             SetupSocket();
         };
@@ -54,8 +60,9 @@ var SignalingMessageType = {
             socket.on('connect', function() {
                 socket.emit('join room', lName);
             });
-            socket.on("room joined", function() {
-                OnConnect();
+            socket.on("room joined", function(msg) {
+                var obj = JSON.parse(msg);
+                OnConnect(obj.name, obj.id);
             });
             SetupSocket();
         };
@@ -76,7 +83,7 @@ var SignalingMessageType = {
             socket.on('disconnect', function() {
                 OnClose();
             });
-            socket.on("msg", function(msg) {
+            socket.on("umsg", function(msg) {
                 mHandler(SignalingMessageType.UserMessage, msg);
             });
         }
@@ -92,8 +99,10 @@ var SignalingMessageType = {
         };
         
         
-        function OnConnect()
+        function OnConnect(lName, lId)
         {
+            mRoomName = lName;
+            mOwnId = lId;
             mConnecting = false;
             mConnected = true;
             mHandler(SignalingMessageType.Connected, null);
@@ -126,6 +135,6 @@ var SignalingMessageType = {
         */
         this.sendMessage = function(lMessage)
         {
-            socket.emit('msg', lMessage);
+            socket.emit('umsg', lMessage);
         };
     }
