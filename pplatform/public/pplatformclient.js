@@ -104,19 +104,21 @@
             
             self.Log("opening " +  lGameNameUrl);
     }
-    function OnSignalingMessageInternal(lType, lMsg)
+    
+    /**
+     * this is the message handler based on Netgroup. Only the content ofer user messages will be send to the games outside of platform via mMessageListener
+     */
+    function OnSignalingMessageInternal(lType, lId, lMsg)
     {
         if(lType == SignalingMessageType.Connected)
         {
             self.Log("Connected");
             gConnected = true;
-          
-          
             $('#openroom').attr("hidden", true);
             $('#joinspan').attr("hidden", true);
             $('#connectedspan').attr("hidden", false);
-            
             ShowGame("./gamelist.html");
+            
         }else if(lType == SignalingMessageType.UserMessage)
         {
             self.Log("Message: " + lMsg);
@@ -124,7 +126,7 @@
             
             for(var i = 0; i < mMessageListener.length; i++)
             {
-                mMessageListener[i](msgObj.tag, msgObj.content);
+                mMessageListener[i](msgObj.tag, msgObj.content, lId);
             }
             
         }else if(lType == SignalingMessageType.Closed)
@@ -134,6 +136,12 @@
             $('#connectedspan').attr("hidden", true);
             gConnected = false;
             self.Log("Disconnected");
+        }else if(lType == SignalingMessageType.UserJoined)
+        {
+            self.Log("User " + lId + " joined");
+        }else if(lType == SignalingMessageType.UserLeft)
+        {
+            self.Log("User " + lId + " disconnected");
         }else{
             self.Log("Invalid message received. type: " + lType + " content: " + lMsg);
         }
