@@ -1,12 +1,21 @@
 //pure platform interface
 //contains still some jquery commands accessing the GUI they will move into the index.html in the future
     
-    
- function Controller()
+var TAG = {};
+TAG.CONTROLLER_DISCOVERY = "PLATFORM_CONTROLLER_DISCOVERY";
+TAG.CONTROLLER_LEFT = "PLATFORM_CONTROLLER_LEFT";
+TAG.VIEW_DISCOVERY = "PLATFORM_VIEW_DISCOVERY";
+TAG.ENTER_GAME = "PLATFORM_ENTER_GAME";
+TAG.EXIT_GAME = "PLATFORM_EXIT_GAME";
+
+
+ function Controller(lId, lName)
  {
-     this.id = -1;
-     this.name = "player -1";
+     this.id = lId;
+     this.name = lName;
  }
+ 
+ 
  function PPlatform()
  {
      
@@ -15,20 +24,14 @@
     
     //only available on the view side for now
     var mControllers = {};
+    this.getControllers = function()
+    {
+        return mControllers;
+    }
     
     //This value will be null until a view was discovered. Only then a controller is fully initialized
     var mViewId = null;
     
-    var TAG_CONTROLLER_DISCOVERY = "PLATFORM_CONTROLLER_DISCOVERY";
-    var TAG_CONTROLLER_LEFT = "PLATFORM_CONTROLLER_LEFT";
-    
-    
-    //will be send out by the view to inform a new controller how to send messages to the view
-    var TAG_VIEW_DISCOVERY = "PLATFORM_VIEW_DISCOVERY";
-    
-    
-    var TAG_ENTER_GAME = "PLATFORM_ENTER_GAME";
-    var TAG_EXIT_GAME = "PLATFORM_EXIT_GAME";
     
     var mActiveGame = null;
     
@@ -58,7 +61,7 @@
     
     this.enterGame = function(lGame)
     {
-        this.sendMessage(TAG_ENTER_GAME, lGame);
+        this.sendMessage(TAG.ENTER_GAME, lGame);
     };
     
     this.startAsView = function()
@@ -107,24 +110,24 @@
     {
         //events to handle before the content gets it
         
-        if(lTag == TAG_ENTER_GAME){
+        if(lTag == TAG.ENTER_GAME){
             ShowGame(lContent);
-        }else if(lTag == TAG_EXIT_GAME){
+        }else if(lTag == TAG.EXIT_GAME){
             //todo handle exit game command -> switch view back to game list?
-        }else if(lTag == TAG_CONTROLLER_DISCOVERY)
+        }else if(lTag == TAG.CONTROLLER_DISCOVERY)
         {
             if(mIsView) {
                 //send out view discovery event
-                self.sendMessage(TAG_VIEW_DISCOVERY, "", lId);
+                self.sendMessage(TAG.VIEW_DISCOVERY, "", lId);
                 
                 if(mActiveGame != null)
                 {
-                    self.sendMessage(TAG_ENTER_GAME, mActiveGame, lId);
+                    self.sendMessage(TAG.ENTER_GAME, mActiveGame, lId);
                 }
                 var c = new Controller(lId, "player " + lId);
                 mControllers[lId] = c;
             }
-        }else if(lTag == TAG_VIEW_DISCOVERY)
+        }else if(lTag == TAG.VIEW_DISCOVERY)
         {
             mViewId = lId; //store the id for later
         }
@@ -138,7 +141,7 @@
         
         //events to handle after the content gets it (e.g. if something gets removed. the game might want to still check 
         //the details of what gets removed before all traces are gone)
-        if(lTag == TAG_CONTROLLER_LEFT){
+        if(lTag == TAG.CONTROLLER_LEFT){
             delete mControllers[lId];
         }
     }
@@ -189,7 +192,7 @@
             //abouut color and name)
             if(mIsView)
             {
-                handleMessage(TAG_CONTROLLER_DISCOVERY, null, lId);
+                handleMessage(TAG.CONTROLLER_DISCOVERY, null, lId);
                 
             }
             //controller ignore these so far
@@ -199,7 +202,7 @@
             
             if(mIsView)
             {
-                handleMessage(TAG_CONTROLLER_LEFT, null, lId);
+                handleMessage(TAG.CONTROLLER_LEFT, null, lId);
             }
             
             //controller ignore these so far
