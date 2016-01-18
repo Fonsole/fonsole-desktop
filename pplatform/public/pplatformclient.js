@@ -61,6 +61,7 @@ TAG.EXIT_GAME = "PLATFORM_EXIT_GAME";
     
     this.enterGame = function(lGame)
     {
+        mActiveGame = lGame;
         this.sendMessage(TAG.ENTER_GAME, lGame);
     };
     
@@ -120,10 +121,7 @@ TAG.EXIT_GAME = "PLATFORM_EXIT_GAME";
                 //send out view discovery event
                 self.sendMessage(TAG.VIEW_DISCOVERY, "", lId);
                 
-                if(mActiveGame != null)
-                {
-                    self.sendMessage(TAG.ENTER_GAME, mActiveGame, lId);
-                }
+                self.sendMessage(TAG.ENTER_GAME, mActiveGame, lId);
                 var c = new Controller(lId, "player " + lId);
                 mControllers[lId] = c;
             }
@@ -133,25 +131,24 @@ TAG.EXIT_GAME = "PLATFORM_EXIT_GAME";
         }
         
         
+        if(lTag == TAG.CONTROLLER_LEFT){
+            delete mControllers[lId];
+        }
+        
         //send the event out to the game and ui
         for(var i = 0; i < mMessageListener.length; i++)
         {
             mMessageListener[i](lTag, lContent, lId);
         }
         
-        //events to handle after the content gets it (e.g. if something gets removed. the game might want to still check 
-        //the details of what gets removed before all traces are gone)
-        if(lTag == TAG.CONTROLLER_LEFT){
-            delete mControllers[lId];
-        }
     }
     
     function ShowGame(lGameNameUrl)
     {
-        
-            $('#contentframe').attr("src",  lGameNameUrl);
+        mActiveGame = lGameNameUrl;
+        $('#contentframe').attr("src",  lGameNameUrl);
             
-            self.Log("opening " +  lGameNameUrl);
+        self.Log("opening " +  lGameNameUrl);
     }
     
     /**

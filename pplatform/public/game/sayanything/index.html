@@ -1,10 +1,255 @@
 <!doctype html>
 <html>
   <head>
+    <meta charset="UTF-8">
  <!-- Copyright (C) 2015 Christoph Kutza -->
-    <title>coming soond</title>
+    <title>Say Anything</title>
+    <style>
+      * { margin: 0; padding: 0; box-sizing: border-box; }
+      body { font: 13px Helvetica, Arial; }
+      .stateview { background: #aaa;margin-bottom: 50px; padding: 10px;}
+      .view { background: #aff; }
+      .controller { background: #ffa;}
+      .judgecontroller { background: #faf;}
+      .hostcontroller { background: #faf;}
+      .judgeName {color: red;}
+    </style>
+    <script src="https://cdn.socket.io/socket.io-1.2.0.js"></script>
+  <script src="http://code.jquery.com/jquery-1.11.1.js"></script>
+  <script src="../../netgroupclient.js"></script>
+  <script src="../../pplatformclient.js"></script>
   </head>
   <body>
-	say anything coming soon
+      <h1> Say Anything </h1>
+              <div class="stateview" id="debug">
+            <h2>Debugview</h2>
+            Grey: A certain state in the game. Visible for View and Controller<br>
+            <div class="view">
+                Cyan: Bigview<br>
+            </div>
+            <div class="controller">
+                Yellow: Controller<br>
+            </div>
+            <div class="hostcontroller">
+                Purple: Judge or Hostcontroller<br>
+            </div>
+        </div>
+        <div class="stateview" id="WaitForStart">
+            <h2>State: WaitForStart</h2>
+            <div class="view">
+                View waiting for game to start
+                <p>
+                Players:
+                    <ul id="playerlist">
+                    </ul>
+                </p>
+            </div>
+            <div class="controller">
+                Waiting for Host
+            </div>
+            <div class="hostcontroller">
+                <button onclick="startGame()">Start Game</button>
+                <button onclick="leaveGame()">Leave Game</button>
+            </div>
+        </div>
+        
+        <div class="stateview" id="questioning">
+            <h2>State: Questioning</h2>
+            <div class="view">
+                
+                <p><span class="judgeName">Player</span> is choosing a question.</p>
+                <span class="timeLeft">30</span>
+            </div>
+            <div class="controller">
+                <p> Waiting for <span class="judgeName">Player</span> to choose a question.</p>
+            </div>
+            <div class="judgecontroller">
+                <div class="questionList">
+                    <label> <input type="radio" name="questionList" value="1">Q1</label> <br>
+                    <label> <input type="radio" name="questionList" value="2">Q2</label> <br>
+                    <label> <input type="radio" name="questionList" value="3">Q3</label> <br>
+                    <label> <input type="radio" name="questionList" value="4">Q4</label> <br>
+                    <label> <input type="radio" name="questionList" value="5"><input type="text" name="questionList" value="custom"></label> <br>
+                    
+                    <button class="confirm">Confirm Selection</button>
+                </div>
+            </div>
+        </div>
+        
+        <div class="stateview" id="Answering">
+            <h2>State: Answering</h2>
+            <div class="view">
+                <p><span class="judgeName">Player</span> asks: </p>
+                <p class="chosenQuestion">Chosen Question?</p>
+                <span class="timeLeft">30</span>
+            </div>
+            <div class="controller">
+                <p>Write your Answer</p>
+                <input type="text" class="answer"> </input>
+                <button class="confirm">Confirm Selection</button>
+            </div>
+            <div class="judgecontroller">
+                <p>Waiting for players to answer your question.</p>
+            </div>
+        </div>
+        
+        <div class="stateview" id="ShowAnswers">
+            <h2>State: Show Answers</h2>
+            <div class="view">
+                <div class="answerList">
+                    <label> <input type="radio" name="answerList" value="1">A1</label> <br>
+                    <label> <input type="radio" name="answerList" value="2">A2</label> <br>
+                    <label> <input type="radio" name="answerList" value="3">A3</label> <br>
+                    <label> <input type="radio" name="answerList" value="4">A4</label> <br>
+                    <label> <input type="radio" name="answerList" value="5">A5</label> <br>
+                    <button class="confirm">Confirm Selection</button>
+                </div>
+            </div>
+            <div class="controller">
+                Wait for all answers to be presented.
+            </div>
+            <div class="judgecontroller">
+                Wait for all answers to be presented.
+            </div>
+        </div>
+        
+        <div class="stateview" id="Judging">
+            <h2>State: Judging</h2>
+            <div class="view">
+                
+                <div class="answerList">
+                    <label> <input type="radio" name="answerList" value="1">A1</label> <br>
+                    <label> <input type="radio" name="answerList" value="2">A2</label> <br>
+                    <label> <input type="radio" name="answerList" value="3">A3</label> <br>
+                    <label> <input type="radio" name="answerList" value="4">A4</label> <br>
+                    <label> <input type="radio" name="answerList" value="5">A5</label> <br>
+                    <button class="confirm">Confirm Selection</button>
+                </div>
+                <p><span class="judgeName">Player</span> is in deliberation.</p>
+                <span class="timeLeft">60</span>
+            </div>
+            <div class="controller">
+                Waiting for judge to pick their favorite.
+            </div>
+            <div class="judgecontroller">
+                Choose Your Favorite
+                <div class="answerList">
+                </div>
+            </div>
+        </div>
+        
+        <div class="stateview" id="Voting">
+            <h2>State: Voting</h2>
+            <div class="view">
+                <div class="voteList">
+                    <label> <input type="checkbox" name="voteList" value="1">A1</label> <br>
+                    <label> <input type="checkbox" name="voteList" value="2">A2</label> <br>
+                    <label> <input type="checkbox" name="voteList" value="3">A3</label> <br>
+                    <label> <input type="checkbox" name="voteList" value="4">A4</label> <br>
+                    <label> <input type="checkbox" name="voteList" value="5">A5</label> <br>
+                </div>
+            </div>
+            <div class="controller">
+                <div class="voteList">
+                    <label> <input type="checkbox" name="voteList" value="1">A1</label> <br>
+                    <label> <input type="checkbox" name="voteList" value="2">A2</label> <br>
+                    <label> <input type="checkbox" name="voteList" value="3">A3</label> <br>
+                    <label> <input type="checkbox" name="voteList" value="4">A4</label> <br>
+                    <label> <input type="checkbox" name="voteList" value="5">A5</label> <br>
+                    <button class="confirm">Confirm Selection</button>
+                </div>
+            </div>
+            <div class="judgecontroller">
+                Wait for players to place votes
+            </div>
+        </div>
+        
+        <div class="stateview" id="ShowWinner">
+            <h2>State: Winner</h2>
+            <div class="view">
+            </div>
+            <div class="controller">
+            </div>
+            <div class="judgecontroller">
+            </div>
+        </div>
+        
+        <div class="stateview" id="ShowScore">
+            <h2>State: Winner</h2>
+            <div class="view">
+            </div>
+            <div class="controller">
+            </div>
+            <div class="judgecontroller">
+            </div>
+        </div>
+        
+        
+<script>
+
+if(typeof parent.gPlatform !== 'undefined')
+{
+    console.debug("game list opened");
+    $('.stateview').attr("hidden", true);
+    $('#WaitForStart').attr("hidden", false);
+    var gPlatform = null;
+    function InitPlatform()
+    {
+        gPlatform = parent.gPlatform;
+        $('.view').attr("hidden", true);
+        $('.hostcontroller').attr("hidden", true);
+        $('.controller').attr("hidden", true);
+        if(gPlatform.isView())
+        {
+            $('.view').attr("hidden", false);
+        }else if(gPlatform.isHostController())
+        {
+            $('.hostcontroller').attr("hidden", false);
+        }else{
+            
+            $('.controller').attr("hidden", false);
+        }
+        
+        gPlatform.addMessageListener(onMessage);
+    }
+    
+    function refreshPlayerList()
+    {
+        $('#playerlist').empty();
+        
+        var controllers = gPlatform.getControllers();
+        for(var id in controllers )
+        {
+            $('#playerlist').append( "<li>" + controllers[id].name + "</li>" );
+        }
+    }
+    
+    function onMessage(lTag, lContent, lFrom)
+    {
+        if(lTag == TAG.CONTROLLER_DISCOVERY || lTag == TAG.CONTROLLER_LEFT)
+        {
+            refreshPlayerList();
+        }
+    }
+    
+    
+    function startGame()
+    {
+        //TODO: send out a message to view to request a state change
+    }
+    
+    function leaveGame()
+    {
+        gPlatform.enterGame("./gamelist.html");
+    }
+    
+    InitPlatform();
+    refreshPlayerList();
+}
+
+
+
+    
+</script>
   </body>
 </html>
