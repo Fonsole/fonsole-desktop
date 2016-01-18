@@ -16,7 +16,7 @@
     //only available on the view side for now
     var mControllers = {};
     
-    //not yet implemented
+    //This value will be null until a view was discovered. Only then a controller is fully initialized
     var mViewId = null;
     
     var TAG_CONTROLLER_DISCOVERY = "PLATFORM_CONTROLLER_DISCOVERY";
@@ -99,14 +99,18 @@
         mMessageListener.push(lListener);
     };
     
-    function deliverListenerMessage(lTag, lContent, lId)
+    /** Will handle all incomming messages + send them to the listener outside of pplatform
+     * 
+     * 
+     */
+    function handleMessage(lTag, lContent, lId)
     {
         //events to handle before the content gets it
         
         if(lTag == TAG_ENTER_GAME){
             ShowGame(lContent);
         }else if(lTag == TAG_EXIT_GAME){
-            
+            //todo handle exit game command -> switch view back to game list?
         }else if(lTag == TAG_CONTROLLER_DISCOVERY)
         {
             if(mIsView) {
@@ -120,6 +124,9 @@
                 var c = new Controller(lId, "player " + lId);
                 mControllers[lId] = c;
             }
+        }else if(lTag == TAG_VIEW_DISCOVERY)
+        {
+            mViewId = lId; //store the id for later
         }
         
         
@@ -163,7 +170,7 @@
             self.Log("Rec: " + lMsg + " from " + lId);
             var msgObj = JSON.parse(lMsg);
             
-            deliverListenerMessage(msgObj.tag, msgObj.content, lId);
+            handleMessage(msgObj.tag, msgObj.content, lId);
             
             
         }else if(lType == SignalingMessageType.Closed)
@@ -182,7 +189,7 @@
             //abouut color and name)
             if(mIsView)
             {
-                deliverListenerMessage(TAG_CONTROLLER_DISCOVERY, null, lId);
+                handleMessage(TAG_CONTROLLER_DISCOVERY, null, lId);
                 
             }
             //controller ignore these so far
@@ -192,7 +199,7 @@
             
             if(mIsView)
             {
-                deliverListenerMessage(TAG_CONTROLLER_LEFT, null, lId);
+                handleMessage(TAG_CONTROLLER_LEFT, null, lId);
             }
             
             //controller ignore these so far
