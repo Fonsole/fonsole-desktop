@@ -44,8 +44,8 @@ module.exports = function()
         
         this.addConnection = function(lConnection)
         {
-            mConnection[lConnection.getId()] = lConnection;
             sendUserJoined(lConnection);
+            mConnection[lConnection.getId()] = lConnection;
         }
         
         this.remConnection = function(lConnection)
@@ -77,7 +77,7 @@ module.exports = function()
             lMsgObj.id = lFrom.getId();
             if(typeof lTo !== 'undefined' && lTo !== null)
             {
-                mConnection[id].emit('user message', JSON.stringify(lMsgObj));
+                mConnection[lTo].emit('user message', JSON.stringify(lMsgObj));
             }else{
                 var txt = JSON.stringify(lMsgObj);
                 for(var id in mConnection)
