@@ -10,13 +10,23 @@
  function PPlatform()
  {
      
-     var self = this;
+    var self = this;
     var gConnected = false;
     
-    var mKnownConnections = null;
+    //only available on the view side for now
+    var mControllers = {};
+    
+    //not yet implemented
+    var mViewId = null;
     
     var TAG_CONTROLLER_DISCOVERY = "PLATFORM_CONTROLLER_DISCOVERY";
     var TAG_CONTROLLER_LEFT = "PLATFORM_CONTROLLER_LEFT";
+    
+    
+    //will be send out by the view to inform a new controller how to send messages to the view
+    var TAG_VIEW_DISCOVERY = "PLATFORM_VIEW_DISCOVERY";
+    
+    
     var TAG_ENTER_GAME = "PLATFORM_ENTER_GAME";
     var TAG_EXIT_GAME = "PLATFORM_EXIT_GAME";
     
@@ -27,7 +37,7 @@
         serverUrl = "http://localhost:3001";
     }
     
-    var mMessageListener = [OnUserMessage];
+    var mMessageListener = [];
     var sigChan = new Netgroup(serverUrl);
     
     var mIsView = false;
@@ -57,7 +67,7 @@
         var key = GetRandomKey();
         
         self.Log("Opening room " + key + " ...");
-        sigChan.open(key, OnSignalingMessageInternal);
+        sigChan.open(key, OnNetgroupMessageInternal);
         $('#gameid').val(key);
         mIsView = true;
         mIsHostController = false;
@@ -65,7 +75,7 @@
     
     this.startAsController = function(key)
     {
-        sigChan.connect(key, OnSignalingMessageInternal);
+        sigChan.connect(key, OnNetgroupMessageInternal);
         mIsView = false;
         mIsHostController = true;
     };
@@ -75,27 +85,56 @@
         sigChan.close();
     };
     
-    this.sendMessage = function(lTag, lContent)
+    this.sendMessage = function(lTag, lContent, lTo)
     {
         var msg = {};
         msg.tag = lTag;
         msg.content = lContent; 
         
-        sigChan.sendMessage(JSON.stringify(msg));  
+        self.Log("Snd: " + JSON.stringify(msg) + " to " + lTo);
+        sigChan.sendMessageTo(JSON.stringify(msg), lTo);  
     };
     this.addMessageListener = function(lListener)
     {
         mMessageListener.push(lListener);
     };
     
-    function OnUserMessage(lTag, lContent)
+    function deliverListenerMessage(lTag, lContent, lId)
     {
-        if(lTag == TAG_ENTER_GAME)
-        {
+        //events to handle before the content gets it
+        
+        if(lTag == TAG_ENTER_GAME){
             ShowGame(lContent);
+        }else if(lTag == TAG_EXIT_GAME){
+            
+        }else if(lTag == TAG_CONTROLLER_DISCOVERY)
+        {
+            if(mIsView) {
+                //send out view discovery event
+                self.sendMessage(TAG_VIEW_DISCOVERY, "", lId);
+                
+                if(mActiveGame != null)
+                {
+                    self.sendMessage(TAG_ENTER_GAME, mActiveGame, lId);
+                }
+                var c = new Controller(lId, "player " + lId);
+                mControllers[lId] = c;
+            }
+        }
+        
+        
+        //send the event out to the game and ui
+        for(var i = 0; i < mMessageListener.length; i++)
+        {
+            mMessageListener[i](lTag, lContent, lId);
+        }
+        
+        //events to handle after the content gets it (e.g. if something gets removed. the game might want to still check 
+        //the details of what gets removed before all traces are gone)
+        if(lTag == TAG_CONTROLLER_LEFT){
+            delete mControllers[lId];
         }
     }
-    
     
     function ShowGame(lGameNameUrl)
     {
@@ -108,7 +147,7 @@
     /**
      * this is the message handler based on Netgroup. Only the content ofer user messages will be send to the games outside of platform via mMessageListener
      */
-    function OnSignalingMessageInternal(lType, lId, lMsg)
+    function OnNetgroupMessageInternal(lType, lId, lMsg)
     {
         if(lType == SignalingMessageType.Connected)
         {
@@ -121,13 +160,11 @@
             
         }else if(lType == SignalingMessageType.UserMessage)
         {
-            self.Log("Message: " + lMsg);
+            self.Log("Rec: " + lMsg + " from " + lId);
             var msgObj = JSON.parse(lMsg);
             
-            for(var i = 0; i < mMessageListener.length; i++)
-            {
-                mMessageListener[i](msgObj.tag, msgObj.content, lId);
-            }
+            deliverListenerMessage(msgObj.tag, msgObj.content, lId);
+            
             
         }else if(lType == SignalingMessageType.Closed)
         {
@@ -139,9 +176,26 @@
         }else if(lType == SignalingMessageType.UserJoined)
         {
             self.Log("User " + lId + " joined");
+            
+            //if this is a view every discovered user must be a controller -> automatically inform that there is
+            //a controller. the controllers itself don't need to send this for now (later they need to and add information
+            //abouut color and name)
+            if(mIsView)
+            {
+                deliverListenerMessage(TAG_CONTROLLER_DISCOVERY, null, lId);
+                
+            }
+            //controller ignore these so far
         }else if(lType == SignalingMessageType.UserLeft)
         {
-            self.Log("User " + lId + " disconnected");
+            self.Log("User " + lId + " left");
+            
+            if(mIsView)
+            {
+                deliverListenerMessage(TAG_CONTROLLER_LEFT, null, lId);
+            }
+            
+            //controller ignore these so far
         }else{
             self.Log("Invalid message received. type: " + lType + " content: " + lMsg);
         }
