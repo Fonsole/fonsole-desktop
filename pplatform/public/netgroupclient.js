@@ -28,7 +28,10 @@
         
         //own id or null if no id as not yet connected
         var mOwnId = null;
-        
+        this.getOwnId = function()
+        {
+            return mOwnId;
+        }
         //handler the messages are delivered to (set during opening/connecting)
         var mHandler = null;
         

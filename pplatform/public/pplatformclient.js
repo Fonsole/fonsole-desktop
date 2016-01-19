@@ -42,6 +42,10 @@ TAG.EXIT_GAME = "PLATFORM_EXIT_GAME";
     
     var mMessageListener = [];
     var sigChan = new Netgroup(serverUrl);
+    this.getOwnId = function()
+    {
+        return sigChan.getOwnId();
+    }
     
     var mIsView = false;
     var mIsHostController = false;

@@ -166,30 +166,17 @@
         //TODO: UI to data connection
         console.debug("UI refresh");
         
-        //hide things intended for other roles
-        if(gPlatform.isView())
-        {
-            $('.view').attr("hidden", false);
-            $('.hostcontroller').attr("hidden", true);
-            $('.controller').attr("hidden", true);
-        
-        }else if(gPlatform.isHostController())
-        {
-            $('.hostcontroller').attr("hidden", false);
-            $('.view').attr("hidden", true);
-            $('.controller').attr("hidden", true);
-        
-        }else{
+        //hide everything -> show later only what is needed
+        $('.view').attr("hidden", true);
+        $('.hostcontroller').attr("hidden", true);
+        $('.controller').attr("hidden", true);
+        $('.judgecontroller').attr("hidden", true);
             
-            $('.controller').attr("hidden", false);
-            $('.view').attr("hidden", true);
-            $('.hostcontroller').attr("hidden", true);
-        }
-        
-        
+
         //hide all states. TODO: remove that later to avoid flickering during state updates
         $('.stateview').attr("hidden", true);
         
+        //show the correct state view
         if(lSharedData.state == SayAnything.GameState.WaitForStart)
         {
             console.log("show WaitForStart");
@@ -200,6 +187,25 @@
             $('#Questioning').attr("hidden", false);
         }else{
             console.debug("ERROR: GUI doesn't know state " + lSharedData.state);
+        }
+        if(gPlatform.isView())
+        {
+            $('.view').attr("hidden", false);
+        }else if(lSharedData.judgeUserId != null && lSharedData.judgeUserId == gPlatform.getOwnId())
+        {
+            $('.judgecontroller').attr("hidden", false);
+            $('.hostcontroller').attr("hidden", false);
+        }else{
+            $('.controller').attr("hidden", false);
+            $('.hostcontroller').attr("hidden", false);
+        }
+        
+        
+        //if there is a judge -> add the judge player to everything with class name "judgeName"
+        if(lSharedData.judgeUserId != null)
+        {
+            $('.judgeName').empty();
+            $('.judgeName').append("Player " + lSharedData.judgeUserId);
         }
         
     }
