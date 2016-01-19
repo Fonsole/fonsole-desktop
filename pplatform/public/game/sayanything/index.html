@@ -86,8 +86,8 @@
             </div>
             <div class="controller">
                 <p>Write your Answer</p>
-                <input type="text" class="answer"> </input>
-                <button class="confirm">Confirm Selection</button>
+                <input type="text" id="answer"> </input>
+                <button class="confirm" onclick="answerConfirm()">Confirm</button>
             </div>
             <div class="judgecontroller">
                 <p>Waiting for players to answer your question.</p>
@@ -223,6 +223,15 @@
         }
         //alert(question);
         gPlatform.sendMessage(SayAnything.Message.Question.TAG, new SayAnything.Message.Question(question));
+    }
+    
+    function answerConfirm()
+    {
+        var answer = $("#answer").val();
+        //alert(answer);
+        
+        
+        gPlatform.sendMessage(SayAnything.Message.Answer.TAG, new SayAnything.Message.Answer(answer));
     }
     InitGame();
     

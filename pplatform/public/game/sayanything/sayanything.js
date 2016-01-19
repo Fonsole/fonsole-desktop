@@ -41,7 +41,7 @@
             WaitForStart : 0,
             Questioning : 1,
             Answering : 2,
-            ShowAnswer : 3,
+            ShowAnswers : 3,
             Judging : 4,
             Voting : 5,
             ShowWinner : 6,
@@ -77,6 +77,13 @@
         this.question = lQuestion;
     }
     SayAnything.Message.Question.TAG = "SayAnything_Question";
+    
+    //sent after the controllers enter an answer and press the confirm button
+    SayAnything.Message.Answer = function(lAnswer)
+    {
+        this.answer = lAnswer;
+    }
+    SayAnything.Message.Answer.TAG = "SayAnything_Answer";
     
     
     
@@ -126,6 +133,30 @@
                     refreshState();
                 }else{
                     console.debug("Received a question during invalid state " + mData.state);
+                }
+            }else if(lTag == SayAnything.Message.Answer.TAG)
+            {
+                if(mData.state == SayAnything.GameState.Answering)
+                {
+                    console.debug("answer received: " + lContent.answer);
+                    if(lFrom in mData.answers)
+                    {
+                        //already an anwer received. ignored
+                        console.debug("already an anwer received. ignored " + lContent.answer);
+                    }else{
+                        mData.answers[lFrom] = lContent.answer;
+                        
+                        if(Object.keys(mData.answers).length >= Object.keys(gPlatform.getControllers()).length - 1)
+                        {
+                            //received same amount of answers as controllers available -> next state
+                            
+                            mData.state = SayAnything.GameState.ShowAnswers;
+                        }
+                        
+                        refreshState();
+                    }
+                }else{
+                    console.debug("Received an answer during invalid state " + mData.state);
                 }
             }
         }
@@ -201,9 +232,14 @@
         {
             console.log("show Answering");
             $('#Answering').attr("hidden", false);
+        }else if(lSharedData.state == SayAnything.GameState.ShowAnswers)
+        {
+            console.log("show ShowAnswers");
+            $('#ShowAnswers').attr("hidden", false);
         }else{
             console.debug("ERROR: GUI doesn't know state " + lSharedData.state);
         }
+        
         if(gPlatform.isView())
         {
             $('.view').attr("hidden", false);
@@ -223,6 +259,11 @@
             $('.judgeName').empty();
             $('.judgeName').append("Player " + lSharedData.judgeUserId);
         }
+        
+        //if question is set -> fill in the question parts in the ui
+        if(lSharedData.question != null)
+            $('.chosenQuestion').empty().append(lSharedData.question);
+        
         
     }
  
