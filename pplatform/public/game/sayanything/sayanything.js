@@ -15,6 +15,7 @@
      */
     SayAnything.Data.Shared = function()
     {
+        var self = this;
         //current state
         this.state = SayAnything.GameState.WaitForStart;
         
@@ -30,11 +31,40 @@
         //user id of the answer the judge has chosen
         this.judgedAnswerId = null;
         
-        //key: user id the votes are from + value -> a list of user id's the votes are for in the answer list
+        //key: user id (equals the id the answer of this user has in the "answers" object)
+        //value: a list of user ids the vote came from (needed to show the color badges in the end)
         this.votes = {};
         
         //will be a list with the players score  (independend if the player is sitll around or not)
         this.score = {};
+         
+         
+         //functions to easily fill and read the data (ideall this should be done only via functions later to prevent bugs)
+         
+         this.addVote = function(lFrom, lTo)
+         {
+            if(lTo in self.votes)
+            {
+                //user got at least one vote already -> add the new vote
+                self.votes[lTo].push(lFrom);
+            }else
+            {
+                //user didn't get a vote yet -> add a list with one vote
+                self.votes[lTo] = [lFrom];
+            }
+         }
+         
+         //returns a list of votes a certain userid/answerid received
+         this.getVotes = function(lUserId)
+         {
+             if(lUserId in self.votes)
+             {
+                 return self.votes[lUserId];
+             }
+             else{
+                 return []; //empty list. user never received a vote
+             }
+         }
     }
 
     /** The states the game can be in.
@@ -202,7 +232,10 @@
                         //already an answer received. ignored
                         console.debug("already an votes received. ignored " + lContent.answer);
                     }else{
-                        mData.votes[lFrom] = [lContent.votePlayerId1, lContent.votePlayerId1];
+                        mData.addVote(lFrom, lContent.votePlayerId1);
+                        mData.addVote(lFrom, lContent.votePlayerId2);
+                        
+
                         
                         if(Object.keys(mData.answers).length >= Object.keys(gPlatform.getControllers()).length - 1)
                         {
@@ -303,31 +336,31 @@
         {
             console.log("show ShowAnswers");
             $('#ShowAnswers').attr("hidden", false);
-            answerListFill(lSharedData.answers);
+            answerListFill(lSharedData);
             
         }else if(lSharedData.state == SayAnything.GameState.Judging)
         {
             console.log("show Judging");
             $('#Judging').attr("hidden", false);
-            answerListFill(lSharedData.answers);
+            answerListFill(lSharedData);
             
         }else if(lSharedData.state == SayAnything.GameState.Voting)
         {
             console.log("show Voting");
             $('#Voting').attr("hidden", false);
-            answerListFill(lSharedData.answers);
+            answerListFill(lSharedData);
             
         }else if(lSharedData.state == SayAnything.GameState.ShowWinner)
         {
             console.log("show ShowWinner");
             $('#ShowWinner').attr("hidden", false);
-            answerListFill(lSharedData.answers);
+            answerListFill(lSharedData);
             
         }else if(lSharedData.state == SayAnything.GameState.ShowScore)
         {
             console.log("show ShowScore");
             $('#ShowScore').attr("hidden", false);
-            answerListFill(lSharedData.answers);
+            answerListFill(lSharedData);
             
         }else{
             console.debug("ERROR: GUI doesn't know state " + lSharedData.state);
@@ -392,7 +425,9 @@
         //data updated -> refresh ui
         if(lTag == SayAnything.Message.SharedDataUpdate.TAG)
         {
-            refreshUi(lContent.sharedData);
+            var lSharedData = new SayAnything.Data.Shared();
+            $.extend( lSharedData, lContent.sharedData );
+            refreshUi(lSharedData);
         }
 
     }
