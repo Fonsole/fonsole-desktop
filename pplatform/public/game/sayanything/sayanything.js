@@ -71,6 +71,7 @@
     }
     SayAnything.Message.GameLoaded.TAG = "SayAnything_GameLoaded";
     
+    //sent after the judge chooses a question
     SayAnything.Message.Question = function(lQuestion)
     {
         this.question = lQuestion;
@@ -115,6 +116,17 @@
             }else if(lTag == SayAnything.Message.GameLoaded.TAG)
             {
                 refreshState();
+            }else if(lTag == SayAnything.Message.Question.TAG)
+            {
+                if(mData.state == SayAnything.GameState.Questioning)
+                {
+                    console.debug("question received: " + lContent.question);
+                    mData.question = lContent.question;
+                    mData.state = SayAnything.GameState.Answering;
+                    refreshState();
+                }else{
+                    console.debug("Received a question during invalid state " + mData.state);
+                }
             }
         }
         
@@ -185,6 +197,10 @@
         {
             console.log("show Questioning");
             $('#Questioning').attr("hidden", false);
+        }else if(lSharedData.state == SayAnything.GameState.Answering)
+        {
+            console.log("show Answering");
+            $('#Answering').attr("hidden", false);
         }else{
             console.debug("ERROR: GUI doesn't know state " + lSharedData.state);
         }

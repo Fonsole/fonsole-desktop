@@ -66,13 +66,13 @@
             </div>
             <div class="judgecontroller">
                 <div class="questionList">
-                    <label> <input type="radio" name="questionList" value="1">Q1</label> <br>
-                    <label> <input type="radio" name="questionList" value="2">Q2</label> <br>
-                    <label> <input type="radio" name="questionList" value="3">Q3</label> <br>
-                    <label> <input type="radio" name="questionList" value="4">Q4</label> <br>
-                    <label> <input type="radio" name="questionList" value="5"><input type="text" name="questionList" value="custom"></label> <br>
+                    <label> <input type="radio" name="questionList" id="questionListQ1" value="Q1"><span id="questionListQ1Label">Q1</span></label> <br>
+                    <label> <input type="radio" name="questionList" id="questionListQ2" value="Q2"><span id="questionListQ2Label">Q2</span></label> <br>
+                    <label> <input type="radio" name="questionList" id="questionListQ3" value="Q3"><span id="questionListQ3Label">Q3</span></label> <br>
+                    <label> <input type="radio" name="questionList" id="questionListQ4" value="Q4"><span id="questionListQ4Label">Q4</span></label> <br>
+                    <label> <input type="radio" name="questionList" id="questionListQ5" value="custom"><input type="text" id="questionCustom"></label> <br>
                     
-                    <button class="confirm">Confirm Selection</button>
+                    <button class="confirm" onclick="questionListConfirm()">Confirm Selection</button>
                 </div>
             </div>
         </div>
@@ -200,6 +200,30 @@
         gPlatform.enterGame("./gamelist.html");
     }
 
+
+    function questionListFill(lQ1, lQ2, lQ3, lQ4)
+    {
+        $("#questionListQ1").val(lQ1);
+        $("#questionListQ2").val(lQ2);
+        $("#questionListQ3").val(lQ3);
+        $("#questionListQ4").val(lQ4);
+        $("#questionListQ1Label").empty().append(lQ1);
+        $("#questionListQ2Label").empty().append(lQ2);
+        $("#questionListQ3Label").empty().append(lQ3);
+        $("#questionListQ4Label").empty().append(lQ4);
+    }
+    //testing:
+    //questionListFill("QU1", "QU2", "QU3", "QU4");
+    function questionListConfirm()
+    {
+        var question = $("input[name=questionList]:checked").val();
+        if(question == "custom")
+        {
+            question = $("#questionCustom").val();
+        }
+        //alert(question);
+        gPlatform.sendMessage(SayAnything.Message.Question.TAG, new SayAnything.Message.Question(question));
+    }
     InitGame();
     
     
