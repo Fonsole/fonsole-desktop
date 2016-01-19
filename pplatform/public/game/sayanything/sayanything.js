@@ -207,7 +207,7 @@
                         if(Object.keys(mData.answers).length >= Object.keys(gPlatform.getControllers()).length - 1)
                         {
                             //received same amount of votes as controllers available -> next state
-                            
+                            CalculateScore();
                             mData.state = SayAnything.GameState.ShowWinner;
                             setTimeout(function()
                             {
@@ -224,6 +224,10 @@
             }
         }
         
+        function CalculateScore()
+        {
+            
+        }
         
         function refreshState()
         {
@@ -311,6 +315,18 @@
         {
             console.log("show Voting");
             $('#Voting').attr("hidden", false);
+            answerListFill(lSharedData.answers);
+            
+        }else if(lSharedData.state == SayAnything.GameState.ShowWinner)
+        {
+            console.log("show ShowWinner");
+            $('#ShowWinner').attr("hidden", false);
+            answerListFill(lSharedData.answers);
+            
+        }else if(lSharedData.state == SayAnything.GameState.ShowScore)
+        {
+            console.log("show ShowScore");
+            $('#ShowScore').attr("hidden", false);
             answerListFill(lSharedData.answers);
             
         }else{
