@@ -95,7 +95,7 @@ TAG.EXIT_GAME = "PLATFORM_EXIT_GAME";
         msg.tag = lTag;
         msg.content = lContent; 
         
-        self.Log("Snd: " + JSON.stringify(msg) + " to " + lTo);
+        self.Log("Snd: TAG: " + lTag + " data: " + JSON.stringify(msg) + " to " + lTo);
         sigChan.sendMessageTo(JSON.stringify(msg), lTo);  
     };
     this.addMessageListener = function(lListener)
@@ -167,9 +167,9 @@ TAG.EXIT_GAME = "PLATFORM_EXIT_GAME";
             
         }else if(lType == SignalingMessageType.UserMessage)
         {
-            self.Log("Rec: " + lMsg + " from " + lId);
             var msgObj = JSON.parse(lMsg);
             
+            self.Log("Rec: TAG: " + msgObj.tag + " data:" + JSON.stringify(msgObj.content) + " from " + lId);
             handleMessage(msgObj.tag, msgObj.content, lId);
             
             

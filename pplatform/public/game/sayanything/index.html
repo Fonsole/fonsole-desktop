@@ -18,6 +18,7 @@
   <script src="http://code.jquery.com/jquery-1.11.1.js"></script>
   <script src="../../netgroupclient.js"></script>
   <script src="../../pplatformclient.js"></script>
+  <script src="sayanything.js"></script>
   </head>
   <body>
       <h1> Say Anything </h1>
@@ -53,7 +54,7 @@
             </div>
         </div>
         
-        <div class="stateview" id="questioning">
+        <div class="stateview" id="Questioning">
             <h2>State: Questioning</h2>
             <div class="view">
                 
@@ -187,68 +188,20 @@
         
 <script>
 
-if(typeof parent.gPlatform !== 'undefined')
-{
-    console.debug("game list opened");
-    $('.stateview').attr("hidden", true);
-    $('#WaitForStart').attr("hidden", false);
-    var gPlatform = null;
-    function InitPlatform()
-    {
-        gPlatform = parent.gPlatform;
-        $('.view').attr("hidden", true);
-        $('.hostcontroller').attr("hidden", true);
-        $('.controller').attr("hidden", true);
-        if(gPlatform.isView())
-        {
-            $('.view').attr("hidden", false);
-        }else if(gPlatform.isHostController())
-        {
-            $('.hostcontroller').attr("hidden", false);
-        }else{
-            
-            $('.controller').attr("hidden", false);
-        }
-        
-        gPlatform.addMessageListener(onMessage);
-    }
-    
-    function refreshPlayerList()
-    {
-        $('#playerlist').empty();
-        
-        var controllers = gPlatform.getControllers();
-        for(var id in controllers )
-        {
-            $('#playerlist').append( "<li>" + controllers[id].name + "</li>" );
-        }
-    }
-    
-    function onMessage(lTag, lContent, lFrom)
-    {
-        if(lTag == TAG.CONTROLLER_DISCOVERY || lTag == TAG.CONTROLLER_LEFT)
-        {
-            refreshPlayerList();
-        }
-    }
-    
-    
+    //ui handlers. maps ui to logic
     function startGame()
     {
-        //TODO: send out a message to view to request a state change
+        
+        gPlatform.sendMessage(SayAnything.Message.StartGame.TAG, new SayAnything.Message.StartGame());
     }
     
     function leaveGame()
     {
         gPlatform.enterGame("./gamelist.html");
     }
+
+    InitGame();
     
-    InitPlatform();
-    refreshPlayerList();
-}
-
-
-
     
 </script>
   </body>
