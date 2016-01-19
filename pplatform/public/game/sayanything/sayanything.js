@@ -96,6 +96,12 @@
     SayAnything.Message.Judge.TAG = "SayAnything_Judge";
     
     
+    SayAnything.Message.Vote = function(lVotePlayerId1, lVotePlayerId2)
+    {
+        this.votePlayerId1 = lVotePlayerId1;
+        this.votePlayerId2 = lVotePlayerId2;
+    }
+    SayAnything.Message.Vote.TAG = "SayAnything_Vote";
     
     
     //var startGameMessage = new SayAnything.Message.StartGame();
@@ -151,7 +157,7 @@
                     console.debug("answer received: " + lContent.answer);
                     if(lFrom in mData.answers)
                     {
-                        //already an anwer received. ignored
+                        //already an asnwer received. ignored
                         console.debug("already an answer received. ignored " + lContent.answer);
                     }else{
                         mData.answers[lFrom] = lContent.answer;
@@ -184,6 +190,36 @@
                     refreshState();
                 }else{
                     console.debug("Received a juding response during invalid state " + mData.state);
+                }
+            }
+            else if(lTag == SayAnything.Message.Vote.TAG)
+            {
+                if(mData.state == SayAnything.GameState.Voting)
+                {
+                    console.debug("vote from " + lFrom + " received: " + lContent.votePlayerId1 + " and " + lContent.votePlayerId2);
+                    if(lFrom in mData.votes)
+                    {
+                        //already an answer received. ignored
+                        console.debug("already an votes received. ignored " + lContent.answer);
+                    }else{
+                        mData.votes[lFrom] = [lContent.votePlayerId1, lContent.votePlayerId1];
+                        
+                        if(Object.keys(mData.answers).length >= Object.keys(gPlatform.getControllers()).length - 1)
+                        {
+                            //received same amount of votes as controllers available -> next state
+                            
+                            mData.state = SayAnything.GameState.ShowWinner;
+                            setTimeout(function()
+                            {
+                                mData.state = SayAnything.GameState.ShowScore;
+                                refreshState();
+                            }, 10000);
+                        }
+                        
+                        refreshState();
+                    }
+                }else{
+                    console.debug("Received an answer during invalid state " + mData.state);
                 }
             }
         }
@@ -269,6 +305,12 @@
         {
             console.log("show Judging");
             $('#Judging').attr("hidden", false);
+            answerListFill(lSharedData.answers);
+            
+        }else if(lSharedData.state == SayAnything.GameState.Voting)
+        {
+            console.log("show Voting");
+            $('#Voting').attr("hidden", false);
             answerListFill(lSharedData.answers);
             
         }else{
