@@ -13,6 +13,8 @@
       .judgecontroller { background: #faf;}
       .hostcontroller { background: #faf;}
       .judgeName {color: red;}
+      
+      
     </style>
     <script src="https://cdn.socket.io/socket.io-1.2.0.js"></script>
   <script src="http://code.jquery.com/jquery-1.11.1.js"></script>
@@ -98,12 +100,18 @@
             <h2>State: Show Answers</h2>
             <div class="view">
                 <div class="answerList">
-                    <label> <input type="radio" name="answerList" value="1">A1</label> <br>
-                    <label> <input type="radio" name="answerList" value="2">A2</label> <br>
-                    <label> <input type="radio" name="answerList" value="3">A3</label> <br>
-                    <label> <input type="radio" name="answerList" value="4">A4</label> <br>
-                    <label> <input type="radio" name="answerList" value="5">A5</label> <br>
-                    <button class="confirm">Confirm Selection</button>
+                    
+                    <label class="A1"><span class="answer">A1</span></label> <br>
+                    <label class="A2"><span class="answer">A2</span></label> <br>
+                    <label class="A3"><span class="answer">A3</span></label> <br>
+                    <label class="A4"><span class="answer">A4</span></label> <br>
+                    <label class="A5"><span class="answer">A5</span></label> <br>
+                    <label class="A6"><span class="answer">A6</span></label> <br>
+                    <label class="A7"><span class="answer">A7</span></label> <br>
+                    <label class="A8"><span class="answer">A8</span></label> <br>
+                    <label class="A9"><span class="answer">A9</span></label> <br>
+                    <label class="A10"><span class="answer">A10</span></label> <br>
+                    
                 </div>
             </div>
             <div class="controller">
@@ -118,14 +126,6 @@
             <h2>State: Judging</h2>
             <div class="view">
                 
-                <div class="answerList">
-                    <label> <input type="radio" name="answerList" value="1">A1</label> <br>
-                    <label> <input type="radio" name="answerList" value="2">A2</label> <br>
-                    <label> <input type="radio" name="answerList" value="3">A3</label> <br>
-                    <label> <input type="radio" name="answerList" value="4">A4</label> <br>
-                    <label> <input type="radio" name="answerList" value="5">A5</label> <br>
-                    <button class="confirm">Confirm Selection</button>
-                </div>
                 <p><span class="judgeName">Player</span> is in deliberation.</p>
                 <span class="timeLeft">60</span>
             </div>
@@ -134,6 +134,20 @@
             </div>
             <div class="judgecontroller">
                 Choose Your Favorite
+                
+                <div class="judgeList">
+                    <label class="A1"> <input type="radio" name="judgingRadio" value="1" class="CB"><span class="answer">A1</span></label> <br>
+                    <label class="A2"> <input type="radio" name="judgingRadio" value="2" class="CB"><span class="answer">A2</span></label> <br>
+                    <label class="A3"> <input type="radio" name="judgingRadio" value="3" class="CB"><span class="answer">A3</span></label> <br>
+                    <label class="A4"> <input type="radio" name="judgingRadio" value="4" class="CB"><span class="answer">A4</span></label> <br>
+                    <label class="A5"> <input type="radio" name="judgingRadio" value="5" class="CB"><span class="answer">A5</span></label> <br>
+                    <label class="A6"> <input type="radio" name="judgingRadio" value="6" class="CB"><span class="answer">A6</span></label> <br>
+                    <label class="A7"> <input type="radio" name="judgingRadio" value="7" class="CB"><span class="answer">A7</span></label> <br>
+                    <label class="A8"> <input type="radio" name="judgingRadio" value="8" class="CB"><span class="answer">A8</span></label> <br>
+                    <label class="A9"> <input type="radio" name="judgingRadio" value="9" class="CB"><span class="answer">A9</span></label> <br>
+                    <label class="A10"> <input type="radio" name="judgingRadio" value="10" class="CB"><span class="answer">A10</span></label> <br>
+                    <button class="confirm" onclick="judgingConfirm()">Confirm Selection</button>
+                </div>
                 <div class="answerList">
                 </div>
             </div>
@@ -142,22 +156,31 @@
         <div class="stateview" id="Voting">
             <h2>State: Voting</h2>
             <div class="view">
-                <div class="voteList">
-                    <label> <input type="checkbox" name="voteList" value="1">A1</label> <br>
-                    <label> <input type="checkbox" name="voteList" value="2">A2</label> <br>
-                    <label> <input type="checkbox" name="voteList" value="3">A3</label> <br>
-                    <label> <input type="checkbox" name="voteList" value="4">A4</label> <br>
-                    <label> <input type="checkbox" name="voteList" value="5">A5</label> <br>
-                </div>
+                    <span class="A1"> <span class="answer">A1</span><span class="votes"> </span> </span> <br>
+                    <span class="A2"> <span class="answer">A2</span><span class="votes"> </span> </span> <br>
+                    <span class="A3"> <span class="answer">A3</span><span class="votes"> </span> </span> <br>
+                    <span class="A4"> <span class="answer">A4</span><span class="votes"> </span> </span> <br>
+                    <span class="A5"> <span class="answer">A5</span><span class="votes"> </span> </span> <br>
+                    <span class="A6"> <span class="answer">A6</span><span class="votes"> </span> </span> <br>
+                    <span class="A7"> <span class="answer">A7</span><span class="votes"> </span> </span> <br>
+                    <span class="A8"> <span class="answer">A8</span><span class="votes"> </span> </span> <br>
+                    <span class="A9"> <span class="answer">A9</span><span class="votes"> </span> </span> <br>
+                    <span class="A10"> <span class="answer">A10</span><span class="votes"> </span> </span> <br>
+                    
             </div>
             <div class="controller">
                 <div class="voteList">
-                    <label> <input type="checkbox" name="voteList" value="1">A1</label> <br>
-                    <label> <input type="checkbox" name="voteList" value="2">A2</label> <br>
-                    <label> <input type="checkbox" name="voteList" value="3">A3</label> <br>
-                    <label> <input type="checkbox" name="voteList" value="4">A4</label> <br>
-                    <label> <input type="checkbox" name="voteList" value="5">A5</label> <br>
-                    <button class="confirm">Confirm Selection</button>
+                     <span class="A1"> <input type="radio" name="votingRadio1" value="1" class="A1CB"><label> <input type="radio" name="votingRadio2" value="1" class="CB"><span class="answer">A1</span></label></span> <br>
+                     <span class="A2"> <input type="radio" name="votingRadio1" value="1" class="A1CB"><label> <input type="radio" name="votingRadio2" value="2" class="CB"><span class="answer">A2</span></label></span> <br>
+                     <span class="A3"> <input type="radio" name="votingRadio1" value="1" class="A1CB"><label> <input type="radio" name="votingRadio2" value="3" class="CB"><span class="answer">A3</span></label></span> <br>
+                     <span class="A4"> <input type="radio" name="votingRadio1" value="1" class="A1CB"><label> <input type="radio" name="votingRadio2" value="4" class="CB"><span class="answer">A4</span></label></span> <br>
+                     <span class="A5"> <input type="radio" name="votingRadio1" value="1" class="A1CB"><label> <input type="radio" name="votingRadio2" value="5" class="CB"><span class="answer">A5</span></label></span> <br>
+                     <span class="A6"> <input type="radio" name="votingRadio1" value="1" class="A1CB"><label> <input type="radio" name="votingRadio2" value="6" class="CB"><span class="answer">A6</span></label></span> <br>
+                     <span class="A7"> <input type="radio" name="votingRadio1" value="1" class="A1CB"><label> <input type="radio" name="votingRadio1" value="7" class="CB"><span class="answer">A7</span></label></span> <br>
+                     <span class="A8"> <input type="radio" name="votingRadio1" value="1" class="A1CB"><label> <input type="radio" name="votingRadio2" value="8" class="CB"><span class="answer">A8</span></label></span> <br>
+                     <span class="A9"> <input type="radio" name="votingRadio1" value="1" class="A1CB"><label> <input type="radio" name="votingRadio2" value="9" class="CB"><span class="answer">A9</span></label></span> <br>
+                     <span class="A10"> <input type="radio" name="votingRadio1" value="1" class="A1CB"><label> <input type="radio" name="votingRadio2" value="10" class="CB"><span class="answer">A10</span></label></span> <br>
+                     <button class="confirm">Confirm Selection</button>
                 </div>
             </div>
             <div class="judgecontroller">
@@ -168,6 +191,16 @@
         <div class="stateview" id="ShowWinner">
             <h2>State: Winner</h2>
             <div class="view">
+                <div class="A1"> <span class="vplayer">player 1:</span> <span class="answer">A1</span> <span class="votes"> </span></div> <br>
+                <div class="A2"> <span class="vplayer">player 2:</span> <span class="answer">A2</span> <span class="votes"> </span></div> <br>
+                <div class="A3"> <span class="vplayer">player 3:</span> <span class="answer">A3</span> <span class="votes"> </span></div> <br>
+                <div class="A4"> <span class="vplayer">player 4:</span> <span class="answer">A4</span> <span class="votes"> </span></div> <br>
+                <div class="A5"> <span class="vplayer">player 5:</span> <span class="answer">A5</span> <span class="votes"> </span></div> <br>
+                <div class="A6"> <span class="vplayer">player 6:</span> <span class="answer">A6</span> <span class="votes"> </span></div> <br>
+                <div class="A7"> <span class="vplayer">player 7:</span> <span class="answer">A7</span> <span class="votes"> </span></div> <br>
+                <div class="A8"> <span class="vplayer">player 8:</span> <span class="answer">A8</span> <span class="votes"> </span></div> <br>
+                <div class="A9"> <span class="vplayer">player 9:</span> <span class="answer">A9</span> <span class="votes"> </span></div> <br>
+                <div class="A10"> <span class="vplayer">player 10:</span> <span class="answer">A10</span> <span class="votes"> </span></div> <br>
             </div>
             <div class="controller">
             </div>
@@ -201,6 +234,32 @@
     }
 
 
+    //fills ui after answers are known: fills answer list itself, vote lists, judge, ...
+    function answerListFill(answers)
+    {
+        var counter = 1;
+        for(var userId in answers)
+        {
+            var parentElement = ".A" + counter;
+            //Label is in all constructs the parent -> make it visible for this answer
+             $(parentElement).attr("hidden", false);
+             
+             //A1, A2 and so on are used for spans that are suppose to contain the answers -> add them
+             $(parentElement + " .answer").empty().append(answers[userId]);
+             
+             //set the id in the value attribute of checkboxes. we use that later to find out who the vote/judge belongs to
+             $(parentElement + " .CB").val(userId);
+            counter++;
+        }
+        for(var i = counter; i <= 10; i++) //10 = max player numbers
+        {
+            var parentElement = ".A" + i;
+            //Label is in all constructs the parent -> make it visible for this answer
+             $(parentElement).attr("hidden", true);
+        }
+        
+    }
+    //answerListFill({1:"testanswer", 4:"testanswer2"});
     function questionListFill(lQ1, lQ2, lQ3, lQ4)
     {
         $("#questionListQ1").val(lQ1);
@@ -232,6 +291,12 @@
         
         
         gPlatform.sendMessage(SayAnything.Message.Answer.TAG, new SayAnything.Message.Answer(answer));
+    }
+    
+    function judgingConfirm()
+    {
+         var playerid = $("input[name=judgingRadio]:checked").val();
+        gPlatform.sendMessage(SayAnything.Message.Judge.TAG, new SayAnything.Message.Judge(playerid));
     }
     InitGame();
     

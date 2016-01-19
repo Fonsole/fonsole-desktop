@@ -27,6 +27,9 @@
         //will contain the player id as key and then the answer.
         this.answers = {};
         
+        //user id of the answer the judge has chosen
+        this.judgedAnswerId = null;
+        
         //key: user id the votes are from + value -> a list of user id's the votes are for in the answer list
         this.votes = {};
         
@@ -86,6 +89,13 @@
     SayAnything.Message.Answer.TAG = "SayAnything_Answer";
     
     
+    SayAnything.Message.Judge = function(lPlayerId)
+    {
+        this.playerId = lPlayerId;
+    }
+    SayAnything.Message.Judge.TAG = "SayAnything_Judge";
+    
+    
     
     
     //var startGameMessage = new SayAnything.Message.StartGame();
@@ -142,7 +152,7 @@
                     if(lFrom in mData.answers)
                     {
                         //already an anwer received. ignored
-                        console.debug("already an anwer received. ignored " + lContent.answer);
+                        console.debug("already an answer received. ignored " + lContent.answer);
                     }else{
                         mData.answers[lFrom] = lContent.answer;
                         
@@ -151,12 +161,29 @@
                             //received same amount of answers as controllers available -> next state
                             
                             mData.state = SayAnything.GameState.ShowAnswers;
+                            
+                            setTimeout(function()
+                            {
+                                mData.state = SayAnything.GameState.Judging;
+                                refreshState();
+                            }, 10000);
                         }
                         
                         refreshState();
                     }
                 }else{
                     console.debug("Received an answer during invalid state " + mData.state);
+                }
+            }else if(lTag == SayAnything.Message.Judge.TAG)
+            {
+                if(mData.state == SayAnything.GameState.Judging)
+                {
+                    console.debug("question received: " + lContent.question);
+                    mData.judgedAnswerId = lContent.playerId;
+                    mData.state = SayAnything.GameState.Voting;
+                    refreshState();
+                }else{
+                    console.debug("Received a juding response during invalid state " + mData.state);
                 }
             }
         }
@@ -236,6 +263,14 @@
         {
             console.log("show ShowAnswers");
             $('#ShowAnswers').attr("hidden", false);
+            answerListFill(lSharedData.answers);
+            
+        }else if(lSharedData.state == SayAnything.GameState.Judging)
+        {
+            console.log("show Judging");
+            $('#Judging').attr("hidden", false);
+            answerListFill(lSharedData.answers);
+            
         }else{
             console.debug("ERROR: GUI doesn't know state " + lSharedData.state);
         }
