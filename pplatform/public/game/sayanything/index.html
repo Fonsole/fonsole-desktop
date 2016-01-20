@@ -211,6 +211,18 @@
         <div class="stateview" id="ShowScore">
             <h2>State: ShowScore</h2>
             <div class="view">
+                <div class="scoreList">
+                    <div class="U1"> <span class="vplayer">player 1</span>: <br><span class="roundScore">A1</span> <br><span class="totalScore"> </span></div> <br>
+                    <div class="U2"> <span class="vplayer">player 2</span>: <br><span class="roundScore">A2</span> <br><span class="totalScore"> </span></div> <br>
+                    <div class="U3"> <span class="vplayer">player 3</span>: <br><span class="roundScore">A3</span> <br><span class="totalScore"> </span></div> <br>
+                    <div class="U4"> <span class="vplayer">player 4</span>: <br><span class="roundScore">A4</span> <br><span class="totalScore"> </span></div> <br>
+                    <div class="U5"> <span class="vplayer">player 5</span>: <br><span class="roundScore">A5</span> <br><span class="totalScore"> </span></div> <br>
+                    <div class="U6"> <span class="vplayer">player 6</span>: <br><span class="roundScore">A6</span> <br><span class="totalScore"> </span></div> <br>
+                    <div class="U7"> <span class="vplayer">player 7</span>: <br><span class="roundScore">A7</span> <br><span class="totalScore"> </span></div> <br>
+                    <div class="U8"> <span class="vplayer">player 8</span>: <br><span class="roundScore">A8</span> <br><span class="totalScore"> </span></div> <br>
+                    <div class="U9"> <span class="vplayer">player 9</span>: <br><span class="roundScore">A9</span> <br><span class="totalScore"> </span></div> <br>
+                    <div class="U10"> <span class="vplayer">player 10</span>: <br><span class="roundScore">A10</span> <br><span class="totalScore"> </span></div> <br>
+                </div>
             </div>
             <div class="controller">
             </div>
@@ -285,6 +297,32 @@
     }
     
     
+    function scoreListFill(lSharedData)
+    {
+        //go trough all scores and fill in the user
+        var counter = 1;
+        for(var userId in lSharedData.totalScore)
+        {
+            var parentElement = ".U" + counter;
+            $(parentElement).attr("hidden", false);
+            if(userId in lSharedData.roundScore){
+                 $(parentElement + " .roundScore").empty().append(lSharedData.roundScore[userId]);
+            }else{
+                $(parentElement + " .roundScore").empty();
+            }
+            $(parentElement + " .totalScore").empty().append(lSharedData.totalScore[userId]);
+            counter++;
+        }
+        //hide all UI slots that aren't filled with answers
+        for(var i = counter; i <= 10; i++) //10 = max player numbers
+        {
+            var parentElement = ".U" + i;
+            //Label is in all constructs the parent -> make it visible for this answer
+            $(parentElement).attr("hidden", true);
+        }
+    }
+    
+    
     //test data
     var testSharedData = new SayAnything.Data.Shared();
     testSharedData.judgeUserId = 2;
@@ -296,7 +334,13 @@
     testSharedData.votes[6] = [5, 7];
     testSharedData.votes[7] = [7, 5];
     testSharedData.judgedAnswerId = 5;
+    
+    testSharedData.roundScore[1] = 1;
+    testSharedData.roundScore[2] = 2;
+    testSharedData.totalScore[1] = 3;
+    testSharedData.totalScore[2] = 4;
     answerListFill(testSharedData);
+    scoreListFill(testSharedData);
     
     //answerListFill({1:"testanswer", 4:"testanswer2"});
     function questionListFill(lQ1, lQ2, lQ3, lQ4)

@@ -33,10 +33,14 @@
         
         //key: user id (equals the id the answer of this user has in the "answers" object)
         //value: a list of user ids the vote came from (needed to show the color badges in the end)
+        //(move to local data, view only?)
         this.votes = {};
         
-        //will be a list with the players score  (independend if the player is sitll around or not)
-        this.score = {};
+        //scores in this round (move to local data, view only?)
+        this.roundScore = {};
+        
+        //scores overall (move to local data, view only?)
+        this.totalScore = {};
          
          
          //functions to easily fill and read the data (ideall this should be done only via functions later to prevent bugs)
@@ -63,6 +67,36 @@
              }
              else{
                  return []; //empty list. user never received a vote
+             }
+         }
+         
+         
+        this.resetRoundData = function()
+        {
+            self.state = SayAnything.GameState.WaitForStart;
+
+            self.judgeUserId = null;
+            self.question = null;
+            self.answers = {};
+            self.judgedAnswerId = null;
+            self.votes = {};
+            self.roundScore = {};
+         }
+         
+         this.awardScore = function(lUserId, lPoints)
+         {
+             if(lUserId in self.roundScore)
+             {
+                 self.roundScore[lUserId] += lPoints;
+             }else{
+                 self.roundScore[lUserId] = lPoints;
+             }
+             
+             if(lUserId in self.totalScore)
+             {
+                 self.totalScore[lUserId] += lPoints;
+             }else{
+                 self.totalScore[lUserId] = lPoints;
              }
          }
     }
@@ -148,6 +182,8 @@
         var mData = new SayAnything.Data.Shared();
         this.getSharedData = function(){return mData;}
         
+        //used to keep track who voted already
+        var mVoted = {}
         
         this.onMessage = function(lTag, lContent, lFrom)
         {
@@ -155,11 +191,7 @@
             if(lTag == SayAnything.Message.StartGame.TAG)
             {
                 console.log("start game");
-                
-                //TODO: dice
-                mData.judgeUserId = lFrom;
-                mData.state = SayAnything.GameState.Questioning;
-                refreshState();
+                startNewRound();   
             }else if(lTag == TAG.CONTROLLER_DISCOVERY)
             {
                 refreshState();
@@ -216,6 +248,7 @@
                 {
                     console.debug("question received: " + lContent.question);
                     mData.judgedAnswerId = lContent.playerId;
+                    mVoted = {}
                     mData.state = SayAnything.GameState.Voting;
                     refreshState();
                 }else{
@@ -227,25 +260,32 @@
                 if(mData.state == SayAnything.GameState.Voting)
                 {
                     console.debug("vote from " + lFrom + " received: " + lContent.votePlayerId1 + " and " + lContent.votePlayerId2);
-                    if(lFrom in mData.votes)
+                    if(lFrom in mVoted)
                     {
                         //already an answer received. ignored
                         console.debug("already an votes received. ignored " + lContent.answer);
                     }else{
+                        
+                        mVoted[lFrom] = true;
                         mData.addVote(lFrom, lContent.votePlayerId1);
                         mData.addVote(lFrom, lContent.votePlayerId2);
                         
 
                         
-                        if(Object.keys(mData.answers).length >= Object.keys(gPlatform.getControllers()).length - 1)
+                        if(Object.keys(mVoted).length >= Object.keys(gPlatform.getControllers()).length - 1)
                         {
                             //received same amount of votes as controllers available -> next state
-                            CalculateScore();
+                            calculateScore();
                             mData.state = SayAnything.GameState.ShowWinner;
                             setTimeout(function()
                             {
                                 mData.state = SayAnything.GameState.ShowScore;
                                 refreshState();
+                                setTimeout(function()
+                                {
+                                    //showed the score for 10 sec. start a new round
+                                    startNewRound();
+                                }, 10000);
                             }, 10000);
                         }
                         
@@ -257,9 +297,43 @@
             }
         }
         
-        function CalculateScore()
+        
+        
+        //called either after the last show score screen or after the start game button was pressed
+        function startNewRound()
         {
+            console.log("start new round");
             
+            var keys = Object.keys(gPlatform.getControllers());
+            var count = keys.length;
+            var rand = Math.floor(Math.random() * (count));
+            
+            mData.resetRoundData();
+            mData.judgeUserId = keys[rand];
+            mData.state = SayAnything.GameState.Questioning;
+            refreshState();
+        }
+        
+        //Will be called before showing the score screen
+        function calculateScore()
+        {
+            //1 point is given to the player that wrote the selected answer.
+            mData.awardScore(mData.judgedAnswerId, 1); //judgedAnswerId == userid of the user that gave the answer
+            
+            //The Judge gets 1 point for each Player Token placed on the answer she selected (Max 3 points.)
+            var selectedVotes = mData.getVotes(mData.judgedAnswerId);
+            var selectedAnswerVoteCount = selectedVotes.Length;
+            if(selectedAnswerVoteCount > 3)
+                selectedAnswerVoteCount = 3;
+            mData.awardScore(mData.judgeUserId, selectedAnswerVoteCount);
+        
+            
+            //Players get 1 point for each player Token they placed on the answer that was selected.
+            //go trough the vote list of the selected answer. the votes are the userid's of the people who voted -> they get a point
+            for(var i = 0; i < selectedVotes.length; i++)
+            {
+                mData.awardScore(selectedVotes[i], 1);
+            }
         }
         
         function refreshState()
@@ -361,6 +435,7 @@
             console.log("show ShowScore");
             $('#ShowScore').attr("hidden", false);
             answerListFill(lSharedData);
+            scoreListFill(lSharedData);
             
         }else{
             console.debug("ERROR: GUI doesn't know state " + lSharedData.state);
