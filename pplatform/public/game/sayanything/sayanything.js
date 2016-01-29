@@ -322,7 +322,7 @@
             
             //The Judge gets 1 point for each Player Token placed on the answer she selected (Max 3 points.)
             var selectedVotes = mData.getVotes(mData.judgedAnswerId);
-            var selectedAnswerVoteCount = selectedVotes.Length;
+            var selectedAnswerVoteCount = selectedVotes.length;
             if(selectedAnswerVoteCount > 3)
                 selectedAnswerVoteCount = 3;
             mData.awardScore(mData.judgeUserId, selectedAnswerVoteCount);
