@@ -183,7 +183,7 @@
         this.getSharedData = function(){return mData;}
         
         //used to keep track who voted already
-        var mVoted = {}
+        var mVoted = {};
         
         this.onMessage = function(lTag, lContent, lFrom)
         {
@@ -248,7 +248,7 @@
                 {
                     console.debug("question received: " + lContent.question);
                     mData.judgedAnswerId = lContent.playerId;
-                    mVoted = {}
+                    mVoted = {};
                     mData.state = SayAnything.GameState.Voting;
                     refreshState();
                 }else{
@@ -304,14 +304,49 @@
         {
             console.log("start new round");
             
+            var lastUser = mData.judgeUserId;
+            
+            mData.resetRoundData();
+            if (typeof lastUser === 'undefined')
+            {
+                //no last user set. -> chose one user randomly
+                mData.judgeUserId = getRandomPlayerId();
+            }else
+            {
+                //search next key in the list
+                var keys = Object.keys(gPlatform.getControllers());
+                var newUser;
+                var found = false;
+                for(var i = 0; i < keys.length - 1; i++)
+                {
+                    //looking for the id that is bigger then the last user id but the smallest possible one
+                    
+                    if(lastUser == keys[i])
+                    {
+                        //next bigger user id found -> 
+                        newUser = keys[ i + 1];
+                        found = true;
+                    }
+                }
+                //not found or restarting the round from 0
+                if(found == false)
+                {
+                    newUser = keys[0];
+                }
+                mData.judgeUserId  = newUser;
+            }
+            
+            
+            mData.state = SayAnything.GameState.Questioning;
+            refreshState();
+        }
+        
+        function getRandomPlayerId()
+        {
             var keys = Object.keys(gPlatform.getControllers());
             var count = keys.length;
             var rand = Math.floor(Math.random() * (count));
-            
-            mData.resetRoundData();
-            mData.judgeUserId = keys[rand];
-            mData.state = SayAnything.GameState.Questioning;
-            refreshState();
+            return keys[rand];
         }
         
         //Will be called before showing the score screen
