@@ -73,7 +73,7 @@
                     <label> <input type="radio" name="questionList" id="questionListQ2" value="Q2"><span id="questionListQ2Label">Q2</span></label> <br>
                     <label> <input type="radio" name="questionList" id="questionListQ3" value="Q3"><span id="questionListQ3Label">Q3</span></label> <br>
                     <label> <input type="radio" name="questionList" id="questionListQ4" value="Q4"><span id="questionListQ4Label">Q4</span></label> <br>
-                    <label> <input type="radio" name="questionList" id="questionListQ5" value="custom"><input type="text" id="questionCustom" onclick="$('#questionListQ5').prop('checked', true);"></label> <br>
+                    <label> <input type="radio" name="questionList" id="questionListQ5" value="custom"></label><input type="text" id="questionCustom" onclick="$('#questionListQ5').prop('checked', true);"> <br>
                     
                     <button class="confirm" onclick="questionListConfirm()">Confirm Selection</button>
                 </div>
@@ -89,7 +89,7 @@
             </div>
             <div class="controller">
                 <p>Write your Answer</p>
-                <input type="text" id="answer"> </input>
+                <input type="text" id="answer" />
                 <button class="confirm" onclick="answerListConfirm()">Confirm</button>
             </div>
             <div class="judgecontroller">

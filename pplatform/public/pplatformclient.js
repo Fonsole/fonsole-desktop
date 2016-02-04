@@ -2,6 +2,7 @@
 //contains still some jquery commands accessing the GUI they will move into the index.html in the future
     
 var TAG = {};
+TAG.CONTROLLER_REGISTER = "PLATFORM_CONTROLLER_REGISTER";
 TAG.CONTROLLER_DISCOVERY = "PLATFORM_CONTROLLER_DISCOVERY";
 TAG.CONTROLLER_LEFT = "PLATFORM_CONTROLLER_LEFT";
 TAG.VIEW_DISCOVERY = "PLATFORM_VIEW_DISCOVERY";
@@ -11,12 +12,19 @@ TAG.EXIT_GAME = "PLATFORM_EXIT_GAME";
 
  function Controller(lId, lName)
  {
+     
+     //TODO: this should be private
      this.id = lId;
      var name = lName;
      
      this.getName = function()
      {
          return name;
+     };     
+     
+     this.getId = function()
+     {
+         return self.id;
      };
  }
  
@@ -56,7 +64,7 @@ TAG.EXIT_GAME = "PLATFORM_EXIT_GAME";
     this.getOwnId = function()
     {
         return sigChan.getOwnId();
-    }
+    };
     
     var mIsView = false;
     var mIsHostController = false;
@@ -120,7 +128,7 @@ TAG.EXIT_GAME = "PLATFORM_EXIT_GAME";
     
     /** Will handle all incomming messages + send them to the listener outside of pplatform
      * 
-     * 
+     * All tasks that are unique to the netgroup commands don't belong here
      */
     function handleMessage(lTag, lContent, lId)
     {
@@ -132,21 +140,53 @@ TAG.EXIT_GAME = "PLATFORM_EXIT_GAME";
             //todo handle exit game command -> switch view back to game list?
         }else if(lTag == TAG.CONTROLLER_DISCOVERY)
         {
-            if(mIsView) {
-                //send out view discovery event
-                self.sendMessage(TAG.VIEW_DISCOVERY, "", lId);
-                
-                self.sendMessage(TAG.ENTER_GAME, mActiveGame, lId);
-                var c = new Controller(lId, "player " + lId);
-                mControllers[lId] = c;
-            }
+            var controllerDiscoveryData = JSON.parse(lContent);
+            var c = new Controller(controllerDiscoveryData.id, controllerDiscoveryData.name);
+            mControllers[lId] = c;
         }else if(lTag == TAG.VIEW_DISCOVERY)
         {
             mViewId = lId; //store the id for later
-        }
-        
-        
-        if(lTag == TAG.CONTROLLER_LEFT){
+            
+            //register as controller at the view
+            var controllerRegisterData = {name: "controller" + self.getOwnId()};
+            self.sendMessage(TAG.CONTROLLER_REGISTER, JSON.stringify(controllerRegisterData), mViewId);
+            
+        }else if(lTag == TAG.CONTROLLER_REGISTER)
+        {
+            //should only received by the view only.
+            //this message is sent by a new controller that joined already
+            //and now wants to be registerd as controller
+            
+            //TODO: get the controller info and send out
+            //a controller discovery to everyone
+            //later we could check username / facebook and so on here
+            
+            //this could also be moved to the server
+            
+            var lControllerRegisterData = JSON.parse(lContent);
+            
+            
+            self.Log("New controller registered: " + lControllerRegisterData.name);
+            //so far the controller registers only via a name
+            //the view will add the controllers id so everyone knows how to
+            //address this controller
+            var controllerDiscoveryData = {"id": lId, "name": lControllerRegisterData.name};
+            
+            //broadcast to everyone. this instance will receive itself the message and then add the controller to the list
+            self.sendMessage(TAG.CONTROLLER_DISCOVERY, JSON.stringify(controllerDiscoveryData));
+            
+            //send a discovery message to the new controller about the existing ones
+            for(var contrId in mControllers)
+            {
+                var controller = mControllers[contrId];
+                var controllerDD = {"id": controller.getId(), "name": controller.getName()}; 
+                self.sendMessage(TAG.CONTROLLER_DISCOVERY, JSON.stringify(controllerDD), lId);
+            }
+            
+            //last step: inform the controller about the currently active game
+            self.sendMessage(TAG.ENTER_GAME, mActiveGame, lId);
+            
+        }else if(lTag == TAG.CONTROLLER_LEFT){
             delete mControllers[lId];
         }
         
@@ -199,13 +239,11 @@ TAG.EXIT_GAME = "PLATFORM_EXIT_GAME";
         {
             self.Log("User " + lId + " joined");
             
-            //if this is a view every discovered user must be a controller -> automatically inform that there is
-            //a controller. the controllers itself don't need to send this for now (later they need to and add information
-            //abouut color and name)
+            
             if(mIsView)
             {
-                handleMessage(TAG.CONTROLLER_DISCOVERY, null, lId);
-                
+                //send out view discovery event
+                self.sendMessage(TAG.VIEW_DISCOVERY, "", lId);
             }
             //controller ignore these so far
         }else if(lType == SignalingMessageType.UserLeft)
