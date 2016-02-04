@@ -28,13 +28,7 @@
                 //platform specific messages
                 if(lTag == TAG.CONTROLLER_DISCOVERY || lTag == TAG.CONTROLLER_LEFT)
                 {
-                    $('#playerlist').empty();
-
-                    var lControllers = gPlatform.getControllers();
-                    for(var id in lControllers )
-                    {
-                        $('#playerlist').append( "<li>" + lControllers[id].name + "</li>" );
-                    }
+                    refreshPlayerList();
                 }
             }
 
@@ -88,6 +82,7 @@
             if(lSharedData.state == SayAnything.GameState.WaitForStart)
             {
                 console.log("show WaitForStart");
+                refreshPlayerList();
                 $('#WaitForStart').attr("hidden", false);
             }else if(lSharedData.state == SayAnything.GameState.Questioning)
             {
@@ -98,6 +93,11 @@
             }else if(lSharedData.state == SayAnything.GameState.Answering)
             {
                 console.log("show Answering");
+                
+                //TODO: this will clear the answer if the world states updates
+                //might be annoying if other things update the state during
+                //the answer itself. will reset the written answer again
+                $('#answer').val("");
                 $('#Answering').attr("hidden", false);
             }else if(lSharedData.state == SayAnything.GameState.ShowAnswers)
             {
@@ -151,7 +151,7 @@
             if(lSharedData.judgeUserId != null)
             {
                 $('.judgeName').empty();
-                $('.judgeName').append("Player " + lSharedData.judgeUserId);
+                $('.judgeName').append(getPlayerName(lSharedData.judgeUserId));
             }
 
             //if question is set -> fill in the question parts in the ui
@@ -159,8 +159,50 @@
                 $('.chosenQuestion').empty().append(lSharedData.question);
         }
 
-    //fills the ui with data
+        function refreshPlayerList()
+        {
+            $('#playerlist').empty();
 
+            var lControllers = gPlatform.getControllers();
+            for(var id in lControllers )
+            {
+                $('#playerlist').append( "<li>" + getPlayerName(id) + "</li>" );
+            }
+        }
+        /**
+         * Returns the player name if available
+         * 
+         * @param {type} lUserId the user id
+         * @returns {String} the players name or "disconnected" if not available
+         */
+        function getPlayerName(lUserId)
+        {
+            var playerName = "user " + lUserId;
+            var controllers = gPlatform.getControllers();
+            if(lUserId in controllers)
+            {
+                var controller = controllers[lUserId];
+                playerName = controller.getName();
+            }
+            return playerName;
+        }
+        /** special method only called while entering the question state. fill only the question list
+         * 
+         */
+        function questionListFill(lQ1, lQ2, lQ3, lQ4)
+        {
+
+
+            $("#questionListQ1").val(lQ1);
+            $("#questionListQ2").val(lQ2);
+            $("#questionListQ3").val(lQ3);
+            $("#questionListQ4").val(lQ4);
+            $("#questionListQ1Label").empty().append(lQ1);
+            $("#questionListQ2Label").empty().append(lQ2);
+            $("#questionListQ3Label").empty().append(lQ3);
+            $("#questionListQ4Label").empty().append(lQ4);
+            $("#questionCustom").val("");
+        }
         //fills the list of answers into the GUI elements
         function answerListFill(lSharedData)
         {
@@ -170,12 +212,13 @@
             var counter = 1;
             for(var userId in lSharedData.answers)
             {
+                
             //answers
                 var parentElement = ".A" + counter;
                 //Label is in all constructs the parent -> make it visible for this answer
                 $(parentElement).attr("hidden", false);
 
-                 $(parentElement + " .playerName").empty().append("Player " + userId);
+                 $(parentElement + " .playerName").empty().append(getPlayerName(userId));
                 //A1, A2 and so on are used for spans that are suppose to contain the answers -> add them
                 $(parentElement + " .answer").empty().append(lSharedData.answers[userId]);
 
@@ -189,15 +232,15 @@
                 votesParentTag.append("Voted by ");
                 for(var i = 0; i < votes.length; i++)
                 {
-                    votesParentTag.append("player " + votes[i] + " ");
+                    votesParentTag.append(getPlayerName(votes[i]) + " ");
                 }
 
                 //if this is the selected answer by the judge -> add the judge mark
                 if(lSharedData.state == SayAnything.GameState.ShowWinner && userId == lSharedData.judgeAnswerId)
                 {
-                    votesParentTag.append(" <b>" + "player " + lSharedData.judgeUserId + "</b>");
+                    votesParentTag.append(" <b>" + getPlayerName(lSharedData.judgeUserId) + "</b>");
                 }
-                $(parentElement + " .vplayer").empty().append("player " + userId);
+                $(parentElement + " .vplayer").empty().append(getPlayerName(userId));
 
                 counter++;
             }
@@ -222,7 +265,7 @@
                 var parentElement = ".U" + counter;
                 $(parentElement).attr("hidden", false);
 
-                 $(parentElement + " .playerName").empty().append("Player " + userId);
+                 $(parentElement + " .playerName").empty().append(getPlayerName(userId));
                 if(userId in lSharedData.roundScore){
                      $(parentElement + " .roundScore").empty().append(lSharedData.roundScore[userId]);
                 }else{
@@ -241,22 +284,6 @@
         }
 
 
-        /** special method only called while entering the question state. fill only the question list
-         * 
-         */
-        function questionListFill(lQ1, lQ2, lQ3, lQ4)
-        {
-
-
-            $("#questionListQ1").val(lQ1);
-            $("#questionListQ2").val(lQ2);
-            $("#questionListQ3").val(lQ3);
-            $("#questionListQ4").val(lQ4);
-            $("#questionListQ1Label").empty().append(lQ1);
-            $("#questionListQ2Label").empty().append(lQ2);
-            $("#questionListQ3Label").empty().append(lQ3);
-            $("#questionListQ4Label").empty().append(lQ4);
-        }
     // </editor-fold>
 
 

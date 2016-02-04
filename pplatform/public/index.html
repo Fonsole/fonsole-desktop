@@ -23,10 +23,10 @@
   <script src="pplatformclient.js"></script>
   </head>
   <body>
-    <div id="controldiv" action="">
+    <div id="controldiv">
       <button id="openroom">Start new group</button>
       
-      <span id="connectedspan" hidden="true">
+      <span id="connectedspan" hidden>
         <button id="leaveroom">Disconnect</button>
         <input id="gameid" autocomplete="off" />
         
@@ -37,7 +37,7 @@
       </div>
     </div>
     <iframe id="contentframe" src="./notconnected.html" width="100%" height="1080"> </iframe>
-    <form id="msgform" action="" hidden="true">
+    <form id="msgform" action="" hidden>
         <ul id="messages"></ul>
         <input id="messageinput" autocomplete="off" /><button>Send</button>
     </form>

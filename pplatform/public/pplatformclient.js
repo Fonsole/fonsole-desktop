@@ -12,7 +12,12 @@ TAG.EXIT_GAME = "PLATFORM_EXIT_GAME";
  function Controller(lId, lName)
  {
      this.id = lId;
-     this.name = lName;
+     var name = lName;
+     
+     this.getName = function()
+     {
+         return name;
+     };
  }
  
  
