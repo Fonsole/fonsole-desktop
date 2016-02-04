@@ -24,10 +24,16 @@ TAG.EXIT_GAME = "PLATFORM_EXIT_GAME";
     
     //only available on the view side for now
     var mControllers = {};
+    
+    /**Returns an object containing connection id as key and controller
+     * information as values.
+     * 
+     * @returns {c|PPlatform.mControllers}
+     */
     this.getControllers = function()
     {
         return mControllers;
-    }
+    };
     
     //This value will be null until a view was discovered. Only then a controller is fully initialized
     var mViewId = null;

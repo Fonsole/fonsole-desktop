@@ -21,6 +21,7 @@
   <script src="../../netgroupclient.js"></script>
   <script src="../../pplatformclient.js"></script>
   <script src="sayanything.js"></script>
+  <script src="sayanythingui.js"></script>
   </head>
   <body>
       <h1> Say Anything </h1>
@@ -89,7 +90,7 @@
             <div class="controller">
                 <p>Write your Answer</p>
                 <input type="text" id="answer"> </input>
-                <button class="confirm" onclick="answerConfirm()">Confirm</button>
+                <button class="confirm" onclick="answerListConfirm()">Confirm</button>
             </div>
             <div class="judgecontroller">
                 <p>Waiting for players to answer your question.</p>
@@ -233,177 +234,14 @@
         
 <script>
 
-    //ui handlers. maps ui to logic
-    function startGame()
-    {
-        
-        gPlatform.sendMessage(SayAnything.Message.StartGame.TAG, new SayAnything.Message.StartGame());
-    }
     
-    function leaveGame()
-    {
-        gPlatform.enterGame("./gamelist.html");
-    }
-
-
-    //fills the list of answers into the GUI elements
-    function answerListFill(lSharedData)
-    {
-         $(".chosenQuestion").empty().append(lSharedData.question);
-        
-        //this loop will go through all given answers and fill the UI with data (answers, id's of checkboxes/radio buttons, votes for the answers, player names that received and gave votes)
-        var counter = 1;
-        for(var userId in lSharedData.answers)
-        {
-        //answers
-            var parentElement = ".A" + counter;
-            //Label is in all constructs the parent -> make it visible for this answer
-            $(parentElement).attr("hidden", false);
-
-             $(parentElement + " .playerName").empty().append("Player " + userId);
-            //A1, A2 and so on are used for spans that are suppose to contain the answers -> add them
-            $(parentElement + " .answer").empty().append(lSharedData.answers[userId]);
-
-            //set the id in the value attribute of checkboxes. we use that later to find out who the vote/judge belongs to
-            $(parentElement + " .CB").val(userId);
-
-        //votes
-            var votes = lSharedData.getVotes(userId);
-            var votesParentTag = $(parentElement + " .votes");
-            votesParentTag.empty();
-            votesParentTag.append("Voted by ");
-            for(var i = 0; i < votes.length; i++)
-            {
-                votesParentTag.append("player " + votes[i] + " ");
-            }
-            
-            //if this is the selected answer by the judge -> add the judge mark
-            if(lSharedData.state == SayAnything.GameState.ShowWinner && userId == lSharedData.judgeAnswerId)
-            {
-                votesParentTag.append(" <b>" + "player " + lSharedData.judgeUserId + "</b>");
-            }
-            $(parentElement + " .vplayer").empty().append("player " + userId);
-
-            counter++;
-        }
-        
-        
-        //hide all UI slots that aren't filled with answers
-        for(var i = counter; i <= 10; i++) //10 = max player numbers
-        {
-            var parentElement = ".A" + i;
-            //Label is in all constructs the parent -> make it visible for this answer
-            $(parentElement).attr("hidden", true);
-        }
-    }
+    //after everything in html is ready -> initialize the game code and global variables
+    //this will initialize the game + global variables
+    initGame();
     
     
-    function scoreListFill(lSharedData)
-    {
-        //go trough all scores and fill in the user
-        var counter = 1;
-        for(var userId in lSharedData.totalScore)
-        {
-            var parentElement = ".U" + counter;
-            $(parentElement).attr("hidden", false);
-            
-             $(parentElement + " .playerName").empty().append("Player " + userId);
-            if(userId in lSharedData.roundScore){
-                 $(parentElement + " .roundScore").empty().append(lSharedData.roundScore[userId]);
-            }else{
-                $(parentElement + " .roundScore").empty();
-            }
-            $(parentElement + " .totalScore").empty().append(lSharedData.totalScore[userId]);
-            counter++;
-        }
-        //hide all UI slots that aren't filled with answers
-        for(var i = counter; i <= 10; i++) //10 = max player numbers
-        {
-            var parentElement = ".U" + i;
-            //Label is in all constructs the parent -> make it visible for this answer
-            $(parentElement).attr("hidden", true);
-        }
-    }
+    initUI();
     
-    
-    /** special method only called while entering the question state. fill only the question list
-     * 
-     */
-    function questionListFill(lQ1, lQ2, lQ3, lQ4)
-    {
-        
-        
-        $("#questionListQ1").val(lQ1);
-        $("#questionListQ2").val(lQ2);
-        $("#questionListQ3").val(lQ3);
-        $("#questionListQ4").val(lQ4);
-        $("#questionListQ1Label").empty().append(lQ1);
-        $("#questionListQ2Label").empty().append(lQ2);
-        $("#questionListQ3Label").empty().append(lQ3);
-        $("#questionListQ4Label").empty().append(lQ4);
-    }
-    
-    
-    //test data
-    var testSharedData = new SayAnything.Data.Shared();
-    testSharedData.judgeUserId = 2;
-    testSharedData.question = "Random question asked by user 2";
-    testSharedData.answers[5] = "answer of user 5";
-    testSharedData.answers[6] = "answer of user 6";
-    testSharedData.answers[7] = "answer of user 7";
-    testSharedData.votes[5] = [6, 6];
-    testSharedData.votes[6] = [5, 7];
-    testSharedData.votes[7] = [7, 5];
-    testSharedData.judgedAnswerId = 5;
-    
-    testSharedData.roundScore[2] = 1;
-    testSharedData.roundScore[5] = 2;
-    testSharedData.roundScore[6] = 0;
-    testSharedData.roundScore[7] = 3;
-    testSharedData.totalScore[2] = 30;
-    testSharedData.totalScore[5] = 40;
-    testSharedData.totalScore[6] = 50;
-    testSharedData.totalScore[7] = 60;
-    
-    
-    answerListFill(testSharedData);
-    scoreListFill(testSharedData);
-    
-    //testing:
-    //questionListFill("QU1", "QU2", "QU3", "QU4");
-    function questionListConfirm()
-    {
-        var question = $("input[name=questionList]:checked").val();
-        if(question == "custom")
-        {
-            question = $("#questionCustom").val();
-        }
-        //alert(question);
-        gPlatform.sendMessage(SayAnything.Message.Question.TAG, new SayAnything.Message.Question(question));
-    }
-    
-    function answerConfirm()
-    {
-        var answer = $("#answer").val();
-        //alert(answer);
-        
-        
-        gPlatform.sendMessage(SayAnything.Message.Answer.TAG, new SayAnything.Message.Answer(answer));
-    }
-    
-    function judgingConfirm()
-    {
-        var playerid = $("input[name=judgingRadio]:checked").val();
-        gPlatform.sendMessage(SayAnything.Message.Judge.TAG, new SayAnything.Message.Judge(playerid));
-    }
-    
-    function votingConfirm()
-    {
-         var playerid1 = $("input[name=votingRadio1]:checked").val();
-         var playerid2 = $("input[name=votingRadio2]:checked").val();
-        gPlatform.sendMessage(SayAnything.Message.Vote.TAG, new SayAnything.Message.Vote(playerid1, playerid2));
-    }
-    InitGame();
     
 </script>
   </body>
