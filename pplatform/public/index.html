@@ -32,7 +32,12 @@
         
       </span>
       <span id="joinspan">
-        Enter the game code to join: <input id="roomname" autocomplete="off" />
+        Enter the game code to join:
+        <input id="roomname" autocomplete="off" />
+        
+        Name:
+        <input id="playername" autocomplete="off" />
+        
         <button id="joinroom">Join</button>
       </div>
     </div>
@@ -58,7 +63,10 @@
         var msg = $('#roomname').val();
         $('#gameid').val(msg);
         
-        gPlatform.startAsController(msg);
+        
+        var playername = $('#playername').val();
+        
+        gPlatform.startAsController(msg, playername);
     });
     
     $('#leaveroom').click(function(){

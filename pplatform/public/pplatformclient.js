@@ -12,7 +12,7 @@ TAG.EXIT_GAME = "PLATFORM_EXIT_GAME";
 
  function Controller(lId, lName)
  {
-     
+     var self = this;
      //TODO: this should be private
      this.id = lId;
      var name = lName;
@@ -66,6 +66,9 @@ TAG.EXIT_GAME = "PLATFORM_EXIT_GAME";
         return sigChan.getOwnId();
     };
     
+    //the name the user chose. 
+    var mOwnName = null;
+    
     var mIsView = false;
     var mIsHostController = false;
     
@@ -100,8 +103,9 @@ TAG.EXIT_GAME = "PLATFORM_EXIT_GAME";
         mIsHostController = false;
     };
     
-    this.startAsController = function(key)
+    this.startAsController = function(key, name)
     {
+        mOwnName = name;
         sigChan.connect(key, OnNetgroupMessageInternal);
         mIsView = false;
         mIsHostController = true;
@@ -142,13 +146,19 @@ TAG.EXIT_GAME = "PLATFORM_EXIT_GAME";
         {
             var controllerDiscoveryData = JSON.parse(lContent);
             var c = new Controller(controllerDiscoveryData.id, controllerDiscoveryData.name);
-            mControllers[lId] = c;
+            mControllers[controllerDiscoveryData.id] = c;
         }else if(lTag == TAG.VIEW_DISCOVERY)
         {
             mViewId = lId; //store the id for later
             
+            
+            var name = mOwnName;
+            if(name === null || name === "" || typeof name === "undefined")
+            {
+                name = "player " + self.getOwnId();
+            }
             //register as controller at the view
-            var controllerRegisterData = {name: "controller" + self.getOwnId()};
+            var controllerRegisterData = {"name": name};
             self.sendMessage(TAG.CONTROLLER_REGISTER, JSON.stringify(controllerRegisterData), mViewId);
             
         }else if(lTag == TAG.CONTROLLER_REGISTER)
