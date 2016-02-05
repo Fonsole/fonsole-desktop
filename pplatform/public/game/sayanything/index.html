@@ -25,7 +25,7 @@
   </head>
   <body>
       <h1> Say Anything </h1>
-              <div class="stateview" id="debug">
+        <div class="stateview" id="debug">
             <h2>Debugview</h2>
             Grey: A certain state in the game. Visible for View and Controller<br>
             <div class="view">
@@ -42,11 +42,11 @@
             <h2>State: WaitForStart</h2>
             <div class="view">
                 View waiting for game to start
-                <p>
+                <br>
                 Players:
                     <ul id="playerlist">
                     </ul>
-                </p>
+                
             </div>
             <div class="controller">
                 Waiting for Host
@@ -57,6 +57,7 @@
             </div>
         </div>
         
+      
         <div class="stateview" id="Questioning">
             <h2>State: Questioning</h2>
             <div class="view">
@@ -65,9 +66,11 @@
                 <span class="timeLeft">30</span>
             </div>
             <div class="controller">
+                <p> Score: <span class="myScore">0</span></p>
                 <p> Waiting for <span class="judgeName">Player</span> to choose a question.</p>
             </div>
             <div class="judgecontroller">
+                <p> Score: <span class="myScore">0</span></p>
                 <div class="questionList">
                     <label> <input type="radio" name="questionList" id="questionListQ1" value="Q1"><span id="questionListQ1Label">Q1</span></label> <br>
                     <label> <input type="radio" name="questionList" id="questionListQ2" value="Q2"><span id="questionListQ2Label">Q2</span></label> <br>
@@ -88,6 +91,7 @@
                 <span class="timeLeft">60</span>
             </div>
             <div class="controller">
+                <p> Score: <span class="myScore">0</span></p>
                 <p>Write your Answer</p>
                 <input type="text" id="answer" />
                 <button class="confirm" onclick="answerListConfirm()">Confirm</button>
@@ -116,9 +120,11 @@
                 </div>
             </div>
             <div class="controller">
+            <p> Score: <span class="myScore">0</span></p>
                 Wait for all answers to be presented.
             </div>
             <div class="judgecontroller">
+                <p> Score: <span class="myScore">0</span></p>
                 Wait for all answers to be presented.
             </div>
         </div>
@@ -131,9 +137,11 @@
                 <span class="timeLeft">60</span>
             </div>
             <div class="controller">
+                <p> Score: <span class="myScore">0</span></p>
                 Waiting for judge to pick their favorite.
             </div>
             <div class="judgecontroller">
+                <p> Score: <span class="myScore">0</span></p>
                 Choose Your Favorite
                 
                 <div class="judgeList">
@@ -170,6 +178,8 @@
                     
             </div>
             <div class="controller">
+                
+                <p> Score: <span class="myScore">0</span></p>
                 <div class="voteList">
                      <span class="A1"> <input type="radio" name="votingRadio1" value="1" class="CB"><label> <input type="radio" name="votingRadio2" value="1" class="CB"><span class="answer">A1</span></label></span> <br>
                      <span class="A2"> <input type="radio" name="votingRadio1" value="1" class="CB"><label> <input type="radio" name="votingRadio2" value="2" class="CB"><span class="answer">A2</span></label></span> <br>
@@ -185,6 +195,8 @@
                 </div>
             </div>
             <div class="judgecontroller">
+                
+                <p> Score: <span class="myScore">0</span></p>
                 Wait for players to place votes
             </div>
         </div>
@@ -204,8 +216,10 @@
                 <div class="A10"> <span class="playerName">player 10</span>: <br><span class="answer">A10</span> <br><span class="votes"> </span></div> <br>
             </div>
             <div class="controller">
+                <p> Score: <span class="myScore">0</span></p>
             </div>
             <div class="judgecontroller">
+                <p> Score: <span class="myScore">0</span></p>
             </div>
         </div>
         
@@ -226,8 +240,10 @@
                 </div>
             </div>
             <div class="controller">
+                <p> Score: <span class="myScore">0</span></p>
             </div>
             <div class="judgecontroller">
+                <p> Score: <span class="myScore">0</span></p>
             </div>
         </div>
         

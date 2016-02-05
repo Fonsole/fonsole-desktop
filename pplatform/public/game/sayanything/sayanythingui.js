@@ -223,7 +223,19 @@
         //fills the list of answers into the GUI elements
         function answerListFill(lSharedData)
         {
-             $(".chosenQuestion").empty().append(lSharedData.question);
+            $(".chosenQuestion").empty().append(lSharedData.question);
+             
+            var ownUserId = gPlatform.getOwnId();
+            var ownScore = 0;
+            if(ownUserId in lSharedData.totalScore)
+            {
+                ownScore = lSharedData.totalScore[ownUserId];
+            }
+            if(ownUserId in lSharedData.roundScore)
+            {
+                ownScore += lSharedData.roundScore[ownUserId];
+            }
+            $(".myScore").empty().append(ownScore);
 
             //this loop will go through all given answers and fill the UI with data (answers, id's of checkboxes/radio buttons, votes for the answers, player names that received and gave votes)
             var counter = 1;

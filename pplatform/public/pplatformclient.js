@@ -75,15 +75,15 @@ TAG.EXIT_GAME = "PLATFORM_EXIT_GAME";
     this.isView = function()
     {
         return mIsView;
-    }
+    };
     this.isController = function()
     {
         return mIsView == false;
-    }
+    };
     this.isHostController = function()
     {
         return mIsHostController;
-    }
+    };
     
     this.enterGame = function(lGame)
     {
