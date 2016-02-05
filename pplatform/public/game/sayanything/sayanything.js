@@ -70,7 +70,8 @@
         
         //scores overall (move to local data, view only?)
         this.totalScore = {};
-         
+        
+        this.timeLeft = 30;
          
          //functions to easily fill and read the data (ideall this should be done only via functions later to prevent bugs)
          
@@ -226,7 +227,7 @@
             //add the message listener
             gPlatform.addMessageListener(gLogic.onMessage);
             refreshState();
-        }
+        };
         
         this.onMessage = function(lTag, lContent, lFrom)
         {
@@ -250,7 +251,7 @@
                 {
                     console.debug("question received: " + lContent.question);
                     mData.question = lContent.question;
-                    mData.state = SayAnything.GameState.Answering;
+                    enterStateAnswering();
                     refreshState();
                 }else{
                     console.debug("Received a question during invalid state " + mData.state);
@@ -270,14 +271,7 @@
                         if(Object.keys(mData.answers).length >= Object.keys(gPlatform.getControllers()).length - 1)
                         {
                             //received same amount of answers as controllers available -> next state
-                            
-                            mData.state = SayAnything.GameState.ShowAnswers;
-                            
-                            setTimeout(function()
-                            {
-                                mData.state = SayAnything.GameState.Judging;
-                                refreshState();
-                            }, 10000);
+                            enterStateShowAnswers();
                         }
                         
                         refreshState();
@@ -292,8 +286,7 @@
                     console.debug("question received: " + lContent.question);
                     mData.judgedAnswerId = lContent.playerId;
                     mVoted = {};
-                    mData.state = SayAnything.GameState.Voting;
-                    refreshState();
+                    enterStateVoting();
                 }else{
                     console.debug("Received a juding response during invalid state " + mData.state);
                 }
@@ -318,21 +311,12 @@
                         if(Object.keys(mVoted).length >= Object.keys(gPlatform.getControllers()).length - 1)
                         {
                             //received same amount of votes as controllers available -> next state
-                            calculateScore();
-                            mData.state = SayAnything.GameState.ShowWinner;
-                            setTimeout(function()
-                            {
-                                mData.state = SayAnything.GameState.ShowScore;
-                                refreshState();
-                                setTimeout(function()
-                                {
-                                    //showed the score for 10 sec. start a new round
-                                    startNewRound();
-                                }, 10000);
-                            }, 10000);
+                            enterStateShowWinner();
                         }
-                        
-                        refreshState();
+                        else
+                        {
+                            refreshState();
+                        }
                     }
                 }else{
                     console.debug("Received an answer during invalid state " + mData.state);
@@ -379,11 +363,67 @@
                 mData.judgeUserId  = newUser;
             }
             
-            
+            enterStateQuestioning();
+        }
+        
+        function enterStateQuestioning()
+        {
             mData.state = SayAnything.GameState.Questioning;
+            mData.timeLeft = 30;
             refreshState();
         }
         
+        function enterStateAnswering()
+        {
+            mData.state = SayAnything.GameState.Answering;
+            mData.timeLeft = 60;
+        }
+        function enterStateShowAnswers()
+        {
+            mData.state = SayAnything.GameState.ShowAnswers;
+            mData.timeLeft = 10;
+            setTimeout(function()
+            {
+                enterStateJudging();
+            }, 10000);
+        }
+        function enterStateJudging()
+        {
+            mData.state = SayAnything.GameState.Judging;
+            mData.timeLeft = 30;
+            refreshState();
+        }
+        
+        function enterStateVoting()
+        {
+            mData.state = SayAnything.GameState.Voting;
+            mData.timeLeft = 30;
+            refreshState();
+        }
+        
+        function enterStateShowWinner()
+        {
+            calculateScore();
+            mData.state = SayAnything.GameState.ShowWinner;
+            mData.timeLeft = 10;
+            refreshState();
+            setTimeout(function()
+            {
+                enterStateShowScore();
+            }, 10000);
+        }
+        
+        function enterStateShowScore()
+        {
+            mData.state = SayAnything.GameState.ShowScore;
+            mData.timeLeft = 10;
+            refreshState();
+            setTimeout(function()
+            {
+                //showed the score for 10 sec. start a new round
+                startNewRound();
+            }, 10000);
+        }
         function getRandomPlayerId()
         {
             var keys = Object.keys(gPlatform.getControllers());

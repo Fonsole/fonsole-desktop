@@ -3,6 +3,7 @@
     //gPlatform is a global variable
     /* global gPlatform */
     
+    var gLastSharedData = null;
 
     function initUI()
     {
@@ -13,6 +14,16 @@
         //no direct access to the game logic is needed
         gPlatform.addMessageListener(onMessageUi);
         
+        
+        setInterval(function() 
+        {
+            //refresh timer every sec
+            if(gLastSharedData != null)
+            {
+                gLastSharedData.timeLeft = gLastSharedData.timeLeft - 1;
+                $('.timeLeft').empty().append(gLastSharedData.timeLeft);
+            }
+        }, 1000);
     }
     
 
@@ -78,6 +89,9 @@
             //hide all states. TODO: remove that later to avoid flickering during state updates
             $('.stateview').attr("hidden", true);
 
+
+
+            $('.timeLeft').empty().append(lSharedData.timeLeft);
             //show the correct state view
             if(lSharedData.state == SayAnything.GameState.WaitForStart)
             {
@@ -157,6 +171,9 @@
             //if question is set -> fill in the question parts in the ui
             if(lSharedData.question != null)
                 $('.chosenQuestion').empty().append(lSharedData.question);
+            
+            
+            gLastSharedData = lSharedData;
         }
 
         function refreshPlayerList()
