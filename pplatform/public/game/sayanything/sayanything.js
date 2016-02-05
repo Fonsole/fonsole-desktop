@@ -217,6 +217,14 @@
         //used to keep track who voted already
         var mVoted = {};
         
+        /**Stores exit timerid or null if no timer is running
+         * The exit timer is used to cancel the current 
+         * state / treat is as failed because the user didn't react
+         * or maybe was disconnected/
+         * @type Number
+         */
+        var mExitTimer = null;
+        
         /**
          * Gets the logic ready. After this call the logic will react
          * to messages received via the platform and will send out
@@ -322,7 +330,7 @@
                     console.debug("Received an answer during invalid state " + mData.state);
                 }
             }
-        }
+        };
         
         
         
@@ -370,16 +378,34 @@
         {
             mData.state = SayAnything.GameState.Questioning;
             mData.timeLeft = 30;
+            mExitTimer = setTimeout(function()
+            {
+                mExitTimer = null;
+                //user didn't choose a question
+                //start a new round
+                gPlatform.Log("Judge failed to choose a question in time.");
+                startNewRound();
+            }, mData.timeLeft * 1000);
             refreshState();
         }
         
         function enterStateAnswering()
         {
+            clearExitTimer();
             mData.state = SayAnything.GameState.Answering;
             mData.timeLeft = 60;
+            mExitTimer = setTimeout(function()
+            {
+                mExitTimer = null;
+                gPlatform.Log("Some users failed to answer in time!");
+                //not all users gave an answer -> switch anyway to show answers
+                enterStateShowAnswers();
+            }, mData.timeLeft * 1000);
         }
+        
         function enterStateShowAnswers()
         {
+            clearExitTimer();
             mData.state = SayAnything.GameState.ShowAnswers;
             mData.timeLeft = 10;
             setTimeout(function()
@@ -391,18 +417,34 @@
         {
             mData.state = SayAnything.GameState.Judging;
             mData.timeLeft = 30;
+            mExitTimer = setTimeout(function()
+            {
+                mExitTimer = null;
+                gPlatform.Log("Judge failed to choose in time.");
+                
+                //game won't be able to calculate a score without that
+                startNewRound();
+            }, mData.timeLeft * 1000);
             refreshState();
         }
         
         function enterStateVoting()
         {
+            clearExitTimer();
             mData.state = SayAnything.GameState.Voting;
             mData.timeLeft = 30;
+            mExitTimer = setTimeout(function()
+            {
+                mExitTimer = null;
+                gPlatform.Log("Some users didn't vote in time!");
+                enterStateShowWinner();
+            }, mData.timeLeft * 1000);
             refreshState();
         }
         
         function enterStateShowWinner()
         {
+            clearExitTimer();
             calculateScore();
             mData.state = SayAnything.GameState.ShowWinner;
             mData.timeLeft = 10;
@@ -424,6 +466,17 @@
                 startNewRound();
             }, 10000);
         }
+        
+        
+        function clearExitTimer()
+        {
+            if(mExitTimer !== null)
+            {
+                clearTimeout(mExitTimer);
+                mExitTimer = null;
+            }
+        }
+        
         function getRandomPlayerId()
         {
             var keys = Object.keys(gPlatform.getControllers());
