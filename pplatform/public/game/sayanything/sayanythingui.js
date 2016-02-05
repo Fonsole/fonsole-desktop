@@ -90,6 +90,19 @@
             $('.stateview').attr("hidden", true);
 
 
+            var ownUserId = gPlatform.getOwnId();
+            var ownScore = 0;
+            if(ownUserId in lSharedData.totalScore)
+            {
+                ownScore = lSharedData.totalScore[ownUserId];
+            }
+            
+
+            //bugfix: don't refresh the score during "ShowWinner" state
+            //the game data contains the newest score already! but 
+            //it shouldn't be known until the score state
+            if(lSharedData.state != SayAnything.GameState.ShowWinner)
+                $(".myScore").empty().append(ownScore);
 
             $('.timeLeft').empty().append(lSharedData.timeLeft);
             //show the correct state view
@@ -100,6 +113,8 @@
                 $('#WaitForStart').attr("hidden", false);
             }else if(lSharedData.state == SayAnything.GameState.Questioning)
             {
+                //clear up answering field for next run
+                $('#answer').val("");
                 console.log("show Questioning");
 
                 questionListFill(GetRandomQuestion(), GetRandomQuestion(), GetRandomQuestion(), GetRandomQuestion());
@@ -108,10 +123,8 @@
             {
                 console.log("show Answering");
                 
-                //TODO: this will clear the answer if the world states updates
-                //might be annoying if other things update the state during
-                //the answer itself. will reset the written answer again
-                $('#answer').val("");
+                
+                
                 $('#Answering').attr("hidden", false);
             }else if(lSharedData.state == SayAnything.GameState.ShowAnswers)
             {
@@ -225,17 +238,6 @@
         {
             $(".chosenQuestion").empty().append(lSharedData.question);
              
-            var ownUserId = gPlatform.getOwnId();
-            var ownScore = 0;
-            if(ownUserId in lSharedData.totalScore)
-            {
-                ownScore = lSharedData.totalScore[ownUserId];
-            }
-            if(ownUserId in lSharedData.roundScore)
-            {
-                ownScore += lSharedData.roundScore[ownUserId];
-            }
-            $(".myScore").empty().append(ownScore);
 
             //this loop will go through all given answers and fill the UI with data (answers, id's of checkboxes/radio buttons, votes for the answers, player names that received and gave votes)
             var counter = 1;

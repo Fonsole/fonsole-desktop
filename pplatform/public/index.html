@@ -58,7 +58,7 @@
     
     $('#joinroom').click(function(){
         gPlatform.Log("Join room");
-        var msg = $('#roomname').val();
+        var msg = $('#roomname').val().toUpperCase();
         $('#gameid').val(msg);
         
         
