@@ -260,7 +260,6 @@
                     console.debug("question received: " + lContent.question);
                     mData.question = lContent.question;
                     enterStateAnswering();
-                    refreshState();
                 }else{
                     console.debug("Received a question during invalid state " + mData.state);
                 }
@@ -377,15 +376,13 @@
         function enterStateQuestioning()
         {
             mData.state = SayAnything.GameState.Questioning;
-            mData.timeLeft = 30;
-            mExitTimer = setTimeout(function()
+            setExitTimeout(function()
             {
-                mExitTimer = null;
                 //user didn't choose a question
                 //start a new round
                 gPlatform.Log("Judge failed to choose a question in time.");
                 startNewRound();
-            }, mData.timeLeft * 1000);
+            }, 30);
             refreshState();
         }
         
@@ -393,14 +390,21 @@
         {
             clearExitTimer();
             mData.state = SayAnything.GameState.Answering;
-            mData.timeLeft = 60;
-            mExitTimer = setTimeout(function()
+            setExitTimeout(function()
             {
-                mExitTimer = null;
-                gPlatform.Log("Some users failed to answer in time!");
-                //not all users gave an answer -> switch anyway to show answers
-                enterStateShowAnswers();
-            }, mData.timeLeft * 1000);
+                if(Object.keys(mData.answers).length > 0)
+                {
+                    gPlatform.Log("Some users failed to answer in time!");
+                    //not all users gave an answer -> switch anyway to show answers
+                    enterStateShowAnswers();
+                }else
+                {
+                    gPlatform.Log("No one answered!");
+                    startNewRound();
+                }
+            }, 60);
+            
+            refreshState();
         }
         
         function enterStateShowAnswers()
@@ -416,15 +420,14 @@
         function enterStateJudging()
         {
             mData.state = SayAnything.GameState.Judging;
-            mData.timeLeft = 30;
-            mExitTimer = setTimeout(function()
+            setExitTimeout(function()
             {
                 mExitTimer = null;
                 gPlatform.Log("Judge failed to choose in time.");
                 
                 //game won't be able to calculate a score without that
                 startNewRound();
-            }, mData.timeLeft * 1000);
+            }, 30);
             refreshState();
         }
         
@@ -432,13 +435,11 @@
         {
             clearExitTimer();
             mData.state = SayAnything.GameState.Voting;
-            mData.timeLeft = 30;
-            mExitTimer = setTimeout(function()
+            setExitTimeout(function()
             {
-                mExitTimer = null;
                 gPlatform.Log("Some users didn't vote in time!");
                 enterStateShowWinner();
-            }, mData.timeLeft * 1000);
+            }, 30);
             refreshState();
         }
         
@@ -467,15 +468,6 @@
             }, 10000);
         }
         
-        
-        function clearExitTimer()
-        {
-            if(mExitTimer !== null)
-            {
-                clearTimeout(mExitTimer);
-                mExitTimer = null;
-            }
-        }
         
         function getRandomPlayerId()
         {
@@ -510,6 +502,31 @@
         function refreshState()
         {
             gPlatform.sendMessage(SayAnything.Message.SharedDataUpdate.TAG , new SayAnything.Message.SharedDataUpdate(mData));
+        }
+        
+        
+        function setExitTimeout(lFunction, lTime)
+        {
+            mData.timeLeft = lTime;
+            mExitTimer = setInterval(function()
+            {
+                mData.timeLeft--;
+                if(mData.timeLeft <= 0)
+                {
+                    clearExitTimer();
+                    lFunction();
+                }
+            }, 1000);
+            
+        }
+        
+        function clearExitTimer()
+        {
+            if(mExitTimer !== null)
+            {
+                clearInterval(mExitTimer);
+                mExitTimer = null;
+            }
         }
         
     };
