@@ -8,7 +8,7 @@ using System.Collections.Generic;
 using Newtonsoft.Json;
 
 
-public class NetGroup : MonoBehaviour
+public class Netgroup : MonoBehaviour
 {
     enum ConnectionState
     {
@@ -69,16 +69,6 @@ public class NetGroup : MonoBehaviour
 	// Use this for initialization
 	void Start ()
     {
-
-        IO.Options opt = new IO.Options();
-        opt.AutoConnect = false;
-        opt.Reconnection = false;
-        opt.Timeout = 1000;
-        
-        //mSocket = IO.Socket("http://because-why-not.com:3001", opt);
-        mSocket = IO.Socket("http://localhost:3001", opt);
-        InitSocket();
-        Open("TEST", null);
 	}
 
 	// Update is called once per frame
@@ -108,6 +98,7 @@ public class NetGroup : MonoBehaviour
 
         if (lType == SignalingMessageType.Connected)
         {
+            mConnectionState = ConnectionState.Connected;
             string lContent = message as string;
             RoomInfoMessage msg = JsonConvert.DeserializeObject<RoomInfoMessage>(lContent as string);
 
@@ -129,13 +120,18 @@ public class NetGroup : MonoBehaviour
         }
         else if (lType == SignalingMessageType.Closed)
         {
+            mConnectionState = ConnectionState.NotConnected;
             DeliverEvent(lType, -1, message as string);
         }
     }
 
     private void DeliverEvent(SignalingMessageType type, int relatedConId, string content)
     {
-        Debug.Log("Message type:" + type + " con id:" + relatedConId + " content" + content);
+
+        if(mEventHandler != null)
+        {
+            mEventHandler(type, relatedConId, content);
+        }
     }
     private void AddEvent(SignalingMessageType lType, object lContent)
     {
@@ -144,8 +140,32 @@ public class NetGroup : MonoBehaviour
     }
     private void OnDestroy()
     {
+        Cleanup();
+    }
+
+    private void Cleanup()
+    {
+
         if (mSocket != null)
+        {
+            Debug.Log("OnDestroy: Disconnecting");
             mSocket.Disconnect();
+            mSocket.Close();
+            mSocket.Off("connect_timeout");
+            mSocket.Off("connect_error");
+            mSocket.Off("disconnect");
+            mSocket.Off("connect");
+            mSocket.Off("room opened");
+            mSocket.Off("room joined");
+            mSocket.Off("user message");
+            mSocket.Off("user joined");
+            mSocket = null;
+            //m.Close();
+
+
+            Debug.Log("Cleanup complete");
+        }
+
     }
 
 
@@ -159,8 +179,14 @@ public class NetGroup : MonoBehaviour
         {
             Debug.Log("Trying to connect to server ...");
             mConnectionState = ConnectionState.Connecting;
+            InitSocket();
             mSocket.Connect();
         }
+    }
+
+    public void Close()
+    {
+        Cleanup();
     }
     private void OnConnected()
     {
@@ -182,10 +208,19 @@ public class NetGroup : MonoBehaviour
         Debug.Log("Connection closed" + ev);
         AddEvent(SignalingMessageType.Closed, ev);
     }
-
+    Manager m;
     private void InitSocket()
     {
 
+        IO.Options opt = new IO.Options();
+        opt.AutoConnect = false;
+        opt.Reconnection = false;
+        opt.ForceNew = true;
+        opt.Timeout = 10000;
+
+        //m = new Manager(new Uri("http://localhost:3001"), opt);
+        mSocket = IO.Socket("http://localhost:3001", opt);
+        //mSocket = m.Socket("/");
         mSocket.On("connect_timeout", OnClose);
         mSocket.On("connect_error", OnClose);
         mSocket.On("disconnect", OnClose);
