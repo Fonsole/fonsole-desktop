@@ -166,6 +166,7 @@ module.exports = function()
         
         function onOpenRoom(lRoomName)
         {
+            console.log('Try to openn room ' + lRoomName);
             mConnecting = false;
             
             //room name still free? 
@@ -212,6 +213,8 @@ module.exports = function()
             }
             else
             {
+                
+                console.log('user ' + mOwnId + ' will be disconnected. Room ' + lRoomName + " unknown");
                 //disconnect the user if it failed
                 mSocket.disconnect();
             }
