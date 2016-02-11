@@ -333,7 +333,7 @@
          */
         function startGame()
         {
-            gPlatform.sendMessage(SayAnything.Message.StartGame.TAG, new SayAnything.Message.StartGame());
+            gPlatform.sendMessageObj(SayAnything.Message.StartGame.TAG, new SayAnything.Message.StartGame());
         }
 
 
@@ -355,7 +355,7 @@
                 question = $("#questionCustom").val();
             }
             //alert(question);
-            gPlatform.sendMessage(SayAnything.Message.Question.TAG, new SayAnything.Message.Question(question));
+            gPlatform.sendMessageObj(SayAnything.Message.Question.TAG, new SayAnything.Message.Question(question));
         }
 
 
@@ -366,7 +366,7 @@
         function answerListConfirm()
         {
             var answer = $("#answer").val();
-            gPlatform.sendMessage(SayAnything.Message.Answer.TAG, new SayAnything.Message.Answer(answer));
+            gPlatform.sendMessageObj(SayAnything.Message.Answer.TAG, new SayAnything.Message.Answer(answer));
         }
 
         /**Confirm button of the judge input
@@ -374,7 +374,7 @@
         function judgingConfirm()
         {
             var playerid = $("input[name=judgingRadio]:checked").val();
-            gPlatform.sendMessage(SayAnything.Message.Judge.TAG, new SayAnything.Message.Judge(playerid));
+            gPlatform.sendMessageObj(SayAnything.Message.Judge.TAG, new SayAnything.Message.Judge(playerid));
         }
 
         /**Confirm button for the votes
@@ -383,7 +383,7 @@
         {
              var playerid1 = $("input[name=votingRadio1]:checked").val();
              var playerid2 = $("input[name=votingRadio2]:checked").val();
-            gPlatform.sendMessage(SayAnything.Message.Vote.TAG, new SayAnything.Message.Vote(playerid1, playerid2));
+            gPlatform.sendMessageObj(SayAnything.Message.Vote.TAG, new SayAnything.Message.Vote(playerid1, playerid2));
         }
     // </editor-fold>
    

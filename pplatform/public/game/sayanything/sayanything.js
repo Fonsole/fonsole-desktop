@@ -17,7 +17,7 @@
             console.log("Game listener added");
             if(gPlatform.isView() == false)
             {
-                gPlatform.sendMessage(SayAnything.Message.GameLoaded.TAG, new SayAnything.Message.GameLoaded());
+                gPlatform.sendMessageObj(SayAnything.Message.GameLoaded.TAG, new SayAnything.Message.GameLoaded());
             }
             
             if(gPlatform.isView())
@@ -501,7 +501,7 @@
         
         function refreshState()
         {
-            gPlatform.sendMessage(SayAnything.Message.SharedDataUpdate.TAG , new SayAnything.Message.SharedDataUpdate(mData));
+            gPlatform.sendMessageObj(SayAnything.Message.SharedDataUpdate.TAG , JSON.stringify(new SayAnything.Message.SharedDataUpdate(mData)));
         }
         
         

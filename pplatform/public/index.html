@@ -79,7 +79,7 @@
         
         var msg = $('#messageinput').val();
         $('#messageinput').val('');
-        gPlatform.sendMessage("chat", msg);
+        gPlatform.sendMessageObj("chat", msg);
         return false;
     });
     

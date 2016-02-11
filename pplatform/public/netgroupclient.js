@@ -77,8 +77,17 @@
         
         this.sendMessageTo = function(lContent, lToUserId)
         {
+            var lId = -1;
+            
+            //filter out "undefined" and strings to enforce type
+            //savety. This helps to not confuse the C# or any other typesafe
+            //versions
+            if(typeof lToUserId === "number")
+                lId = lToUserId;
+            
+            
             var lMsgObj = {};
-            lMsgObj.id = lToUserId;
+            lMsgObj.id = lId;
             lMsgObj.content = lContent;
             mSocket.emit('user message', JSON.stringify(lMsgObj));
         };

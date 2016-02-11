@@ -115,9 +115,18 @@ TAG.EXIT_GAME = "PLATFORM_EXIT_GAME";
     {
         sigChan.close();
     };
-    
+    this.sendMessageObj = function(lTag, lObj, lTo)
+    {
+        self.sendMessage(lTag, JSON.stringify(lObj), lTo);
+    };
     this.sendMessage = function(lTag, lContent, lTo)
     {
+        //the content is in typesafe platforms defined as "string"
+        //it should always be a string even if it is empty
+        if(typeof lContent === "undefined" || lContent == null)
+        {
+            lContent = "";
+        }
         var msg = {};
         msg.tag = lTag;
         msg.content = lContent; 
