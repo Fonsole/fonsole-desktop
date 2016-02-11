@@ -28,6 +28,19 @@ public class Netgroup : MonoBehaviour
         UserLeft = 5
     };
 
+
+    private struct RoomInfoMessage
+    {
+        public string name;
+        public int id;
+    }
+
+
+    private struct UserMessage
+    {
+        public int id;
+        public string content;
+    }
     private struct MsgEventData
     {
         private SignalingMessageType mType;
@@ -51,11 +64,6 @@ public class Netgroup : MonoBehaviour
     }
 
 
-    private struct RoomInfoMessage
-    {
-        public string name;
-        public int id;
-    }
     
     private ConnectionState mConnectionState = ConnectionState.NotConnected;
     private Action<SignalingMessageType, int, string> mEventHandler = null;
@@ -77,7 +85,16 @@ public class Netgroup : MonoBehaviour
         HandleEvents();
 
 	}
+    public void SendMessageTo(string message, int userid)
+    {
+        UserMessage msg = new UserMessage();
+        msg.content = message;
+        msg.id = userid;
 
+        string m = JsonConvert.SerializeObject(msg);
+        mSocket.Emit("user message", m);
+        Debug.Log("Send " + m);
+    }
     private void HandleEvents()
     {
 
@@ -102,12 +119,13 @@ public class Netgroup : MonoBehaviour
             string lContent = message as string;
             RoomInfoMessage msg = JsonConvert.DeserializeObject<RoomInfoMessage>(lContent as string);
 
-            mRoomName = msg.name;
+            //mRoomName = msg.name;
             int lConnectionId = -1;
             lConnectionId = msg.id;
             mOwnId = msg.id;
-            lContent = null;
-            DeliverEvent(lType, lConnectionId, lContent);
+            lContent = msg.name;
+            DeliverEvent(lType, lConnectionId, mRoomName);
+
         }
         else if (lType == SignalingMessageType.UserJoined || lType == SignalingMessageType.UserLeft)
         {
@@ -116,7 +134,8 @@ public class Netgroup : MonoBehaviour
         }
         else if (lType == SignalingMessageType.UserMessage)
         {
-            DeliverEvent(lType, -1, message as string);
+            UserMessage um = Luz.Helper.JsonWrapper.FromJson<UserMessage>(message as string);
+            DeliverEvent(lType, um.id, um.content); //TODO: fix this
         }
         else if (lType == SignalingMessageType.Closed)
         {
@@ -188,21 +207,7 @@ public class Netgroup : MonoBehaviour
     {
         Cleanup();
     }
-    private void OnConnected()
-    {
 
-        Debug.Log("Connected to server!");
-
-        if (mRoomOwner)
-        {
-
-            mSocket.Emit("open room", mRoomName);
-        }
-        else
-        {
-            mSocket.Emit("join room", mRoomName);
-        }
-    }
     private void OnClose(object ev)
     {
         Debug.Log("Connection closed" + ev);
@@ -229,7 +234,9 @@ public class Netgroup : MonoBehaviour
         //Socket io for unity doesn't seem to implement this the same way as the web version :/
         mSocket.On("connect", () =>
         {
-            OnConnected();
+            Debug.Log("Connected to server! Opening room");
+            mSocket.Emit("open room", mRoomName);
+
         });
 
         //custom messages
