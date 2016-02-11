@@ -75,7 +75,7 @@ module.exports = function()
             var lMsgObj = {};
             lMsgObj.content = lContent;
             lMsgObj.id = lFrom.getId();
-            if(typeof lTo !== 'undefined' && lTo !== null)
+            if(typeof lTo !== 'undefined' && lTo !== null && lTo !== -1)
             {
                 mConnection[lTo].emit('user message', JSON.stringify(lMsgObj));
             }else{

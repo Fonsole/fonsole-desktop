@@ -35,7 +35,7 @@ public class Controller
 public class PPlatform : MonoBehaviour
 {
     private Netgroup mNetgroup = null;
-    private string mGameName = "gamelist";
+    private string mActiveName = "gamelist";
 
 
     private Dictionary<int, Controller> mController = new Dictionary<int, Controller>();
@@ -55,11 +55,15 @@ public class PPlatform : MonoBehaviour
     }
 
     string TAG_CONTROLLER_LEFT = "PLATFORM_CONTROLLER_LEFT";
+    //no content
+
     
     string TAG_VIEW_DISCOVERY = "PLATFORM_VIEW_DISCOVERY";
-    //view discovery has no content
+    //no content
 
     string TAG_ENTER_GAME = "PLATFORM_ENTER_GAME";
+    //string content
+
     string TAG_EXIT_GAME = "PLATFORM_EXIT_GAME";
 
     private struct PlatformMessage
@@ -88,9 +92,14 @@ public class PPlatform : MonoBehaviour
         }
         GUILayout.EndHorizontal();
     }
+
+    public void EnterGame(string name)
+    {
+        Send(TAG_ENTER_GAME, name, -1);
+    }
 	private void ShowGame(string name)
     {
-        Debug.Log("Show game");
+        Debug.Log("Show game " + name);
 
     }
 
@@ -117,10 +126,17 @@ public class PPlatform : MonoBehaviour
             Debug.Log("Added new " + c);
             mController.Add(discoveryMsg.id, c);
 
+
+            Send(TAG_ENTER_GAME, mActiveName, discoveryMsg.id);
         }
+
         
         //send the message out to the games
 
+        if(tag == TAG_ENTER_GAME)
+        {
+            ShowGame(content);
+        }
 
         if(tag == TAG_CONTROLLER_LEFT)
         {
@@ -132,6 +148,7 @@ public class PPlatform : MonoBehaviour
     }
     private void OnNetgroupMessageInternal(Netgroup.SignalingMessageType type, int conId, string content)
     {
+        Debug.Log("Message type: " + type + " con id: " + conId + " content: " + content);
         if(type == Netgroup.SignalingMessageType.Connected)
         {
             GameObject go = GameObject.Find("PPlatformGui");
@@ -159,7 +176,7 @@ public class PPlatform : MonoBehaviour
 
 
 
-        Debug.Log("Message type:" + type + " con id:" + conId + " content" + content);
+
     }
 
     private void Send(string tag, string content, int lTo = -1)

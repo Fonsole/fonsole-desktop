@@ -208,9 +208,10 @@ TAG.EXIT_GAME = "PLATFORM_EXIT_GAME";
         
     }
     
-    function ShowGame(lGameNameUrl)
+    function ShowGame(lGameName)
     {
-        mActiveGame = lGameNameUrl;
+        mActiveGame = lGameName;
+        var lGameNameUrl = "./game/" + lGameName;
         $('#contentframe').attr("src",  lGameNameUrl);
             
         self.Log("opening " +  lGameNameUrl);
@@ -228,7 +229,7 @@ TAG.EXIT_GAME = "PLATFORM_EXIT_GAME";
             $('#openroom').attr("hidden", true);
             $('#joinspan').attr("hidden", true);
             $('#connectedspan').attr("hidden", false);
-            ShowGame("./gamelist.html");
+            //ShowGame("gamelist");
             
         }else if(lType == SignalingMessageType.UserMessage)
         {
