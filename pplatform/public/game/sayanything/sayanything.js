@@ -257,7 +257,8 @@
             {
                 if(mData.state == SayAnything.GameState.Questioning)
                 {
-                    console.debug("question received: " + lContent.question);
+                    var questionMessage = JSON.parse(lContent);
+                    console.debug("question received: " + questionMessage.question);
                     mData.question = lContent.question;
                     enterStateAnswering();
                 }else{
@@ -267,11 +268,12 @@
             {
                 if(mData.state == SayAnything.GameState.Answering)
                 {
-                    console.debug("answer received: " + lContent.answer);
+                    var answerMessage = JSON.parse(lContent);
+                    console.debug("answer received: " + answerMessage.answer);
                     if(lFrom in mData.answers)
                     {
                         //already an asnwer received. ignored
-                        console.debug("already an answer received. ignored " + lContent.answer);
+                        console.debug("already an answer received. ignored " + answerMessage.answer);
                     }else{
                         mData.answers[lFrom] = lContent.answer;
                         
@@ -290,8 +292,9 @@
             {
                 if(mData.state == SayAnything.GameState.Judging)
                 {
-                    console.debug("question received: " + lContent.question);
-                    mData.judgedAnswerId = lContent.playerId;
+                    var judgeMessage = JSON.parse(lContent);
+                    
+                    mData.judgedAnswerId = judgeMessage.playerId;
                     mVoted = {};
                     enterStateVoting();
                 }else{
@@ -302,16 +305,17 @@
             {
                 if(mData.state == SayAnything.GameState.Voting)
                 {
+                    var voteMessage = JSON.parse(lContent);
                     console.debug("vote from " + lFrom + " received: " + lContent.votePlayerId1 + " and " + lContent.votePlayerId2);
                     if(lFrom in mVoted)
                     {
                         //already an answer received. ignored
-                        console.debug("already an votes received. ignored " + lContent.answer);
+                        console.debug("already an votes received. ignored ");
                     }else{
                         
                         mVoted[lFrom] = true;
-                        mData.addVote(lFrom, lContent.votePlayerId1);
-                        mData.addVote(lFrom, lContent.votePlayerId2);
+                        mData.addVote(lFrom, voteMessage.votePlayerId1);
+                        mData.addVote(lFrom, voteMessage.votePlayerId2);
                         
 
                         

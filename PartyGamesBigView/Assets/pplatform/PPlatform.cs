@@ -5,6 +5,7 @@ using System.Text;
 using Newtonsoft.Json;
 using System.Collections.Generic;
 using PPlatform.Helper;
+using UnityEngine.SceneManagement;
 
 namespace PPlatform
 {
@@ -13,6 +14,11 @@ namespace PPlatform
         private Netgroup mNetgroup = null;
         private string mActiveName = "gamelist";
         private Dictionary<int, Controller> mController = new Dictionary<int, Controller>();
+
+        public Dictionary<int, Controller> Controllers
+        {
+            get { return mController; }
+        }
 
 
         string TAG_CONTROLLER_REGISTER = "PLATFORM_CONTROLLER_REGISTER";
@@ -40,6 +46,9 @@ namespace PPlatform
 
         string TAG_EXIT_GAME = "PLATFORM_EXIT_GAME";
 
+
+        public event Action<string, string, int> Message;
+
         private struct PlatformMessage
         {
             public string tag;
@@ -49,7 +58,10 @@ namespace PPlatform
         private void Awake()
         {
             mNetgroup = GetComponent<Netgroup>();
-            
+            if(mNetgroup == null)
+            {
+                mNetgroup = this.gameObject.AddComponent<Netgroup>();
+            }
         }
 
         private void Start()
@@ -60,12 +72,12 @@ namespace PPlatform
 
         private void OnGUI()
         {
-            GUILayout.BeginVertical();
-            if (GUILayout.Button("Exit"))
-            {
-                mNetgroup.Close();
-            }
-            GUILayout.EndHorizontal();
+            //GUILayout.BeginVertical();
+            //if (GUILayout.Button("Exit"))
+            //{
+            //    mNetgroup.Close();
+            //}
+            //GUILayout.EndHorizontal();
         }
 
         public void EnterGame(string name)
@@ -75,9 +87,18 @@ namespace PPlatform
         private void ShowGame(string name)
         {
             Debug.Log("Show game " + name);
-            Application.LoadLevel(name);
+            SceneManager.LoadScene(name);
+            //mActiveName = name;
         }
 
+        /// <summary>
+        /// Tells the platform that a new game was loaded
+        /// </summary>
+        /// <param name="name"></param>
+        public void GameLoaded(string name)
+        {
+            mActiveName = name;
+        }
         private void HandlePlatformMessage(string tag, string content, int conId)
         {
             if (tag == TAG_CONTROLLER_REGISTER)
@@ -107,6 +128,8 @@ namespace PPlatform
 
 
             //send the message out to the games
+            if (Message != null)
+                Message(tag, content, conId);
 
             if (tag == TAG_ENTER_GAME)
             {
@@ -127,10 +150,11 @@ namespace PPlatform
             if (type == Netgroup.SignalingMessageType.Connected)
             {
                 GameObject go = GameObject.Find("PPlatformGui");
-                PPlatformGui gui = go.GetComponent<PPlatformGui>();
-
-
-                gui._gameCode.text = content;
+                if(go != null)
+                {
+                    PPlatformGui gui = go.GetComponent<PPlatformGui>();
+                    gui._gameCode.text = content;
+                }
             }
             else if (type == Netgroup.SignalingMessageType.UserJoined)
             {
@@ -154,7 +178,7 @@ namespace PPlatform
 
         }
 
-        private void Send(string tag, string content, int lTo = -1)
+        public void Send(string tag, string content, int lTo = -1)
         {
             PlatformMessage pm = new PlatformMessage();
             pm.tag = tag;

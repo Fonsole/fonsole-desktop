@@ -47,13 +47,14 @@
             //if the game data changed
             if(lTag == SayAnything.Message.SharedDataUpdate.TAG)
             {
+                var updateSharedDataMessage = JSON.parse(lContent);
                 //create a new shared data instance
                 var sd = new SayAnything.Data.Shared();
 
                 //copy the received data into this instance
                 //this allows to access the helper methods in SayAnything.Data.Shared
                 //not just the raw data/json object
-                $.extend( sd, lContent.sharedData );
+                $.extend( sd, updateSharedDataMessage.sharedData );
 
                 //call the refresh ui method
                 refreshUi(sd);
