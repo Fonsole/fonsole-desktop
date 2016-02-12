@@ -57,7 +57,7 @@ namespace PPlatform.SayAnything
         private void OnGUI()
         {
             GUILayout.BeginVertical();
-            GUILayout.Label("state:" + mData.state);
+            GUILayout.Label("state:" + mData);
             GUILayout.EndHorizontal();
         }
 
