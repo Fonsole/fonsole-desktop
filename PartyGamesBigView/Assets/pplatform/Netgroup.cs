@@ -67,6 +67,12 @@ namespace PPlatform
 
 
 
+        public static readonly string EVENT_ROOM_OPENED = "room opened";
+        public static readonly string EVENT_ROOM_JOINED = "room joined";
+        public static readonly string EVENT_USER_JOINED = "user joined";
+        public static readonly string EVENT_USER_LEFT = "user left";
+        public static readonly string EVENT_USER_MESSAGE = "user message";
+
         private ConnectionState mConnectionState = ConnectionState.NotConnected;
         private Action<SignalingMessageType, int, string> mEventHandler = null;
         private Queue<MsgEventData> mEventQueue = new Queue<MsgEventData>();
@@ -94,7 +100,7 @@ namespace PPlatform
             msg.id = userid;
 
             string m = JsonConvert.SerializeObject(msg);
-            mSocket.Emit("user message", m);
+            mSocket.Emit(EVENT_USER_MESSAGE, m);
             Debug.Log("Send " + m);
         }
         private void HandleEvents()
@@ -169,20 +175,32 @@ namespace PPlatform
 
             if (mSocket != null)
             {
-                Debug.Log("OnDestroy: Disconnecting");
+                Debug.Log("OnDestroy: unregister all handlers");
                 //if the connectiong is buggy e.g. it is missing incomming events then disconnect often causes unity to stall completly
                 //the library seem to block this call until the server replied which never happens
                 //the server registered the disconnect already while this keeps blocking forever
                 //mSocket.Disconnect();
-                mSocket.Close();
-                mSocket.Off("connect_timeout");
-                mSocket.Off("connect_error");
-                mSocket.Off("disconnect");
-                mSocket.Off("connect");
-                mSocket.Off("room opened");
-                mSocket.Off("room joined");
-                mSocket.Off("user message");
-                mSocket.Off("user joined");
+                //mSocket.Close();
+
+
+                //close causes the same bug. just unregister handlers for now
+
+                mSocket.Off(Socket.EVENT_CONNECT);
+                mSocket.Off(Socket.EVENT_CONNECT_TIMEOUT);
+                mSocket.Off(Socket.EVENT_CONNECT_ERROR);
+                mSocket.Off(Socket.EVENT_DISCONNECT);
+                mSocket.Off(Socket.EVENT_ERROR);
+                mSocket.Off(Socket.EVENT_RECONNECT);
+                mSocket.Off(Socket.EVENT_RECONNECT_ATTEMPT);
+                mSocket.Off(Socket.EVENT_RECONNECT_ERROR);
+                mSocket.Off(Socket.EVENT_RECONNECT_FAILED);
+                mSocket.Off(Socket.EVENT_RECONNECTING);
+
+                mSocket.Off(EVENT_ROOM_OPENED);
+                mSocket.Off(EVENT_ROOM_JOINED);
+                mSocket.Off(EVENT_USER_MESSAGE);
+                mSocket.Off(EVENT_USER_JOINED);
+                mSocket.Off(EVENT_USER_LEFT);
                 mSocket = null;
                 //m.Close();
 
@@ -242,39 +260,37 @@ namespace PPlatform
             mSocket.On(Socket.EVENT_RECONNECT_FAILED, (o) => { Debug.Log("Socket.io event:" + Socket.EVENT_RECONNECT_FAILED); });
             mSocket.On(Socket.EVENT_RECONNECTING, (o) => { Debug.Log("Socket.io event:" + Socket.EVENT_RECONNECTING); });
             //Socket io for unity doesn't seem to implement this the same way as the web version :/
-            mSocket.On("connect", () =>
+            mSocket.On(Socket.EVENT_CONNECT, () =>
             {
                 Debug.Log("Connected to server! Opening room");
                 mSocket.Emit("open room", mRoomName);
 
             });
 
+
             //custom messages
-            mSocket.On("room opened", (ev) =>
+            mSocket.On(EVENT_ROOM_OPENED, (ev) =>
             {
                 Debug.Log("Room opened " + ev);
                 AddEvent(SignalingMessageType.Connected, ev);
             });
-
-
-            mSocket.On("room joined", (ev) =>
+            mSocket.On(EVENT_ROOM_JOINED, (ev) =>
             {
                 Debug.Log("Room joined " + ev);
                 AddEvent(SignalingMessageType.Connected, ev);
             });
-
-            mSocket.On("user message", (ev) =>
-            {
-                AddEvent(SignalingMessageType.UserMessage, ev);
-            });
-            mSocket.On("user joined", (ev) =>
+            mSocket.On(EVENT_USER_JOINED, (ev) =>
             {
                 Debug.Log(ev);
                 AddEvent(SignalingMessageType.UserJoined, ev);
             });
-            mSocket.On("user left", (ev) =>
+            mSocket.On(EVENT_USER_LEFT, (ev) =>
             {
                 AddEvent(SignalingMessageType.UserLeft, ev);
+            });
+            mSocket.On(EVENT_USER_MESSAGE, (ev) =>
+            {
+                AddEvent(SignalingMessageType.UserMessage, ev);
             });
         }
     }
