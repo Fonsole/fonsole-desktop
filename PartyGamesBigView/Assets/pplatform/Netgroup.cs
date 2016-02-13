@@ -170,7 +170,10 @@ namespace PPlatform
             if (mSocket != null)
             {
                 Debug.Log("OnDestroy: Disconnecting");
-                mSocket.Disconnect();
+                //if the connectiong is buggy e.g. it is missing incomming events then disconnect often causes unity to stall completly
+                //the library seem to block this call until the server replied which never happens
+                //the server registered the disconnect already while this keeps blocking forever
+                //mSocket.Disconnect();
                 mSocket.Close();
                 mSocket.Off("connect_timeout");
                 mSocket.Off("connect_error");
@@ -225,14 +228,19 @@ namespace PPlatform
             opt.ForceNew = true;
             opt.Timeout = 10000;
 
+
             //m = new Manager(new Uri("http://localhost:3001"), opt);
             mSocket = IO.Socket("http://localhost:3001", opt);
             //mSocket = m.Socket("/");
-            mSocket.On("connect_timeout", OnClose);
-            mSocket.On("connect_error", OnClose);
-            mSocket.On("disconnect", OnClose);
-
-
+            mSocket.On(Socket.EVENT_CONNECT_TIMEOUT, (o) => { Debug.Log("Socket.io event:" + Socket.EVENT_CONNECT_TIMEOUT); OnClose(o); });
+            mSocket.On(Socket.EVENT_CONNECT_ERROR, (o) => { Debug.Log("Socket.io event:" + Socket.EVENT_CONNECT_ERROR); OnClose(o); });
+            mSocket.On(Socket.EVENT_DISCONNECT, (o) => { Debug.Log("Socket.io event:" + Socket.EVENT_DISCONNECT); OnClose(o); });
+            mSocket.On(Socket.EVENT_ERROR, (o) => { Debug.Log("Socket.io event:" + Socket.EVENT_ERROR); OnClose(o); });
+            mSocket.On(Socket.EVENT_RECONNECT, (o) => { Debug.Log("Socket.io event:" + Socket.EVENT_RECONNECT); });
+            mSocket.On(Socket.EVENT_RECONNECT_ATTEMPT, (o) => { Debug.Log("Socket.io event:" + Socket.EVENT_RECONNECT_ATTEMPT); });
+            mSocket.On(Socket.EVENT_RECONNECT_ERROR, (o) => { Debug.Log("Socket.io event:" + Socket.EVENT_RECONNECT_ERROR); });
+            mSocket.On(Socket.EVENT_RECONNECT_FAILED, (o) => { Debug.Log("Socket.io event:" + Socket.EVENT_RECONNECT_FAILED); });
+            mSocket.On(Socket.EVENT_RECONNECTING, (o) => { Debug.Log("Socket.io event:" + Socket.EVENT_RECONNECTING); });
             //Socket io for unity doesn't seem to implement this the same way as the web version :/
             mSocket.On("connect", () =>
             {
