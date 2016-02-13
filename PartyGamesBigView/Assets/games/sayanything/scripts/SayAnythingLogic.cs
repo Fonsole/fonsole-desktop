@@ -95,9 +95,45 @@ namespace PPlatform.SayAnything
                     EnterStateJudgingAndVoting();
                 }
             }
+            else if (lTag == Message.Judge.TAG)
+            {
+                Judge judgeMsg = JsonWrapper.FromJson<Judge>(lContent);
+                mData.judgedAnswerId = judgeMsg.playerId;
 
+                if(IsJudgeAndVotingFinished())
+                {
+                    SwitchState(GameState.ShowWinner);
+                }
+            }
+            else if (lTag == Message.Vote.TAG)
+            {
+                Vote voteMsg = JsonWrapper.FromJson<Vote>(lContent);
+                mData.AddVote(lConId, voteMsg.votePlayerId1);
+                mData.AddVote(lConId, voteMsg.votePlayerId2);
+
+                if (IsJudgeAndVotingFinished())
+                {
+                    SwitchState(GameState.ShowWinner);
+                }
+            }
         }
 
+
+        public bool IsJudgeAndVotingFinished()
+        {
+            int votes = 0;
+
+            foreach(var voteList in mData.votes)
+            {
+                votes += voteList.Value.Count;
+            }
+
+            if(votes >= 2 * (PPlatform.Instance.Controllers.Count - 1) && mData.judgedAnswerId != -1)
+            {
+                return true;
+            }
+            return false;
+        }
 
         /// <summary>
         /// TODO: add a "CanSwitch" state before for sanity checking
@@ -106,7 +142,9 @@ namespace PPlatform.SayAnything
         public void SwitchState(GameState lTargetGameState)
         {
             Debug.Log("Change state from " + mData.state + " to " + lTargetGameState);
-            if (lTargetGameState == GameState.Questioning && mData.state == GameState.WaitForStart)
+            if (lTargetGameState == GameState.Questioning && mData.state == GameState.WaitForStart
+                ||
+                lTargetGameState == GameState.Questioning && mData.state == GameState.ShowScore)
             {
 
                 //TODO: at least 2 for testing (ideally 3) players needed
@@ -117,6 +155,18 @@ namespace PPlatform.SayAnything
             else if (lTargetGameState == GameState.Answering && mData.state == GameState.Questioning)
             {
                 EnterStateAnswering();
+            }
+            else if (lTargetGameState == GameState.JudgingAndVoting && mData.state == GameState.Answering)
+            {
+                EnterStateJudgingAndVoting();
+            }
+            else if (lTargetGameState == GameState.ShowWinner && mData.state == GameState.JudgingAndVoting)
+            {
+                EnterStateShowWinner();
+            }
+            else if (lTargetGameState == GameState.ShowScore && mData.state == GameState.ShowWinner)
+            {
+                EnterStateShowScore();
             }
             else
             {
@@ -158,10 +208,33 @@ namespace PPlatform.SayAnything
 
         private void EnterStateJudgingAndVoting()
         {
-            SwitchState(GameState.JudgingAndVoting);
+            mData.state = GameState.JudgingAndVoting;
             RefreshState();
         }
 
+
+        private void EnterStateShowWinner()
+        {
+            mData.state = GameState.ShowWinner;
+            RefreshState();
+            StartCoroutine(CoroutineSwitchToShowScore());
+        }
+        private IEnumerator CoroutineSwitchToShowScore()
+        {
+            yield return new WaitForSeconds(10);
+            SwitchState(GameState.ShowScore);
+        }
+        private void EnterStateShowScore()
+        {
+            mData.state = GameState.ShowScore;
+            RefreshState();
+            StartCoroutine(CoroutineSwitchToShowQuestioning());
+        }
+        private IEnumerator CoroutineSwitchToShowQuestioning()
+        {
+            yield return new WaitForSeconds(10);
+            SwitchState(GameState.Questioning);
+        }
 
         /// <summary>
         /// Gets a random user id from the controller list. 

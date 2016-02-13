@@ -11,9 +11,9 @@ namespace PPlatform.SayAnything
         WaitForStart = 0,
         Questioning = 1,
         Answering = 2,
-        ShowAnswers = 3,
+        //ShowAnswers = 3, //show answers will be merged with judging (can be hidden via controller logic but isn't essential for the game logic
         JudgingAndVoting = 4,
-        Voting = 5,
+        //Voting = 5, //voting is merged with Judging
         ShowWinner = 6,
         ShowScore = 7
     }
@@ -147,6 +147,10 @@ namespace PPlatform.SayAnything
 
 
              st.Append("\t");
+             st.Append("judgedAnswerId:\t");
+             st.AppendLine("" + judgedAnswerId);
+
+             st.Append("\t");
              st.Append("votes:\n");
              foreach (var v in votes)
              {
@@ -170,6 +174,7 @@ namespace PPlatform.SayAnything
                  st.AppendLine();
              }
              st.AppendLine();
+
 
              st.Append("\t");
              st.Append("total score:\n");

@@ -140,8 +140,7 @@
             Questioning : 1,
             Answering : 2,
             ShowAnswers : 3,
-            Judging : 4,
-            Voting : 5,
+            JudgingAndVoting : 4,
             ShowWinner : 6,
             ShowScore : 7
         };

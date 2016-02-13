@@ -133,17 +133,12 @@
                 $('#ShowAnswers').attr("hidden", false);
                 answerListFill(lSharedData);
 
-            }else if(lSharedData.state == SayAnything.GameState.Judging)
+            }else if(lSharedData.state == SayAnything.GameState.JudgingAndVoting)
             {
-                console.log("show Judging");
-                $('#Judging').attr("hidden", false);
+                console.log("show JudgingAndVoting");
+                $('#JudgingAndVoting').attr("hidden", false);
                 answerListFill(lSharedData);
-
-            }else if(lSharedData.state == SayAnything.GameState.Voting)
-            {
-                console.log("show Voting");
-                $('#Voting').attr("hidden", false);
-                answerListFill(lSharedData);
+                
 
             }else if(lSharedData.state == SayAnything.GameState.ShowWinner)
             {

@@ -129,17 +129,32 @@
             </div>
         </div>
         
-        <div class="stateview" id="Judging">
+        <div class="stateview" id="JudgingAndVoting">
             <h2>State: Judging</h2>
             <div class="view">
                 
                 <p><span class="judgeName">Player</span> is in deliberation.</p>
                 <span class="timeLeft">60</span>
             </div>
+
             <div class="controller">
+                
                 <p> Score: <span class="myScore">0</span></p>
-                Waiting for judge to pick their favorite.
+                <div class="voteList">
+                     <span class="A1"> <input type="radio" name="votingRadio1" value="1" class="CB"><label> <input type="radio" name="votingRadio2" value="1" class="CB"><span class="answer">A1</span></label></span> <br>
+                     <span class="A2"> <input type="radio" name="votingRadio1" value="1" class="CB"><label> <input type="radio" name="votingRadio2" value="2" class="CB"><span class="answer">A2</span></label></span> <br>
+                     <span class="A3"> <input type="radio" name="votingRadio1" value="1" class="CB"><label> <input type="radio" name="votingRadio2" value="3" class="CB"><span class="answer">A3</span></label></span> <br>
+                     <span class="A4"> <input type="radio" name="votingRadio1" value="1" class="CB"><label> <input type="radio" name="votingRadio2" value="4" class="CB"><span class="answer">A4</span></label></span> <br>
+                     <span class="A5"> <input type="radio" name="votingRadio1" value="1" class="CB"><label> <input type="radio" name="votingRadio2" value="5" class="CB"><span class="answer">A5</span></label></span> <br>
+                     <span class="A6"> <input type="radio" name="votingRadio1" value="1" class="CB"><label> <input type="radio" name="votingRadio2" value="6" class="CB"><span class="answer">A6</span></label></span> <br>
+                     <span class="A7"> <input type="radio" name="votingRadio1" value="1" class="CB"><label> <input type="radio" name="votingRadio2" value="7" class="CB"><span class="answer">A7</span></label></span> <br>
+                     <span class="A8"> <input type="radio" name="votingRadio1" value="1" class="CB"><label> <input type="radio" name="votingRadio2" value="8" class="CB"><span class="answer">A8</span></label></span> <br>
+                     <span class="A9"> <input type="radio" name="votingRadio1" value="1" class="CB"><label> <input type="radio" name="votingRadio2" value="9" class="CB"><span class="answer">A9</span></label></span> <br>
+                     <span class="A10"> <input type="radio" name="votingRadio1" value="1" class="CB"><label> <input type="radio" name="votingRadio2" value="10" class="CB"><span class="answer">A10</span></label></span> <br>
+                     <button class="confirm" onclick="votingConfirm()">Confirm Selection</button>
+                </div>
             </div>
+            
             <div class="judgecontroller">
                 <p> Score: <span class="myScore">0</span></p>
                 Choose Your Favorite
@@ -161,7 +176,9 @@
                 </div>
             </div>
         </div>
-        
+ 
+      
+        <!-- Voting state was removed and merged with Judging state
         <div class="stateview" id="Voting">
             <h2>State: Voting</h2>
             <div class="view">
@@ -177,30 +194,13 @@
                     <div class="A10"> <span class="answer">A10</span> <br><span class="votes"> </span> </div> <br>
                     
             </div>
-            <div class="controller">
-                
-                <p> Score: <span class="myScore">0</span></p>
-                <div class="voteList">
-                     <span class="A1"> <input type="radio" name="votingRadio1" value="1" class="CB"><label> <input type="radio" name="votingRadio2" value="1" class="CB"><span class="answer">A1</span></label></span> <br>
-                     <span class="A2"> <input type="radio" name="votingRadio1" value="1" class="CB"><label> <input type="radio" name="votingRadio2" value="2" class="CB"><span class="answer">A2</span></label></span> <br>
-                     <span class="A3"> <input type="radio" name="votingRadio1" value="1" class="CB"><label> <input type="radio" name="votingRadio2" value="3" class="CB"><span class="answer">A3</span></label></span> <br>
-                     <span class="A4"> <input type="radio" name="votingRadio1" value="1" class="CB"><label> <input type="radio" name="votingRadio2" value="4" class="CB"><span class="answer">A4</span></label></span> <br>
-                     <span class="A5"> <input type="radio" name="votingRadio1" value="1" class="CB"><label> <input type="radio" name="votingRadio2" value="5" class="CB"><span class="answer">A5</span></label></span> <br>
-                     <span class="A6"> <input type="radio" name="votingRadio1" value="1" class="CB"><label> <input type="radio" name="votingRadio2" value="6" class="CB"><span class="answer">A6</span></label></span> <br>
-                     <span class="A7"> <input type="radio" name="votingRadio1" value="1" class="CB"><label> <input type="radio" name="votingRadio2" value="7" class="CB"><span class="answer">A7</span></label></span> <br>
-                     <span class="A8"> <input type="radio" name="votingRadio1" value="1" class="CB"><label> <input type="radio" name="votingRadio2" value="8" class="CB"><span class="answer">A8</span></label></span> <br>
-                     <span class="A9"> <input type="radio" name="votingRadio1" value="1" class="CB"><label> <input type="radio" name="votingRadio2" value="9" class="CB"><span class="answer">A9</span></label></span> <br>
-                     <span class="A10"> <input type="radio" name="votingRadio1" value="1" class="CB"><label> <input type="radio" name="votingRadio2" value="10" class="CB"><span class="answer">A10</span></label></span> <br>
-                     <button class="confirm" onclick="votingConfirm()">Confirm Selection</button>
-                </div>
-            </div>
             <div class="judgecontroller">
                 
                 <p> Score: <span class="myScore">0</span></p>
                 Wait for players to place votes
             </div>
         </div>
-        
+        -->
         <div class="stateview" id="ShowWinner">
             <h2>State: ShowWinner</h2>
             <div class="view">
