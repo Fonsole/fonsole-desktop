@@ -486,7 +486,7 @@
             //1 point is given to the player that wrote the selected answer.
             mData.awardScore(mData.judgedAnswerId, 1); //judgedAnswerId == userid of the user that gave the answer
             
-            //The Judge gets 1 point for each Player Token placed on the answer she selected (Max 3 points.)
+            //  
             var selectedVotes = mData.getVotes(mData.judgedAnswerId);
             var selectedAnswerVoteCount = selectedVotes.length;
             if(selectedAnswerVoteCount > 3)

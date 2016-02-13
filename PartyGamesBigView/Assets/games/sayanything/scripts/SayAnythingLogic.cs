@@ -216,17 +216,48 @@ namespace PPlatform.SayAnything
         private void EnterStateShowWinner()
         {
             mData.state = GameState.ShowWinner;
+            CalculateRoundScore();
             RefreshState();
             StartCoroutine(CoroutineSwitchToShowScore());
         }
+
+        private void CalculateRoundScore()
+        {
+            //1 point is given to the user that sent the selected answer
+            mData.awardRoundScore(mData.judgedAnswerId, 1);
+
+            //The Judge gets 1 point for each Player Token placed on the answer she selected (Max 3 points.)
+            List<int> selectedVotes = mData.GetVotes(mData.judgedAnswerId);
+            int judgePoints = selectedVotes.Count;
+            mData.awardRoundScore(mData.judgeUserId, judgePoints);
+
+            //each player gets a point for each vote that were given to the answer the judge selected
+            foreach(int pid in selectedVotes)
+            {
+                mData.awardRoundScore(pid, 1);
+            }
+        }
+
+        private void CalculateFinalScore()
+        {
+            foreach(var v in mData.roundScore)
+            {
+                mData.awardTotalScore(v.Key, v.Value);
+            }
+        }
+
+
         private IEnumerator CoroutineSwitchToShowScore()
         {
             yield return new WaitForSeconds(10);
             SwitchState(GameState.ShowScore);
         }
+
+
         private void EnterStateShowScore()
         {
             mData.state = GameState.ShowScore;
+            CalculateFinalScore();
             RefreshState();
             StartCoroutine(CoroutineSwitchToShowQuestioning());
         }

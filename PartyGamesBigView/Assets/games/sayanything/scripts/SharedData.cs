@@ -91,104 +91,119 @@ namespace PPlatform.SayAnything
             this.judgedAnswerId = -1;
             this.votes = new Dictionary<int,List<int>>();
             this.roundScore = new Dictionary<int, int>();
-         }
-         
-         public void awardScore(int lUserId, int lPoints)
-         {
-             //add it to the score received this round
-             if(this.roundScore.ContainsKey(lUserId))
-             {
-                 this.roundScore[lUserId] += lPoints;
-             }else{
-                 this.roundScore[lUserId] = lPoints;
-             }
-             
-             //add it to the total score
-             if(this.totalScore.ContainsKey(lUserId))
-             {
-                 this.totalScore[lUserId] += lPoints;
-             }else{
-                 this.totalScore[lUserId] = lPoints;
-             }
-         }
+        }
+
+        /// <summary>
+        /// Awards score to a user. Only valid for the current round.
+        /// 
+        /// Value can't be higher than 3.
+        /// </summary>
+        /// <param name="lUserId"></param>
+        /// <param name="lPoints"></param>
+        public void awardRoundScore(int lUserId, int lPoints)
+        {
+            //add it to the score received this round
+            if(this.roundScore.ContainsKey(lUserId))
+            {
+                this.roundScore[lUserId] += lPoints;
+            }else{
+                this.roundScore[lUserId] = lPoints;
+            }
+
+            if (this.roundScore[lUserId] > 3)
+                this.roundScore[lUserId] = 3;
+        }
+
+        public void awardTotalScore(int lUserId, int lPoints)
+        {
+            //add it to the total score
+            if (this.totalScore.ContainsKey(lUserId))
+            {
+                this.totalScore[lUserId] += lPoints;
+            }
+            else
+            {
+                this.totalScore[lUserId] = lPoints;
+            }
+        }
 
 
-         public override string ToString()
-         {
-             StringBuilder st = new StringBuilder();
-             st.AppendLine("Shared Data: ");
+        public override string ToString()
+        {
+            StringBuilder st = new StringBuilder();
+            st.AppendLine("Shared Data: ");
 
-             st.Append("\t");
-             st.Append("state:\t");
-             st.AppendLine("" + state);
-
-
-             st.Append("\t");
-             st.Append("judgeUserId:\t");
-             st.AppendLine("" + judgeUserId);
+            st.Append("\t");
+            st.Append("state:\t");
+            st.AppendLine("" + state);
 
 
-             st.Append("\t");
-             st.Append("question:\t");
-             st.AppendLine("" + question);
+            st.Append("\t");
+            st.Append("judgeUserId:\t");
+            st.AppendLine("" + judgeUserId);
 
 
-             st.Append("\t");
-             st.Append("answers:\n");
-             foreach (var v in answers)
-             {
-                 st.Append("\t\t");
-                 st.Append(v.Key);
-                 st.Append(":");
-                 st.Append(v.Value);
-                 st.AppendLine();
-             }
-             st.AppendLine();
+            st.Append("\t");
+            st.Append("question:\t");
+            st.AppendLine("" + question);
 
 
-             st.Append("\t");
-             st.Append("judgedAnswerId:\t");
-             st.AppendLine("" + judgedAnswerId);
-
-             st.Append("\t");
-             st.Append("votes:\n");
-             foreach (var v in votes)
-             {
-                 st.Append("\t\t");
-                 st.Append(v.Key);
-                 st.Append(":");
-                 st.Append(v.Value);
-                 st.AppendLine();
-             }
-             st.AppendLine();
+            st.Append("\t");
+            st.Append("answers:\n");
+            foreach (var v in answers)
+            {
+                st.Append("\t\t");
+                st.Append(v.Key);
+                st.Append(":");
+                st.Append(v.Value);
+                st.AppendLine();
+            }
+            st.AppendLine();
 
 
-             st.Append("\t");
-             st.Append("score:\n");
-             foreach (var v in roundScore)
-             {
-                 st.Append("\t\t");
-                 st.Append(v.Key);
-                 st.Append(":");
-                 st.Append(v.Value);
-                 st.AppendLine();
-             }
-             st.AppendLine();
+            st.Append("\t");
+            st.Append("judgedAnswerId:\t");
+            st.AppendLine("" + judgedAnswerId);
+
+            st.Append("\t");
+            st.Append("votes:\n");
+            foreach (var v in votes)
+            {
+                st.Append("\t\t");
+                st.Append(v.Key);
+                st.Append(":");
+                st.Append(v.Value);
+                st.AppendLine();
+            }
+            st.AppendLine();
 
 
-             st.Append("\t");
-             st.Append("total score:\n");
-             foreach (var v in totalScore)
-             {
-                 st.Append("\t\t");
-                 st.Append(v.Key);
-                 st.Append(":");
-                 st.Append(v.Value);
-                 st.AppendLine();
-             }
-             st.AppendLine();
+            st.Append("\t");
+            st.Append("score:\n");
+            foreach (var v in roundScore)
+            {
+                st.Append("\t\t");
+                st.Append(v.Key);
+                st.Append(":");
+                st.Append(v.Value);
+                st.AppendLine();
+            }
+            st.AppendLine();
 
-             return st.ToString();
-         }
+
+            st.Append("\t");
+            st.Append("total score:\n");
+            foreach (var v in totalScore)
+            {
+                st.Append("\t\t");
+                st.Append(v.Key);
+                st.Append(":");
+                st.Append(v.Value);
+                st.AppendLine();
+            }
+            st.AppendLine();
+
+            return st.ToString();
+        }
     }
 }
