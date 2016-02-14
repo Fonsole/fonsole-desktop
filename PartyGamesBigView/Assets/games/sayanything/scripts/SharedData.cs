@@ -27,7 +27,7 @@ namespace PPlatform.SayAnything
         public GameState state = SayAnything.GameState.WaitForStart;
         
         //user id of the judge. only the connection id for now
-        public int judgeUserId = -1;
+        public int judgeUserId = UNDEFINED;
         
         //simply the text of the question
         public string question = null;
@@ -36,7 +36,7 @@ namespace PPlatform.SayAnything
         public Dictionary<int, string> answers = new Dictionary<int, string>();
         
         //user id of the answer the judge has chosen
-        public int judgedAnswerId = -1;
+        public int judgedAnswerId = UNDEFINED;
         
         //key: user id (equals the id the answer of this user has in the "answers" object)
         //value: a list of user ids the vote came from (needed to show the color badges in the end)
@@ -49,7 +49,7 @@ namespace PPlatform.SayAnything
         //scores overall (move to local data, view only?)
         public Dictionary<int, int> totalScore = new Dictionary<int, int>();
 
-        public int timeLeft = 30;
+        public float timeLeft = 30;
          
          //functions to easily fill and read the data (ideall this should be done only via functions later to prevent bugs)
          
@@ -172,7 +172,9 @@ namespace PPlatform.SayAnything
                 st.Append("\t\t");
                 st.Append(v.Key);
                 st.Append(":");
-                st.Append(v.Value);
+                st.Append("|");
+                v.Value.ForEach((x) => { st.Append(x); st.Append("|"); });
+                
                 st.AppendLine();
             }
             st.AppendLine();
@@ -203,6 +205,10 @@ namespace PPlatform.SayAnything
             }
             st.AppendLine();
 
+
+            st.Append("\t");
+            st.Append("timeLeft: \t");
+            st.Append(this.timeLeft);
             return st.ToString();
         }
     }

@@ -19,6 +19,14 @@ namespace PPlatform.SayAnything
     /// </summary>
     public class SayAnythingLogic : MonoBehaviour
     {
+        public static readonly float QUESTIONING_TIME = 30;
+        public static readonly float ANSWERING_TIME = 60;
+        public static readonly float VOTING_TIME = 30;
+        public static readonly float SHOWWINNER_TIME = 10;
+        public static readonly float SHOWSCORE_TIME = 10;
+
+
+
         /// <summary>
         /// Must be the same as the scene name + folder name in unity and the same folder name of the controller!
         /// </summary>
@@ -26,6 +34,27 @@ namespace PPlatform.SayAnything
 
 
         private SharedData mData = new SharedData();
+
+
+        /// <summary>
+        /// Codes used for error checks / checks if states are valid and if switch to the next state is valid too
+        /// 
+        /// This is used to avoid exceptions which aren't supported on all unity platforms
+        /// </summary>
+        public enum StatusCode
+        {
+            Invalid = 0, //no status code was set. usuallt indicates programming error or memory problems
+            Ok = 1, //all fine
+
+
+            //game problems
+            NotEnoughPlayers = 100, //user tried to start a game but there aren't enough players or a new round starts but too many players logged out
+            NoQuestionAsked = 101, // judge didn't asked a question
+            NoJudgeChoice = 102, //judge didn't choose one of the answers -> no score can't be calculated
+            NotEnoughAnswers = 103,//there aren't enough answers to keep playing
+
+        }
+
         // Use this for initialization
         void Start()
         {
@@ -54,13 +83,97 @@ namespace PPlatform.SayAnything
 
         }
 
+        private void FixedUpdate()
+        {
+            mData.timeLeft -= Time.fixedDeltaTime;
+
+            if(mData.timeLeft <= 0)
+            {
+                //time ran out
+                if(mData.state == GameState.Questioning)
+                {
+                    StatusCode code = CanEnterStateAnswering();
+                    if (code == StatusCode.Ok)
+                    {
+                        SwitchState(GameState.Answering);
+                    }
+                    else
+                    {
+                        CancelCurrentRound(code);
+                    }
+                    //start next round
+                }else if(mData.state == GameState.Answering)
+                {
+                    StatusCode code = CanEnterStateJudgeAndVoting();
+                    if (code == StatusCode.Ok)
+                    {
+                        SwitchState(GameState.JudgingAndVoting);
+                    }
+                    else
+                    {
+                        CancelCurrentRound(code);
+                    }
+                }
+                else if (mData.state == GameState.JudgingAndVoting)
+                {
+                    //game fails if the judge didn't choose anything
+                    //but no votes are fine
+                    StatusCode code = CanEnterStateShowWinner();
+                    if (code == StatusCode.Ok)
+                    {
+                        SwitchState(GameState.ShowWinner);
+                    }
+                    else
+                    {
+                        CancelCurrentRound(code);
+                    }
+                }
+                else if (mData.state == GameState.ShowWinner)
+                {
+                    SwitchState(GameState.ShowScore);
+                }
+                else if (mData.state == GameState.ShowScore)
+                {
+                    if (CanEnterStateQuestioning() == StatusCode.Ok)
+                    {
+                        SwitchState(GameState.Questioning);
+                    }
+                    else
+                    {
+                        SwitchState(GameState.WaitForStart);
+                    }
+                }
+            }
+
+        }
+
         private void OnGUI()
         {
             GUILayout.BeginVertical();
             GUILayout.Label("state:" + mData);
             GUILayout.EndHorizontal();
         }
+        /// <summary>
+        /// Will cancel the round and either enter questioning state or the wait for start state if there aren't enough players
+        /// </summary>
+        private void CancelCurrentRound(StatusCode reason)
+        {
+            Debug.Log("Status code: " + reason);
+            if (CanEnterStateQuestioning() == StatusCode.Ok)
+            {
+                SwitchState(GameState.Questioning);
+            }
+            else
+            {
+                SwitchState(GameState.WaitForStart);
+            }
+            
+        }
 
+        private bool HasEnoughPlayers()
+        {
+            return PPlatform.Instance.Controllers.Count >= 2; //TODO: should be 3 for the future. 2 for testing
+        }
 
         public void OnMessage(string lTag, string lContent, int lConId)
         {
@@ -128,13 +241,43 @@ namespace PPlatform.SayAnything
                 votes += voteList.Value.Count;
             }
 
-            if(votes >= 2 * (PPlatform.Instance.Controllers.Count - 1) && mData.judgedAnswerId != -1)
+            if(votes >= 2 * (PPlatform.Instance.Controllers.Count - 1) && mData.judgedAnswerId != SharedData.UNDEFINED)
             {
                 return true;
             }
             return false;
         }
 
+
+
+        private StatusCode CanEnterStateQuestioning()
+        {
+            if (HasEnoughPlayers() == false)
+                return StatusCode.NotEnoughPlayers;
+
+            return StatusCode.Ok;
+        }
+        private StatusCode CanEnterStateAnswering()
+        {
+            if (String.IsNullOrEmpty(mData.question))
+                return StatusCode.NoQuestionAsked;
+
+            return StatusCode.Ok;
+        }
+        private StatusCode CanEnterStateJudgeAndVoting()
+        {
+            if (mData.answers.Count < 1) //TODO: <= in the future. at least 2 answers needed but 1 is enough for testing
+                return StatusCode.NotEnoughAnswers;
+
+            return StatusCode.Ok;
+        }
+        private StatusCode CanEnterStateShowWinner()
+        {
+            if (mData.judgedAnswerId == -1)
+                return StatusCode.NoJudgeChoice;
+
+            return StatusCode.Ok;
+        }
         /// <summary>
         /// TODO: add a "CanSwitch" state before for sanity checking
         /// </summary>
@@ -142,9 +285,9 @@ namespace PPlatform.SayAnything
         public void SwitchState(GameState lTargetGameState)
         {
             Debug.Log("Change state from " + mData.state + " to " + lTargetGameState);
-            if (lTargetGameState == GameState.Questioning && mData.state == GameState.WaitForStart
-                ||
-                lTargetGameState == GameState.Questioning && mData.state == GameState.ShowScore)
+
+            //questening state can always be entered no matter from which state (the whole round will be cancelt if ShowScore wasn't reached)
+            if (lTargetGameState == GameState.Questioning)
             {
 
                 //TODO: at least 2 for testing (ideally 3) players needed
@@ -195,13 +338,14 @@ namespace PPlatform.SayAnything
             }
 
             mData.state = GameState.Questioning;
+            mData.timeLeft = QUESTIONING_TIME;
             RefreshState();
         }
 
         private void EnterStateAnswering()
         {
-
             mData.state = GameState.Answering;
+            mData.timeLeft = ANSWERING_TIME;
             RefreshState();
         }
 
@@ -209,6 +353,7 @@ namespace PPlatform.SayAnything
         private void EnterStateJudgingAndVoting()
         {
             mData.state = GameState.JudgingAndVoting;
+            mData.timeLeft = VOTING_TIME;
             RefreshState();
         }
 
@@ -216,9 +361,19 @@ namespace PPlatform.SayAnything
         private void EnterStateShowWinner()
         {
             mData.state = GameState.ShowWinner;
+            mData.timeLeft = SHOWWINNER_TIME;
             CalculateRoundScore();
             RefreshState();
-            StartCoroutine(CoroutineSwitchToShowScore());
+            //StartCoroutine(CoroutineSwitchToShowScore());
+        }
+
+        private void EnterStateShowScore()
+        {
+            mData.state = GameState.ShowScore;
+            mData.timeLeft = SHOWSCORE_TIME;
+            CalculateFinalScore();
+            RefreshState();
+            //StartCoroutine(CoroutineSwitchToShowQuestioning());
         }
 
         private void CalculateRoundScore()
@@ -247,25 +402,17 @@ namespace PPlatform.SayAnything
         }
 
 
-        private IEnumerator CoroutineSwitchToShowScore()
-        {
-            yield return new WaitForSeconds(10);
-            SwitchState(GameState.ShowScore);
-        }
+        //private IEnumerator CoroutineSwitchToShowScore()
+        //{
+        //    yield return new WaitForSeconds(10);
+        //    SwitchState(GameState.ShowScore);
+        //}
 
-
-        private void EnterStateShowScore()
-        {
-            mData.state = GameState.ShowScore;
-            CalculateFinalScore();
-            RefreshState();
-            StartCoroutine(CoroutineSwitchToShowQuestioning());
-        }
-        private IEnumerator CoroutineSwitchToShowQuestioning()
-        {
-            yield return new WaitForSeconds(10);
-            SwitchState(GameState.Questioning);
-        }
+        //private IEnumerator CoroutineSwitchToShowQuestioning()
+        //{
+        //    yield return new WaitForSeconds(10);
+        //    SwitchState(GameState.Questioning);
+        //}
 
         /// <summary>
         /// Gets a random user id from the controller list. 
