@@ -17,7 +17,8 @@ namespace PPlatform.SayAnything
         ShowWinner = 6,
         ShowScore = 7
     }
-    
+
+
     public class SharedData
     {
         public const int UNDEFINED = -1;
@@ -210,6 +211,12 @@ namespace PPlatform.SayAnything
             st.Append("timeLeft: \t");
             st.Append(this.timeLeft);
             return st.ToString();
+        }
+
+
+        public static IEnumerable<GameState> GetValidStates()
+        {
+            return Enum.GetValues(typeof(GameState)).Cast<GameState>();
         }
     }
 }

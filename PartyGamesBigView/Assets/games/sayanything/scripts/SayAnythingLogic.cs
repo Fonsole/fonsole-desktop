@@ -35,6 +35,11 @@ namespace PPlatform.SayAnything
 
         private SharedData mData = new SharedData();
 
+        public SharedData Data
+        {
+            get { return mData; }
+        }
+
 
         /// <summary>
         /// Codes used for error checks / checks if states are valid and if switch to the next state is valid too
@@ -67,14 +72,14 @@ namespace PPlatform.SayAnything
 
             //SharedData result = JsonWrapper.FromJson<SharedData>(json);
 
-            PPlatform.Instance.Message += OnMessage;
-            PPlatform.Instance.GameLoaded(GAME_NAME);
+            Platform.Instance.Message += OnMessage;
+            Platform.Instance.GameLoaded(GAME_NAME);
         }
 
         void OnDestroy()
         {
-            if (PPlatform.Instance != null)
-                PPlatform.Instance.Message -= OnMessage;
+            if (Platform.Instance != null)
+                Platform.Instance.Message -= OnMessage;
         }
 
         // Update is called once per frame
@@ -147,10 +152,14 @@ namespace PPlatform.SayAnything
 
         }
 
+
+        private bool debugUi = false;
         private void OnGUI()
         {
             GUILayout.BeginVertical();
-            GUILayout.Label("state:" + mData);
+            debugUi = GUILayout.Toggle(debugUi, "debugui");
+            if (debugUi)
+                GUILayout.Label("state:" + mData);
             GUILayout.EndHorizontal();
         }
         /// <summary>
@@ -172,7 +181,7 @@ namespace PPlatform.SayAnything
 
         private bool HasEnoughPlayers()
         {
-            return PPlatform.Instance.Controllers.Count >= 2; //TODO: should be 3 for the future. 2 for testing
+            return Platform.Instance.Controllers.Count >= 2; //TODO: should be 3 for the future. 2 for testing
         }
 
         public void OnMessage(string lTag, string lContent, int lConId)
@@ -203,7 +212,7 @@ namespace PPlatform.SayAnything
 
 
                 //TODO: add timer and there could be answers that are from users that logged out by now...
-                if(mData.answers.Count == PPlatform.Instance.Controllers.Count -1)
+                if(mData.answers.Count == Platform.Instance.Controllers.Count -1)
                 {
                     EnterStateJudgingAndVoting();
                 }
@@ -241,7 +250,7 @@ namespace PPlatform.SayAnything
                 votes += voteList.Value.Count;
             }
 
-            if(votes >= 2 * (PPlatform.Instance.Controllers.Count - 1) && mData.judgedAnswerId != SharedData.UNDEFINED)
+            if(votes >= 2 * (Platform.Instance.Controllers.Count - 1) && mData.judgedAnswerId != SharedData.UNDEFINED)
             {
                 return true;
             }
@@ -421,12 +430,12 @@ namespace PPlatform.SayAnything
         /// <returns></returns>
         private int GetRandomUserId()
         {
-            int count = PPlatform.Instance.Controllers.Count;
+            int count = Platform.Instance.Controllers.Count;
 
             int randomIndex = UnityEngine.Random.Range(0, count - 1);
             
 
-            var en = PPlatform.Instance.Controllers.OrderBy<KeyValuePair<int, Controller>, int>((v) => v.Value.Id);
+            var en = Platform.Instance.Controllers.OrderBy<KeyValuePair<int, Controller>, int>((v) => v.Value.Id);
             int nm = 0;
             foreach(var v in en)
             {
@@ -440,7 +449,7 @@ namespace PPlatform.SayAnything
 
         private int GetNextJudgeId(int last)
         {
-            var en = PPlatform.Instance.Controllers.OrderBy<KeyValuePair<int, Controller>, int>((v) => v.Value.Id);
+            var en = Platform.Instance.Controllers.OrderBy<KeyValuePair<int, Controller>, int>((v) => v.Value.Id);
 
             bool lastFound = false;
             int next = -1;
@@ -477,7 +486,7 @@ namespace PPlatform.SayAnything
             SharedDataUpdate msg = new SharedDataUpdate();
             msg.sharedData = mData;
             string json = JsonWrapper.ToJson(msg);
-            PPlatform.Instance.Send(SharedDataUpdate.TAG, json);
+            Platform.Instance.Send(SharedDataUpdate.TAG, json);
         }
     }
 

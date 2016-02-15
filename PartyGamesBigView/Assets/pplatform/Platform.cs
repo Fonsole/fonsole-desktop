@@ -9,7 +9,7 @@ using UnityEngine.SceneManagement;
 
 namespace PPlatform
 {
-    public class PPlatform : UnitySingleton<PPlatform>
+    public class Platform : UnitySingleton<Platform>
     {
         private Netgroup mNetgroup = null;
         private string mActiveName = "gamelist";
@@ -67,7 +67,7 @@ namespace PPlatform
         private void Start()
         {
             DontDestroyOnLoad(this.gameObject);
-            mNetgroup.Open(GetRandomKey(), OnNetgroupMessageInternal);
+            //mNetgroup.Open(GetRandomKey(), OnNetgroupMessageInternal);
         }
 
         private void OnGUI()
