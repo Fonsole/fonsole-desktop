@@ -180,6 +180,11 @@ Prefab:
       propertyPath: m_Name
       value: Controller (4)
       objectReference: {fileID: 0}
+    - target: {fileID: 11490800, guid: 62ce678ae4698aa4ab3db1586d527c22, type: 2}
+      propertyPath: m_FontData.m_Font
+      value: 
+      objectReference: {fileID: 12800000, guid: 43a334e1dc49f754f8ae7af91d8da515,
+        type: 3}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 62ce678ae4698aa4ab3db1586d527c22, type: 2}
   m_IsPrefabParent: 0
@@ -212,7 +217,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &302153600
 RectTransform:
   m_ObjectHideFlags: 0
@@ -399,6 +404,11 @@ Prefab:
       propertyPath: m_Name
       value: Controller (8)
       objectReference: {fileID: 0}
+    - target: {fileID: 11490800, guid: 62ce678ae4698aa4ab3db1586d527c22, type: 2}
+      propertyPath: m_FontData.m_Font
+      value: 
+      objectReference: {fileID: 12800000, guid: 43a334e1dc49f754f8ae7af91d8da515,
+        type: 3}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 62ce678ae4698aa4ab3db1586d527c22, type: 2}
   m_IsPrefabParent: 0
@@ -552,18 +562,6 @@ Prefab:
     - target: {fileID: 22482506, guid: 694269427199ff84091f142b182654a1, type: 2}
       propertyPath: m_Pivot.y
       value: 0.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 22482506, guid: 694269427199ff84091f142b182654a1, type: 2}
-      propertyPath: m_LocalScale.x
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 22482506, guid: 694269427199ff84091f142b182654a1, type: 2}
-      propertyPath: m_LocalScale.y
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 22482506, guid: 694269427199ff84091f142b182654a1, type: 2}
-      propertyPath: m_LocalScale.z
-      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 172612, guid: 694269427199ff84091f142b182654a1, type: 2}
       propertyPath: m_Name
@@ -754,6 +752,11 @@ Prefab:
       propertyPath: m_SizeDelta.y
       value: 0.5
       objectReference: {fileID: 0}
+    - target: {fileID: 11496602, guid: 0c63328045aff5647b9fd74d33fff866, type: 2}
+      propertyPath: m_FontData.m_Font
+      value: 
+      objectReference: {fileID: 12800000, guid: 43a334e1dc49f754f8ae7af91d8da515,
+        type: 3}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 0c63328045aff5647b9fd74d33fff866, type: 2}
   m_IsPrefabParent: 0
@@ -1158,6 +1161,11 @@ Prefab:
       propertyPath: m_Name
       value: Controller (7)
       objectReference: {fileID: 0}
+    - target: {fileID: 11490800, guid: 62ce678ae4698aa4ab3db1586d527c22, type: 2}
+      propertyPath: m_FontData.m_Font
+      value: 
+      objectReference: {fileID: 12800000, guid: 43a334e1dc49f754f8ae7af91d8da515,
+        type: 3}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 62ce678ae4698aa4ab3db1586d527c22, type: 2}
   m_IsPrefabParent: 0
@@ -1251,6 +1259,11 @@ Prefab:
       propertyPath: m_Pivot.y
       value: 0.5
       objectReference: {fileID: 0}
+    - target: {fileID: 11490800, guid: 62ce678ae4698aa4ab3db1586d527c22, type: 2}
+      propertyPath: m_FontData.m_Font
+      value: 
+      objectReference: {fileID: 12800000, guid: 43a334e1dc49f754f8ae7af91d8da515,
+        type: 3}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 62ce678ae4698aa4ab3db1586d527c22, type: 2}
   m_IsPrefabParent: 0
@@ -1632,6 +1645,11 @@ Prefab:
       propertyPath: m_FontData.m_Alignment
       value: 4
       objectReference: {fileID: 0}
+    - target: {fileID: 11496602, guid: 0c63328045aff5647b9fd74d33fff866, type: 2}
+      propertyPath: m_FontData.m_Font
+      value: 
+      objectReference: {fileID: 12800000, guid: 43a334e1dc49f754f8ae7af91d8da515,
+        type: 3}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 0c63328045aff5647b9fd74d33fff866, type: 2}
   m_IsPrefabParent: 0
@@ -1908,6 +1926,11 @@ Prefab:
       propertyPath: m_Name
       value: Controller (5)
       objectReference: {fileID: 0}
+    - target: {fileID: 11490800, guid: 62ce678ae4698aa4ab3db1586d527c22, type: 2}
+      propertyPath: m_FontData.m_Font
+      value: 
+      objectReference: {fileID: 12800000, guid: 43a334e1dc49f754f8ae7af91d8da515,
+        type: 3}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 62ce678ae4698aa4ab3db1586d527c22, type: 2}
   m_IsPrefabParent: 0
@@ -2170,6 +2193,11 @@ Prefab:
       propertyPath: m_Name
       value: Controller (2)
       objectReference: {fileID: 0}
+    - target: {fileID: 11490800, guid: 62ce678ae4698aa4ab3db1586d527c22, type: 2}
+      propertyPath: m_FontData.m_Font
+      value: 
+      objectReference: {fileID: 12800000, guid: 43a334e1dc49f754f8ae7af91d8da515,
+        type: 3}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 62ce678ae4698aa4ab3db1586d527c22, type: 2}
   m_IsPrefabParent: 0
@@ -2359,6 +2387,11 @@ Prefab:
       propertyPath: m_Name
       value: Controller (6)
       objectReference: {fileID: 0}
+    - target: {fileID: 11490800, guid: 62ce678ae4698aa4ab3db1586d527c22, type: 2}
+      propertyPath: m_FontData.m_Font
+      value: 
+      objectReference: {fileID: 12800000, guid: 43a334e1dc49f754f8ae7af91d8da515,
+        type: 3}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 62ce678ae4698aa4ab3db1586d527c22, type: 2}
   m_IsPrefabParent: 0
@@ -2384,7 +2417,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1657592670
 RectTransform:
   m_ObjectHideFlags: 0
@@ -2771,6 +2804,11 @@ Prefab:
       propertyPath: m_Name
       value: Controller (3)
       objectReference: {fileID: 0}
+    - target: {fileID: 11490800, guid: 62ce678ae4698aa4ab3db1586d527c22, type: 2}
+      propertyPath: m_FontData.m_Font
+      value: 
+      objectReference: {fileID: 12800000, guid: 43a334e1dc49f754f8ae7af91d8da515,
+        type: 3}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 62ce678ae4698aa4ab3db1586d527c22, type: 2}
   m_IsPrefabParent: 0
@@ -2972,6 +3010,11 @@ Prefab:
       propertyPath: m_Name
       value: Controller (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 11490800, guid: 62ce678ae4698aa4ab3db1586d527c22, type: 2}
+      propertyPath: m_FontData.m_Font
+      value: 
+      objectReference: {fileID: 12800000, guid: 43a334e1dc49f754f8ae7af91d8da515,
+        type: 3}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 62ce678ae4698aa4ab3db1586d527c22, type: 2}
   m_IsPrefabParent: 0
@@ -3150,7 +3193,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &2022252365
 RectTransform:
   m_ObjectHideFlags: 0
