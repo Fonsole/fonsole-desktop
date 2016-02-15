@@ -28,17 +28,8 @@ public class JudgeName : MonoBehaviour {
     {
         if(SayAnythingUi.Instance != null && SayAnythingUi.Instance.CurrentData != null)
         {
-            int id = SayAnythingUi.Instance.CurrentData.judgedAnswerId;
-
-            if(Platform.Instance.Controllers.ContainsKey(id))
-            {
-                Controller c = Platform.Instance.Controllers[id];
-                this._Name.text = c.Name;
-            }
-            else
-            {
-                this._Name.text = "Someone";
-            }
+            int id = SayAnythingUi.Instance.CurrentData.judgeUserId;
+            this._Name.text = SayAnythingUi.Instance.GetUserName(id) + _TextAfterName;
         }
     }
 }

@@ -212,7 +212,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &302153600
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1286,8 +1286,8 @@ RectTransform:
   m_RootOrder: 0
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 33.000122, y: -72.29399}
-  m_SizeDelta: {x: -850, y: -546}
+  m_AnchoredPosition: {x: 33.000122, y: -50}
+  m_SizeDelta: {x: -850, y: -953}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &990563020
 MonoBehaviour:
@@ -1367,7 +1367,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 22432278, guid: 01c71641c1649bc4b834edefa0c71a93, type: 2}
       propertyPath: m_AnchoredPosition.y
-      value: -53
+      value: -34
       objectReference: {fileID: 0}
     - target: {fileID: 22432278, guid: 01c71641c1649bc4b834edefa0c71a93, type: 2}
       propertyPath: m_SizeDelta.x
@@ -1375,7 +1375,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 22432278, guid: 01c71641c1649bc4b834edefa0c71a93, type: 2}
       propertyPath: m_SizeDelta.y
-      value: 344
+      value: 381
       objectReference: {fileID: 0}
     - target: {fileID: 22432278, guid: 01c71641c1649bc4b834edefa0c71a93, type: 2}
       propertyPath: m_AnchorMin.x
@@ -1400,6 +1400,34 @@ Prefab:
     - target: {fileID: 22432278, guid: 01c71641c1649bc4b834edefa0c71a93, type: 2}
       propertyPath: m_Pivot.y
       value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 11409794, guid: 01c71641c1649bc4b834edefa0c71a93, type: 2}
+      propertyPath: m_FontData.m_FontSize
+      value: 80
+      objectReference: {fileID: 0}
+    - target: {fileID: 11409794, guid: 01c71641c1649bc4b834edefa0c71a93, type: 2}
+      propertyPath: m_FontData.m_MaxSize
+      value: 80
+      objectReference: {fileID: 0}
+    - target: {fileID: 11409794, guid: 01c71641c1649bc4b834edefa0c71a93, type: 2}
+      propertyPath: m_Text
+      value: What musician or band would be the most embarassing to have in your collection?
+      objectReference: {fileID: 0}
+    - target: {fileID: 11409794, guid: 01c71641c1649bc4b834edefa0c71a93, type: 2}
+      propertyPath: m_FontData.m_BestFit
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 11409794, guid: 01c71641c1649bc4b834edefa0c71a93, type: 2}
+      propertyPath: m_FontData.m_MinSize
+      value: 16
+      objectReference: {fileID: 0}
+    - target: {fileID: 22424816, guid: 01c71641c1649bc4b834edefa0c71a93, type: 2}
+      propertyPath: m_AnchoredPosition.y
+      value: -28
+      objectReference: {fileID: 0}
+    - target: {fileID: 22424816, guid: 01c71641c1649bc4b834edefa0c71a93, type: 2}
+      propertyPath: m_SizeDelta.y
+      value: 56
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 01c71641c1649bc4b834edefa0c71a93, type: 2}
@@ -1558,7 +1586,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 22422200, guid: 0c63328045aff5647b9fd74d33fff866, type: 2}
       propertyPath: m_AnchoredPosition.y
-      value: 169
+      value: 236
       objectReference: {fileID: 0}
     - target: {fileID: 22422200, guid: 0c63328045aff5647b9fd74d33fff866, type: 2}
       propertyPath: m_SizeDelta.x
@@ -1599,6 +1627,10 @@ Prefab:
     - target: {fileID: 11496602, guid: 0c63328045aff5647b9fd74d33fff866, type: 2}
       propertyPath: m_Text
       value: 'JudgeName asks:'
+      objectReference: {fileID: 0}
+    - target: {fileID: 11496602, guid: 0c63328045aff5647b9fd74d33fff866, type: 2}
+      propertyPath: m_FontData.m_Alignment
+      value: 4
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 0c63328045aff5647b9fd74d33fff866, type: 2}
@@ -2352,7 +2384,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1657592670
 RectTransform:
   m_ObjectHideFlags: 0
@@ -2453,8 +2485,6 @@ MonoBehaviour:
   _QuestioningUI: {fileID: 2022252364}
   _AnsweringUI: {fileID: 2088420980}
   _JudgingAndVotingUI: {fileID: 1657592669}
-  _ShowWinnerUI: {fileID: 1657592669}
-  _ShowScoreUI: {fileID: 1657592669}
 --- !u!114 &1669363543
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3120,7 +3150,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &2022252365
 RectTransform:
   m_ObjectHideFlags: 0

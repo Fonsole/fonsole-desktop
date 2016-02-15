@@ -18,8 +18,7 @@ namespace PPlatform.SayAnything.UI
         public GameObject _QuestioningUI;
         public GameObject _AnsweringUI;
         public GameObject _JudgingAndVotingUI;
-        public GameObject _ShowWinnerUI;
-        public GameObject _ShowScoreUI;
+
 
         public SharedData CurrentData
         {
@@ -82,24 +81,48 @@ namespace PPlatform.SayAnything.UI
 
         private void ShowState(GameState state)
         {
-            var en = SharedData.GetValidStates();
 
-            foreach(GameState s in en)
+            if (state == GameState.WaitForStart)
             {
-                GameObject go = GetStateParent(s);
-                if (go != null)
-                {
-                    if (s == state)
-                    {
-                        if (go.activeSelf == false)
-                            go.SetActive(true);
-                    }
-                    else
-                    {
-                        if (go.activeSelf == true)
-                            go.SetActive(false);
-                    }
-                }
+                _WaitForStartUI.SetActive(true);
+                _QuestioningUI.SetActive(false);
+                _AnsweringUI.SetActive(false);
+                _JudgingAndVotingUI.SetActive(false);
+            }
+            else if (state == GameState.Questioning)
+            {
+                _WaitForStartUI.SetActive(false);
+                _QuestioningUI.SetActive(true);
+                _AnsweringUI.SetActive(false);
+                _JudgingAndVotingUI.SetActive(false);
+            }
+            else if (state == GameState.Answering)
+            {
+                _WaitForStartUI.SetActive(false);
+                _QuestioningUI.SetActive(false);
+                _AnsweringUI.SetActive(true);
+                _JudgingAndVotingUI.SetActive(false);
+            }
+            else if (state == GameState.JudgingAndVoting)
+            {
+                _WaitForStartUI.SetActive(false);
+                _QuestioningUI.SetActive(false);
+                _AnsweringUI.SetActive(false);
+                _JudgingAndVotingUI.SetActive(true);
+            }
+            else if (state == GameState.ShowWinner)
+            {
+                _WaitForStartUI.SetActive(false);
+                _QuestioningUI.SetActive(false);
+                _AnsweringUI.SetActive(false);
+                _JudgingAndVotingUI.SetActive(true);
+            }
+            else if (state == GameState.ShowScore)
+            {
+                _WaitForStartUI.SetActive(false);
+                _QuestioningUI.SetActive(false);
+                _AnsweringUI.SetActive(false);
+                _JudgingAndVotingUI.SetActive(true);
             }
         }
         public string GetUserName(int id)
@@ -114,35 +137,7 @@ namespace PPlatform.SayAnything.UI
         {
             return new Color(1, 0.5f, 0.5f, 1);
         }
-        private GameObject GetStateParent(GameState state)
-        {
-            if(state == GameState.WaitForStart)
-            {
-                return _WaitForStartUI;
-            }else if(state == GameState.Questioning)
-            {
-                return _QuestioningUI;
-            }else if(state == GameState.Answering)
-            {
-                return _AnsweringUI;
-            }else if(state == GameState.JudgingAndVoting)
-            {
-                return _JudgingAndVotingUI;
-            }
-            else if (state == GameState.ShowWinner)
-            {
-                return _ShowWinnerUI;
-            }
-            else if (state == GameState.ShowScore)
-            {
-                return _ShowScoreUI;
-            }
-            else
-            {
-                Debug.LogError("Invalid state requested " + state);
-                return null;
-            }
-        }
+
     }
 
 
