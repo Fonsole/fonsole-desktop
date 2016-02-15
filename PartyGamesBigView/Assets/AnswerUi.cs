@@ -16,39 +16,73 @@ namespace PPlatform.SayAnything.UI
         public Text _UsernameText;
         public Image[] _UsernameColors;
 
+        public GameObject _SelectedMarker;
 
-        public GameObject _VoteParent;
+        public VoteList _VoteParent;
 
         public void Refresh(int userId, SharedData data)
         {
             if(data.answers.ContainsKey(userId))
             {
-                if (data.state == GameState.JudgingAndVoting && data.judgeUserId == -1)
+                if (data.state == GameState.JudgingAndVoting && data.judgedAnswerId == -1)
                 {
                     //judge didnt decide yet. only show answers
                     _Text.text = data.answers[userId];
                     SetColor(Color.white);
                     _UsernameParent.SetActive(false);
-                    _VoteParent.SetActive(false);
-                }else if (data.state == GameState.JudgingAndVoting && data.judgeUserId != -1)
+                    _VoteParent.gameObject.SetActive(false);
+                    _SelectedMarker.SetActive(false);
+                }
+                else if (data.state == GameState.JudgingAndVoting && data.judgedAnswerId != -1)
                 {
                     _Text.text = data.answers[userId];
                     SetColor(Color.white);
-                    _VoteParent.SetActive(true);
+                    _VoteParent.gameObject.SetActive(true);
+                    _VoteParent.Refresh(userId, data);
                     _UsernameParent.SetActive(false);
+                    _SelectedMarker.SetActive(false);
                 }
                 else if (data.state == GameState.ShowWinner)
                 {
                     _Text.text = data.answers[userId];
                     SetColor(SayAnythingUi.Instance.GetUserColor(userId));
-                    _VoteParent.SetActive(true);
+                    _VoteParent.gameObject.SetActive(true);
+                    _VoteParent.Refresh(userId, data);
                     _UsernameParent.SetActive(true);
                     _UsernameText.text = SayAnythingUi.Instance.GetUserName(userId);
+
+                    if(userId == data.judgedAnswerId)
+                    {
+                        _SelectedMarker.SetActive(true);
+                    }
+                    else
+                    {
+
+                        _SelectedMarker.SetActive(false);
+                    }
                 }
                 else if (data.state == GameState.ShowScore)
                 {
-                    _VoteParent.SetActive(true);
+                    int score = 0;
+                    int totalScore = 0;
+                    
+                    data.roundScore.TryGetValue(userId, out score);
+                    data.totalScore.TryGetValue(userId, out totalScore);
+                    _Text.text = "Score: " + score + "\nTotal Score: " + totalScore;
+                    SetColor(SayAnythingUi.Instance.GetUserColor(userId));
+                    _VoteParent.gameObject.SetActive(true);
+                    _VoteParent.Refresh(userId, data);
                     _UsernameParent.SetActive(true);
+                    _UsernameText.text = SayAnythingUi.Instance.GetUserName(userId);
+                    if (userId == data.judgedAnswerId)
+                    {
+                        _SelectedMarker.SetActive(true);
+                    }
+                    else
+                    {
+
+                        _SelectedMarker.SetActive(false);
+                    }
                 }
 
                 SetVisibile(true);

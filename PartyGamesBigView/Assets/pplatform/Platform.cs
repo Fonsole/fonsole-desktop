@@ -67,7 +67,7 @@ namespace PPlatform
         private void Start()
         {
             DontDestroyOnLoad(this.gameObject);
-            //mNetgroup.Open(GetRandomKey(), OnNetgroupMessageInternal);
+            mNetgroup.Open(GetRandomKey(), OnNetgroupMessageInternal);
         }
 
         private void OnGUI()

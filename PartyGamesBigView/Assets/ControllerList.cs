@@ -12,7 +12,7 @@ public class ControllerList : MonoBehaviour {
 	}
 	
 	// Update is called once per frame
-	void OnEnable ()
+	private void FixedUpdate ()
     {
         int counter = 0;
 	    foreach(var v in Platform.Instance.Controllers)

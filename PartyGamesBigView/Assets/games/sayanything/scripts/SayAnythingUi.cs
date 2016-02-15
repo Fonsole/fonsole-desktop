@@ -28,10 +28,38 @@ namespace PPlatform.SayAnything.UI
                 if (_Debug)
                 {
                     SharedData data = new SharedData();
+                    data.judgeUserId = 0;
                     data.judgedAnswerId = 1;
-                    data.state = GameState.JudgingAndVoting;
+                    data.question = "How are you?";
+                    data.state = GameState.ShowScore;
                     data.answers.Add(1, "answer 1");
                     data.answers.Add(2, "answer 2");
+                    data.answers.Add(3, "answer 3");
+                    data.answers.Add(4, "answer 4");
+                    data.answers.Add(5, "answer 5");
+                    data.AddVote(1, 2);
+                    data.AddVote(1, 3);
+                    data.AddVote(2, 1);
+                    data.AddVote(2, 1);
+                    data.AddVote(3, 1);
+                    data.AddVote(3, 1);
+                    data.AddVote(4, 1);
+                    data.AddVote(4, 1);
+                    data.AddVote(5, 1);
+                    data.AddVote(5, 1);
+
+                    data.roundScore[0] = 0;
+                    data.roundScore[1] = 1;
+                    data.roundScore[2] = 2;
+                    data.roundScore[3] = 3;
+                    data.roundScore[4] = 4;
+                    data.roundScore[5] = 5;
+                    data.totalScore[0] = 6;
+                    data.totalScore[1] = 7;
+                    data.totalScore[2] = 8;
+                    data.totalScore[3] = 9;
+                    data.totalScore[4] = 10;
+                    data.totalScore[5] = 11;
                     return data;
                 }
                 else
@@ -47,7 +75,7 @@ namespace PPlatform.SayAnything.UI
             SharedData data = CurrentData;
             if(data != null)
             {
-                //ShowState(data.state);
+                ShowState(data.state);
             }
         }
 
@@ -80,11 +108,11 @@ namespace PPlatform.SayAnything.UI
             {
                 return Platform.Instance.Controllers[id].Name;
             }
-            return "Someone";
+            return "Someone(" + id + ")";
         }
         public Color GetUserColor(int id)
         {
-            return Color.red;
+            return new Color(1, 0.5f, 0.5f, 1);
         }
         private GameObject GetStateParent(GameState state)
         {
