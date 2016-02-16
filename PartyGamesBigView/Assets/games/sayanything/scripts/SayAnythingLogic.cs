@@ -191,20 +191,24 @@ namespace PPlatform.SayAnything
                 //a controller joined the game and loaded the game controller code -> send a data update
                 //TODO: send the refresh just to the sender?
                 RefreshState();
-            }else if(lTag == Message.StartGame.TAG)
+            }
+
+
+            if (mData.state == GameState.WaitForStart && lTag == Message.StartGame.TAG)
             {
                 //controller send the start game event.
                 //TODO: check for player count and send back an error if there aren't enough player
                 //OR hide the button until there are enough player (risky though because it could change until the message arrives)
                 SwitchState(GameState.Questioning);
-            
-            }else if(lTag == Message.Question.TAG)
+
+            }
+            else if (mData.state == GameState.Questioning && lTag == Message.Question.TAG)
             {
                 Question questionMsg = JsonWrapper.FromJson<Question>(lContent);
                 mData.question = questionMsg.question;
                 SwitchState(GameState.Answering);
             }
-            else if (lTag == Message.Answer.TAG)
+            else if (mData.state == GameState.Answering && lTag == Message.Answer.TAG)
             {
                 Answer answerMsg = JsonWrapper.FromJson<Answer>(lContent);
 
@@ -217,7 +221,7 @@ namespace PPlatform.SayAnything
                     EnterStateJudgingAndVoting();
                 }
             }
-            else if (lTag == Message.Judge.TAG)
+            else if (mData.state == GameState.JudgingAndVoting && lTag == Message.Judge.TAG)
             {
                 Judge judgeMsg = JsonWrapper.FromJson<Judge>(lContent);
                 mData.judgedAnswerId = judgeMsg.playerId;
@@ -227,7 +231,7 @@ namespace PPlatform.SayAnything
                     SwitchState(GameState.ShowWinner);
                 }
             }
-            else if (lTag == Message.Vote.TAG)
+            else if (mData.state == GameState.JudgingAndVoting && lTag == Message.Vote.TAG)
             {
                 Vote voteMsg = JsonWrapper.FromJson<Vote>(lContent);
                 mData.AddVote(lConId, voteMsg.votePlayerId1);
@@ -237,6 +241,10 @@ namespace PPlatform.SayAnything
                 {
                     SwitchState(GameState.ShowWinner);
                 }
+            }
+            else
+            {
+                //Debug.LogWarning("Ignored invalid message during state:" + mData.state + " TAG:" + lTag + " content:" + lContent + " from:" + lConId);
             }
         }
 
