@@ -7,6 +7,14 @@ using PPlatform.Helper;
 
 namespace PPlatform.SayAnything.UI
 {
+    /// <summary>
+    /// Signeton while the say anything game is running.
+    /// 
+    /// All UI elements get their shared data + platform data via this class.
+    /// 
+    /// This allows to feed in mocking data to test and design the ui without
+    /// having to run the whole game.
+    /// </summary>
     public class SayAnythingUi : UnitySingleton<SayAnythingUi>
     {
 
@@ -68,6 +76,11 @@ namespace PPlatform.SayAnything.UI
             }
         }
 
+
+        public int[] GetActiveUsers()
+        {
+            return Platform.Instance.Controllers.Keys.ToArray();
+        }
 
         public void FixedUpdate()
         {

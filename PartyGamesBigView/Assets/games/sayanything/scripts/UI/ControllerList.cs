@@ -2,29 +2,33 @@
 using System.Collections;
 using PPlatform;
 
-public class ControllerList : MonoBehaviour {
-
-    public ControllerUi[] _ControllerUis;
-
-	// Use this for initialization
-	void Start () {
-	
-	}
-	
-	// Update is called once per frame
-	private void FixedUpdate ()
+namespace PPlatform.SayAnything.UI
+{
+    public class ControllerList : MonoBehaviour
     {
-        int counter = 0;
-	    foreach(var v in Platform.Instance.Controllers)
+
+        public ControllerUi[] _ControllerUis;
+
+        // Use this for initialization
+        void Start()
         {
-            _ControllerUis[counter].SetVisibility(true);
-            _ControllerUis[counter].SetContent(v.Value);
-            counter++;
+
         }
 
-        for(int i = counter; i < _ControllerUis.Length; i++)
+        // Update is called once per frame
+        private void FixedUpdate()
         {
-            _ControllerUis[i].SetVisibility(false);
+            int counter = 0;
+            foreach (var v in SayAnythingUi.Instance.GetActiveUsers())
+            {
+                _ControllerUis[counter].Refresh(v, SayAnythingUi.Instance.CurrentData);
+                counter++;
+            }
+            for (int i = counter; i < _ControllerUis.Length; i++)
+            {
+                //give them an invalid user. they are going to hide themselves
+                _ControllerUis[i].Refresh(SharedData.UNDEFINED, SayAnythingUi.Instance.CurrentData);
+            }
         }
-	}
+    }
 }

@@ -2,23 +2,25 @@
 using System.Collections;
 using UnityEngine.UI;
 using PPlatform;
+using PPlatform.SayAnything.UI;
+using PPlatform.SayAnything;
 
-public class ControllerUi : MonoBehaviour
+public class ControllerUi : UserUi
 {
-    public Text _Name;
-    public Graphic[] _ColorTargetsImage;
 
-
-
-    public void SetVisibility(bool val)
+    
+    public void Refresh(int userId, SharedData data)
     {
-        this.gameObject.SetActive(val);
-    }
-
-    public void SetContent(Controller c)
-    {
-        if (_Name != null)
-            _Name.text = c.Name;
-
+        if (userId == SharedData.UNDEFINED)
+        {
+            //inactive user -> set to default design
+            SetDefault();
+        }
+        else
+        {
+            //active user. change name and color
+            SetColor(SayAnythingUi.Instance.GetUserColor(userId));
+            SetUserName(SayAnythingUi.Instance.GetUserName(userId));
+        }
     }
 }

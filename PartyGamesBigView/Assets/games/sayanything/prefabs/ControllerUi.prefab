@@ -79,7 +79,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.700692, g: 0.54264706, b: 0.9264706, a: 1}
+  m_Color: {r: 0.9264706, g: 0.9264706, b: 0.9264706, a: 0.666}
   m_RaycastTarget: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
@@ -106,7 +106,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.700692, g: 0.54264706, b: 0.9264706, a: 1}
+  m_Color: {r: 0.9264706, g: 0.9264706, b: 0.9264706, a: 0.666}
   m_RaycastTarget: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
@@ -132,10 +132,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d477f06e9e9ced84696d97022f4fef3a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _Name: {fileID: 11490800}
-  _ColorTargetsImage:
-  - {fileID: 11415858}
+  _UsernameParent: {fileID: 191382}
+  _UsernameText: {fileID: 11490800}
+  _UsernameColors:
   - {fileID: 11404416}
+  - {fileID: 11415858}
 --- !u!114 &11490800
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -162,13 +163,13 @@ MonoBehaviour:
     m_BestFit: 1
     m_MinSize: 10
     m_MaxSize: 60
-    m_Alignment: 3
+    m_Alignment: 4
     m_AlignByGeometry: 0
     m_RichText: 1
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: NAME
+  m_Text: empty
 --- !u!222 &22200618
 CanvasRenderer:
   m_ObjectHideFlags: 1
@@ -220,7 +221,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0.5}
   m_AnchorMax: {x: 0, y: 0.5}
   m_AnchoredPosition: {x: 10, y: 0}
-  m_SizeDelta: {x: 254, y: 108}
+  m_SizeDelta: {x: 328, y: 108}
   m_Pivot: {x: 0, y: 0.5}
 --- !u!224 &22446154
 RectTransform:
