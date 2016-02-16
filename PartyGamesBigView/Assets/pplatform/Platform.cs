@@ -165,7 +165,6 @@ namespace PPlatform
             }
             else if (type == ANetgroup.SignalingMessageType.UserLeft)
             {
-                Send(TAG_VIEW_DISCOVERY, "", conId);
                 HandlePlatformMessage(TAG_CONTROLLER_LEFT, null, conId);
             }
             else if (type == ANetgroup.SignalingMessageType.UserMessage)
