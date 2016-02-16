@@ -234,6 +234,7 @@ namespace PPlatform.SayAnything
             else if (mData.state == GameState.JudgingAndVoting && lTag == Message.Vote.TAG)
             {
                 Vote voteMsg = JsonWrapper.FromJson<Vote>(lContent);
+                mData.CancelVotesBy(lConId);
                 mData.AddVote(lConId, voteMsg.votePlayerId1);
                 mData.AddVote(lConId, voteMsg.votePlayerId2);
 

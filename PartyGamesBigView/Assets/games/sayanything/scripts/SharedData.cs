@@ -53,9 +53,16 @@ namespace PPlatform.SayAnything
         public float timeLeft = 30;
          
          //functions to easily fill and read the data (ideall this should be done only via functions later to prevent bugs)
-         
-         public void AddVote(int lFrom, int lTo)
-         {
+        public void CancelVotesBy(int lFrom)
+        {
+            foreach(var v in this.votes)
+            {
+                v.Value.Remove(lFrom);
+                v.Value.Remove(lFrom);
+            }
+        }
+        public void AddVote(int lFrom, int lTo)
+        {
             if(this.votes.ContainsKey(lTo))
             {
                 //user got at least one vote already -> add the new vote
@@ -66,20 +73,20 @@ namespace PPlatform.SayAnything
                 this.votes[lTo] = new List<int>(new int[]{lFrom});
 
             }
-         }
+        }
          
 
-         public List<int> GetVotes(int lUserId)
-         {
-             if(this.votes.ContainsKey(lUserId))
-             {
-                 return this.votes[lUserId];
-             }
-             else{
+        public List<int> GetVotes(int lUserId)
+        {
+            if(this.votes.ContainsKey(lUserId))
+            {
+                return this.votes[lUserId];
+            }
+            else{
                  
-                 return new List<int>(); //empty list. user never received a vote.
-             }
-         }
+                return new List<int>(); //empty list. user never received a vote.
+            }
+        }
          
          
         public void resetRoundData()
