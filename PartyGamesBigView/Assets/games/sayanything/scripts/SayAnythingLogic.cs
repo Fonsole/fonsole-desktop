@@ -296,7 +296,10 @@ namespace PPlatform.SayAnything
             Debug.Log("Change state from " + mData.state + " to " + lTargetGameState);
 
             //questening state can always be entered no matter from which state (the whole round will be cancelt if ShowScore wasn't reached)
-            if (lTargetGameState == GameState.Questioning)
+            if (lTargetGameState == GameState.WaitForStart)
+            {
+                EnterStateWaitForStart();
+            }else if (lTargetGameState == GameState.Questioning)
             {
 
                 //TODO: at least 2 for testing (ideally 3) players needed
@@ -327,7 +330,14 @@ namespace PPlatform.SayAnything
 
         }
 
+        
+        private void EnterStateWaitForStart()
+        {
 
+            mData.resetRoundData();
+            mData.state = GameState.WaitForStart;
+            RefreshState();
+        }
         private void EnterStateQuestioning()
         {
             int lastJudge = mData.judgeUserId;
