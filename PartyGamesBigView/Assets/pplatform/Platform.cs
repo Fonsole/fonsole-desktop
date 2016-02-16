@@ -171,7 +171,7 @@ namespace PPlatform
             else if (type == ANetgroup.SignalingMessageType.UserMessage)
             {
                 PlatformMessage pm = JsonWrapper.FromJson<PlatformMessage>(content);
-                Debug.Log("Tag: " + pm.tag + " content " + pm.content + " raw json: " + content);
+                //Debug.Log("Tag: " + pm.tag + " content " + pm.content + " raw json: " + content);
                 HandlePlatformMessage(pm.tag, pm.content, conId);
             }
 

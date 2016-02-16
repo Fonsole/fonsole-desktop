@@ -209,7 +209,6 @@ GameObject:
   - 224: {fileID: 302153600}
   - 222: {fileID: 302153603}
   - 114: {fileID: 302153602}
-  - 114: {fileID: 302153601}
   - 114: {fileID: 302153604}
   m_Layer: 0
   m_Name: WaitForStart
@@ -217,7 +216,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &302153600
 RectTransform:
   m_ObjectHideFlags: 0
@@ -244,17 +243,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &302153601
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 302153599}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: de394ae60b563b2459d15239449d48db, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &302153602
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1193,6 +1181,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9620af97ce3f789409e194bb3f3ab394, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _TextBeforeName: 
   _Name: {fileID: 1730905510}
   _TextAfterName: ' is choosing a question.'
 --- !u!1 &990563018
@@ -1308,7 +1297,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 22432278, guid: 01c71641c1649bc4b834edefa0c71a93, type: 2}
       propertyPath: m_AnchoredPosition.y
-      value: -51.250015
+      value: -40.5
       objectReference: {fileID: 0}
     - target: {fileID: 22432278, guid: 01c71641c1649bc4b834edefa0c71a93, type: 2}
       propertyPath: m_SizeDelta.x
@@ -1316,7 +1305,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 22432278, guid: 01c71641c1649bc4b834edefa0c71a93, type: 2}
       propertyPath: m_SizeDelta.y
-      value: 474.5
+      value: 453
       objectReference: {fileID: 0}
     - target: {fileID: 22432278, guid: 01c71641c1649bc4b834edefa0c71a93, type: 2}
       propertyPath: m_AnchorMin.x
@@ -1528,7 +1517,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 22422200, guid: 0c63328045aff5647b9fd74d33fff866, type: 2}
       propertyPath: m_AnchoredPosition.y
-      value: 236
+      value: 226.5
       objectReference: {fileID: 0}
     - target: {fileID: 22422200, guid: 0c63328045aff5647b9fd74d33fff866, type: 2}
       propertyPath: m_SizeDelta.x
@@ -1536,7 +1525,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 22422200, guid: 0c63328045aff5647b9fd74d33fff866, type: 2}
       propertyPath: m_SizeDelta.y
-      value: 100
+      value: 81
       objectReference: {fileID: 0}
     - target: {fileID: 22422200, guid: 0c63328045aff5647b9fd74d33fff866, type: 2}
       propertyPath: m_AnchorMin.x
@@ -2339,7 +2328,6 @@ GameObject:
   - 224: {fileID: 1657592670}
   - 222: {fileID: 1657592673}
   - 114: {fileID: 1657592672}
-  - 114: {fileID: 1657592671}
   m_Layer: 0
   m_Name: JudgingToShowScore
   m_TagString: Untagged
@@ -2366,18 +2354,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &1657592671
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1657592669}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b9ef5c7faf75a64439b9ef77823771c7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _AnswerList: {fileID: 400577572}
 --- !u!114 &1657592672
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3200,14 +3176,13 @@ GameObject:
   - 224: {fileID: 2022252365}
   - 222: {fileID: 2022252368}
   - 114: {fileID: 2022252367}
-  - 114: {fileID: 2022252366}
   m_Layer: 0
   m_Name: Questioning
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &2022252365
 RectTransform:
   m_ObjectHideFlags: 0
@@ -3226,17 +3201,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &2022252366
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 2022252364}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: de394ae60b563b2459d15239449d48db, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &2022252367
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3286,7 +3250,6 @@ GameObject:
   - 224: {fileID: 2088420981}
   - 222: {fileID: 2088420984}
   - 114: {fileID: 2088420983}
-  - 114: {fileID: 2088420982}
   m_Layer: 0
   m_Name: Answering
   m_TagString: Untagged
@@ -3312,17 +3275,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &2088420982
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 2088420980}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: de394ae60b563b2459d15239449d48db, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &2088420983
 MonoBehaviour:
   m_ObjectHideFlags: 0
