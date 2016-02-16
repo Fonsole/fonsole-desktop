@@ -30,6 +30,7 @@ namespace PPlatform.SayAnything.UI
         public Image[] _UsernameColors;
         private Color[] mDefaultColors;
 
+
         private Color mCurrentColor = Color.white;
 
 
@@ -75,7 +76,7 @@ namespace PPlatform.SayAnything.UI
         }
         protected void SetDefault()
         {
-
+            mCurrentColor = Color.white;
             ResetColors();
             SetUserName(mDefaultUsernameText);
         }
