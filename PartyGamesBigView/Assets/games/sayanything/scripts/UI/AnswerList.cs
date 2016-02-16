@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
-namespace PPlatform.SayAnything.UI
+namespace PPlatform.SayAnything.Ui
 {
     public class AnswerList : MonoBehaviour
     {

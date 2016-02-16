@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using UnityEngine.UI;
-namespace PPlatform.SayAnything.UI
+namespace PPlatform.SayAnything.Ui
 {
     /// <summary>
     /// AnswerUI shows user information based on a UserID and the current state of the game.

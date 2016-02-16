@@ -2,7 +2,7 @@
 using System.Collections;
 using UnityEngine.UI;
 using PPlatform;
-using PPlatform.SayAnything.UI;
+using PPlatform.SayAnything.Ui;
 
 /// <summary>
 /// Allows to fill a given text element automatically with a judge name.

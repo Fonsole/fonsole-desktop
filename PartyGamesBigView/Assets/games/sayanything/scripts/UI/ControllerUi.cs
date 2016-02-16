@@ -2,7 +2,7 @@
 using System.Collections;
 using UnityEngine.UI;
 using PPlatform;
-using PPlatform.SayAnything.UI;
+using PPlatform.SayAnything.Ui;
 using PPlatform.SayAnything;
 
 public class ControllerUi : UserUi

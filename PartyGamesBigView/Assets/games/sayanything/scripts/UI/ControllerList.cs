@@ -2,7 +2,7 @@
 using System.Collections;
 using PPlatform;
 
-namespace PPlatform.SayAnything.UI
+namespace PPlatform.SayAnything.Ui
 {
     public class ControllerList : MonoBehaviour
     {

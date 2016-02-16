@@ -5,7 +5,7 @@ using System;
 using System.Linq;
 using PPlatform.Helper;
 
-namespace PPlatform.SayAnything.UI
+namespace PPlatform.SayAnything.Ui
 {
     /// <summary>
     /// Signeton while the say anything game is running.

@@ -4,7 +4,7 @@ using UnityEngine.UI;
 using PPlatform.SayAnything;
 using System.Collections.Generic;
 
-namespace PPlatform.SayAnything.UI
+namespace PPlatform.SayAnything.Ui
 {
     public class VoteList : MonoBehaviour {
 

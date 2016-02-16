@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using UnityEngine.UI;
-namespace PPlatform.SayAnything.UI
+namespace PPlatform.SayAnything.Ui
 {
 
     public class QuestionText : MonoBehaviour

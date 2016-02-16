@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace PPlatform.SayAnything.UI
+namespace PPlatform.SayAnything.Ui
 {
     public class JudgingAndVotingScreen : GameScreen
     {

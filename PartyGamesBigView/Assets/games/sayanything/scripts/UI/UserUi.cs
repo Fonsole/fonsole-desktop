@@ -5,7 +5,7 @@ using System.Text;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace PPlatform.SayAnything.UI
+namespace PPlatform.SayAnything.Ui
 {
 
     /// <summary>
