@@ -6,6 +6,27 @@
 
 module.exports = function()
 {
+    var EVENT_CONNECTION = "connection";
+    var MESSAGE_NAME = "SMSG";
+    var SignalingMessageType = {
+        Invalid : 0,
+        Connected : 1,
+        Closed : 2,
+        UserMessage : 3,
+        UserJoined : 4,
+        UserLeft : 5,
+        OpenRoom : 6,
+        JoinRoom : 7
+    };
+    
+    
+    function SMessage(lMsgType, lMsgContent, lUserId)
+    {
+        this.type = lMsgType;
+        this.content = lMsgContent;
+        this.id = lUserId;
+    }
+    
     var Server = require('socket.io');
     var io;
     
@@ -24,14 +45,14 @@ module.exports = function()
         
         
         //wait for connections via socket.io. if a connection is etablished setup all the handlers for messages
-        io.on('connection', function(lSocket) {
+        io.on(EVENT_CONNECTION, function(lSocket) {
             
             connectionCount++;
             console.log('a user ' + connectionCount + ' connected');
             var connection = new Connection(connectionCount);
             connection.init(lSocket);
         });
-    }
+    };
     
     
     function Room(lName)
@@ -42,6 +63,10 @@ module.exports = function()
         //add to the global room list
         gRooms[mName] = this; 
         
+        this.getName = function()
+        {
+            return mName;
+        };
         this.addConnection = function(lConnection)
         {
             sendUserJoined(lConnection);
@@ -72,36 +97,33 @@ module.exports = function()
         
         this.sendUserMessage = function(lFrom, lContent, lTo)
         {
-            var lMsgObj = {};
-            lMsgObj.content = lContent;
-            lMsgObj.id = lFrom.getId();
+            var lMsgObj = new SMessage(SignalingMessageType.UserMessage, lContent, lFrom.getId());
             if(typeof lTo !== 'undefined' && lTo !== null && lTo !== -1)
             {
-                mConnection[lTo].emit('user message', JSON.stringify(lMsgObj));
+                mConnection[lTo].emit(MESSAGE_NAME, lMsgObj);
             }else{
-                var txt = JSON.stringify(lMsgObj);
                 for(var id in mConnection)
                 {
-                    mConnection[id].emit('user message', txt);
+                    mConnection[id].emit(MESSAGE_NAME, lMsgObj);
                 }
             }
         }
         
         function sendUserJoined(lConnection)
         {
-            var msg = lConnection.getId();
             for(var id in mConnection)
             {
-                mConnection[id].emit('user joined', msg);
+                var lMsgObj = new SMessage(SignalingMessageType.UserJoined, "", lConnection.getId());
+                mConnection[id].emit(MESSAGE_NAME, lMsgObj);
             }
         }
         
         function sendUserLeft(lConnection)
         {
-            var msg = lConnection.getId();
             for(var id in mConnection)
             {
-                mConnection[id].emit('user left', msg);
+                var lMsgObj = new SMessage(SignalingMessageType.UserLeft, "", lConnection.getId());
+                mConnection[id].emit(MESSAGE_NAME, lMsgObj);
             }
         }
     }
@@ -129,27 +151,29 @@ module.exports = function()
         {
             mSocket = lSocket;
 
-            //event to open a new room and add the user
-            //user will get disconnected immediately if there isn't a room available (part of the definition of SignalingChan)
-            mSocket.on('open room', function(lMsg) {
-                onOpenRoom(lMsg);
-            });
-            
-            //join event. either joins an existing room. if there is none -> disconnect
-            mSocket.on('join room', function(lMsg) {
-                onJoinRoom(lMsg);
-            });
-            
-            //msg sends a message to everyone in the room
-            mSocket.on('user message', function(lMsg) {
-                onUserMessage(JSON.parse(lMsg));
+            mSocket.on(MESSAGE_NAME, function(lMsg) {
+                
+                console.log('REC: ' + JSON.stringify(lMsg));
+                if(lMsg.type == SignalingMessageType.OpenRoom)
+                {
+                    onOpenRoom(lMsg.content);
+                }else if(lMsg.type == SignalingMessageType.JoinRoom)
+                {
+                    onJoinRoom(lMsg.content);
+                }else if(lMsg.type == SignalingMessageType.UserMessage)
+                {
+                    onUserMessage(lMsg.content, lMsg.id);
+                }else
+                {
+                    console.log("Unknown message: " + JSON.stringify(lMsg));
+                }
             });
             
             //disconnect evet
             mSocket.on('disconnect', function() {
                 onDisconnect();
             });
-        }
+        };
         
         /**
          * Called if the connection is in a room that is closed.
@@ -157,12 +181,12 @@ module.exports = function()
         this.disconnect = function()
         {
             mSocket.disconnect();
-        }
+        };
         
         this.emit = function(lType, lMsg)
         {
             mSocket.emit(lType, lMsg);
-        }
+        };
         
         function onOpenRoom(lRoomName)
         {
@@ -181,10 +205,9 @@ module.exports = function()
                 
                 console.log('room opened: ' + lRoomName);
                 
-                var lMsgObj = {};
-                lMsgObj.name = mRoom.name;
-                lMsgObj.id = mOwnId;
-                mSocket.emit('room opened', JSON.stringify(lMsgObj));
+                var lMsgObj = new SMessage(SignalingMessageType.Connected, mRoom.getName(), mOwnId);
+                mSocket.emit(MESSAGE_NAME, lMsgObj);
+                console.log('SND: ' + JSON.stringify(lMsgObj));
             }
             else
             {
@@ -206,10 +229,9 @@ module.exports = function()
                 
                 console.log('user ' + mOwnId + ' joined room: ' + lRoomName);
                 
-                var lMsgObj = {};
-                lMsgObj.name = mRoom.name;
-                lMsgObj.id = mOwnId;
-                mSocket.emit('room joined', JSON.stringify(lMsgObj));
+                var lMsgObj = new SMessage(SignalingMessageType.Connected, mRoom.getName(), mOwnId);
+                mSocket.emit(MESSAGE_NAME, lMsgObj);
+                console.log('SND: ' + JSON.stringify(lMsgObj));
             }
             else
             {
@@ -220,11 +242,11 @@ module.exports = function()
             }
         }
         
-        function onUserMessage(lMsgObj)
+        function onUserMessage(lContent, lTo)
         {
             if(mRoom != null) //check if user is actually in a room
             {
-                mRoom.sendUserMessage(self, lMsgObj.content, lMsgObj.id);
+                mRoom.sendUserMessage(self, lContent, lTo);
             }
         }
         
@@ -251,7 +273,3 @@ module.exports = function()
     }
 }
 
-
-
-
-module.exports.test = "testmessages";

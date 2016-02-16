@@ -1,4 +1,4 @@
-﻿using Newtonsoft.Json;
+﻿
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,13 +10,15 @@ namespace PPlatform.Helper
     {
         public static string ToJson(object msg)
         {
-            return JsonConvert.SerializeObject(msg);
+            //throw new NotImplementedException();
+            return Newtonsoft.Json.JsonConvert.SerializeObject(msg);
         }
 
 
         public static T FromJson<T>(string msg)
         {
-            return JsonConvert.DeserializeObject<T>(msg);
+            //throw new NotImplementedException();
+            return Newtonsoft.Json.JsonConvert.DeserializeObject<T>(msg);
         }
     }
 }

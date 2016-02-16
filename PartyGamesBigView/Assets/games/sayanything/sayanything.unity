@@ -217,7 +217,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &302153600
 RectTransform:
   m_ObjectHideFlags: 0
@@ -663,10 +663,10 @@ RectTransform:
   - {fileID: 1730905509}
   m_Father: {fileID: 990563019}
   m_RootOrder: 0
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 1, y: 1}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_SizeDelta: {x: 1136, y: 166}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!224 &665201725 stripped
 RectTransform:
@@ -1613,10 +1613,10 @@ RectTransform:
   - {fileID: 1794010372}
   m_Father: {fileID: 2088420981}
   m_RootOrder: 0
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 33, y: -72.294}
-  m_SizeDelta: {x: -850, y: -546}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 33, y: -72.29401}
+  m_SizeDelta: {x: 1070, y: 534}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1194203189
 MonoBehaviour:
@@ -2194,7 +2194,7 @@ Camera:
   near clip plane: 0.3
   far clip plane: 1000
   field of view: 60
-  orthographic: 0
+  orthographic: 1
   orthographic size: 5
   m_Depth: -1
   m_CullingMask:
@@ -3207,7 +3207,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &2022252365
 RectTransform:
   m_ObjectHideFlags: 0

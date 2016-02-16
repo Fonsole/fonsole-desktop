@@ -1,14 +1,26 @@
 //Copyright (C) 2015 Christoph Kutza
 
-    //maps the string based messages of mSocketio to clear id based messages
+    var EVENT_CONNECTION = "connection";
+    var MESSAGE_NAME = "SMSG";
     var SignalingMessageType = {
         Invalid : 0,
         Connected : 1,
         Closed : 2,
         UserMessage : 3,
         UserJoined : 4,
-        UserLeft : 5
+        UserLeft : 5,
+        OpenRoom : 6,
+        JoinRoom : 7
     };
+    
+    
+    function SMessage(lMsgType, lMsgContent, lUserId)
+    {
+        this.type = lMsgType;
+        this.content = lMsgContent;
+        this.id = lUserId;
+    }
+    
     function Netgroup(lUrl)
     {
         //socket.io object to access the network
@@ -31,7 +43,7 @@
         this.getOwnId = function()
         {
             return mOwnId;
-        }
+        };
         //handler the messages are delivered to (set during opening/connecting)
         var mHandler = null;
         
@@ -86,10 +98,8 @@
                 lId = lToUserId;
             
             
-            var lMsgObj = {};
-            lMsgObj.id = lId;
-            lMsgObj.content = lContent;
-            mSocket.emit('user message', JSON.stringify(lMsgObj));
+            var lMsgObj = new SMessage(SignalingMessageType.UserMessage, lContent, lId);
+            mSocket.emit(MESSAGE_NAME, lMsgObj);
         };
         /**Sends a message over the signaling channel.
         * This can either be a broadcast to everyone in the room or be done more
@@ -127,61 +137,53 @@
             
             //mSocket.io special messages
             mSocket.on('connect_timeout', function() {
-                OnClose();
+                onClose();
             });
             mSocket.on('connect_error', function() {
-                OnClose();
+                onClose();
             });
             mSocket.on('disconnect', function() {
-                OnClose();
+                onClose();
             });
             
             mSocket.on('connect', function() {
                 if(mRoomOwner){
-                    mSocket.emit('open room', mRoomName);
+                    var lMsgObj = new SMessage(SignalingMessageType.OpenRoom, mRoomName, -1);
+                    mSocket.emit(MESSAGE_NAME, lMsgObj);
                 }
                 else{
-                    mSocket.emit('join room', mRoomName);
+                    var lMsgObj = new SMessage(SignalingMessageType.JoinRoom, mRoomName, -1);
+                    mSocket.emit(MESSAGE_NAME, lMsgObj);
                 }
             });
             
             //custom messages
-            mSocket.on("room opened", function(lMsg) {
-                var lMsgObj = JSON.parse(lMsg);
-                OnConnect(lMsgObj.name, lMsgObj.id);
+            mSocket.on(MESSAGE_NAME, function(lMsgObj) {
+                console.log("REC: " + JSON.stringify(lMsgObj));
+                if(lMsgObj.type == SignalingMessageType.Connected)
+                {
+                    onConnect(lMsgObj.content, lMsgObj.id);
+                }else if(lMsgObj.type == SignalingMessageType.Connected)
+                {
+                    onConnect(lMsgObj.content, lMsgObj.id);
+                }else if(lMsgObj.type == SignalingMessageType.UserMessage)
+                {
+                    onUserMessage(lMsgObj.id, lMsgObj.content);
+                }else if(lMsgObj.type == SignalingMessageType.UserLeft)
+                {
+                    onUserJoined(lMsgObj.id);
+                }else if(lMsgObj.type == SignalingMessageType.UserLeft)
+                {
+                    onUserLeft(lMsgObj.id);
+                }
             });
-            mSocket.on("room joined", function(lMsg) {
-                var lMsgObj = JSON.parse(lMsg);
-                OnConnect(lMsgObj.name, lMsgObj.id);
-            });
-            
-            mSocket.on("user message", function(lMsg) {
-                var lMsgObj = JSON.parse(lMsg);
-                OnUserMessage(lMsgObj.id, lMsgObj.content);
-            });
-            mSocket.on("user joined", function(lMsg) {
-                OnUserJoined(lMsg);
-            });
-            mSocket.on("user left", function(lMsg) {
-                OnUserLeft(lMsg);
-            });
-        }
-        
-        /**
-         * Adds handlers to the mSocket
-         */
-        function SetupmSocket()
-        {
             
         }
         
         
  //event handlers
-        /**\
-         * Called after open or join call was successful
-         * 
-         */
-        function OnConnect(lName, lId)
+ 
+        function onConnect(lName, lId)
         {
             mRoomName = lName;
             mOwnId = lId;
@@ -189,15 +191,15 @@
             mConnected = true;
             mHandler(SignalingMessageType.Connected, mOwnId, null);
         }
-        function OnUserJoined(lId)
+        function onUserJoined(lId)
         {
             mHandler(SignalingMessageType.UserJoined, lId, null);
         }
-        function OnUserLeft(lId)
+        function onUserLeft(lId)
         {
             mHandler(SignalingMessageType.UserLeft, lId, null);
         }
-        function OnUserMessage(lId, lContent)
+        function onUserMessage(lId, lContent)
         {
             mHandler(SignalingMessageType.UserMessage, lId, lContent);
         }
@@ -206,7 +208,7 @@
          * 
          * Note: This might also be called because of a timeout
          */
-        function OnClose()
+        function onClose()
         {
             if(mConnecting || mConnected)
             {

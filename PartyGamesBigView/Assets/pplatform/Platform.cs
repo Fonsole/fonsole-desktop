@@ -2,7 +2,7 @@
 using System.Collections;
 using System;
 using System.Text;
-using Newtonsoft.Json;
+
 using System.Collections.Generic;
 using PPlatform.Helper;
 using UnityEngine.SceneManagement;
@@ -11,7 +11,7 @@ namespace PPlatform
 {
     public class Platform : UnitySingleton<Platform>
     {
-        private Netgroup mNetgroup = null;
+        private ANetgroup mNetgroup = null;
         private string mActiveName = "gamelist";
         private Dictionary<int, Controller> mController = new Dictionary<int, Controller>();
 
@@ -47,6 +47,7 @@ namespace PPlatform
         string TAG_EXIT_GAME = "PLATFORM_EXIT_GAME";
 
 
+        private int mOwnId = -1;
         public event Action<string, string, int> Message;
 
         private struct PlatformMessage
@@ -57,10 +58,10 @@ namespace PPlatform
 
         private void Awake()
         {
-            mNetgroup = GetComponent<Netgroup>();
+            mNetgroup = GetComponent<UnityNetgroup>();
             if(mNetgroup == null)
             {
-                mNetgroup = this.gameObject.AddComponent<Netgroup>();
+                mNetgroup = this.gameObject.AddComponent<UnityNetgroup>();
             }
         }
 
@@ -144,11 +145,12 @@ namespace PPlatform
             }
 
         }
-        private void OnNetgroupMessageInternal(Netgroup.SignalingMessageType type, int conId, string content)
+        private void OnNetgroupMessageInternal(ANetgroup.SignalingMessageType type, int conId, string content)
         {
-            Debug.Log("Message type: " + type + " con id: " + conId + " content: " + content);
-            if (type == Netgroup.SignalingMessageType.Connected)
+            //Debug.Log("Message type: " + type + " con id: " + conId + " content: " + content);
+            if (type == ANetgroup.SignalingMessageType.Connected)
             {
+                mOwnId = conId;
                 GameObject go = GameObject.Find("PPlatformGui");
                 if(go != null)
                 {
@@ -156,17 +158,17 @@ namespace PPlatform
                     gui._gameCode.text = content;
                 }
             }
-            else if (type == Netgroup.SignalingMessageType.UserJoined)
+            else if (type == ANetgroup.SignalingMessageType.UserJoined)
             {
                 //send out the view discovery message to the new user so the controller knows how to contact the view
                 Send(TAG_VIEW_DISCOVERY, "", conId);
             }
-            else if (type == Netgroup.SignalingMessageType.UserLeft)
+            else if (type == ANetgroup.SignalingMessageType.UserLeft)
             {
                 Send(TAG_VIEW_DISCOVERY, "", conId);
                 HandlePlatformMessage(TAG_CONTROLLER_LEFT, null, conId);
             }
-            else if (type == Netgroup.SignalingMessageType.UserMessage)
+            else if (type == ANetgroup.SignalingMessageType.UserMessage)
             {
                 PlatformMessage pm = JsonWrapper.FromJson<PlatformMessage>(content);
                 Debug.Log("Tag: " + pm.tag + " content " + pm.content + " raw json: " + content);

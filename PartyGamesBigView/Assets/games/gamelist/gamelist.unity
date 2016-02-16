@@ -93,7 +93,6 @@ GameObject:
   serializedVersion: 4
   m_Component:
   - 4: {fileID: 507225773}
-  - 114: {fileID: 507225772}
   - 114: {fileID: 507225771}
   m_Layer: 0
   m_Name: PPlatform
@@ -111,17 +110,6 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 2a720da0be9d303468b4e0929bc31558, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &507225772
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 507225770}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 81bad4cc7b51fc44ea9e887742f445b9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!4 &507225773
