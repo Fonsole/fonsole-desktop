@@ -15,6 +15,13 @@ namespace PPlatform
         private string mActiveName = "gamelist";
         private Dictionary<int, Controller> mController = new Dictionary<int, Controller>();
 
+        private string mGameCode;
+
+        public string GameCode
+        {
+            get { return mGameCode; }
+        }
+
         public Dictionary<int, Controller> Controllers
         {
             get { return mController; }
@@ -68,7 +75,8 @@ namespace PPlatform
         private void Start()
         {
             DontDestroyOnLoad(this.gameObject);
-            mNetgroup.Open(GetRandomKey(), OnNetgroupMessageInternal);
+            mGameCode = GetRandomKey();
+            mNetgroup.Open(mGameCode, OnNetgroupMessageInternal);
         }
 
         private void OnGUI()
@@ -151,12 +159,7 @@ namespace PPlatform
             if (type == ANetgroup.SignalingMessageType.Connected)
             {
                 mOwnId = conId;
-                GameObject go = GameObject.Find("PPlatformGui");
-                if(go != null)
-                {
-                    PPlatformGui gui = go.GetComponent<PPlatformGui>();
-                    gui._gameCode.text = content;
-                }
+                mGameCode = content;
             }
             else if (type == ANetgroup.SignalingMessageType.UserJoined)
             {

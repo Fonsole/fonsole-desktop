@@ -228,7 +228,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aacc268ac26b9dc4b9b8622c6345edd6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _gameCode: {fileID: 920180093}
 --- !u!1 &920180091
 GameObject:
   m_ObjectHideFlags: 0
@@ -238,6 +237,7 @@ GameObject:
   m_Component:
   - 224: {fileID: 920180092}
   - 222: {fileID: 920180095}
+  - 114: {fileID: 920180096}
   - 114: {fileID: 920180094}
   - 114: {fileID: 920180093}
   m_Layer: 5
@@ -362,6 +362,19 @@ CanvasRenderer:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 920180091}
+--- !u!114 &920180096
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 920180091}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 617074982d9948f40ae9681930ed3d1e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _Text: {fileID: 0}
+  _InputField: {fileID: 920180093}
 --- !u!1 &1258040666
 GameObject:
   m_ObjectHideFlags: 0
@@ -556,8 +569,8 @@ Camera:
   m_GameObject: {fileID: 1821431648}
   m_Enabled: 1
   serializedVersion: 2
-  m_ClearFlags: 1
-  m_BackGroundColor: {r: 0.19215687, g: 0.3019608, b: 0.4745098, a: 0.019607844}
+  m_ClearFlags: 2
+  m_BackGroundColor: {r: 0.16176468, g: 0.16176468, b: 0.16176468, a: 0.019607844}
   m_NormalizedViewPortRect:
     serializedVersion: 2
     x: 0
@@ -701,7 +714,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.19607843, g: 0.19607843, b: 0.19607843, a: 1}
+  m_Color: {r: 0.9117647, g: 0.9117647, b: 0.9117647, a: 1}
   m_RaycastTarget: 1
   m_OnCullStateChanged:
     m_PersistentCalls:

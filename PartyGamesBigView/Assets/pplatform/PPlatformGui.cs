@@ -6,7 +6,6 @@ namespace PPlatform
 {
     public class PPlatformGui : MonoBehaviour
     {
-        public InputField _gameCode;
 
         // Use this for initialization
         void Start()
