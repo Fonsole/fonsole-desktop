@@ -11,6 +11,10 @@ namespace PPlatform
 {
     public class Platform : UnitySingleton<Platform>
     {
+
+
+        public KeyCode _ExitKey = KeyCode.Escape;
+
         private ANetgroup mNetgroup = null;
         private string mActiveName = "gamelist";
         private Dictionary<int, Controller> mController = new Dictionary<int, Controller>();
@@ -206,7 +210,11 @@ namespace PPlatform
         }
         private void Update()
         {
-
+            if(Input.GetKeyUp(_ExitKey))
+            {
+                Debug.Log("Exit application.");
+                Application.Quit();
+            }
         }
     }
 }
