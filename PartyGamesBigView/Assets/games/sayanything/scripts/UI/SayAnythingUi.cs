@@ -57,40 +57,7 @@ namespace PPlatform.SayAnything.Ui
             {
                 if (_Debug)
                 {
-                    SharedData data = new SharedData();
-                    data.judgeUserId = 0;
-                    data.judgedAnswerId = 1;
-                    data.question = "How are you?";
-                    data.state = GameState.ShowScore;
-                    data.answers.Add(1, "answer 1");
-                    data.answers.Add(2, "answer 2");
-                    data.answers.Add(3, "answer 3");
-                    data.answers.Add(4, "answer 4");
-                    data.answers.Add(5, "answer 5");
-                    data.AddVote(1, 2);
-                    data.AddVote(1, 3);
-                    data.AddVote(2, 1);
-                    data.AddVote(2, 1);
-                    data.AddVote(3, 1);
-                    data.AddVote(3, 1);
-                    data.AddVote(4, 1);
-                    data.AddVote(4, 1);
-                    data.AddVote(5, 1);
-                    data.AddVote(5, 1);
-
-                    data.roundScore[0] = 0;
-                    data.roundScore[1] = 1;
-                    data.roundScore[2] = 2;
-                    data.roundScore[3] = 3;
-                    data.roundScore[4] = 4;
-                    data.roundScore[5] = 5;
-                    data.totalScore[0] = 6;
-                    data.totalScore[1] = 7;
-                    data.totalScore[2] = 8;
-                    data.totalScore[3] = 9;
-                    data.totalScore[4] = 10;
-                    data.totalScore[5] = 11;
-                    return data;
+                    return GetDebugData();
                 }
                 else
                 {
@@ -103,22 +70,59 @@ namespace PPlatform.SayAnything.Ui
         {
 
         }
+        private SharedData GetDebugData()
+        {
 
-        //private void TestColors()
-        //{
+            SharedData data = new SharedData();
+            data.judgeUserId = 0;
+            data.judgedAnswerId = 1;
+            data.question = "Which two people (real or fictional) would you most like to see fight each other?";
+            data.state = GameState.ShowScore;
+            data.answers.Add(1, "answer 1");
+            data.answers.Add(2, "answer 2");
+            data.answers.Add(3, "answer 3");
+            data.answers.Add(4, "answer 4");
+            data.answers.Add(5, "answer 5");
+            data.AddVote(1, 2);
+            data.AddVote(1, 3);
+            data.AddVote(2, 1);
+            data.AddVote(2, 1);
+            data.AddVote(3, 1);
+            data.AddVote(3, 1);
+            data.AddVote(4, 1);
+            data.AddVote(4, 1);
+            data.AddVote(5, 1);
+            data.AddVote(5, 1);
 
-        //    for (int i = 0; i < 100; i++)
-        //    {
-        //        Color c = UnityEngine.Random.ColorHSV(0, 1, 0.5f, 0.75f, 0.4f, 0.9f, 1, 1);
-        //        Debug.Log("<color=" + "#" + ColorToHex(c) + ">" + c + "</color>");
-        //    }
-        //}
-        //string ColorToHex(Color32 color)
-        //{
-        //    string hex = color.r.ToString("X2") + color.g.ToString("X2") + color.b.ToString("X2");
-        //    return hex;
-        //}
- 
+            data.roundScore[0] = 0;
+            data.roundScore[1] = 1;
+            data.roundScore[2] = 2;
+            data.roundScore[3] = 3;
+            data.roundScore[4] = 4;
+            data.roundScore[5] = 5;
+            data.totalScore[0] = 6;
+            data.totalScore[1] = 7;
+            data.totalScore[2] = 8;
+            data.totalScore[3] = 9;
+            data.totalScore[4] = 10;
+            data.totalScore[5] = 11;
+            return data;
+        }
+
+        /// <summary>
+        /// Creats a string showing a users round and total score.
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <returns></returns>
+        public string GetUserScoreText(int userId)
+        {
+            int score = 0;
+            int totalScore = 0;
+            SharedData data = CurrentData;
+            data.roundScore.TryGetValue(userId, out score);
+            data.totalScore.TryGetValue(userId, out totalScore);
+            return "Score: " + score + "\nTotal Score: " + totalScore;
+        }
 
         public int[] GetActiveUsers()
         {

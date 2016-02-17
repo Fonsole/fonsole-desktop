@@ -75,12 +75,7 @@ namespace PPlatform.SayAnything.Ui
                 }
                 else if (data.state == GameState.ShowScore)
                 {
-                    int score = 0;
-                    int totalScore = 0;
-
-                    data.roundScore.TryGetValue(userId, out score);
-                    data.totalScore.TryGetValue(userId, out totalScore);
-                    _Text.text = "Score: " + score + "\nTotal Score: " + totalScore;
+                    _Text.text = SayAnythingUi.Instance.GetUserScoreText(userId);
                     SetColor(SayAnythingUi.Instance.GetUserColor(userId));
                     _VoteParent.gameObject.SetActive(true);
                     _VoteParent.Refresh(userId, data);
