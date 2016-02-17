@@ -4,6 +4,7 @@ using PPlatform.SayAnything;
 using System;
 using System.Linq;
 using PPlatform.Helper;
+using System.Collections.Generic;
 
 namespace PPlatform.SayAnything.Ui
 {
@@ -76,6 +77,26 @@ namespace PPlatform.SayAnything.Ui
             }
         }
 
+        private void Start()
+        {
+
+        }
+
+        //private void TestColors()
+        //{
+
+        //    for (int i = 0; i < 100; i++)
+        //    {
+        //        Color c = UnityEngine.Random.ColorHSV(0, 1, 0.5f, 0.75f, 0.4f, 0.9f, 1, 1);
+        //        Debug.Log("<color=" + "#" + ColorToHex(c) + ">" + c + "</color>");
+        //    }
+        //}
+        //string ColorToHex(Color32 color)
+        //{
+        //    string hex = color.r.ToString("X2") + color.g.ToString("X2") + color.b.ToString("X2");
+        //    return hex;
+        //}
+ 
 
         public int[] GetActiveUsers()
         {
@@ -146,9 +167,82 @@ namespace PPlatform.SayAnything.Ui
             }
             return "Someone(" + id + ")";
         }
+
+
+
+
+        public Color[] mColorList = new Color[]
+        {
+            ToColor(170, 114, 57),
+            ToColor(170, 136, 57),
+            ToColor(48, 61, 116),
+            ToColor(38, 91, 106),
+
+            ToColor(41, 150, 41),
+            ToColor(95, 39, 126),
+            ToColor(188, 188, 51),
+            ToColor(188, 51, 51),
+
+            ToColor(3, 36, 75),
+            ToColor(114, 34, 0),
+            ToColor(0, 78, 47),
+            ToColor(114, 70, 0)
+        };
+
+        public Dictionary<int, Color> mUserColor = new Dictionary<int, Color>();
+
+        ///// <summary>
+        ///// If we have a new user who needs a new color we check first if there is a color given to a user that doesn't exist anymore.
+        ///// After that we give out one of the free colors
+        ///// </summary>
+        //private void RefreshColorDictionary()
+        //{
+        //    Dictionary<int, Color> newDict = new Dictionary<int, Color>();
+
+        //    foreach(var v in mUserColor)
+        //    {
+        //        if(IsUserAvailable(v.Key) == false)
+        //        {
+        //            newDict.Add(v.Key, v.Value);
+        //        }
+        //    }
+        //    mUserColor = newDict;
+        //}
+
+        public bool IsUserAvailable(int userId)
+        {
+            if (Platform.Instance.Controllers.ContainsKey(userId))
+                return true;
+            return false;
+        }
+
+        public void AllocNewColor(int userId)
+        {
+            //TODO: use defined colors first before using random ones.
+            mUserColor[userId] = UnityEngine.Random.ColorHSV(0, 1, 0.5f, 0.75f, 0.4f, 0.9f, 1, 1);
+        }
         public Color GetUserColor(int id)
         {
-            return new Color(1, 0.5f, 0.5f, 1);
+            if(IsUserAvailable(id) == false)
+            {
+                //user that are offline get a grey color
+                return new Color(0.25f, 0.25f, 0.25f, 1);
+            }
+            else
+            {
+                if (mUserColor.ContainsKey(id) == false)
+                {
+                    AllocNewColor(id);
+                }
+                return mUserColor[id];
+            }
+            
+        }
+
+
+        public static Color ToColor(int r, int g, int b)
+        {
+            return new Color(r / 255.0f, g / 255.0f, b / 255.0f, 1);
         }
 
     }
