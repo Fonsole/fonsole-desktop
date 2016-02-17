@@ -28,6 +28,28 @@ namespace PPlatform.SayAnything.Ui
         public GameObject _AnsweringUI;
         public GameObject _JudgingAndVotingUI;
 
+        public Color[] _PlayerColors = new Color[]
+        {
+            ToColor(170, 114, 57),
+            ToColor(170, 136, 57),
+            ToColor(48, 61, 116),
+            ToColor(38, 91, 106),
+
+            ToColor(41, 150, 41),
+            ToColor(95, 39, 126),
+            ToColor(188, 188, 51),
+            ToColor(188, 51, 51),
+
+            ToColor(3, 36, 75),
+            ToColor(114, 34, 0),
+            ToColor(0, 78, 47),
+            ToColor(114, 70, 0)
+        };
+
+        private Dictionary<int, Color> mUserColor = new Dictionary<int, Color>();
+
+        //to help checking for preset colors that are already used
+        private Dictionary<Color, int> mColorUser = new Dictionary<Color, int>();
 
         public SharedData CurrentData
         {
@@ -171,43 +193,27 @@ namespace PPlatform.SayAnything.Ui
 
 
 
-        public Color[] mColorList = new Color[]
+
+        /// <summary>
+        /// If we have a new user who needs a new color we check first if there is a color given to a user that doesn't exist anymore.
+        /// After that we give out one of the free colors
+        /// </summary>
+        private void RefreshColorDictionary()
         {
-            ToColor(170, 114, 57),
-            ToColor(170, 136, 57),
-            ToColor(48, 61, 116),
-            ToColor(38, 91, 106),
-
-            ToColor(41, 150, 41),
-            ToColor(95, 39, 126),
-            ToColor(188, 188, 51),
-            ToColor(188, 51, 51),
-
-            ToColor(3, 36, 75),
-            ToColor(114, 34, 0),
-            ToColor(0, 78, 47),
-            ToColor(114, 70, 0)
-        };
-
-        public Dictionary<int, Color> mUserColor = new Dictionary<int, Color>();
-
-        ///// <summary>
-        ///// If we have a new user who needs a new color we check first if there is a color given to a user that doesn't exist anymore.
-        ///// After that we give out one of the free colors
-        ///// </summary>
-        //private void RefreshColorDictionary()
-        //{
-        //    Dictionary<int, Color> newDict = new Dictionary<int, Color>();
-
-        //    foreach(var v in mUserColor)
-        //    {
-        //        if(IsUserAvailable(v.Key) == false)
-        //        {
-        //            newDict.Add(v.Key, v.Value);
-        //        }
-        //    }
-        //    mUserColor = newDict;
-        //}
+            Dictionary<int, Color> newDict = new Dictionary<int, Color>();
+            Dictionary<Color, int> newColorDict = new Dictionary<Color, int>();
+            foreach (var v in mUserColor)
+            {
+                //keep the color in the list if it is an active user
+                if (IsUserAvailable(v.Key))
+                {
+                    newDict.Add(v.Key, v.Value);
+                    newColorDict.Add(v.Value, v.Key);
+                }
+            }
+            mUserColor = newDict;
+            mColorUser = newColorDict;
+        }
 
         public bool IsUserAvailable(int userId)
         {
@@ -218,8 +224,35 @@ namespace PPlatform.SayAnything.Ui
 
         public void AllocNewColor(int userId)
         {
-            //TODO: use defined colors first before using random ones.
-            mUserColor[userId] = UnityEngine.Random.ColorHSV(0, 1, 0.5f, 0.75f, 0.4f, 0.9f, 1, 1);
+            //first throw out all colors that aren't used by known users
+            RefreshColorDictionary();
+
+            bool found = false;
+            Color result = Color.white;
+
+            //look for the next free color
+            for (int i = 0; i < _PlayerColors.Length; i++ )
+            {
+                if(mColorUser.ContainsKey(_PlayerColors[i]) == false)
+                {
+                    //found a unused one
+                    result = _PlayerColors[i];
+                    found = true;
+                    break;
+                }
+            }
+
+
+            //backup strategy. It is unclear how many users we need to store (as some might be offline for some time and then
+            //return?)
+            //in case there are more users than colors and all are used -> create a random one
+            if (found == false)
+            {
+                result = UnityEngine.Random.ColorHSV(0, 1, 0.5f, 0.75f, 0.4f, 0.9f, 1, 1);
+            }
+
+            mUserColor[userId] = result;
+            mColorUser.Add(result, userId);
         }
         public Color GetUserColor(int id)
         {
