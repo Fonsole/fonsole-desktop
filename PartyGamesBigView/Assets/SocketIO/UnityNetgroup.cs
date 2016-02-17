@@ -12,7 +12,7 @@ namespace PPlatform
     {
         private SocketIOComponent mSocket;
 
-
+        public string _Url = "ws://localhost:3001/socket.io/?EIO=4&transport=websocket";
         
 
         private void Awake()
@@ -22,7 +22,7 @@ namespace PPlatform
         protected override void InitSocket()
         {
             mSocket = gameObject.AddComponent<SocketIOComponent>();
-            mSocket.url = "ws://localhost:3001/socket.io/?EIO=4&transport=websocket";
+            mSocket.url = _Url;
             mSocket.On("open", OnOpen);
             mSocket.On("connect", OnConnected);
             mSocket.On(MESSAGE_NAME, OnMessage);
