@@ -16,7 +16,7 @@ namespace PPlatform.SayAnything.Ui
     /// This allows to feed in mocking data to test and design the ui without
     /// having to run the whole game.
     /// </summary>
-    public class SayAnythingUi : UnitySingleton<SayAnythingUi>
+    public class SayAnythingUi : SceneSingleton<SayAnythingUi>
     {
 
         public bool _Debug = true;

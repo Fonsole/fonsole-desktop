@@ -7,20 +7,34 @@ using PPlatform.SayAnything;
 
 public class ControllerUi : UserUi
 {
-
+    private int mUserId = SharedData.UNDEFINED;
     
     public void Refresh(int userId, SharedData data)
     {
-        if (userId == SharedData.UNDEFINED)
+
+        if (mUserId != userId)
         {
-            //inactive user -> set to default design
-            SetDefault();
+            //only call methods if something changed
+            if (userId == SharedData.UNDEFINED)
+            {
+                //inactive user -> set to default design
+                SetDefault();
+            }
+            else
+            {
+                //switched to active
+                //active user. change name and color
+                SetColor(SayAnythingUi.Instance.GetUserColor(userId));
+                SetUserName(SayAnythingUi.Instance.GetUserName(userId));
+
+                //send out sound event
+                if (AudioManager.Instance != null)
+                    AudioManager.Instance.OnUserJoin();
+            }
+
+
+
         }
-        else
-        {
-            //active user. change name and color
-            SetColor(SayAnythingUi.Instance.GetUserColor(userId));
-            SetUserName(SayAnythingUi.Instance.GetUserName(userId));
-        }
+        mUserId = userId;
     }
 }
