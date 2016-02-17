@@ -11,6 +11,10 @@ namespace PPlatform
 {
     public class Platform : UnitySingleton<Platform>
     {
+        public static readonly int VIEW_USER_ID = 0;
+        public static readonly int HOST_CONTROLLER_USER_ID = 1;
+
+        private int mNextUserId = HOST_CONTROLLER_USER_ID; //start with the host controller user id
 
 
         public KeyCode _ExitKey = KeyCode.Escape;
@@ -18,6 +22,8 @@ namespace PPlatform
         private ANetgroup mNetgroup = null;
         private string mActiveName = "gamelist";
         private Dictionary<int, Controller> mController = new Dictionary<int, Controller>();
+        public Dictionary<int, int> mConnectionIdToUserId = new Dictionary<int, int>();
+        public Dictionary<int, int> mUserIdToConnectionId = new Dictionary<int, int>();
 
         private string mGameCode;
 
@@ -41,7 +47,8 @@ namespace PPlatform
         string TAG_CONTROLLER_DISCOVERY = "PLATFORM_CONTROLLER_DISCOVERY";
         private struct ControllerDiscoveryMessage
         {
-            public int id;
+            public int connectionId;
+            public int userId;
             public string name;
         }
 
@@ -112,37 +119,13 @@ namespace PPlatform
         {
             mActiveName = name;
         }
-        private void HandlePlatformMessage(string tag, string content, int conId)
+        private void HandlePlatformMessage(string tag, string content, int userId)
         {
-            if (tag == TAG_CONTROLLER_REGISTER)
-            {
-                //send out discovery broadcast (which will be received locally too and handled
-
-                ControllerRegisterMessage msg = JsonWrapper.FromJson<ControllerRegisterMessage>(content);
-                Debug.Log("ControllerRegisterMessage received");
-                ControllerDiscoveryMessage discoveryMsg = new ControllerDiscoveryMessage();
-                discoveryMsg.id = conId;
-                discoveryMsg.name = msg.name;
-                Send(TAG_CONTROLLER_DISCOVERY, JsonWrapper.ToJson(discoveryMsg));
-
-            }
-            if (tag == TAG_CONTROLLER_DISCOVERY)
-            {
-                //add controller to the list
-                ControllerDiscoveryMessage discoveryMsg = JsonWrapper.FromJson<ControllerDiscoveryMessage>(content);
-
-                Controller c = new Controller(discoveryMsg.id, discoveryMsg.name);
-                Debug.Log("Added new " + c);
-                mController.Add(discoveryMsg.id, c);
-
-
-                Send(TAG_ENTER_GAME, mActiveName, discoveryMsg.id);
-            }
 
 
             //send the message out to the games
             if (Message != null)
-                Message(tag, content, conId);
+                Message(tag, content, userId);
 
             if (tag == TAG_ENTER_GAME)
             {
@@ -151,11 +134,40 @@ namespace PPlatform
 
             if (tag == TAG_CONTROLLER_LEFT)
             {
-                Debug.Log("Remove " + mController[conId]);
+                Debug.Log("Remove " + mController[userId]);
                 //remove controller
-                mController.Remove(conId);
+                RemoveController(userId);
             }
 
+        }
+
+        private void AddController(int connectionId, int userId, string name)
+        {
+            Controller c = new Controller(userId, name);
+            Debug.Log("Added new " + c);
+            mController.Add(userId, c);
+            mConnectionIdToUserId[connectionId] = userId;
+            mUserIdToConnectionId[userId] = userId;
+        }
+        public void RemoveController(int userId)
+        {
+            int conId = mUserIdToConnectionId[userId];
+            mController.Remove(userId);
+            mUserIdToConnectionId.Remove(conId);
+            mConnectionIdToUserId.Remove(conId);
+        }
+        public int ConnectionIdToUserId(int connectionId)
+        {
+            if (connectionId == -1)
+                return -1;
+            return connectionId;
+        }
+
+        public int UserIdToConnectionId(int userId)
+        {
+            if (userId == -1)
+                return -1;
+            return userId;
         }
         private void OnNetgroupMessageInternal(ANetgroup.SignalingMessageType type, int conId, string content)
         {
@@ -177,8 +189,45 @@ namespace PPlatform
             else if (type == ANetgroup.SignalingMessageType.UserMessage)
             {
                 PlatformMessage pm = JsonWrapper.FromJson<PlatformMessage>(content);
-                //Debug.Log("Tag: " + pm.tag + " content " + pm.content + " raw json: " + content);
-                HandlePlatformMessage(pm.tag, pm.content, conId);
+
+                //special platform messages which are handled before controllers are fully registerd
+                if (pm.tag == TAG_CONTROLLER_REGISTER)
+                {
+                    //send out discovery broadcast (which will be received locally too and handled below)
+
+                    ControllerRegisterMessage msg = JsonWrapper.FromJson<ControllerRegisterMessage>(pm.content);
+                    Debug.Log("ControllerRegisterMessage received");
+                    ControllerDiscoveryMessage discoveryMsg = new ControllerDiscoveryMessage();
+                    discoveryMsg.connectionId = conId;
+                    discoveryMsg.userId = conId;
+                    discoveryMsg.name = msg.name;
+
+                    PlatformMessage pmout = new PlatformMessage();
+                    pmout.tag = TAG_CONTROLLER_DISCOVERY;
+                    pmout.content = JsonWrapper.ToJson(discoveryMsg);
+
+                    //use internal as the user isn't discovered locally yet before this message is received
+                    SendInternal(JsonWrapper.ToJson(pmout));
+
+                    //DO NOT PASS THIS MESSAGE TO HandlePlatformMessage. this message is internal only
+                    //wait until controller discovery is received.
+                }else if (pm.tag == TAG_CONTROLLER_DISCOVERY)
+                {
+                    //add controller to the list
+                    ControllerDiscoveryMessage discoveryMsg = JsonWrapper.FromJson<ControllerDiscoveryMessage>(pm.content);
+                    AddController(discoveryMsg.connectionId, discoveryMsg.userId, discoveryMsg.name);
+
+
+                    Send(TAG_ENTER_GAME, mActiveName, discoveryMsg.userId);
+
+                    //controller is known now -> handle the messages
+                    HandlePlatformMessage(pm.tag, pm.content, discoveryMsg.userId);
+                }
+                else
+                {
+                    HandlePlatformMessage(pm.tag, pm.content, ConnectionIdToUserId(conId));
+                }
+
             }
 
 
@@ -186,16 +235,34 @@ namespace PPlatform
 
         }
 
-        public void Send(string tag, string content, int lTo = -1)
+
+        /// <summary>
+        /// Sends a message to a certain user id or to everyone (including back to the sender)
+        /// 
+        /// 
+        /// </summary>
+        /// <param name="tag"> Any kind of tag. Make sure it is unique to avoid conflicts with other games</param>
+        /// <param name="content">string, ideally json as content</param>
+        /// <param name="lToUserId">A user id or -1 for broadcast</param>
+        public void Send(string tag, string content, int lToUserId = -1)
         {
             PlatformMessage pm = new PlatformMessage();
             pm.tag = tag;
             pm.content = content;
 
-            Debug.Log("Snd: [Tag:" + tag + " Content:" + content + " To:" + lTo + "]");
-            mNetgroup.SendMessageTo(JsonWrapper.ToJson(pm), lTo);
+            int connectionId = UserIdToConnectionId(lToUserId);
+            SendInternal(JsonWrapper.ToJson(pm), connectionId);
         }
-
+        
+        /// <summary>
+        /// Internal message: Sending a string directly to the message system via the connection id.
+        /// </summary>
+        /// <param name="content"></param>
+        /// <param name="lToConnectionId"></param>
+        private void SendInternal(string content, int lToConnectionId = -1)
+        {
+            mNetgroup.SendMessageTo(content, lToConnectionId);
+        }
 
         private string GetRandomKey()
         {
@@ -216,5 +283,6 @@ namespace PPlatform
                 Application.Quit();
             }
         }
+
     }
 }

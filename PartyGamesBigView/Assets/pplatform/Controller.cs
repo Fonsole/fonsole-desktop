@@ -7,10 +7,10 @@ namespace PPlatform
 {
     public class Controller
     {
-        private int mId;
-        public int Id
+        private int mUserId;
+        public int UserId
         {
-            get { return mId; }
+            get { return mUserId; }
         }
 
         private string mName;
@@ -21,14 +21,14 @@ namespace PPlatform
 
         public Controller(int id, string name)
         {
-            mId = id;
+            mUserId = id;
             mName = name;
         }
 
 
         public override string ToString()
         {
-            return "Controller[id:" + mId + " name:" + mName + "]";
+            return "Controller[id:" + mUserId + " name:" + mName + "]";
         }
     }
 }

@@ -337,7 +337,7 @@
          */
         function leaveGame()
         {
-            gPlatform.enterGame("./gamelist.html");
+            gPlatform.enterGame("gamelist");
         }
 
 

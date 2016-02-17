@@ -4,6 +4,14 @@
 var TAG = {};
 TAG.CONTROLLER_REGISTER = "PLATFORM_CONTROLLER_REGISTER";
 TAG.CONTROLLER_DISCOVERY = "PLATFORM_CONTROLLER_DISCOVERY";
+
+function ControllerDiscoveryMessage(lConnectionId, lUserId, lName)
+{
+    this.connectionId = lConnectionId;
+    this.userId = lUserId;
+    this.name = lName;
+}
+
 TAG.CONTROLLER_LEFT = "PLATFORM_CONTROLLER_LEFT";
 TAG.VIEW_DISCOVERY = "PLATFORM_VIEW_DISCOVERY";
 TAG.ENTER_GAME = "PLATFORM_ENTER_GAME";
@@ -34,6 +42,10 @@ TAG.EXIT_GAME = "PLATFORM_EXIT_GAME";
      
     var self = this;
     var gConnected = false;
+    
+    
+    this.VIEW_USER_ID = 0;
+    this.HOST_CONTROLLER_USER_ID = 1;
     
     //only available on the view side for now
     var mControllers = {};

@@ -454,12 +454,12 @@ namespace PPlatform.SayAnything
             int randomIndex = UnityEngine.Random.Range(0, count - 1);
             
 
-            var en = Platform.Instance.Controllers.OrderBy<KeyValuePair<int, Controller>, int>((v) => v.Value.Id);
+            var en = Platform.Instance.Controllers.OrderBy<KeyValuePair<int, Controller>, int>((v) => v.Value.UserId);
             int nm = 0;
             foreach(var v in en)
             {
                 if (nm == randomIndex)
-                    return v.Value.Id;
+                    return v.Value.UserId;
                 nm++;
             }
 
@@ -468,7 +468,7 @@ namespace PPlatform.SayAnything
 
         private int GetNextJudgeId(int last)
         {
-            var en = Platform.Instance.Controllers.OrderBy<KeyValuePair<int, Controller>, int>((v) => v.Value.Id);
+            var en = Platform.Instance.Controllers.OrderBy<KeyValuePair<int, Controller>, int>((v) => v.Value.UserId);
 
             bool lastFound = false;
             int next = -1;
@@ -476,10 +476,10 @@ namespace PPlatform.SayAnything
             {
                 if(lastFound)
                 {
-                    next = v.Value.Id;
+                    next = v.Value.UserId;
                     break;
                 }
-                if(v.Value.Id == last)
+                if(v.Value.UserId == last)
                 {
                     lastFound = true;
                 }
@@ -491,7 +491,7 @@ namespace PPlatform.SayAnything
             {
                 if(en.Any())
                 {
-                    next = en.First().Value.Id;
+                    next = en.First().Value.UserId;
                 }
             }
 
