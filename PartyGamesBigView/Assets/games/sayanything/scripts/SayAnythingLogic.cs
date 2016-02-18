@@ -181,7 +181,14 @@ namespace PPlatform.SayAnything
 
         private bool HasEnoughPlayers()
         {
-            return Platform.Instance.Controllers.Count >= 2; //TODO: should be 3 for the future. 2 for testing
+            int activePlayers = 0;
+            
+            foreach(var v in Platform.Instance.Controllers)
+            {
+                if(v.Value.IsAvailable)
+                    activePlayers++;
+            }
+            return activePlayers >=3;
         }
 
         public void OnMessage(string lTag, string lContent, int lConId)
@@ -449,24 +456,47 @@ namespace PPlatform.SayAnything
         /// <returns></returns>
         private int GetRandomUserId()
         {
-            int count = Platform.Instance.Controllers.Count;
+            List<Controller> activeControllers = Platform.Instance.Controllers.Values.Where((x) => { return x.IsAvailable; }).ToList();
+
+            int count = activeControllers.Count;
 
             int randomIndex = UnityEngine.Random.Range(0, count - 1);
-            
 
-            var en = Platform.Instance.Controllers.OrderBy<KeyValuePair<int, Controller>, int>((v) => v.Value.UserId);
-            int nm = 0;
-            foreach(var v in en)
+            return activeControllers[randomIndex].UserId;
+        }
+        
+        private int GetNextJudgeId(int last)
+        {
+            List<Controller> activeControllers = Platform.Instance.Controllers.Values.Where((x) => { return x.IsAvailable; }).OrderBy((x) =>{ return x.UserId;}).ToList();
+
+            bool lastFound = false;
+            int next = -1;
+            foreach (var v in activeControllers)
             {
-                if (nm == randomIndex)
-                    return v.Value.UserId;
-                nm++;
+                if (lastFound)
+                {
+                    next = v.UserId;
+                    break;
+                }
+                if (v.UserId == last)
+                {
+                    lastFound = true;
+                }
             }
 
-            return -1;
-        }
 
-        private int GetNextJudgeId(int last)
+            //the last user was the last one in the list? restart with the first
+            if (lastFound && next == -1)
+            {
+                if (activeControllers.Any())
+                {
+                    next = activeControllers.First().UserId;
+                }
+            }
+            return next;
+
+        }
+        private int GetNextJudgeId_old(int last)
         {
             var en = Platform.Instance.Controllers.OrderBy<KeyValuePair<int, Controller>, int>((v) => v.Value.UserId);
 
