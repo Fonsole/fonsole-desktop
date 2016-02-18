@@ -13,15 +13,34 @@ namespace PPlatform
             get { return mUserId; }
         }
 
+        private int mConnectionId = -1;
+        public int ConnectionId
+        {
+            get
+            {
+                return mConnectionId;
+            }
+            set
+            {
+                mConnectionId = value;
+            }
+        }
+
+        public bool IsAvailable
+        {
+            get { return mConnectionId != -1; }
+        }
+
         private string mName;
         public string Name
         {
             get { return mName; }
         }
 
-        public Controller(int id, string name)
+        public Controller(int connectionId, int userId, string name)
         {
-            mUserId = id;
+            mConnectionId = connectionId;
+            mUserId = userId;
             mName = name;
         }
 
@@ -30,5 +49,7 @@ namespace PPlatform
         {
             return "Controller[id:" + mUserId + " name:" + mName + "]";
         }
+
+
     }
 }

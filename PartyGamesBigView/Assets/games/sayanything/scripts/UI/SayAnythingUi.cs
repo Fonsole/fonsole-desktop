@@ -124,9 +124,13 @@ namespace PPlatform.SayAnything.Ui
             return "Score: " + score + "\nTotal Score: " + totalScore;
         }
 
-        public int[] GetActiveUsers()
+        public IEnumerable<int> GetActiveUsers()
         {
-            return Platform.Instance.Controllers.Keys.ToArray();
+            foreach(var v in Platform.Instance.Controllers)
+            {
+                if(v.Value.IsAvailable)
+                    yield return v.Value.UserId;
+            }
         }
 
         public void FixedUpdate()

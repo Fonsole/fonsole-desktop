@@ -9,6 +9,11 @@ using UnityEngine.SceneManagement;
 
 namespace PPlatform
 {
+    /// <summary>
+    /// Main class giving access to everything shared between multiple games + to the network.
+    /// 
+    /// 
+    /// </summary>
     public class Platform : UnitySingleton<Platform>
     {
         public static readonly int VIEW_USER_ID = 0;
@@ -21,9 +26,11 @@ namespace PPlatform
 
         private ANetgroup mNetgroup = null;
         private string mActiveName = "gamelist";
+        /// <summary>
+        /// Key is the user id
+        /// </summary>
         private Dictionary<int, Controller> mController = new Dictionary<int, Controller>();
-        public Dictionary<int, int> mConnectionIdToUserId = new Dictionary<int, int>();
-        public Dictionary<int, int> mUserIdToConnectionId = new Dictionary<int, int>();
+        private Dictionary<int, int> mConnectionIdToUserId = new Dictionary<int, int>();
 
         private string mGameCode;
 
@@ -65,7 +72,7 @@ namespace PPlatform
         string TAG_EXIT_GAME = "PLATFORM_EXIT_GAME";
 
 
-        private int mOwnId = -1;
+        private int mOwnConnectionId = -1;
         public event Action<string, string, int> Message;
 
         private struct PlatformMessage
@@ -134,57 +141,77 @@ namespace PPlatform
 
             if (tag == TAG_CONTROLLER_LEFT)
             {
-                Debug.Log("Remove " + mController[userId]);
                 //remove controller
-                RemoveController(userId);
+                DeactivateController(userId);
             }
 
         }
 
-        private void AddController(int connectionId, int userId, string name)
+        private void ActivateController(int connectionId, int userId, string name)
         {
-            Controller c = new Controller(userId, name);
-            Debug.Log("Added new " + c);
-            mController.Add(userId, c);
-            mConnectionIdToUserId[connectionId] = userId;
-            mUserIdToConnectionId[userId] = userId;
+            if(mController.ContainsKey(userId))
+            {
+                mController[userId].ConnectionId = connectionId;
+                Debug.Log("User reconnected " + mController[userId]);
+                mConnectionIdToUserId[connectionId] = userId;
+            }
+            else
+            {
+                Controller c = new Controller(connectionId, userId, name);
+                Debug.Log("Added new " + c);
+                mController.Add(userId, c);
+                mConnectionIdToUserId[connectionId] = userId;
+            }
         }
-        public void RemoveController(int userId)
+        public void DeactivateController(int userId)
         {
-            int conId = mUserIdToConnectionId[userId];
-            mController.Remove(userId);
-            mUserIdToConnectionId.Remove(conId);
-            mConnectionIdToUserId.Remove(conId);
+            Debug.Log("Deactivate " + mController[userId]);
+            int connectionId = mController[userId].ConnectionId;
+            mController[userId].ConnectionId = -1;
+            mConnectionIdToUserId.Remove(connectionId);
         }
         public int ConnectionIdToUserId(int connectionId)
         {
-            if (connectionId == -1)
+            if (connectionId == mOwnConnectionId)
+                return VIEW_USER_ID;
+
+            if (connectionId == -1 || mConnectionIdToUserId.ContainsKey(connectionId) == false)
                 return -1;
-            return connectionId;
+            return mConnectionIdToUserId[connectionId];
         }
 
         public int UserIdToConnectionId(int userId)
         {
-            if (userId == -1)
+            if (userId == VIEW_USER_ID)
+                return mOwnConnectionId;
+
+            if (userId == -1 || mController.ContainsKey(userId) == false)
                 return -1;
-            return userId;
+            return mController[userId].ConnectionId;
         }
         private void OnNetgroupMessageInternal(ANetgroup.SignalingMessageType type, int conId, string content)
         {
             //Debug.Log("Message type: " + type + " con id: " + conId + " content: " + content);
             if (type == ANetgroup.SignalingMessageType.Connected)
             {
-                mOwnId = conId;
+                mOwnConnectionId = conId;
                 mGameCode = content;
             }
             else if (type == ANetgroup.SignalingMessageType.UserJoined)
             {
                 //send out the view discovery message to the new user so the controller knows how to contact the view
-                Send(TAG_VIEW_DISCOVERY, "", conId);
+
+                //user isn't registered as controller yet -> user intenal send
+                SendInternal(TAG_VIEW_DISCOVERY, "", conId);
             }
             else if (type == ANetgroup.SignalingMessageType.UserLeft)
             {
-                HandlePlatformMessage(TAG_CONTROLLER_LEFT, null, conId);
+                int userId = ConnectionIdToUserId(conId);
+
+                //only forward if the connection had a user id. if not the user wasn't known in the first place
+                //and probably failed to register due to too many players, wrong version, ....
+                if(userId != -1)
+                    HandlePlatformMessage(TAG_CONTROLLER_LEFT, null, userId);
             }
             else if (type == ANetgroup.SignalingMessageType.UserMessage)
             {
@@ -196,18 +223,33 @@ namespace PPlatform
                     //send out discovery broadcast (which will be received locally too and handled below)
 
                     ControllerRegisterMessage msg = JsonWrapper.FromJson<ControllerRegisterMessage>(pm.content);
+
+                    int userId = -1;
+                    foreach(var v in mController)
+                    {
+                        if(v.Value.Name == msg.name)
+                        {
+                            //same name, same user
+                            userId = v.Value.UserId;
+                        }
+                    }
+                    if(userId == -1)
+                    {
+                        //couldn't find the user based on his name -> give new id
+                        userId = mNextUserId;
+                        mNextUserId++;
+                    }
+
+
                     Debug.Log("ControllerRegisterMessage received");
                     ControllerDiscoveryMessage discoveryMsg = new ControllerDiscoveryMessage();
                     discoveryMsg.connectionId = conId;
-                    discoveryMsg.userId = conId;
+                    discoveryMsg.userId = userId;
                     discoveryMsg.name = msg.name;
 
-                    PlatformMessage pmout = new PlatformMessage();
-                    pmout.tag = TAG_CONTROLLER_DISCOVERY;
-                    pmout.content = JsonWrapper.ToJson(discoveryMsg);
+                    //send a broadcast that a new user was registered telling the user id
+                    SendInternal(TAG_CONTROLLER_DISCOVERY, JsonWrapper.ToJson(discoveryMsg));
 
-                    //use internal as the user isn't discovered locally yet before this message is received
-                    SendInternal(JsonWrapper.ToJson(pmout));
 
                     //DO NOT PASS THIS MESSAGE TO HandlePlatformMessage. this message is internal only
                     //wait until controller discovery is received.
@@ -215,7 +257,7 @@ namespace PPlatform
                 {
                     //add controller to the list
                     ControllerDiscoveryMessage discoveryMsg = JsonWrapper.FromJson<ControllerDiscoveryMessage>(pm.content);
-                    AddController(discoveryMsg.connectionId, discoveryMsg.userId, discoveryMsg.name);
+                    ActivateController(discoveryMsg.connectionId, discoveryMsg.userId, discoveryMsg.name);
 
 
                     Send(TAG_ENTER_GAME, mActiveName, discoveryMsg.userId);
@@ -225,7 +267,16 @@ namespace PPlatform
                 }
                 else
                 {
-                    HandlePlatformMessage(pm.tag, pm.content, ConnectionIdToUserId(conId));
+                    int userId = ConnectionIdToUserId(conId);
+
+                    if (userId != -1)
+                    {
+                        HandlePlatformMessage(pm.tag, pm.content, userId);
+                    }
+                    else
+                    {
+                        Debug.LogWarning("Received a message from an unregistered connection " + conId + " content: " + content );
+                    }
                 }
 
             }
@@ -251,7 +302,30 @@ namespace PPlatform
             pm.content = content;
 
             int connectionId = UserIdToConnectionId(lToUserId);
-            SendInternal(JsonWrapper.ToJson(pm), connectionId);
+            if (lToUserId != -1 && connectionId == -1)
+            {
+                Debug.Log("Can't send message to the given user. User isn't connected.");
+            }
+            else
+            {
+                SendInternal(JsonWrapper.ToJson(pm), connectionId);
+            }
+        }
+
+        /// <summary>
+        /// Sends a message using the connection id. This is used to send messages
+        /// before a user gets registered as controller and thus won't have a user id yet.
+        /// </summary>
+        /// <param name="tag"></param>
+        /// <param name="content"></param>
+        /// <param name="lConnectionId"></param>
+        private void SendInternal(string tag, string content, int lConnectionId = -1)
+        {
+            PlatformMessage pm = new PlatformMessage();
+            pm.tag = tag;
+            pm.content = content;
+
+            SendInternal(JsonWrapper.ToJson(pm), lConnectionId);
         }
         
         /// <summary>
