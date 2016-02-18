@@ -44,8 +44,14 @@ namespace PPlatform
         {
             get { return mController; }
         }
-
-
+        private bool mIsConnected = false;
+        public bool IsConnected
+        {
+            get
+            {
+                return mIsConnected;
+            }
+        }
         string TAG_CONTROLLER_REGISTER = "PLATFORM_CONTROLLER_REGISTER";
         struct ControllerRegisterMessage
         {
@@ -200,6 +206,11 @@ namespace PPlatform
             {
                 mOwnConnectionId = conId;
                 mGameCode = content;
+                mIsConnected = true;
+            }
+            else if (type == ANetgroup.SignalingMessageType.Closed)
+            {
+                mIsConnected = false;
             }
             else if (type == ANetgroup.SignalingMessageType.UserJoined)
             {

@@ -21,15 +21,25 @@ namespace PPlatform.Ui
         // Update is called once per frame
         void Update()
         {
-
-            if (mLastKnownCode != Platform.Instance.GameCode)
+            if(Platform.Instance.IsConnected)
             {
-                mLastKnownCode = Platform.Instance.GameCode;
-                if (_Text != null)
-                    _Text.text = mLastKnownCode;
-                if (_InputField != null)
-                    _InputField.text = mLastKnownCode;
+                if (mLastKnownCode != Platform.Instance.GameCode)
+                {
+                    mLastKnownCode = Platform.Instance.GameCode;
+                    if (_Text != null)
+                        _Text.text = mLastKnownCode;
+                    if (_InputField != null)
+                        _InputField.text = mLastKnownCode;
+                }
             }
+            else
+            {
+                if (_Text != null)
+                    _Text.text = "";
+                if (_InputField != null)
+                    _InputField.text = "";
+            }
+
         }
     }
 
