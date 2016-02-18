@@ -113,6 +113,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2a720da0be9d303468b4e0929bc31558, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _ExitKey: 27
 --- !u!114 &507225772
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -124,6 +125,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 69e56366cb4c2554aba54e85d8800f1b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _Url: ws://because-why-not.com:3001/socket.io/?EIO=4&transport=websocket
 --- !u!4 &507225773
 Transform:
   m_ObjectHideFlags: 0
