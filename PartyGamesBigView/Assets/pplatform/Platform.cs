@@ -6,6 +6,7 @@ using System.Text;
 using System.Collections.Generic;
 using PPlatform.Helper;
 using UnityEngine.SceneManagement;
+using Luz.Tools;
 
 namespace PPlatform
 {
@@ -95,10 +96,13 @@ namespace PPlatform
             DontDestroyOnLoad(this.gameObject);
             mGameCode = GetRandomKey();
             mNetgroup.Open(mGameCode, OnNetgroupMessageInternal);
+
+            DebugConsole.ActivateConsole();
         }
 
         private void OnGUI()
         {
+            DebugConsole.DrawConsole();
             //GUILayout.BeginVertical();
             //if (GUILayout.Button("Exit"))
             //{
