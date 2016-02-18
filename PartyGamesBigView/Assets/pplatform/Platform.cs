@@ -240,6 +240,8 @@ namespace PPlatform
                         mNextUserId++;
                     }
 
+                    if (string.IsNullOrEmpty(msg.name))
+                        msg.name = "player " + userId;
 
                     Debug.Log("ControllerRegisterMessage received");
                     ControllerDiscoveryMessage discoveryMsg = new ControllerDiscoveryMessage();

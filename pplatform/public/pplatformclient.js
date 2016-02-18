@@ -18,11 +18,12 @@ TAG.ENTER_GAME = "PLATFORM_ENTER_GAME";
 TAG.EXIT_GAME = "PLATFORM_EXIT_GAME";
 
 
- function Controller(lId, lName)
+ function Controller(lConnectionId, lUserId, lName)
  {
      var self = this;
      //TODO: this should be private
-     this.id = lId;
+     var connectionId = lConnectionId;
+     var userId = lUserId;
      var name = lName;
      
      this.getName = function()
@@ -32,7 +33,7 @@ TAG.EXIT_GAME = "PLATFORM_EXIT_GAME";
      
      this.getId = function()
      {
-         return self.id;
+         return self.userId;
      };
  }
  
@@ -73,11 +74,20 @@ TAG.EXIT_GAME = "PLATFORM_EXIT_GAME";
     
     var mMessageListener = [];
     var sigChan = new Netgroup(serverUrl);
+    this.getOwnUserId = function()
+    {
+        return mOwnUserId;
+    };
     this.getOwnId = function()
+    {
+        return mOwnUserId;
+    };
+    this.getOwnConnectionId = function()
     {
         return sigChan.getOwnId();
     };
     
+    var mOwnUserId = -1;
     //the name the user chose. 
     var mOwnName = null;
     
@@ -166,8 +176,13 @@ TAG.EXIT_GAME = "PLATFORM_EXIT_GAME";
         }else if(lTag == TAG.CONTROLLER_DISCOVERY)
         {
             var controllerDiscoveryData = JSON.parse(lContent);
-            var c = new Controller(controllerDiscoveryData.id, controllerDiscoveryData.name);
-            mControllers[controllerDiscoveryData.id] = c;
+            var c = new Controller(controllerDiscoveryData.connectionId, controllerDiscoveryData.userId, controllerDiscoveryData.name);
+            mControllers[controllerDiscoveryData.userId] = c;
+            if(self.getOwnConnectionId() == controllerDiscoveryData.connectionId)
+            {
+                mOwnName = controllerDiscoveryData.name;
+                mOwnUserId = controllerDiscoveryData.userId;
+            }
         }else if(lTag == TAG.VIEW_DISCOVERY)
         {
             mViewId = lId; //store the id for later
@@ -176,7 +191,7 @@ TAG.EXIT_GAME = "PLATFORM_EXIT_GAME";
             var name = mOwnName;
             if(name === null || name === "" || typeof name === "undefined")
             {
-                name = "player " + self.getOwnId();
+                name = ""; //empty name will be replaced by the server
             }
             //register as controller at the view
             var controllerRegisterData = {"name": name};
