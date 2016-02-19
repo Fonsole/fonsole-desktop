@@ -8,7 +8,7 @@
     <style>
       * { margin: 0; padding: 0; box-sizing: border-box; }
       body { font: Helvetica, Arial; }
-      
+      iframe{width:100%}
       #controldiv { background: #000; padding: 3px; width: 100%; color: white;}
       label {white-space:nowrap;}
       #openroom  { margin-right: 20px;}
@@ -33,21 +33,19 @@
         <input id="gameid" autocomplete="off" />
         
       </span>
-      <span id="joinspan">
+      
         <label>Game code: <input id="roomname" autocomplete="off" /></label>
         <label>Name:<input id="playername" autocomplete="off" /> </label>
         <button id="joinroom">Join</button>
-      </div>
     </div>
-    <iframe id="contentframe" src="./notconnected.html" width="100%" height="1080"> </iframe>
-    <form id="msgform" action="" hidden>
-        <ul id="messages"></ul>
-        <input id="messageinput" autocomplete="off" /><button>Send</button>
-    </form>
+      
+          <iframe id="contentframe" src="./notconnected.html" height="1080"> </iframe>
+    
 <script>
 
    //Connect buttons to platform functionality
-    
+    $('#playername').val(localStorage.playername);
+    $('#roomname').val(localStorage.gameid);
     var gPlatform = new PPlatform();
     
 //Platform UI
@@ -58,13 +56,15 @@
     
     $('#joinroom').click(function(){
         gPlatform.Log("Join room");
-        var msg = $('#roomname').val().toUpperCase();
-        $('#gameid').val(msg);
+        var gameid = $('#roomname').val().toUpperCase();
+        $('#gameid').val(gameid);
         
         
         var playername = $('#playername').val();
         
-        gPlatform.join(msg, playername);
+        localStorage.gameid = gameid;
+        localStorage.playername = playername;
+        gPlatform.join(gameid, playername);
     });
     
     $('#leaveroom').click(function(){

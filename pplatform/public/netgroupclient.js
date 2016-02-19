@@ -163,13 +163,10 @@
                 if(lMsgObj.type == SignalingMessageType.Connected)
                 {
                     onConnect(lMsgObj.content, lMsgObj.id);
-                }else if(lMsgObj.type == SignalingMessageType.Connected)
-                {
-                    onConnect(lMsgObj.content, lMsgObj.id);
                 }else if(lMsgObj.type == SignalingMessageType.UserMessage)
                 {
                     onUserMessage(lMsgObj.id, lMsgObj.content);
-                }else if(lMsgObj.type == SignalingMessageType.UserLeft)
+                }else if(lMsgObj.type == SignalingMessageType.UserJoined)
                 {
                     onUserJoined(lMsgObj.id);
                 }else if(lMsgObj.type == SignalingMessageType.UserLeft)

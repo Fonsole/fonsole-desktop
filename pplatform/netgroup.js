@@ -71,14 +71,14 @@ module.exports = function()
         {
             sendUserJoined(lConnection);
             mConnection[lConnection.getId()] = lConnection;
-        }
+        };
         
         this.remConnection = function(lConnection)
         {
             console.log('send user left message');
             delete mConnection[lConnection.getId()];
             sendUserLeft(lConnection);
-        }
+        };
         
         this.close = function()
         {    
@@ -93,7 +93,7 @@ module.exports = function()
             
                     
             console.log('Room ' + mName + ' closed');
-        }
+        };
         
         this.sendUserMessage = function(lFrom, lContent, lTo)
         {
@@ -107,7 +107,7 @@ module.exports = function()
                     mConnection[id].emit(MESSAGE_NAME, lMsgObj);
                 }
             }
-        }
+        };
         
         function sendUserJoined(lConnection)
         {
