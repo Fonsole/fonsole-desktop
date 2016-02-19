@@ -28,9 +28,6 @@
         <div class="stateview" id="debug">
             <h2>Debugview</h2>
             Grey: A certain state in the game. Visible for View and Controller<br>
-            <div class="view">
-                Cyan: Bigview<br>
-            </div>
             <div class="controller">
                 Yellow: Controller<br>
             </div>
@@ -40,14 +37,6 @@
         </div>
         <div class="stateview" id="WaitForStart">
             <h2>State: WaitForStart</h2>
-            <div class="view">
-                View waiting for game to start
-                <br>
-                Players:
-                    <ul id="playerlist">
-                    </ul>
-                
-            </div>
             <div class="controller">
                 Waiting for Host
             </div>
@@ -60,11 +49,6 @@
       
         <div class="stateview" id="Questioning">
             <h2>State: Questioning</h2>
-            <div class="view">
-                
-                <p><span class="judgeName">Player</span> is choosing a question.</p>
-                <span class="timeLeft">30</span>
-            </div>
             <div class="controller">
                 <p> Score: <span class="myScore">0</span></p>
                 <p> Waiting for <span class="judgeName">Player</span> to choose a question.</p>
@@ -85,11 +69,6 @@
         
         <div class="stateview" id="Answering">
             <h2>State: Answering</h2>
-            <div class="view">
-                <p><span class="judgeName">Player</span> asks: </p>
-                <p class="chosenQuestion">Chosen Question?</p>
-                <span class="timeLeft">60</span>
-            </div>
             <div class="controller">
                 <p> Score: <span class="myScore">0</span></p>
                 <p>Write your Answer</p>
@@ -103,22 +82,6 @@
         
         <div class="stateview" id="ShowAnswers">
             <h2>State: Show Answers</h2>
-            <div class="view">
-                <div class="answerList">
-                    
-                    <label class="A1"><span class="answer">A1</span></label> <br>
-                    <label class="A2"><span class="answer">A2</span></label> <br>
-                    <label class="A3"><span class="answer">A3</span></label> <br>
-                    <label class="A4"><span class="answer">A4</span></label> <br>
-                    <label class="A5"><span class="answer">A5</span></label> <br>
-                    <label class="A6"><span class="answer">A6</span></label> <br>
-                    <label class="A7"><span class="answer">A7</span></label> <br>
-                    <label class="A8"><span class="answer">A8</span></label> <br>
-                    <label class="A9"><span class="answer">A9</span></label> <br>
-                    <label class="A10"><span class="answer">A10</span></label> <br>
-                    
-                </div>
-            </div>
             <div class="controller">
             <p> Score: <span class="myScore">0</span></p>
                 Wait for all answers to be presented.
@@ -131,11 +94,7 @@
         
         <div class="stateview" id="JudgingAndVoting">
             <h2>State: Judging</h2>
-            <div class="view">
-                
-                <p><span class="judgeName">Player</span> is in deliberation.</p>
-                <span class="timeLeft">60</span>
-            </div>
+            
 
             <div class="controller">
                 
@@ -176,45 +135,10 @@
                 </div>
             </div>
         </div>
- 
       
-        <!-- Voting state was removed and merged with Judging state
-        <div class="stateview" id="Voting">
-            <h2>State: Voting</h2>
-            <div class="view">
-                    <div class="A1"> <span class="answer">A1</span> <br><span class="votes"> </span> </div> <br>
-                    <div class="A2"> <span class="answer">A2</span> <br><span class="votes"> </span> </div> <br>
-                    <div class="A3"> <span class="answer">A3</span> <br><span class="votes"> </span> </div> <br>
-                    <div class="A4"> <span class="answer">A4</span> <br><span class="votes"> </span> </div> <br>
-                    <div class="A5"> <span class="answer">A5</span> <br><span class="votes"> </span> </div> <br>
-                    <div class="A6"> <span class="answer">A6</span> <br><span class="votes"> </span> </div> <br>
-                    <div class="A7"> <span class="answer">A7</span> <br><span class="votes"> </span> </div> <br>
-                    <div class="A8"> <span class="answer">A8</span> <br><span class="votes"> </span> </div> <br>
-                    <div class="A9"> <span class="answer">A9</span> <br><span class="votes"> </span> </div> <br>
-                    <div class="A10"> <span class="answer">A10</span> <br><span class="votes"> </span> </div> <br>
-                    
-            </div>
-            <div class="judgecontroller">
-                
-                <p> Score: <span class="myScore">0</span></p>
-                Wait for players to place votes
-            </div>
-        </div>
-        -->
         <div class="stateview" id="ShowWinner">
             <h2>State: ShowWinner</h2>
-            <div class="view">
-                <div class="A1"> <span class="playerName">player 1</span>: <br><span class="answer">A1</span> <br><span class="votes"> </span></div> <br>
-                <div class="A2"> <span class="playerName">player 2</span>: <br><span class="answer">A2</span> <br><span class="votes"> </span></div> <br>
-                <div class="A3"> <span class="playerName">player 3</span>: <br><span class="answer">A3</span> <br><span class="votes"> </span></div> <br>
-                <div class="A4"> <span class="playerName">player 4</span>: <br><span class="answer">A4</span> <br><span class="votes"> </span></div> <br>
-                <div class="A5"> <span class="playerName">player 5</span>: <br><span class="answer">A5</span> <br><span class="votes"> </span></div> <br>
-                <div class="A6"> <span class="playerName">player 6</span>: <br><span class="answer">A6</span> <br><span class="votes"> </span></div> <br>
-                <div class="A7"> <span class="playerName">player 7</span>: <br><span class="answer">A7</span> <br><span class="votes"> </span></div> <br>
-                <div class="A8"> <span class="playerName">player 8</span>: <br><span class="answer">A8</span> <br><span class="votes"> </span></div> <br>
-                <div class="A9"> <span class="playerName">player 9</span>: <br><span class="answer">A9</span> <br><span class="votes"> </span></div> <br>
-                <div class="A10"> <span class="playerName">player 10</span>: <br><span class="answer">A10</span> <br><span class="votes"> </span></div> <br>
-            </div>
+            
             <div class="controller">
                 <p> Score: <span class="myScore">0</span></p>
             </div>
@@ -225,20 +149,7 @@
         
         <div class="stateview" id="ShowScore">
             <h2>State: ShowScore</h2>
-            <div class="view">
-                <div class="scoreList">
-                    <div class="U1"> <span class="playerName">player 1</span>: <br><span class="roundScore">A1</span> <br>Total:<span class="totalScore"> </span></div> <br>
-                    <div class="U2"> <span class="playerName">player 2</span>: <br><span class="roundScore">A2</span> <br>Total:<span class="totalScore"> </span></div> <br>
-                    <div class="U3"> <span class="playerName">player 3</span>: <br><span class="roundScore">A3</span> <br>Total:<span class="totalScore"> </span></div> <br>
-                    <div class="U4"> <span class="playerName">player 4</span>: <br><span class="roundScore">A4</span> <br>Total:<span class="totalScore"> </span></div> <br>
-                    <div class="U5"> <span class="playerName">player 5</span>: <br><span class="roundScore">A5</span> <br>Total:<span class="totalScore"> </span></div> <br>
-                    <div class="U6"> <span class="playerName">player 6</span>: <br><span class="roundScore">A6</span> <br>Total:<span class="totalScore"> </span></div> <br>
-                    <div class="U7"> <span class="playerName">player 7</span>: <br><span class="roundScore">A7</span> <br>Total:<span class="totalScore"> </span></div> <br>
-                    <div class="U8"> <span class="playerName">player 8</span>: <br><span class="roundScore">A8</span> <br>Total:<span class="totalScore"> </span></div> <br>
-                    <div class="U9"> <span class="playerName">player 9</span>: <br><span class="roundScore">A9</span> <br>Total:<span class="totalScore"> </span></div> <br>
-                    <div class="U10"> <span class="playerName">player 10</span>: <br><span class="roundScore">A10</span> <br>Total:<span class="totalScore"> </span></div> <br>
-                </div>
-            </div>
+            
             <div class="controller">
                 <p> Score: <span class="myScore">0</span></p>
             </div>
