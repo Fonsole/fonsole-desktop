@@ -15,13 +15,12 @@ function ControllerDiscoveryMessage(lConnectionId, lUserId, lName)
 TAG.CONTROLLER_LEFT = "PLATFORM_CONTROLLER_LEFT";
 TAG.VIEW_DISCOVERY = "PLATFORM_VIEW_DISCOVERY";
 TAG.ENTER_GAME = "PLATFORM_ENTER_GAME";
-TAG.EXIT_GAME = "PLATFORM_EXIT_GAME";
 
 
  function Controller(lConnectionId, lUserId, lName)
  {
      var self = this;
-     //TODO: this should be private
+     
      var connectionId = lConnectionId;
      var userId = lUserId;
      var name = lName;
@@ -35,6 +34,12 @@ TAG.EXIT_GAME = "PLATFORM_EXIT_GAME";
      {
          return self.userId;
      };
+     
+     
+     this.toString = function()
+     {
+         return "Controller[connectionId:" + connectionId+ ", userId:" + userId+ ", "+ ", name:" + name;
+     }
  }
  
  
@@ -42,7 +47,11 @@ TAG.EXIT_GAME = "PLATFORM_EXIT_GAME";
  {
      
     var self = this;
-    var gConnected = false;
+    var mIsConnected = false;
+    this.isConnected = function()
+    {
+        return mIsConnected;
+    };
     
     
     this.VIEW_USER_ID = 0;
@@ -78,7 +87,7 @@ TAG.EXIT_GAME = "PLATFORM_EXIT_GAME";
     {
         return mOwnUserId;
     };
-    this.getOwnId = function()
+    this.getOwnId = function() //keeps old code from breaking
     {
         return mOwnUserId;
     };
@@ -91,17 +100,15 @@ TAG.EXIT_GAME = "PLATFORM_EXIT_GAME";
     //the name the user chose. 
     var mOwnName = null;
     
-    var mIsView = false;
     var mIsHostController = false;
     
-    this.isView = function()
+    function onClose()
     {
-        return mIsView;
-    };
-    this.isController = function()
-    {
-        return mIsView == false;
-    };
+        //disconnected. clean up all data
+        mControllers = {};
+        
+    }
+        
     this.isHostController = function()
     {
         return mIsHostController;
@@ -113,23 +120,10 @@ TAG.EXIT_GAME = "PLATFORM_EXIT_GAME";
         this.sendMessage(TAG.ENTER_GAME, lGame);
     };
     
-    this.startAsView = function()
-    {
-        
-        var key = GetRandomKey();
-        
-        self.Log("Opening room " + key + " ...");
-        sigChan.open(key, OnNetgroupMessageInternal);
-        $('#gameid').val(key);
-        mIsView = true;
-        mIsHostController = false;
-    };
-    
-    this.startAsController = function(key, name)
+    this.join = function(key, name)
     {
         mOwnName = name;
         sigChan.connect(key, OnNetgroupMessageInternal);
-        mIsView = false;
         mIsHostController = true;
     };
     
@@ -171,8 +165,6 @@ TAG.EXIT_GAME = "PLATFORM_EXIT_GAME";
         
         if(lTag == TAG.ENTER_GAME){
             ShowGame(lContent);
-        }else if(lTag == TAG.EXIT_GAME){
-            //todo handle exit game command -> switch view back to game list?
         }else if(lTag == TAG.CONTROLLER_DISCOVERY)
         {
             var controllerDiscoveryData = JSON.parse(lContent);
@@ -183,7 +175,8 @@ TAG.EXIT_GAME = "PLATFORM_EXIT_GAME";
                 mOwnName = controllerDiscoveryData.name;
                 mOwnUserId = controllerDiscoveryData.userId;
             }
-        }else if(lTag == TAG.VIEW_DISCOVERY)
+        }
+        else if(lTag == TAG.VIEW_DISCOVERY)
         {
             mViewId = lId; //store the id for later
             
@@ -196,41 +189,6 @@ TAG.EXIT_GAME = "PLATFORM_EXIT_GAME";
             //register as controller at the view
             var controllerRegisterData = {"name": name};
             self.sendMessage(TAG.CONTROLLER_REGISTER, JSON.stringify(controllerRegisterData), mViewId);
-            
-        }else if(lTag == TAG.CONTROLLER_REGISTER)
-        {
-            //should only received by the view only.
-            //this message is sent by a new controller that joined already
-            //and now wants to be registerd as controller
-            
-            //TODO: get the controller info and send out
-            //a controller discovery to everyone
-            //later we could check username / facebook and so on here
-            
-            //this could also be moved to the server
-            
-            var lControllerRegisterData = JSON.parse(lContent);
-            
-            
-            self.Log("New controller registered: " + lControllerRegisterData.name);
-            //so far the controller registers only via a name
-            //the view will add the controllers id so everyone knows how to
-            //address this controller
-            var controllerDiscoveryData = {"id": lId, "name": lControllerRegisterData.name};
-            
-            //broadcast to everyone. this instance will receive itself the message and then add the controller to the list
-            self.sendMessage(TAG.CONTROLLER_DISCOVERY, JSON.stringify(controllerDiscoveryData));
-            
-            //send a discovery message to the new controller about the existing ones
-            for(var contrId in mControllers)
-            {
-                var controller = mControllers[contrId];
-                var controllerDD = {"id": controller.getId(), "name": controller.getName()}; 
-                self.sendMessage(TAG.CONTROLLER_DISCOVERY, JSON.stringify(controllerDD), lId);
-            }
-            
-            //last step: inform the controller about the currently active game
-            self.sendMessage(TAG.ENTER_GAME, mActiveGame, lId);
             
         }else if(lTag == TAG.CONTROLLER_LEFT){
             delete mControllers[lId];
@@ -261,7 +219,7 @@ TAG.EXIT_GAME = "PLATFORM_EXIT_GAME";
         if(lType == SignalingMessageType.Connected)
         {
             self.Log("Connected");
-            gConnected = true;
+            mIsConnected = true;
             $('#openroom').attr("hidden", true);
             $('#joinspan').attr("hidden", true);
             $('#connectedspan').attr("hidden", false);
@@ -280,27 +238,18 @@ TAG.EXIT_GAME = "PLATFORM_EXIT_GAME";
             $('#openroom').attr("hidden", false);
             $('#joinspan').attr("hidden", false);
             $('#connectedspan').attr("hidden", true);
-            gConnected = false;
+            mIsConnected = false;
+            onClose();
             self.Log("Disconnected");
         }else if(lType == SignalingMessageType.UserJoined)
         {
             self.Log("User " + lId + " joined");
             
             
-            if(mIsView)
-            {
-                //send out view discovery event
-                self.sendMessage(TAG.VIEW_DISCOVERY, "", lId);
-            }
             //controller ignore these so far
         }else if(lType == SignalingMessageType.UserLeft)
         {
             self.Log("User " + lId + " left");
-            
-            if(mIsView)
-            {
-                handleMessage(TAG.CONTROLLER_LEFT, null, lId);
-            }
             
             //controller ignore these so far
         }else{
@@ -317,7 +266,7 @@ TAG.EXIT_GAME = "PLATFORM_EXIT_GAME";
         }
         return result;
     }
-        
+    
     this.Log = function(msg)
     {
         $('#messages').append($('<li>').text(msg));

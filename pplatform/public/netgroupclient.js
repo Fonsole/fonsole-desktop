@@ -121,7 +121,7 @@
         this.close = function()
         {
             mSocket.disconnect();
-            OnClose();
+            onClose();
         };
         
         

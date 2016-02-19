@@ -32,17 +32,6 @@
         function onMessageUi(lTag, lContent, lFrom)
         {    
 
-            //if it is running on the view -> check if the controller
-            //list was updated
-            if(gPlatform.isView())
-            {
-                //platform specific messages
-                if(lTag == TAG.CONTROLLER_DISCOVERY || lTag == TAG.CONTROLLER_LEFT)
-                {
-                    refreshPlayerList();
-                }
-            }
-
             //used for view and controller -> update the page
             //if the game data changed
             if(lTag == SayAnything.Message.SharedDataUpdate.TAG)
@@ -157,10 +146,7 @@
                 console.debug("ERROR: GUI doesn't know state " + lSharedData.state);
             }
 
-            if(gPlatform.isView())
-            {
-                $('.view').attr("hidden", false);
-            }else if(lSharedData.judgeUserId != null && lSharedData.judgeUserId == gPlatform.getOwnId())
+            if(lSharedData.judgeUserId != null && lSharedData.judgeUserId == gPlatform.getOwnId())
             {
                 $('.judgecontroller').attr("hidden", false);
                 $('.hostcontroller').attr("hidden", false);
