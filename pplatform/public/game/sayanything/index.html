@@ -2,29 +2,18 @@
 <html>
   <head>
     <meta charset="UTF-8">
- <!-- Copyright (C) 2015 Christoph Kutza -->
+    <!-- Copyright (C) 2015 Christoph Kutza -->
     <title>Say Anything</title>
-    <style>
-      * { margin: 0; padding: 0; box-sizing: border-box; }
-      body { font: 13px Helvetica, Arial; }
-      .stateview { background: #aaa;margin-bottom: 50px; padding: 10px;}
-      .view { background: #aff; }
-      .controller { background: #ffa;}
-      .judgecontroller { background: #faf;}
-      .hostcontroller { background: #faf;}
-      .judgeName {color: red;}
-      
-      
-    </style>
+    <link rel="stylesheet" type="text/css" href="style.css">
     <script src="https://cdn.socket.io/socket.io-1.2.0.js"></script>
-  <script src="http://code.jquery.com/jquery-1.11.1.js"></script>
-  <script src="../../netgroupclient.js"></script>
-  <script src="../../pplatformclient.js"></script>
-  <script src="sayanything.js"></script>
-  <script src="sayanythingui.js"></script>
-  </head>
-  <body>
-      <h1> Say Anything </h1>
+    <script src="http://code.jquery.com/jquery-1.11.1.js"></script>
+    <script src="../../netgroupclient.js"></script>
+    <script src="../../pplatformclient.js"></script>
+    <script src="questions.js"></script>
+    <script src="sayanything.js"></script>
+    </head>
+    <body>
+        <h1> Say Anything </h1>
         <div class="stateview" id="debug">
             <h2>Debugview</h2>
             Grey: A certain state in the game. Visible for View and Controller<br>
@@ -61,7 +50,7 @@
                     <label> <input type="radio" name="questionList" id="questionListQ3" value="Q3"><span id="questionListQ3Label">Q3</span></label> <br>
                     <label> <input type="radio" name="questionList" id="questionListQ4" value="Q4"><span id="questionListQ4Label">Q4</span></label> <br>
                     <label> <input type="radio" name="questionList" id="questionListQ5" value="custom"></label><input type="text" id="questionCustom" onclick="$('#questionListQ5').prop('checked', true);"> <br>
-                    
+
                     <button class="confirm" onclick="questionListConfirm()">Confirm Selection</button>
                 </div>
             </div>
@@ -79,7 +68,7 @@
                 <p>Waiting for players to answer your question.</p>
             </div>
         </div>
-        
+
         <div class="stateview" id="ShowAnswers">
             <h2>State: Show Answers</h2>
             <div class="controller">
@@ -91,13 +80,13 @@
                 Wait for all answers to be presented.
             </div>
         </div>
-        
+
         <div class="stateview" id="JudgingAndVoting">
             <h2>State: Judging</h2>
-            
+
 
             <div class="controller">
-                
+
                 <p> Score: <span class="myScore">0</span></p>
                 <div class="voteList">
                      <span class="A1"> <input type="radio" name="votingRadio1" value="1" class="CB"><label> <input type="radio" name="votingRadio2" value="1" class="CB"><span class="answer">A1</span></label></span> <br>
@@ -113,11 +102,11 @@
                      <button class="confirm" onclick="votingConfirm()">Confirm Selection</button>
                 </div>
             </div>
-            
+
             <div class="judgecontroller">
                 <p> Score: <span class="myScore">0</span></p>
                 Choose Your Favorite
-                
+
                 <div class="judgeList">
                     <label class="A1"> <input type="radio" name="judgingRadio" value="1" class="CB"><span class="answer">A1</span></label> <br>
                     <label class="A2"> <input type="radio" name="judgingRadio" value="2" class="CB"><span class="answer">A2</span></label> <br>
@@ -135,10 +124,10 @@
                 </div>
             </div>
         </div>
-      
+
         <div class="stateview" id="ShowWinner">
             <h2>State: ShowWinner</h2>
-            
+
             <div class="controller">
                 <p> Score: <span class="myScore">0</span></p>
             </div>
@@ -146,10 +135,10 @@
                 <p> Score: <span class="myScore">0</span></p>
             </div>
         </div>
-        
+
         <div class="stateview" id="ShowScore">
             <h2>State: ShowScore</h2>
-            
+
             <div class="controller">
                 <p> Score: <span class="myScore">0</span></p>
             </div>
@@ -157,19 +146,17 @@
                 <p> Score: <span class="myScore">0</span></p>
             </div>
         </div>
-        
-        
-<script>
+        <script>
 
-    
-    //after everything in html is ready -> initialize the game code and global variables
-    //this will initialize the game + global variables
-    initGame();
-    
-    
-    initUI();
-    
-    
-</script>
-  </body>
+
+            //after everything in html is ready -> initialize the game code and global variables
+            //this will initialize the game + global variables
+            initGame();
+
+
+            initUI();
+
+
+    </script>
+    </body>
 </html>

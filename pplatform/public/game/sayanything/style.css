@@ -1,0 +1,10 @@
+
+      * { margin: 0; padding: 0; box-sizing: border-box; }
+      body { font: 13px Helvetica, Arial; }
+      .stateview { background: #aaa;margin-bottom: 50px; padding: 10px;}
+      .view { background: #aff; }
+      .controller { background: #ffa;}
+      .judgecontroller { background: #faf;}
+      .hostcontroller { background: #faf;}
+      .judgeName {color: red;}
+      
