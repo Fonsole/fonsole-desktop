@@ -2,11 +2,47 @@
 <html>
   <head>
     <meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
  <!-- Copyright (C) 2015 Christoph Kutza -->
     <title>Game listt</title>
     <style>
-      * { margin: 0; padding: 0; box-sizing: border-box; }
-      body { font: 13px Helvetica, Arial; }
+      *
+{
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+}
+.label
+{
+    margin-left: 30%;
+    width: 40vw;
+}
+
+input{
+    width: 40vw;
+}
+
+
+body
+{
+      font-family: 'Open Sans', sans-serif;
+      background-color: black;
+      color: white;
+}
+button
+{
+      margin: 0 auto;
+      margin-top: 1%;
+      color:white; 
+      background-color: #333333; 
+      border-radius:2vw; 
+      border: none; 
+      box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
+      width: 40vw; 
+      height:5vh;
+      display: block;
+}
+
     </style>
     <script src="https://cdn.socket.io/socket.io-1.2.0.js"></script>
   <script src="http://code.jquery.com/jquery-1.11.1.js"></script>
@@ -14,6 +50,35 @@
   <script src="pplatformclient.js"></script>
   </head>
   <body>
-	Either start a new game or join an existing one
+        <div class="login">
+            <div class="label"><label for="roomname">Game code: </label> <input id="roomname" autocomplete="off" /></div>
+            <div class="label"><label for="playername">Name: </label><input id="playername" autocomplete="off" /></div>
+            <br>
+            <br>
+            <button id="joinroom">Join</button>
+        </div>
+        <script>
+            
+            
+            gPlatform = parent.gPlatform;
+    
+            $('#joinroom').click(function(){
+                gPlatform.Log("Join room");
+                var gameid = $('#roomname').val().toUpperCase();
+                $('#gameid').val(gameid);
+
+
+                var playername = $('#playername').val();
+
+                localStorage.gameid = gameid;
+                localStorage.playername = playername;
+                gPlatform.join(gameid, playername);
+            });
+
+
+            $('#playername').val(localStorage.playername);
+            $('#roomname').val(localStorage.gameid);
+        </script>
+            
   </body>
 </html>
