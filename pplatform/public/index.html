@@ -7,9 +7,9 @@
     <title>Socket.IO chat</title>
     <style>
       * { margin: 0; padding: 0; box-sizing: border-box; }
-      body { font: Helvetica, Arial; }
-      iframe{width:100%}
-      #controldiv { background: #000; padding: 3px; width: 100%; color: white;}
+      body { font: Helvetica, Arial; height:100vh;}
+      iframe{width:100%; height: 90vh;}
+      #controldiv { display: block; background: #000; padding: 3px; width: 100%; color: white;height: 9vh;}
       label {white-space:nowrap;}
       #openroom  { margin-right: 20px;}
       #msgform { background: #000; padding: 3px; position: fixed; bottom: 0; width: 100%; }
@@ -39,13 +39,11 @@
         <button id="joinroom">Join</button>
     </div>
       
-          <iframe id="contentframe" src="./notconnected.html" height="1080"> </iframe>
+          <iframe id="contentframe" src="./notconnected.html"> </iframe>
     
 <script>
 
-   //Connect buttons to platform functionality
-    $('#playername').val(localStorage.playername);
-    $('#roomname').val(localStorage.gameid);
+
     var gPlatform = new PPlatform();
     
 //Platform UI
@@ -88,6 +86,8 @@
     });
 
 
+    $('#playername').val(localStorage.playername);
+    $('#roomname').val(localStorage.gameid);
     
     
 </script>

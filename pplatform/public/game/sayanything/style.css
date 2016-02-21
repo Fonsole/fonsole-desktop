@@ -12,9 +12,9 @@ body
 }
 .stateview 
 { 
-      background: #bbc;
-      margin-bottom: 50px; 
-      padding: 10px;
+    min-height: 99vh;
+    background: #bbc;
+    padding: 10px;
 }
 
 
@@ -55,15 +55,17 @@ input[type="radio"]{
 
 label
 {
-	min-height: 25px;
-	width: 90%;
-	display: block;
-	margin-left: auto;
-	margin-right: auto;
-	margin-top: 5px;
-	margin-bottom: 5px;
-  border-radius: 3px;
-  border: 1px solid #333333
+    min-height: 25px;
+    width: 90%;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 5px;
+    margin-bottom: 5px;
+    border-radius: 3px;
+    border: 1px solid #333333;
+    background-color: #ddf;
+    text-align: center;
 }
 
 /*
@@ -101,10 +103,21 @@ input[type="radio"]:checked ~ label
     animation-name: selectAnimation;
     animation-duration: 0.5s;
 }
+h1
+{
+    color:white;
+    text-align: center;
+}
+
+.debug
+{
+    display: none;
+}
+
 #questionCustom
 {
 	display: inline;
-	background-color: transparent;
+	background-color: white;
 	width: 100%;
   border-radius: 3px;
 	border:none;

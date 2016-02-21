@@ -15,19 +15,8 @@
     </head>
     <body>
         
-        <h1> Say Anything </h1>
-        <div class="stateview" id="debug">
-            <h2>Debugview</h2>
-            Grey: A certain state in the game. Visible for View and Controller<br>
-            <div class="controller">
-                Yellow: Controller<br>
-            </div>
-            <div class="hostcontroller">
-                Purple: Judge or Hostcontroller<br>
-            </div>
-        </div>
         <div class="stateview" id="WaitForStart">
-            <h2>State: WaitForStart</h2>
+            <h2 class="debug">State: WaitForStart</h2>
             <div class="controller">
                 Waiting for Host
             </div>
@@ -39,7 +28,7 @@
         
       
         <div class="stateview" id="Questioning">
-            <h2>State: Questioning</h2>
+            <h2 class="debug">State: Questioning</h2>
             <div class="controller">
                 <p> Score: <span class="myScore">0</span></p>
                 <p> Waiting for <span class="judgeName">Player</span> to choose a question.</p>
@@ -59,7 +48,7 @@
         </div>
         
         <div class="stateview" id="Answering">
-            <h2>State: Answering</h2>
+            <h2 class="debug">State: Answering</h2>
             <div class="controller">
                 <p> Score: <span class="myScore">0</span></p>
                 <p>Write your Answer</p>
@@ -72,7 +61,7 @@
         </div>
 
         <div class="stateview" id="ShowAnswers">
-            <h2>State: Show Answers</h2>
+            <h2 class="debug">State: Show Answers</h2>
             <div class="controller">
             <p> Score: <span class="myScore">0</span></p>
                 Wait for all answers to be presented.
@@ -84,7 +73,7 @@
         </div>
 
         <div class="stateview" id="JudgingAndVoting">
-            <h2>State: Judging</h2>
+            <h2 class="debug">State: Judging</h2>
 
 
             <div class="controller">
@@ -128,7 +117,7 @@
         </div>
 
         <div class="stateview" id="ShowWinner">
-            <h2>State: ShowWinner</h2>
+            <h2 class="debug">State: ShowWinner</h2>
 
             <div class="controller">
                 <p> Score: <span class="myScore">0</span></p>
@@ -139,7 +128,7 @@
         </div>
 
         <div class="stateview" id="ShowScore">
-            <h2>State: ShowScore</h2>
+            <h2 class="debug">State: ShowScore</h2>
 
             <div class="controller">
                 <p> Score: <span class="myScore">0</span></p>

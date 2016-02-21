@@ -265,6 +265,8 @@
             console.debug("UI refresh");
 
             //hide everything -> show later only what is needed
+            
+            $('.debug').attr("hidden", true);
             $('.view').attr("hidden", true);
             $('.hostcontroller').attr("hidden", true);
             $('.controller').attr("hidden", true);
