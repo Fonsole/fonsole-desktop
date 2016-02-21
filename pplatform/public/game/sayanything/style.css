@@ -40,6 +40,11 @@ button
 
 
 
+button:active
+{
+    background-color: #FFE161;
+}
+
 /* hide input
 */
 input[type="radio"]{

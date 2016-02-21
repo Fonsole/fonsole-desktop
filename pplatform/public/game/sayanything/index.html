@@ -110,15 +110,15 @@
                 Choose Your Favorite
 
                 <div class="judgeList">
-                    <div><input type="radio" name="judgingRadio" value="1" class="CB" id="jr1"><label for="jr1" class="A1"><span class="answer">A1</span></label> </div>
-                    <div><input type="radio" name="judgingRadio" value="2" class="CB" id="jr2"><label for="jr2" class="A2"><span class="answer">A2</span></label> </div>
-                    <div><input type="radio" name="judgingRadio" value="3" class="CB" id="jr3"><label for="jr3" class="A3"><span class="answer">A3</span></label> </div>
-                    <div><input type="radio" name="judgingRadio" value="4" class="CB" id="jr4"><label for="jr4" class="A4"><span class="answer">A4</span></label> </div>
-                    <div><input type="radio" name="judgingRadio" value="5" class="CB" id="jr5"><label for="jr5" class="A5"><span class="answer">A5</span></label> </div>
-                    <div><input type="radio" name="judgingRadio" value="6" class="CB" id="jr6"><label for="jr6" class="A6"><span class="answer">A6</span></label> </div>
-                    <div><input type="radio" name="judgingRadio" value="7" class="CB" id="jr7"><label for="jr7" class="A7"><span class="answer">A7</span></label> </div>
-                    <div><input type="radio" name="judgingRadio" value="8" class="CB" id="jr8"><label for="jr8" class="A8"><span class="answer">A8</span></label> </div>
-                    <div><input type="radio" name="judgingRadio" value="9" class="CB" id="jr9"><label for="jr9" class="A9"><span class="answer">A9</span></label> </div>
+                    <div class="A1"><input type="radio" name="judgingRadio" value="1" class="CB" id="jr1"><label for="jr1"><span class="answer">A1</span></label> </div>
+                    <div class="A2"><input type="radio" name="judgingRadio" value="2" class="CB" id="jr2"><label for="jr2"><span class="answer">A2</span></label> </div>
+                    <div class="A3"><input type="radio" name="judgingRadio" value="3" class="CB" id="jr3"><label for="jr3"><span class="answer">A3</span></label> </div>
+                    <div class="A4"><input type="radio" name="judgingRadio" value="4" class="CB" id="jr4"><label for="jr4"><span class="answer">A4</span></label> </div>
+                    <div class="A5"><input type="radio" name="judgingRadio" value="5" class="CB" id="jr5"><label for="jr5"><span class="answer">A5</span></label> </div>
+                    <div class="A6"><input type="radio" name="judgingRadio" value="6" class="CB" id="jr6"><label for="jr6"><span class="answer">A6</span></label> </div>
+                    <div class="A7"><input type="radio" name="judgingRadio" value="7" class="CB" id="jr7"><label for="jr7"><span class="answer">A7</span></label> </div>
+                    <div class="A8"><input type="radio" name="judgingRadio" value="8" class="CB" id="jr8"><label for="jr8"><span class="answer">A8</span></label> </div>
+                    <div class="A9"><input type="radio" name="judgingRadio" value="9" class="CB" id="jr9"><label for="jr9"><span class="answer">A9</span></label> </div>
                     
                     <button class="confirm" onclick="judgingConfirm()">Confirm Selection</button>
                 </div>
@@ -185,12 +185,13 @@ $(".voteList input").click( function(){
        //$(".voteList input").attr('for="' + $(this).siblings("") +'"');
    }
 });
+
+        initTestUi();
             //after everything in html is ready -> initialize the game code and global variables
             //this will initialize the game + global variables
             initGame();
 
 
-            initUI();
 
 
     </script>

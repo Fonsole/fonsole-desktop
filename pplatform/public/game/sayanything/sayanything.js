@@ -335,7 +335,6 @@
                 console.log("show ShowScore");
                 $('#ShowScore').attr("hidden", false);
                 answerListFill(lSharedData);
-                scoreListFill(lSharedData);
 
             }else{
                 console.debug("ERROR: GUI doesn't know state " + lSharedData.state);
@@ -385,6 +384,10 @@
         function getPlayerName(lUserId)
         {
             var playerName = "user " + lUserId;
+            if(typeof gPlatform === "undefined" || gPlatform === null)
+            {
+                return playerName;
+            }
             var controllers = gPlatform.getControllers();
             if(lUserId in controllers)
             {
@@ -455,7 +458,7 @@
 
 
             //hide all UI slots that aren't filled with answers
-            for(var i = counter; i <= 10; i++) //10 = max player numbers
+            for(var i = counter; i <= 9; i++) //10 = max player numbers
             {
                 var parentElement = ".A" + i;
                 //Label is in all constructs the parent -> make it visible for this answer
@@ -464,32 +467,6 @@
         }
 
 
-        function scoreListFill(lSharedData)
-        {
-            //go trough all scores and fill in the user
-            var counter = 1;
-            for(var userId in lSharedData.totalScore)
-            {
-                var parentElement = ".U" + counter;
-                $(parentElement).attr("hidden", false);
-
-                 $(parentElement + " .playerName").empty().append(getPlayerName(userId));
-                if(userId in lSharedData.roundScore){
-                     $(parentElement + " .roundScore").empty().append(lSharedData.roundScore[userId]);
-                }else{
-                    $(parentElement + " .roundScore").empty();
-                }
-                $(parentElement + " .totalScore").empty().append(lSharedData.totalScore[userId]);
-                counter++;
-            }
-            //hide all UI slots that aren't filled with answers
-            for(var i = counter; i <= 10; i++) //10 = max player numbers
-            {
-                var parentElement = ".U" + i;
-                //Label is in all constructs the parent -> make it visible for this answer
-                $(parentElement).attr("hidden", true);
-            }
-        }
 
 
     // </editor-fold>
@@ -599,7 +576,6 @@
 
 
         answerListFill(testSharedData);
-        scoreListFill(testSharedData);   
     }
 
 
