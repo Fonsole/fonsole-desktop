@@ -6,6 +6,8 @@ using System.Text;
 using System.Collections.Generic;
 using PPlatform.Helper;
 using UnityEngine.SceneManagement;
+using System.Linq;
+
 using Luz.Tools;
 
 namespace PPlatform
@@ -19,7 +21,7 @@ namespace PPlatform
     {
         public static readonly int VIEW_USER_ID = 0;
         public static readonly int HOST_CONTROLLER_USER_ID = 1;
-
+        public static readonly int MAX_CONTROLLERS = 9;
         private int mNextUserId = HOST_CONTROLLER_USER_ID; //start with the host controller user id
 
 
@@ -43,6 +45,14 @@ namespace PPlatform
         public Dictionary<int, Controller> Controllers
         {
             get { return mController; }
+        }
+
+        public IEnumerable<Controller> ActiveControllers
+        {
+            get
+            {
+                return Platform.Instance.Controllers.Values.Where((x) => { return x.IsAvailable; });
+            }
         }
         private bool mIsConnected = false;
         public bool IsConnected
@@ -76,7 +86,8 @@ namespace PPlatform
         string TAG_ENTER_GAME = "PLATFORM_ENTER_GAME";
         //string content
 
-        string TAG_EXIT_GAME = "PLATFORM_EXIT_GAME";
+        string TAG_SERVER_FULL = "PLATFORM_SERVER_FULL";
+        string TAG_NAME_IN_USE = "PLATFORM_NAME_IN_USE";
 
 
         private int mOwnConnectionId = -1;
@@ -235,52 +246,78 @@ namespace PPlatform
                 //special platform messages which are handled before controllers are fully registerd
                 if (pm.tag == TAG_CONTROLLER_REGISTER)
                 {
-                    //send out discovery broadcast (which will be received locally too and handled below)
 
-                    ControllerRegisterMessage msg = JsonWrapper.FromJson<ControllerRegisterMessage>(pm.content);
-
-                    int userId = -1;
-                    foreach(var v in mController)
+                    //server full?
+                    if (ActiveControllers.Count() >= MAX_CONTROLLERS)
                     {
-                        if(v.Value.Name == msg.name)
+                        //user isn't registered as controller yet -> user intenal send
+                        SendInternal(TAG_SERVER_FULL, "", conId);
+                    }
+                    else
+                    {
+                        //parse the message
+                        ControllerRegisterMessage msg = JsonWrapper.FromJson<ControllerRegisterMessage>(pm.content);
+
+
+                        //name is use by active controller? 
+                        if (mController.Values.Where((x) => { return x.IsAvailable && x.Name == msg.name; }).Any())
                         {
-                            //same name, same user
-                            userId = v.Value.UserId;
+                            //someone is online with the same name (an active user!) -> can't login
+
+                            SendInternal(TAG_NAME_IN_USE, "", conId);
+                        }
+                        else
+                        {
+                            //all fine -> allow connection and send out discovery message so everyone else knows
+                            //a new controller is available
+                            //send out discovery broadcast (which will be received locally too and handled below)
+
+                            int userId = -1;
+                            foreach (var v in mController)
+                            {
+                                if (v.Value.Name == msg.name)
+                                {
+                                    //same name, same user
+                                    userId = v.Value.UserId;
+                                }
+                            }
+                            if (userId == -1)
+                            {
+                                //couldn't find the user based on his name -> give new id
+                                userId = mNextUserId;
+                                mNextUserId++;
+                            }
+
+                            if (string.IsNullOrEmpty(msg.name))
+                                msg.name = "player " + userId;
+
+                            Debug.Log("ControllerRegisterMessage received");
+                            ControllerDiscoveryMessage discoveryMsg = new ControllerDiscoveryMessage();
+                            discoveryMsg.connectionId = conId;
+                            discoveryMsg.userId = userId;
+                            discoveryMsg.name = msg.name;
+
+                            //send a broadcast that a new user was registered telling the user id
+                            SendInternal(TAG_CONTROLLER_DISCOVERY, JsonWrapper.ToJson(discoveryMsg));
+
+
+                            //DO NOT PASS THIS MESSAGE TO HandlePlatformMessage. this message is internal only
+                            //wait until controller discovery is received.
                         }
                     }
-                    if(userId == -1)
-                    {
-                        //couldn't find the user based on his name -> give new id
-                        userId = mNextUserId;
-                        mNextUserId++;
-                    }
-
-                    if (string.IsNullOrEmpty(msg.name))
-                        msg.name = "player " + userId;
-
-                    Debug.Log("ControllerRegisterMessage received");
-                    ControllerDiscoveryMessage discoveryMsg = new ControllerDiscoveryMessage();
-                    discoveryMsg.connectionId = conId;
-                    discoveryMsg.userId = userId;
-                    discoveryMsg.name = msg.name;
-
-                    //send a broadcast that a new user was registered telling the user id
-                    SendInternal(TAG_CONTROLLER_DISCOVERY, JsonWrapper.ToJson(discoveryMsg));
-
-
-                    //DO NOT PASS THIS MESSAGE TO HandlePlatformMessage. this message is internal only
-                    //wait until controller discovery is received.
-                }else if (pm.tag == TAG_CONTROLLER_DISCOVERY)
+                }
+                else if (pm.tag == TAG_CONTROLLER_DISCOVERY)
                 {
                     //add controller to the list
                     ControllerDiscoveryMessage discoveryMsg = JsonWrapper.FromJson<ControllerDiscoveryMessage>(pm.content);
+
                     ActivateController(discoveryMsg.connectionId, discoveryMsg.userId, discoveryMsg.name);
-
-
                     Send(TAG_ENTER_GAME, mActiveName, discoveryMsg.userId);
+
 
                     //controller is known now -> handle the messages
                     HandlePlatformMessage(pm.tag, pm.content, discoveryMsg.userId);
+
                 }
                 else
                 {
@@ -292,15 +329,10 @@ namespace PPlatform
                     }
                     else
                     {
-                        Debug.LogWarning("Received a message from an unregistered connection " + conId + " content: " + content );
+                        Debug.LogWarning("Received a message from an unregistered connection " + conId + " content: " + content);
                     }
                 }
-
             }
-
-
-
-
         }
 
 

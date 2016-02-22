@@ -50,12 +50,17 @@
     
     gPlatform.addMessageListener(function(lTag, lContent) {
         gPlatform.Log(lTag + ": " + lContent);
+        
+        
+        if(lTag == TAG.DISCONNECTED)
+        {
+            location.reload();
+        }
     });
 
     $('#leaveroom').click(function(){
         gPlatform.Log("Closing");
         gPlatform.disconnect();
-        location.reload();
     });
     
     

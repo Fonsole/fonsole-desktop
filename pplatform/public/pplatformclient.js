@@ -15,6 +15,13 @@ function ControllerDiscoveryMessage(lConnectionId, lUserId, lName)
 TAG.CONTROLLER_LEFT = "PLATFORM_CONTROLLER_LEFT";
 TAG.VIEW_DISCOVERY = "PLATFORM_VIEW_DISCOVERY";
 TAG.ENTER_GAME = "PLATFORM_ENTER_GAME";
+TAG.SERVER_FULL = "PLATFORM_SERVER_FULL";
+TAG.NAME_IN_USE = "PLATFORM_NAME_IN_USE";
+
+//special message to inform the games and other things connected to the platform
+//that the connection was disconnected. current ui will reload the page
+//in the future this could be used to show errors
+TAG.DISCONNECTED = "PLATFORM_DISCONNECTED";
 
 
  function Controller(lConnectionId, lUserId, lName)
@@ -39,7 +46,7 @@ TAG.ENTER_GAME = "PLATFORM_ENTER_GAME";
      this.toString = function()
      {
          return "Controller[connectionId:" + connectionId+ ", userId:" + userId+ ", "+ ", name:" + name;
-     }
+     };
  }
  
  
@@ -104,8 +111,10 @@ TAG.ENTER_GAME = "PLATFORM_ENTER_GAME";
     
     function onClose()
     {
+        handleMessage(TAG.DISCONNECTED, null, -1);
         //disconnected. clean up all data
         mControllers = {};
+        
         
     }
         
@@ -165,6 +174,12 @@ TAG.ENTER_GAME = "PLATFORM_ENTER_GAME";
         
         if(lTag == TAG.ENTER_GAME){
             ShowGame(lContent);
+        }else if(lTag == TAG.SERVER_FULL)
+        {
+            self.disconnect();
+        }else if(lTag == TAG.NAME_IN_USE)
+        {
+            self.disconnect();
         }else if(lTag == TAG.CONTROLLER_DISCOVERY)
         {
             var controllerDiscoveryData = JSON.parse(lContent);
@@ -269,7 +284,6 @@ TAG.ENTER_GAME = "PLATFORM_ENTER_GAME";
     
     this.Log = function(msg)
     {
-        $('#messages').append($('<li>').text(msg));
         console.debug(msg);
-    }
+    };
  }

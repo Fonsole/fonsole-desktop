@@ -110,7 +110,7 @@ namespace PPlatform
             msg.type = SignalingMessageType.UserMessage;
             msg.content = message;
             msg.id = userid;
-            Debug.Log("Snd " + msg);
+            //Debug.Log("Snd " + msg);
             SendMessageViaSocketIo(msg);
         }
 
