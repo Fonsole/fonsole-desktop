@@ -51,7 +51,6 @@ namespace PPlatform.SayAnything.Message
         }
     }
 
-
     public struct Judge
     {
         public static readonly string TAG = "SayAnything_Judge";

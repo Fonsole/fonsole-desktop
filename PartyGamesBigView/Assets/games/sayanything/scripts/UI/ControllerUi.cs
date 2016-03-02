@@ -26,6 +26,7 @@ public class ControllerUi : UserUi
                 //active user. change name and color
                 SetColor(SayAnythingUi.Instance.GetUserColor(userId));
                 SetUserName(SayAnythingUi.Instance.GetUserName(userId));
+				SetJoinVisibile (false);
 
                 //send out sound event
                 if (AudioManager.Instance != null)

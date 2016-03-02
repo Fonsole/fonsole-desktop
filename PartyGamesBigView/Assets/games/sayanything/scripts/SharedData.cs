@@ -11,6 +11,7 @@ namespace PPlatform.SayAnything
         WaitForStart = 0,
         Questioning = 1,
         Answering = 2,
+		DisplayAnswers = 3,
         //ShowAnswers = 3, //show answers will be merged with judging (can be hidden via controller logic but isn't essential for the game logic
         JudgingAndVoting = 4,
         //Voting = 5, //voting is merged with Judging

@@ -13,10 +13,13 @@ namespace PPlatform.SayAnything.Ui
     /// </summary>
     public abstract class UserUi : MonoBehaviour
     {
+		public AnimateUi anim;
+
         /// <summary>
         /// Parent of the username field. In some states this is set to inactive to hide the username
         /// </summary>
         public GameObject _UsernameParent;
+		public GameObject _JoiningParent;
 
         /// <summary>
         /// Text of the username
@@ -38,6 +41,7 @@ namespace PPlatform.SayAnything.Ui
 
         protected virtual void Awake()
         {
+			anim = gameObject.AddComponent<AnimateUi> ();
             mDefaultUsernameText = _UsernameText.text;
             mDefaultColors = new Color[_UsernameColors.Length];
             for(int i = 0; i < mDefaultColors.Length; i++)
@@ -79,6 +83,7 @@ namespace PPlatform.SayAnything.Ui
             mCurrentColor = Color.white;
             ResetColors();
             SetUserName(mDefaultUsernameText);
+			SetJoinVisibile (true);
         }
         protected void ResetColors()
         {
@@ -103,6 +108,16 @@ namespace PPlatform.SayAnything.Ui
                 gameObject.SetActive(isVisible);
             }
         }
+
+		protected void SetJoinVisibile(bool isVisible)
+		{
+			//This method might be polled. Only change the visibility if necessary
+			if (isVisible != _JoiningParent.activeSelf)
+			{
+				_JoiningParent.SetActive(isVisible);
+				_UsernameParent.SetActive(!isVisible);
+			}
+		}
 
         
     }

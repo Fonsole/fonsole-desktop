@@ -26,6 +26,7 @@ namespace PPlatform.SayAnything.Ui
         public GameObject _WaitForStartUI;
         public GameObject _QuestioningUI;
         public GameObject _AnsweringUI;
+		public GameObject _DisplayAnswersUI;
         public GameObject _JudgingAndVotingUI;
 
         public Color[] _PlayerColors = new Color[]
@@ -151,6 +152,7 @@ namespace PPlatform.SayAnything.Ui
                 _WaitForStartUI.SetActive(true);
                 _QuestioningUI.SetActive(false);
                 _AnsweringUI.SetActive(false);
+				_DisplayAnswersUI.SetActive(false);
                 _JudgingAndVotingUI.SetActive(false);
             }
             else if (state == GameState.Questioning)
@@ -158,6 +160,7 @@ namespace PPlatform.SayAnything.Ui
                 _WaitForStartUI.SetActive(false);
                 _QuestioningUI.SetActive(true);
                 _AnsweringUI.SetActive(false);
+				_DisplayAnswersUI.SetActive(false);
                 _JudgingAndVotingUI.SetActive(false);
             }
             else if (state == GameState.Answering)
@@ -165,13 +168,23 @@ namespace PPlatform.SayAnything.Ui
                 _WaitForStartUI.SetActive(false);
                 _QuestioningUI.SetActive(false);
                 _AnsweringUI.SetActive(true);
+				_DisplayAnswersUI.SetActive(false);
                 _JudgingAndVotingUI.SetActive(false);
             }
+			else if (state == GameState.DisplayAnswers)
+			{
+				_WaitForStartUI.SetActive(false);
+				_QuestioningUI.SetActive(false);
+				_AnsweringUI.SetActive(false);
+				_DisplayAnswersUI.SetActive(true);
+				_JudgingAndVotingUI.SetActive(false);
+			}
             else if (state == GameState.JudgingAndVoting)
             {
                 _WaitForStartUI.SetActive(false);
                 _QuestioningUI.SetActive(false);
                 _AnsweringUI.SetActive(false);
+				_DisplayAnswersUI.SetActive(false);
                 _JudgingAndVotingUI.SetActive(true);
             }
             else if (state == GameState.ShowWinner)
@@ -179,6 +192,7 @@ namespace PPlatform.SayAnything.Ui
                 _WaitForStartUI.SetActive(false);
                 _QuestioningUI.SetActive(false);
                 _AnsweringUI.SetActive(false);
+				_DisplayAnswersUI.SetActive(false);
                 _JudgingAndVotingUI.SetActive(true);
             }
             else if (state == GameState.ShowScore)
@@ -186,6 +200,7 @@ namespace PPlatform.SayAnything.Ui
                 _WaitForStartUI.SetActive(false);
                 _QuestioningUI.SetActive(false);
                 _AnsweringUI.SetActive(false);
+				_DisplayAnswersUI.SetActive(false);
                 _JudgingAndVotingUI.SetActive(true);
             }
         }

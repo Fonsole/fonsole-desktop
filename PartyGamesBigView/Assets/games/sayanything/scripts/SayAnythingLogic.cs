@@ -21,6 +21,7 @@ namespace PPlatform.SayAnything
     {
         public static readonly float QUESTIONING_TIME = 30;
         public static readonly float ANSWERING_TIME = 60;
+		public static readonly float DISPLAY_TIME = 5;
         public static readonly float VOTING_TIME = 30;
         public static readonly float SHOWWINNER_TIME = 10;
         public static readonly float SHOWSCORE_TIME = 10;
@@ -109,16 +110,27 @@ namespace PPlatform.SayAnything
                     //start next round
                 }else if(mData.state == GameState.Answering)
                 {
-                    StatusCode code = CanEnterStateJudgeAndVoting();
+                    StatusCode code = CanEnterStateDisplay();
                     if (code == StatusCode.Ok)
                     {
-                        SwitchState(GameState.JudgingAndVoting);
+						SwitchState(GameState.DisplayAnswers);
                     }
                     else
                     {
                         CancelCurrentRound(code);
                     }
-                }
+				}else if(mData.state == GameState.DisplayAnswers)
+				{
+					StatusCode code = CanEnterStateJudgeAndVoting();
+					if (code == StatusCode.Ok)
+					{
+						SwitchState(GameState.JudgingAndVoting);
+					}
+					else
+					{
+						CancelCurrentRound(code);
+					}
+				}
                 else if (mData.state == GameState.JudgingAndVoting)
                 {
                     //game fails if the judge didn't choose anything
@@ -225,7 +237,7 @@ namespace PPlatform.SayAnything
                 //TODO: add timer and there could be answers that are from users that logged out by now...
                 if(mData.answers.Count == Platform.Instance.Controllers.Count -1)
                 {
-                    EnterStateJudgingAndVoting();
+					EnterStateDisplay();
                 }
             }
             else if (mData.state == GameState.JudgingAndVoting && lTag == Message.Judge.TAG)
@@ -289,6 +301,13 @@ namespace PPlatform.SayAnything
 
             return StatusCode.Ok;
         }
+		private StatusCode CanEnterStateDisplay()
+		{
+			if (mData.answers.Count < 1) //TODO: <= in the future. at least 2 answers needed but 1 is enough for testing
+				return StatusCode.NotEnoughAnswers;
+
+			return StatusCode.Ok;
+		}
         private StatusCode CanEnterStateJudgeAndVoting()
         {
             if (mData.answers.Count < 1) //TODO: <= in the future. at least 2 answers needed but 1 is enough for testing
@@ -314,23 +333,28 @@ namespace PPlatform.SayAnything
             //questening state can always be entered no matter from which state (the whole round will be cancelt if ShowScore wasn't reached)
             if (lTargetGameState == GameState.WaitForStart)
             {
+				AudioManager.Instance.OnWaitForStart ();
                 EnterStateWaitForStart();
             }else if (lTargetGameState == GameState.Questioning)
             {
 
                 //TODO: at least 2 for testing (ideally 3) players needed
                 //
-
+				AudioManager.Instance.OnStartGame();
                 EnterStateQuestioning();
             }
             else if (lTargetGameState == GameState.Answering && mData.state == GameState.Questioning)
             {
                 EnterStateAnswering();
             }
-            else if (lTargetGameState == GameState.JudgingAndVoting && mData.state == GameState.Answering)
+			else if (lTargetGameState == GameState.DisplayAnswers && mData.state == GameState.Answering)
             {
-                EnterStateJudgingAndVoting();
+                EnterStateDisplay();
             }
+			else if (lTargetGameState == GameState.JudgingAndVoting && mData.state == GameState.DisplayAnswers)
+			{
+				EnterStateJudgingAndVoting();
+			}
             else if (lTargetGameState == GameState.ShowWinner && mData.state == GameState.JudgingAndVoting)
             {
                 EnterStateShowWinner();
@@ -384,6 +408,13 @@ namespace PPlatform.SayAnything
             RefreshState();
         }
 
+
+		private void EnterStateDisplay()
+		{
+			mData.state = GameState.DisplayAnswers;
+			mData.timeLeft = DISPLAY_TIME * (Platform.Instance.Controllers.Count - 1);
+			RefreshState();
+		}
 
         private void EnterStateJudgingAndVoting()
         {

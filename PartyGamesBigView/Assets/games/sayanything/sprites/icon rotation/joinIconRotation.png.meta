@@ -1,0 +1,542 @@
+fileFormatVersion: 2
+guid: 1a757637cc079b1459889efe15e5a3f7
+timeCreated: 1456263693
+licenseType: Free
+TextureImporter:
+  fileIDToRecycleName:
+    21300000: joinIconRotation_0
+    21300002: joinIconRotation_1
+    21300004: joinIconRotation_2
+    21300006: joinIconRotation_3
+    21300008: joinIconRotation_4
+    21300010: joinIconRotation_5
+    21300012: joinIconRotation_6
+    21300014: joinIconRotation_7
+    21300016: joinIconRotation_8
+    21300018: joinIconRotation_9
+    21300020: joinIconRotation_10
+    21300022: joinIconRotation_11
+    21300024: joinIconRotation_12
+    21300026: joinIconRotation_13
+    21300028: joinIconRotation_14
+    21300030: joinIconRotation_15
+    21300032: joinIconRotation_16
+    21300034: joinIconRotation_17
+  serializedVersion: 2
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 1
+    linearTexture: 0
+    correctGamma: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+  isReadable: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 0
+  cubemapConvolution: 0
+  cubemapConvolutionSteps: 7
+  cubemapConvolutionExponent: 1.5
+  seamlessCubemap: 0
+  textureFormat: -1
+  maxTextureSize: 2048
+  textureSettings:
+    filterMode: -1
+    aniso: 16
+    mipBias: -1
+    wrapMode: 1
+  nPOTScale: 0
+  lightmap: 0
+  rGBM: 0
+  compressionQuality: 50
+  allowsAlphaSplitting: 0
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spritePixelsToUnits: 100
+  alphaIsTransparency: 1
+  textureType: 8
+  buildTargetSettings: []
+  spriteSheet:
+    sprites:
+    - name: joinIconRotation_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 1769
+        width: 244
+        height: 103
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -105, y: 35.5}
+        - {x: -105, y: -18.5}
+        - {x: -97, y: -37.5}
+        - {x: -53, y: -37.5}
+        - {x: -43, y: -36.5}
+        - {x: -32, y: -22.5}
+        - {x: -32, y: 27.5}
+        - {x: -34, y: 35.5}
+      - - {x: -5, y: 11.5}
+        - {x: -5, y: -16.5}
+        - {x: -3, y: -17.5}
+        - {x: 105, y: -17.5}
+        - {x: 106, y: -12.5}
+        - {x: 106, y: 11.5}
+    - name: joinIconRotation_1
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 1666
+        width: 244
+        height: 103
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -41, y: 35.5}
+        - {x: -91, y: 35.5}
+        - {x: -105, y: 27.5}
+        - {x: -105, y: -31.5}
+        - {x: -91, y: -37.5}
+        - {x: -45, y: -37.5}
+        - {x: -35, y: -25.5}
+        - {x: -32, y: -15.5}
+        - {x: -32, y: 22.5}
+      - - {x: -5, y: 11.5}
+        - {x: -5, y: -16.5}
+        - {x: -3, y: -17.5}
+        - {x: 105, y: -17.5}
+        - {x: 106, y: -12.5}
+        - {x: 106, y: 11.5}
+    - name: joinIconRotation_2
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 1563
+        width: 244
+        height: 103
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -105, y: 35.5}
+        - {x: -105, y: -33.5}
+        - {x: -99, y: -37.5}
+        - {x: -51, y: -37.5}
+        - {x: -32, y: -27.5}
+        - {x: -32, y: 35.5}
+      - - {x: -5, y: 11.5}
+        - {x: -5, y: -16.5}
+        - {x: -3, y: -17.5}
+        - {x: 105, y: -17.5}
+        - {x: 106, y: -12.5}
+        - {x: 106, y: 11.5}
+    - name: joinIconRotation_3
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 1460
+        width: 244
+        height: 103
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -88, y: 36.5}
+        - {x: -106, y: 30.5}
+        - {x: -106, y: -24.5}
+        - {x: -98, y: -36.5}
+        - {x: -52, y: -36.5}
+        - {x: -33, y: -27.5}
+        - {x: -33, y: 22.5}
+        - {x: -46, y: 36.5}
+      - - {x: -5, y: 11.5}
+        - {x: -5, y: -16.5}
+        - {x: -3, y: -17.5}
+        - {x: 105, y: -17.5}
+        - {x: 106, y: -12.5}
+        - {x: 106, y: 11.5}
+    - name: joinIconRotation_4
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 1357
+        width: 244
+        height: 103
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -89, y: 35.5}
+        - {x: -105, y: 19.5}
+        - {x: -105, y: -11.5}
+        - {x: -102, y: -23.5}
+        - {x: -92, y: -37.5}
+        - {x: -47, y: -37.5}
+        - {x: -32, y: -30.5}
+        - {x: -32, y: 15.5}
+        - {x: -44, y: 35.5}
+      - - {x: -5, y: 11.5}
+        - {x: -5, y: -16.5}
+        - {x: -3, y: -17.5}
+        - {x: 105, y: -17.5}
+        - {x: 106, y: -12.5}
+        - {x: 106, y: 11.5}
+    - name: joinIconRotation_5
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 1254
+        width: 244
+        height: 103
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -97, y: 35.5}
+        - {x: -106, y: 19.5}
+        - {x: -106, y: -17.5}
+        - {x: -101, y: -24.5}
+        - {x: -84, y: -37.5}
+        - {x: -49, y: -37.5}
+        - {x: -33, y: -22.5}
+        - {x: -33, y: 31.5}
+        - {x: -46, y: 35.5}
+      - - {x: -5, y: 11.5}
+        - {x: -5, y: -16.5}
+        - {x: -3, y: -17.5}
+        - {x: 105, y: -17.5}
+        - {x: 106, y: -12.5}
+        - {x: 106, y: 11.5}
+    - name: joinIconRotation_6
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 1151
+        width: 244
+        height: 103
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -94, y: 34.5}
+        - {x: -105, y: 29.5}
+        - {x: -105, y: -19.5}
+        - {x: -91, y: -36.5}
+        - {x: -53, y: -36.5}
+        - {x: -46, y: -34.5}
+        - {x: -33, y: -27.5}
+        - {x: -33, y: 30.5}
+        - {x: -37, y: 34.5}
+      - - {x: -5, y: 11.5}
+        - {x: -5, y: -16.5}
+        - {x: -3, y: -17.5}
+        - {x: 105, y: -17.5}
+        - {x: 106, y: -12.5}
+        - {x: 106, y: 11.5}
+    - name: joinIconRotation_7
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 1048
+        width: 244
+        height: 103
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -106, y: 35.5}
+        - {x: -106, y: -35.5}
+        - {x: -103, y: -36.5}
+        - {x: -37, y: -36.5}
+        - {x: -33, y: -29.5}
+        - {x: -33, y: 18.5}
+        - {x: -42, y: 35.5}
+      - - {x: -5, y: 11.5}
+        - {x: -5, y: -16.5}
+        - {x: -3, y: -17.5}
+        - {x: 105, y: -17.5}
+        - {x: 106, y: -12.5}
+        - {x: 106, y: 11.5}
+    - name: joinIconRotation_8
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 945
+        width: 244
+        height: 103
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -97, y: 34.5}
+        - {x: -105, y: 22.5}
+        - {x: -105, y: -30.5}
+        - {x: -95, y: -37.5}
+        - {x: -48, y: -37.5}
+        - {x: -33, y: -17.5}
+        - {x: -33, y: 18.5}
+        - {x: -47, y: 34.5}
+      - - {x: -5, y: 11.5}
+        - {x: -5, y: -16.5}
+        - {x: -3, y: -17.5}
+        - {x: 105, y: -17.5}
+        - {x: 106, y: -12.5}
+        - {x: 106, y: 11.5}
+    - name: joinIconRotation_9
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 842
+        width: 244
+        height: 103
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -89, y: 35.5}
+        - {x: -105, y: 20.5}
+        - {x: -105, y: -21.5}
+        - {x: -87, y: -35.5}
+        - {x: -82, y: -37.5}
+        - {x: -44, y: -37.5}
+        - {x: -32, y: -29.5}
+        - {x: -32, y: 20.5}
+        - {x: -42, y: 35.5}
+      - - {x: -5, y: 11.5}
+        - {x: -5, y: -16.5}
+        - {x: -3, y: -17.5}
+        - {x: 105, y: -17.5}
+        - {x: 106, y: -12.5}
+        - {x: 106, y: 11.5}
+    - name: joinIconRotation_10
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 739
+        width: 244
+        height: 103
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -99, y: 35.5}
+        - {x: -104, y: 20.5}
+        - {x: -105, y: 13.5}
+        - {x: -105, y: -20.5}
+        - {x: -93, y: -37.5}
+        - {x: -46, y: -37.5}
+        - {x: -32, y: -16.5}
+        - {x: -32, y: 31.5}
+        - {x: -42, y: 35.5}
+      - - {x: -5, y: 11.5}
+        - {x: -5, y: -16.5}
+        - {x: -3, y: -17.5}
+        - {x: 105, y: -17.5}
+        - {x: 106, y: -12.5}
+        - {x: 106, y: 11.5}
+    - name: joinIconRotation_11
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 636
+        width: 244
+        height: 103
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -89, y: 35.5}
+        - {x: -106, y: 27.5}
+        - {x: -106, y: -30.5}
+        - {x: -104, y: -37.5}
+        - {x: -33, y: -37.5}
+        - {x: -33, y: 20.5}
+        - {x: -46, y: 35.5}
+      - - {x: -5, y: 11.5}
+        - {x: -5, y: -16.5}
+        - {x: -3, y: -17.5}
+        - {x: 105, y: -17.5}
+        - {x: 106, y: -12.5}
+        - {x: 106, y: 11.5}
+    - name: joinIconRotation_12
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 533
+        width: 244
+        height: 103
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -92, y: 35.5}
+        - {x: -99, y: 32.5}
+        - {x: -106, y: 13.5}
+        - {x: -106, y: -25.5}
+        - {x: -98, y: -37.5}
+        - {x: -40, y: -37.5}
+        - {x: -32, y: -26.5}
+        - {x: -32, y: 16.5}
+        - {x: -38, y: 35.5}
+      - - {x: -5, y: 11.5}
+        - {x: -5, y: -16.5}
+        - {x: -3, y: -17.5}
+        - {x: 105, y: -17.5}
+        - {x: 106, y: -12.5}
+        - {x: 106, y: 11.5}
+    - name: joinIconRotation_13
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 430
+        width: 244
+        height: 103
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -96, y: 35.5}
+        - {x: -105, y: 29.5}
+        - {x: -105, y: -22.5}
+        - {x: -98, y: -37.5}
+        - {x: -47, y: -37.5}
+        - {x: -32, y: -27.5}
+        - {x: -32, y: 18.5}
+        - {x: -38, y: 35.5}
+      - - {x: -5, y: 11.5}
+        - {x: -5, y: -16.5}
+        - {x: -3, y: -17.5}
+        - {x: 105, y: -17.5}
+        - {x: 106, y: -12.5}
+        - {x: 106, y: 11.5}
+    - name: joinIconRotation_14
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 327
+        width: 244
+        height: 103
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -40, y: 35.5}
+        - {x: -92, y: 35.5}
+        - {x: -106, y: 29.5}
+        - {x: -106, y: -32.5}
+        - {x: -87, y: -37.5}
+        - {x: -44, y: -37.5}
+        - {x: -35, y: -21.5}
+        - {x: -33, y: -15.5}
+        - {x: -33, y: 23.5}
+      - - {x: -5, y: 11.5}
+        - {x: -5, y: -16.5}
+        - {x: -3, y: -17.5}
+        - {x: 105, y: -17.5}
+        - {x: 106, y: -12.5}
+        - {x: 106, y: 11.5}
+    - name: joinIconRotation_15
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 224
+        width: 244
+        height: 103
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -102, y: 35.5}
+        - {x: -106, y: 31.5}
+        - {x: -106, y: -23.5}
+        - {x: -101, y: -36.5}
+        - {x: -47, y: -36.5}
+        - {x: -33, y: -19.5}
+        - {x: -33, y: 10.5}
+        - {x: -38, y: 35.5}
+      - - {x: -5, y: 11.5}
+        - {x: -5, y: -16.5}
+        - {x: -3, y: -17.5}
+        - {x: 105, y: -17.5}
+        - {x: 106, y: -12.5}
+        - {x: 106, y: 11.5}
+    - name: joinIconRotation_16
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 121
+        width: 244
+        height: 103
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -51, y: 35.5}
+        - {x: -105, y: 35.5}
+        - {x: -105, y: -37.5}
+        - {x: -50, y: -37.5}
+        - {x: -32, y: -32.5}
+        - {x: -32, y: 12.5}
+        - {x: -46, y: 32.5}
+      - - {x: -5, y: 11.5}
+        - {x: -5, y: -16.5}
+        - {x: -3, y: -17.5}
+        - {x: 105, y: -17.5}
+        - {x: 106, y: -12.5}
+        - {x: 106, y: 11.5}
+    - name: joinIconRotation_17
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 18
+        width: 244
+        height: 103
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -119, y: -42.5}
+        - {x: -120, y: -43.5}
+        - {x: -120, y: -50.5}
+        - {x: -119, y: -51.5}
+        - {x: -95, y: -51.5}
+        - {x: -93, y: -48.5}
+        - {x: -93, y: -42.5}
+      - - {x: -117, y: -10.5}
+        - {x: -121, y: -11.5}
+        - {x: -121, y: -34.5}
+        - {x: -117, y: -38.5}
+        - {x: -97, y: -38.5}
+        - {x: -93, y: -34.5}
+        - {x: -93, y: -14.5}
+        - {x: -94, y: -10.5}
+      - - {x: -107, y: 19.5}
+        - {x: -117, y: 13.5}
+        - {x: -119, y: 4.5}
+        - {x: -119, y: -8.5}
+        - {x: -98, y: -8.5}
+        - {x: -95, y: -2.5}
+        - {x: -95, y: 19.5}
+      - - {x: -118, y: 49.5}
+        - {x: -121, y: 46.5}
+        - {x: -121, y: 24.5}
+        - {x: -118, y: 21.5}
+        - {x: -93, y: 21.5}
+        - {x: -93, y: 49.5}
+    outline: []
+  spritePackingTag: 
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
