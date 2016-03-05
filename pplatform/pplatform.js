@@ -25,13 +25,13 @@ app.use(express.static('public'));
 
 //setup the netgroup server
 var netgroup = new netgroup();
-netgroup.listen(http);
+netgroup.listen(3001);
 
 
 
 
 //process.env.PORT will be replaced with a pipe by azure if not hosted there the given port is used
-var port = process.env.PORT || 3001;
+var port = process.env.PORT || 80;
 
 //open the port for clients to connect
 http.listen(port, function(){
