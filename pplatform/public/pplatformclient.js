@@ -83,7 +83,7 @@ TAG.DISCONNECTED = "PLATFORM_DISCONNECTED";
     
     var mActiveGame = null;
     
-    var serverUrl = "http://because-why-not.com:3001";
+    var serverUrl = "http://fonsole.com:3001";
     if(window.location.href.indexOf("localhost") > -1) {
         serverUrl = "http://localhost:3001";
     }
