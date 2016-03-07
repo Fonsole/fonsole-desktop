@@ -1,5 +1,5 @@
 {
-  "name": "netgroup",
+  "name": "PPlatform",
   "version": "0.1.0",
   "description": "Allows to group webusers via a code they can share",
   "dependencies": {
