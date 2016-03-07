@@ -241,6 +241,7 @@ namespace PPlatform
             }
             else if (type == ANetgroup.SignalingMessageType.UserMessage)
             {
+                //Handling of custom messages specific for platform funcitonality
                 PlatformMessage pm = JsonWrapper.FromJson<PlatformMessage>(content);
 
                 //special platform messages which are handled before controllers are fully registerd
@@ -305,18 +306,38 @@ namespace PPlatform
                             //wait until controller discovery is received.
                         }
                     }
-                }
+                } //end of if (pm.tag == TAG_CONTROLLER_REGISTER)
                 else if (pm.tag == TAG_CONTROLLER_DISCOVERY)
                 {
                     //add controller to the list
-                    ControllerDiscoveryMessage discoveryMsg = JsonWrapper.FromJson<ControllerDiscoveryMessage>(pm.content);
+                    ControllerDiscoveryMessage incDiscoveryMsg = JsonWrapper.FromJson<ControllerDiscoveryMessage>(pm.content);
 
-                    ActivateController(discoveryMsg.connectionId, discoveryMsg.userId, discoveryMsg.name);
-                    Send(TAG_ENTER_GAME, mActiveName, discoveryMsg.userId);
+                    ActivateController(incDiscoveryMsg.connectionId, incDiscoveryMsg.userId, incDiscoveryMsg.name);
+
+
+                    foreach(var c in mController.Values)
+                    {
+                        if (c.IsAvailable && c.UserId != incDiscoveryMsg.userId) //all available user except the new user itself
+                        {
+                            //send a discovery message with all needed user info
+                            ControllerDiscoveryMessage outDiscoveryMsg = new ControllerDiscoveryMessage();
+                            outDiscoveryMsg.connectionId = c.ConnectionId;
+                            outDiscoveryMsg.userId = c.UserId;
+                            outDiscoveryMsg.name = c.Name;
+
+                            //send the messages only to the new user
+                            Send(TAG_CONTROLLER_DISCOVERY, JsonWrapper.ToJson(outDiscoveryMsg), incDiscoveryMsg.userId);
+                        }
+
+                    }
+
+
+                    //tell the controller to enter the current game
+                    Send(TAG_ENTER_GAME, mActiveName, incDiscoveryMsg.userId);
 
 
                     //controller is known now -> handle the messages
-                    HandlePlatformMessage(pm.tag, pm.content, discoveryMsg.userId);
+                    HandlePlatformMessage(pm.tag, pm.content, incDiscoveryMsg.userId);
 
                 }
                 else
@@ -332,7 +353,7 @@ namespace PPlatform
                         Debug.LogWarning("Received a message from an unregistered connection " + conId + " content: " + content);
                     }
                 }
-            }
+            }//end of if(type == ANetgroup.SignalingMessageType.UserMessage)
         }
 
 
