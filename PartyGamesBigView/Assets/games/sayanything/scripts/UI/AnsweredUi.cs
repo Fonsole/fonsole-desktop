@@ -16,8 +16,8 @@ namespace PPlatform.SayAnything.Ui
 		{
 			if (data.answers.ContainsKey(userId))
 			{
-				//Animate answer popup
-				if (!answered) {
+                //Animate answer popup
+                if (!answered) {
 					answered = true;
 					SetVisibile(true);
 					SetColor(SayAnythingUi.Instance.GetUserColor(userId));
@@ -34,11 +34,11 @@ namespace PPlatform.SayAnything.Ui
 		}
 
 
-		public void AnswerPopup (int userId){
-			anim.StartCoroutine (anim.Move (
-				new Vector2 (userId * 55 - ((9f*55f)/2f), -Screen.height - 10f),
-				new Vector2(userId * 55 - ((9f*55f)/2f), -Screen.height + 100f),
-				new Vector2 (userId * 55 - ((9f*55f)/2f), -Screen.height + 60f), 5f));
+		public void AnswerPopup (int userId) {
+            anim.StartCoroutine (anim.Move (
+				new Vector2 (userId * 55 - ((9f*55f)/2f), -500f),
+				new Vector2 (userId * 55 - ((9f*55f)/2f), -425f),
+				new Vector2 (userId * 55 - ((9f*55f)/2f), -460f), 5f));
 		}
 	}
 }
