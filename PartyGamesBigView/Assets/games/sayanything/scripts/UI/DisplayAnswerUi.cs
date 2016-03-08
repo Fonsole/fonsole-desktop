@@ -25,9 +25,9 @@ namespace PPlatform.SayAnything.Ui
 					_Text.text = data.answers[userId];
 					SetVisibile(true);
 
-					_UsernameText.text = SayAnythingUi.Instance.GetUserName(userId);
-					_UsernameText.color = SayAnythingUi.Instance.GetUserColor(userId);
-					StartCoroutine(AnswerDisplay (userId));
+                    //_UsernameText.text = SayAnythingUi.Instance.GetUserName(userId);
+                    //_UsernameText.color = SayAnythingUi.Instance.GetUserColor(userId);
+                    StartCoroutine(AnswerDisplay (userId));
 				}
 			}
 			else
@@ -44,7 +44,7 @@ namespace PPlatform.SayAnything.Ui
 			anim.StartCoroutine (anim.MovePause (
 				new Vector2 (Screen.width + 200, 0),
 				new Vector2(0, 0),
-				new Vector2 (-Screen.width - 400, 0), 5f, 3f));
+				new Vector2 (-Screen.width -1000, 0), 5f, 3f));
 
 			yield return new WaitForSeconds (5f);
 			displayed = true;

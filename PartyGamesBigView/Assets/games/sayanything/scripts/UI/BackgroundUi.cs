@@ -10,45 +10,36 @@ namespace PPlatform.SayAnything.Ui
 		public Image background;
 		public Image alternativeBackground;
 		public Sprite[] backgrounds;
+        private int current;
+		private float progress;
 
-		private GameState prevState;
-		private float target = 1;
 
-		void Start (){
+		void Start () {
 			alternativeBackground.color = new Color (1, 1, 1, 0);
+            current = -1; progress = 1.1f;
+            trySwitch();
 		}
 
 		void FixedUpdate()
 		{
-			SharedData data = SayAnythingUi.Instance.CurrentData;
-			switch (data.state) {
-				case GameState.WaitForStart:
-					background.sprite = backgrounds [0];
-					break;
-				case GameState.Questioning:
-					alternativeBackground.sprite = backgrounds [2];
-					break;
-				case GameState.Answering:
-					background.sprite = backgrounds [2];
-					break;
-				case GameState.JudgingAndVoting:
-					alternativeBackground.sprite = backgrounds [1];
-					break;
-				case GameState.ShowWinner:
-					background.sprite = backgrounds [1];
-					break;
-				case GameState.ShowScore:
-					alternativeBackground.sprite = backgrounds [1];
-					break;
-			}
-
-			if (data.state != prevState) {
-				prevState = data.state;
-				target = Mathf.Abs (target - 1);
-			}
-
-			background.color = Color.Lerp (background.color, new Color (1, 1, 1, target), Time.deltaTime * 2f);
-			alternativeBackground.color = Color.Lerp (alternativeBackground.color, new Color (1, 1, 1, Mathf.Abs(target-1)), Time.deltaTime * 2f);
+            trySwitch();
+            Color bColor = background.color, abColor = alternativeBackground.color;
+            bColor.a = 1 - progress;
+            abColor.a = progress;
+            background.color = bColor;
+            alternativeBackground.color = abColor;
+            progress += Time.deltaTime /300f;
 		}
+
+        private void trySwitch() {
+            if (progress >= 1f) {
+                current = (current + 1) % backgrounds.Length;
+                int next = (current + 1) % backgrounds.Length;
+                background.sprite = backgrounds[current];
+                alternativeBackground.sprite = backgrounds[next];
+                progress = 0f;
+            }
+        }
+
 	}
 }

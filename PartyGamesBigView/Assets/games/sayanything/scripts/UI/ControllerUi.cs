@@ -34,23 +34,46 @@ public class ControllerUi : UserUi
 
     private IEnumerator join(int userId) {
 
+        animating = true;
         animator.SetBool("join", true);
         yield return null;
 
         yield return new WaitForSeconds(1.25f);
 
+        Color current = _UsernameText.color;
+        current.a = 0f;
+
+        //switched to active
+        //active user. change name and color
+        SetColor(current);
+        SetUserName(SayAnythingUi.Instance.GetUserName(userId));
+        _UsernameParent.SetActive(true);
+
         //send out sound event
         if (AudioManager.Instance != null)
             AudioManager.Instance.OnUserJoin();
 
-        while (!animator.GetCurrentAnimatorStateInfo(0).IsName("joined"))
+        float timer = 0f;
+        while (!animator.GetCurrentAnimatorStateInfo(0).IsName("joined")) {
+            if (timer < 1f) {
+                current.a = Mathf.Lerp(0f, 1f, timer);
+                _UsernameText.color = current;
+                timer += Time.deltaTime;
+            }
             yield return null;
+        }
+        animating = false;
 
         //switched to active
         //active user. change name and color
         SetColor(SayAnythingUi.Instance.GetUserColor(userId));
-        SetUserName(SayAnythingUi.Instance.GetUserName(userId));
         SetJoinVisibile(false);
+
+        while (timer < 1f) {
+            current.a = Mathf.Lerp(0f, 1f, timer);
+            _UsernameText.color = current;
+            timer += Time.deltaTime;
+        }
     }
 
 }

@@ -218,7 +218,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!1 &177186
 GameObject:
   m_ObjectHideFlags: 1
@@ -250,7 +250,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!1 &195706
 GameObject:
   m_ObjectHideFlags: 0
@@ -532,7 +532,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0661f2b3b22afb24cadd2ca182d3636f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  anim: {fileID: 0}
   _UsernameParent: {fileID: 179118}
+  _JoiningParent: {fileID: 0}
   _UsernameText: {fileID: 11472002}
   _UsernameColors:
   - {fileID: 11437156}
@@ -713,7 +715,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Answer
+  m_Text: 
 --- !u!222 &22204606
 CanvasRenderer:
   m_ObjectHideFlags: 1
@@ -1083,7 +1085,7 @@ RectTransform:
   m_RootOrder: 0
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 50, y: -50}
+  m_AnchoredPosition: {x: 150, y: -100}
   m_SizeDelta: {x: 500, y: 150}
   m_Pivot: {x: 0, y: 1}
 --- !u!224 &22490228

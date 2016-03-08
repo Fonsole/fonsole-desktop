@@ -36,6 +36,7 @@ namespace PPlatform.SayAnything.Ui
 
         private Color mCurrentColor = Color.white;
 
+        public bool animating = false;
 
         protected string mDefaultUsernameText;
 
@@ -78,13 +79,17 @@ namespace PPlatform.SayAnything.Ui
                 }
             }
         }
+
         protected void SetDefault()
         {
+            if (animating) return;
+
             mCurrentColor = Color.white;
             ResetColors();
             SetUserName(mDefaultUsernameText);
 			SetJoinVisibile (true);
         }
+
         protected void ResetColors()
         {
             for (int i = 0; i < mDefaultColors.Length; i++)
@@ -111,6 +116,8 @@ namespace PPlatform.SayAnything.Ui
 
 		protected void SetJoinVisibile(bool isVisible)
 		{
+            if (animating) return;
+
 			//This method might be polled. Only change the visibility if necessary
 			if (isVisible != _JoiningParent.activeSelf)
 			{
