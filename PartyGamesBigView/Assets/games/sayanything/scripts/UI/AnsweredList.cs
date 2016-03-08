@@ -20,7 +20,7 @@ namespace PPlatform.SayAnything.Ui
 			int counter = 0;
 			foreach(var v in SayAnythingUi.Instance.CurrentData.answers)
 			{
-				_AnsweredUis[counter].Refresh(v.Key, SayAnythingUi.Instance.CurrentData);
+				_AnsweredUis[counter].Refresh(v.Key, SayAnythingUi.Instance.CurrentData, counter+1);
 				counter++;
 			}
 			for (int i = counter; i < _AnsweredUis.Length; i++)

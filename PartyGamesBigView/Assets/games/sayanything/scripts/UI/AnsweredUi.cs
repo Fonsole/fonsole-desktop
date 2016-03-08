@@ -12,7 +12,7 @@ namespace PPlatform.SayAnything.Ui
 		public GameObject _SelectedMarker;
 		public bool answered = false;
 
-		public void Refresh(int userId, SharedData data)
+		public void Refresh(int userId, SharedData data, int order = 1)
 		{
 			if (data.answers.ContainsKey(userId))
 			{
@@ -20,8 +20,8 @@ namespace PPlatform.SayAnything.Ui
                 if (!answered) {
 					answered = true;
 					SetVisibile(true);
-					SetColor(SayAnythingUi.Instance.GetUserColor(userId));
-					AnswerPopup (userId);
+					SetColor(Color.Lerp(SayAnythingUi.Instance.GetUserColor(userId), Color.white, 0.575f));
+					AnswerPopup ((order%2==0)? order/2: -order/2);
 				}
 			}
 			else
@@ -34,11 +34,11 @@ namespace PPlatform.SayAnything.Ui
 		}
 
 
-		public void AnswerPopup (int userId) {
+		public void AnswerPopup (int position) {
             anim.StartCoroutine (anim.Move (
-				new Vector2 (userId * 55 - ((9f*55f)/2f), -500f),
-				new Vector2 (userId * 55 - ((9f*55f)/2f), -425f),
-				new Vector2 (userId * 55 - ((9f*55f)/2f), -460f), 5f));
+				new Vector2 (position *150f, -460f),
+				new Vector2 (position *150f, -460f),
+				new Vector2 (position *150f, -460f), 1f));
 		}
 	}
 }

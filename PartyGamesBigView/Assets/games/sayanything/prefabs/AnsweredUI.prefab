@@ -11,7 +11,7 @@ GameObject:
   - 222: {fileID: 22201488}
   - 114: {fileID: 11475460}
   - 114: {fileID: 11422762}
-  - 95: {fileID: 9509966}
+  - 95: {fileID: 9504330}
   m_Layer: 0
   m_Name: AnsweredUI
   m_TagString: Untagged
@@ -19,7 +19,7 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!95 &9509966
+--- !u!95 &9504330
 Animator:
   serializedVersion: 3
   m_ObjectHideFlags: 1
@@ -28,7 +28,7 @@ Animator:
   m_GameObject: {fileID: 158742}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 9ee9577a3166767459a6e2a4949d494e, type: 2}
+  m_Controller: {fileID: 9100000, guid: 7e379736f7ff5fd48989d2ebe395a1de, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -74,9 +74,9 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_Sprite: {fileID: 21300000, guid: 9a28cfe71d36dcf4aaf64fa1a91979c0, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 189555fd397dffd4e8e65986eaf96bc0, type: 3}
   m_Type: 0
-  m_PreserveAspect: 0
+  m_PreserveAspect: 1
   m_FillCenter: 1
   m_FillMethod: 4
   m_FillAmount: 1
@@ -96,14 +96,14 @@ RectTransform:
   m_GameObject: {fileID: 158742}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 3, y: 3, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: -600}
-  m_SizeDelta: {x: 55, y: 45}
+  m_SizeDelta: {x: 100, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1001 &100100000
 Prefab:
