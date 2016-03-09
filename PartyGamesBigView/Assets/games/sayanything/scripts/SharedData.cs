@@ -9,11 +9,11 @@ namespace PPlatform.SayAnything
     public enum GameState
     {
         WaitForStart = 0,
-        Questioning = 1,
-        Answering = 2,
-        //ShowAnswers = 3, //show answers will be merged with judging (can be hidden via controller logic but isn't essential for the game logic
-        JudgingAndVoting = 4,
-        //Voting = 5, //voting is merged with Judging
+        Rules = 1,
+        Questioning = 2,
+        Answering = 3,
+		DisplayAnswers = 4,
+        JudgingAndVoting = 5,
         ShowWinner = 6,
         ShowScore = 7
     }
