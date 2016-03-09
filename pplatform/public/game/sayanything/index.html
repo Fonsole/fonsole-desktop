@@ -14,7 +14,7 @@
     <script src="sayanything.js"></script>
     </head>
     <body>
-        
+
         <div class="stateview" id="WaitForStart">
             <h2 class="debug">State: WaitForStart</h2>
             <div class="controller">
@@ -25,8 +25,16 @@
                 <button onclick="leaveGame()">Leave Game</button>
             </div>
         </div>
-        
-      
+
+        <div class="stateview" id="Rules">
+            <h2 class="debug">State: Rules</h2>
+            <div class="controller">
+            </div>
+            <div class="hostcontroller">
+                <button onclick="skipRules()">Skip Rules</button>
+            </div>
+        </div>
+
         <div class="stateview" id="Questioning">
             <h2 class="debug">State: Questioning</h2>
             <div class="controller">
@@ -46,14 +54,19 @@
                 </div>
             </div>
         </div>
-        
+
         <div class="stateview" id="Answering">
             <h2 class="debug">State: Answering</h2>
             <div class="controller">
-                <p> Score: <span class="myScore">0</span></p>
-                <p>Write your Answer</p>
-                <input type="text" id="answer" />
-                <button class="confirm" onclick="answerListConfirm()">Confirm</button>
+                <div class="preAnswer">
+                    <p> Score: <span class="myScore">0</span></p>
+                    <p>Write your Answer</p>
+                    <input type="text" id="answer" />
+                    <button class="confirm" onclick="answerListConfirm()">Confirm</button>
+                </div>
+                <div class="postAnswer" hidden="true">
+                    <p>Answer Submitted</p>
+                </div>
             </div>
             <div class="judgecontroller">
                 <p>Waiting for players to answer your question.</p>
@@ -80,16 +93,16 @@
 
                 <p> Score: <span class="myScore">0</span></p>
                 <div class="voteList">
-                     <div class="A1"> <input type="radio" name="votingRadio1" value="1" class="CB" id="vr11"> <input type="radio" name="votingRadio2" value="1" class="CB" id="vr21"><label for="vr11"> <span class="answer">A1</span></label></div> 
-                     <div class="A2"> <input type="radio" name="votingRadio1" value="1" class="CB" id="vr12"> <input type="radio" name="votingRadio2" value="2" class="CB" id="vr22"><label for="vr12"> <span class="answer">A2</span></label></div> 
-                     <div class="A3"> <input type="radio" name="votingRadio1" value="1" class="CB" id="vr13"> <input type="radio" name="votingRadio2" value="3" class="CB" id="vr23"><label for="vr13"> <span class="answer">A3</span></label></div> 
-                     <div class="A4"> <input type="radio" name="votingRadio1" value="1" class="CB" id="vr14"> <input type="radio" name="votingRadio2" value="4" class="CB" id="vr24"><label for="vr14"> <span class="answer">A4</span></label></div> 
-                     <div class="A5"> <input type="radio" name="votingRadio1" value="1" class="CB" id="vr15"> <input type="radio" name="votingRadio2" value="5" class="CB" id="vr25"><label for="vr15"> <span class="answer">A5</span></label></div> 
-                     <div class="A6"> <input type="radio" name="votingRadio1" value="1" class="CB" id="vr16"> <input type="radio" name="votingRadio2" value="6" class="CB" id="vr26"><label for="vr16"> <span class="answer">A6</span></label></div> 
-                     <div class="A7"> <input type="radio" name="votingRadio1" value="1" class="CB" id="vr17"> <input type="radio" name="votingRadio2" value="7" class="CB" id="vr27"><label for="vr17"> <span class="answer">A7</span></label></div> 
-                     <div class="A8"> <input type="radio" name="votingRadio1" value="1" class="CB" id="vr18"> <input type="radio" name="votingRadio2" value="8" class="CB" id="vr28"><label for="vr18"> <span class="answer">A8</span></label></div> 
-                     <div class="A9"> <input type="radio" name="votingRadio1" value="1" class="CB" id="vr19"> <input type="radio" name="votingRadio2" value="9" class="CB" id="vr29"><label for="vr19"> <span class="answer">A9</span></label></div> 
-                     
+                     <div class="A1"> <input type="radio" name="votingRadio1" value="1" class="CB" id="vr11"> <input type="radio" name="votingRadio2" value="1" class="CB" id="vr21"><label for="vr11"> <span class="answer">A1</span></label></div>
+                     <div class="A2"> <input type="radio" name="votingRadio1" value="1" class="CB" id="vr12"> <input type="radio" name="votingRadio2" value="2" class="CB" id="vr22"><label for="vr12"> <span class="answer">A2</span></label></div>
+                     <div class="A3"> <input type="radio" name="votingRadio1" value="1" class="CB" id="vr13"> <input type="radio" name="votingRadio2" value="3" class="CB" id="vr23"><label for="vr13"> <span class="answer">A3</span></label></div>
+                     <div class="A4"> <input type="radio" name="votingRadio1" value="1" class="CB" id="vr14"> <input type="radio" name="votingRadio2" value="4" class="CB" id="vr24"><label for="vr14"> <span class="answer">A4</span></label></div>
+                     <div class="A5"> <input type="radio" name="votingRadio1" value="1" class="CB" id="vr15"> <input type="radio" name="votingRadio2" value="5" class="CB" id="vr25"><label for="vr15"> <span class="answer">A5</span></label></div>
+                     <div class="A6"> <input type="radio" name="votingRadio1" value="1" class="CB" id="vr16"> <input type="radio" name="votingRadio2" value="6" class="CB" id="vr26"><label for="vr16"> <span class="answer">A6</span></label></div>
+                     <div class="A7"> <input type="radio" name="votingRadio1" value="1" class="CB" id="vr17"> <input type="radio" name="votingRadio2" value="7" class="CB" id="vr27"><label for="vr17"> <span class="answer">A7</span></label></div>
+                     <div class="A8"> <input type="radio" name="votingRadio1" value="1" class="CB" id="vr18"> <input type="radio" name="votingRadio2" value="8" class="CB" id="vr28"><label for="vr18"> <span class="answer">A8</span></label></div>
+                     <div class="A9"> <input type="radio" name="votingRadio1" value="1" class="CB" id="vr19"> <input type="radio" name="votingRadio2" value="9" class="CB" id="vr29"><label for="vr19"> <span class="answer">A9</span></label></div>
+
                      <button class="confirm" onclick="votingConfirm()">Confirm Selection</button>
                 </div>
             </div>
@@ -108,7 +121,7 @@
                     <div class="A7"><input type="radio" name="judgingRadio" value="7" class="CB" id="jr7"><label for="jr7"><span class="answer">A7</span></label> </div>
                     <div class="A8"><input type="radio" name="judgingRadio" value="8" class="CB" id="jr8"><label for="jr8"><span class="answer">A8</span></label> </div>
                     <div class="A9"><input type="radio" name="judgingRadio" value="9" class="CB" id="jr9"><label for="jr9"><span class="answer">A9</span></label> </div>
-                    
+
                     <button class="confirm" onclick="judgingConfirm()">Confirm Selection</button>
                 </div>
                 <div class="answerList">
@@ -140,37 +153,37 @@
         <script>
 
 $(".voteList input").click( function(){
-   if( $(this).is(':checked') ) 
+   if( $(this).is(':checked') )
    {
-       
+
        if($(this).attr("name") === "votingRadio1")
        {
            //get all labels and get the id's from their votingRadio2 and set the id's to their for field
            //$(this).siblings("label").attr("for", (this).siblings("votingRadio2").attr("id"));
            //var v = $(".voteList input[name='votingRadio2']");
-           
+
            $(".voteList label").each(function(index, element)
            {
                var qelement = $(element);
-               
+
                qelement.attr("for", qelement.siblings("[name='votingRadio2']").attr("id"));
            });
-               
+
        }else if($(this).attr("name") === "votingRadio2")
        {
            //get all labels and get the id's from their votingRadio2 and set the id's to their for field
            //$(this).siblings("label").attr("for", (this).siblings("votingRadio2").attr("id"));
            //var v = $(".voteList input[name='votingRadio2']");
-           
+
            $(".voteList label").each(function(index, element)
            {
                var qelement = $(element);
-               
+
                qelement.attr("for", qelement.siblings("[name='votingRadio1']").attr("id"));
            });
        }
        //console.log($(".voteList input:checked ~ input:checked + label"));
-       
+
        //$(".voteList input").attr('for="' + $(this).siblings("") +'"');
    }
 });

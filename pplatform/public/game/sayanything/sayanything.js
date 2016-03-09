@@ -2,7 +2,7 @@
     //global variables
 //    var gLogic = null;
     var gPlatform = null;
-    
+
 
     //called once after the page is loaded see index.html
     function initGame()
@@ -11,7 +11,7 @@
         if(typeof parent.gPlatform !== 'undefined')
         {
             gPlatform = parent.gPlatform;
-            
+
             //send out a broadcast telling the say anything view + other controllers
             //that this controller loaded the game and can now receive game specific messages
             //the view will respond to this by sendingthe current game data
@@ -19,13 +19,13 @@
         }
         //fills the ui with test data
         initTestUi();
-        
+
         //all the ui needs is the possibility to receive messages
         //no direct access to the game logic is needed
         gPlatform.addMessageListener(onMessageUi);
-        
-        
-        setInterval(function() 
+
+
+        setInterval(function()
         {
             //refresh timer every sec
             if(gLastSharedData != null)
@@ -35,10 +35,10 @@
             }
         }, 1000);
     }
-    
 
 
-    
+
+
 
 //Game data
     var SayAnything = {};
@@ -48,41 +48,41 @@
 
     /**Will be used by all controllers and view. It can be only changed by the view and if it changes it will
      * send the new version to all connected controllers. (if needed)
-     * 
+     *
      */
     SayAnything.Data.Shared = function()
     {
         var self = this;
         //current state
         this.state = SayAnything.GameState.WaitForStart;
-        
+
         //user id of the judge. only the connection id for now
         this.judgeUserId = null;
-        
+
         //simply the text of the question
         this.question = null;
-        
+
         //will contain the player id as key and then the answer.
         this.answers = {};
-        
+
         //user id of the answer the judge has chosen
         this.judgedAnswerId = null;
-        
+
         //key: user id (equals the id the answer of this user has in the "answers" object)
         //value: a list of user ids the vote came from (needed to show the color badges in the end)
         //(move to local data, view only?)
         this.votes = {};
-        
+
         //scores in this round (move to local data, view only?)
         this.roundScore = {};
-        
+
         //scores overall (move to local data, view only?)
         this.totalScore = {};
-        
+
         this.timeLeft = 30;
-         
+
          //functions to easily fill and read the data (ideall this should be done only via functions later to prevent bugs)
-         
+
          this.addVote = function(lFrom, lTo)
          {
             if(lTo in self.votes)
@@ -95,7 +95,7 @@
                 self.votes[lTo] = [lFrom];
             }
          };
-         
+
          //returns a list of votes a certain userid/answerid received
          this.getVotes = function(lUserId)
          {
@@ -107,8 +107,8 @@
                  return []; //empty list. user never received a vote
              }
          };
-         
-         
+
+
         this.resetRoundData = function()
         {
             self.state = SayAnything.GameState.WaitForStart;
@@ -120,7 +120,7 @@
             self.votes = {};
             self.roundScore = {};
          };
-         
+
          this.awardScore = function(lUserId, lPoints)
          {
              if(lUserId in self.roundScore)
@@ -129,7 +129,7 @@
              }else{
                  self.roundScore[lUserId] = lPoints;
              }
-             
+
              if(lUserId in self.totalScore)
              {
                  self.totalScore[lUserId] += lPoints;
@@ -141,91 +141,99 @@
 
 
     /** The states the game can be in.
-     * 
+     *
      */
      SayAnything.GameState = {
             WaitForStart : 0,
-            Questioning : 1,
-            Answering : 2,
-            ShowAnswers : 3,
-            JudgingAndVoting : 4,
+            Rules : 1,
+            Questioning : 2,
+            Answering : 3,
+            ShowAnswers : 4,
+            JudgingAndVoting : 5,
             ShowWinner : 6,
             ShowScore : 7
         };
-    
+
 //pre build messages content so it is clear what a message is suppose to contain
-   
+
    //updates view and client after the shared data changed
     SayAnything.Message.SharedDataUpdate = function(lSharedData)
     {
         this.sharedData = lSharedData;
     };
     SayAnything.Message.SharedDataUpdate.TAG = "SayAnything_SharedDataUpdate";
-    
+
     //message to the view that a controller clicked the start game button
     SayAnything.Message.StartGame = function()
     {
         //no content
     };
     SayAnything.Message.StartGame.TAG = "SayAnything_StartGame";
-    
+
     //notifying the view that a controller finished loading the game and is ready to process messages
     SayAnything.Message.GameLoaded = function()
     {
         //no content
     };
     SayAnything.Message.GameLoaded.TAG = "SayAnything_GameLoaded";
-    
+
+    //sent after a controller skips rules
+    SayAnything.Message.Rules = function()
+    {
+        //no content
+    };
+    SayAnything.Message.Rules.TAG = "SayAnything_SkipRules";
+
     //sent after the judge chooses a question
     SayAnything.Message.Question = function(lQuestion)
     {
         this.question = lQuestion;
     };
     SayAnything.Message.Question.TAG = "SayAnything_Question";
-    
+
     //sent after the controllers enter an answer and press the confirm button
     SayAnything.Message.Answer = function(lAnswer)
     {
         this.answer = lAnswer;
     };
     SayAnything.Message.Answer.TAG = "SayAnything_Answer";
-    
-    
+
+
     SayAnything.Message.Judge = function(lPlayerId)
     {
         this.playerId = lPlayerId;
     };
     SayAnything.Message.Judge.TAG = "SayAnything_Judge";
-    
-    
+
+
     SayAnything.Message.Vote = function(lVotePlayerId1, lVotePlayerId2)
     {
         this.votePlayerId1 = lVotePlayerId1;
         this.votePlayerId2 = lVotePlayerId2;
     };
     SayAnything.Message.Vote.TAG = "SayAnything_Vote";
-    
 
-    
-    
-    
-    
 
- 
-    
-    
+
+
+
+
+
+
+
+
 
     //gPlatform is a global variable
     /* global gPlatform */
-    
+
     var gLastSharedData = null;
 
-    
+
 
     // <editor-fold desc="UI refresh and helper">
 
         function onMessageUi(lTag, lContent, lFrom)
-        {    
+        {
 
             //used for view and controller -> update the page
             //if the game data changed
@@ -247,17 +255,17 @@
 
 
         //called if a message arrived which caused the game data to change ->
-        //refresh to UI (ideally compare it to the last changed data and 
+        //refresh to UI (ideally compare it to the last changed data and
         //only refresh the changed ui)
 
 
         /** Game data changed -> refresh the UI
          * TODO: make a backup of the old data and show only the differences?
          * (not really needed for controller though)
-         * 
-         * 
+         *
+         *
          * @param {SayAnything.Data.Shared} lSharedData the updated shared data
-         * 
+         *
          */
         function refreshUi(lSharedData)
         {
@@ -265,7 +273,7 @@
             console.debug("UI refresh");
 
             //hide everything -> show later only what is needed
-            
+
             $('.debug').attr("hidden", true);
             $('.view').attr("hidden", true);
             $('.hostcontroller').attr("hidden", true);
@@ -283,10 +291,10 @@
             {
                 ownScore = lSharedData.totalScore[ownUserId];
             }
-            
+
 
             //bugfix: don't refresh the score during "ShowWinner" state
-            //the game data contains the newest score already! but 
+            //the game data contains the newest score already! but
             //it shouldn't be known until the score state
             if(lSharedData.state != SayAnything.GameState.ShowWinner)
                 $(".myScore").empty().append(ownScore);
@@ -298,6 +306,10 @@
                 console.log("show WaitForStart");
                 refreshPlayerList();
                 $('#WaitForStart').attr("hidden", false);
+            }else if(lSharedData.state == SayAnything.GameState.Rules)
+            {
+                console.log("show Rules");
+                $('#Rules').attr("hidden", false);
             }else if(lSharedData.state == SayAnything.GameState.Questioning)
             {
                 //clear up answering field for next run
@@ -309,9 +321,9 @@
             }else if(lSharedData.state == SayAnything.GameState.Answering)
             {
                 console.log("show Answering");
-                
-                
-                
+
+
+
                 $('#Answering').attr("hidden", false);
             }else if(lSharedData.state == SayAnything.GameState.ShowAnswers)
             {
@@ -324,7 +336,7 @@
                 console.log("show JudgingAndVoting");
                 $('#JudgingAndVoting').attr("hidden", false);
                 answerListFill(lSharedData);
-                
+
 
             }else if(lSharedData.state == SayAnything.GameState.ShowWinner)
             {
@@ -362,8 +374,8 @@
             //if question is set -> fill in the question parts in the ui
             if(lSharedData.question != null)
                 $('.chosenQuestion').empty().append(lSharedData.question);
-            
-            
+
+
             gLastSharedData = lSharedData;
         }
 
@@ -379,7 +391,7 @@
         }
         /**
          * Returns the player name if available
-         * 
+         *
          * @param {type} lUserId the user id
          * @returns {String} the players name or "disconnected" if not available
          */
@@ -399,7 +411,7 @@
             return playerName;
         }
         /** special method only called while entering the question state. fill only the question list
-         * 
+         *
          */
         function questionListFill(lQ1, lQ2, lQ3, lQ4)
         {
@@ -419,13 +431,13 @@
         function answerListFill(lSharedData)
         {
             $(".chosenQuestion").empty().append(lSharedData.question);
-             
+
 
             //this loop will go through all given answers and fill the UI with data (answers, id's of checkboxes/radio buttons, votes for the answers, player names that received and gave votes)
             var counter = 1;
             for(var userId in lSharedData.answers)
             {
-                
+
             //answers
                 var parentElement = ".A" + counter;
                 //Label is in all constructs the parent -> make it visible for this answer
@@ -482,10 +494,10 @@
      * respond with an game data update which causes the refreshUi function
      * to be called. The view can also just ignore the input.
      */
-    // <editor-fold desc="UI event handlers">  
-    
+    // <editor-fold desc="UI event handlers">
+
         /**Controller clicks the start game button
-         * 
+         *
          */
         function startGame()
         {
@@ -500,6 +512,10 @@
             gPlatform.enterGame("gamelist");
         }
 
+        function skipRules()
+        {
+            gPlatform.sendMessageObj(SayAnything.Message.Rules.TAG, new SayAnything.Message.Rules());
+        }
 
         /**Confirm button of the question input
          */
@@ -516,11 +532,14 @@
 
 
         /**Confirm button of the answer list
-         * 
+         *
          * @returns {undefined}
          */
         function answerListConfirm()
         {
+            $('.preAnswer').attr("hidden", true);
+            $('.postAnswer').attr("hidden", false);
+
             var answer = $("#answer").val();
             gPlatform.sendMessageObj(SayAnything.Message.Answer.TAG, new SayAnything.Message.Answer(answer));
         }
@@ -542,7 +561,7 @@
             gPlatform.sendMessageObj(SayAnything.Message.Vote.TAG, new SayAnything.Message.Vote(playerid1, playerid2));
         }
     // </editor-fold>
-   
+
 
 
     /**For testing only!
@@ -581,10 +600,10 @@
     }
 
 
-    
 
-    
-    
+
+
+
 
 
 
@@ -593,6 +612,6 @@
 function GetRandomQuestion()
 {
     var randomIndex = Math.floor((Math.random() * gQuestions.length));
-    
+
     return gQuestions[randomIndex];
 }

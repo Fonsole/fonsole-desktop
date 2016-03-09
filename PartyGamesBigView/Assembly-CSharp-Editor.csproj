@@ -74,7 +74,7 @@
  <HintPath>C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/TreeEditor/Editor/UnityEditor.TreeEditor.dll</HintPath>
  </Reference>
  <Reference Include="Newtonsoft.Json">
- <HintPath>C:/Users/Jazzer/Google Drive/Games/Freelance/PartyGames/PartyGamesBigView/Assets/Newtonsoft.Json.dll</HintPath>
+ <HintPath>C:/Users/Jazzer/Google Drive/Games/Freelance/PartyGames/Repo/PartyGamesBigView/Assets/Newtonsoft.Json.dll</HintPath>
  </Reference>
  <Reference Include="UnityEditor.Graphs">
  <HintPath>C:/Program Files/Unity/Editor/Data/Managed/UnityEditor.Graphs.dll</HintPath>

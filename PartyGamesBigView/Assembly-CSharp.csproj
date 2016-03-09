@@ -168,7 +168,7 @@
  <HintPath>C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/Networking/UnityEngine.Networking.dll</HintPath>
  </Reference>
  <Reference Include="Newtonsoft.Json">
- <HintPath>C:/Users/Jazzer/Google Drive/Games/Freelance/PartyGames/PartyGamesBigView/Assets/Newtonsoft.Json.dll</HintPath>
+ <HintPath>C:/Users/Jazzer/Google Drive/Games/Freelance/PartyGames/Repo/PartyGamesBigView/Assets/Newtonsoft.Json.dll</HintPath>
  </Reference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

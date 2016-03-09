@@ -26,6 +26,11 @@ namespace PPlatform.SayAnything.Message
         //no content
     }
 
+    public struct Rules
+    {
+        public static readonly string TAG = "SayAnything_SkipRules";
+        //skip rules screen
+    }
     //sent after the judge chooses a question
     public struct Question
     {
