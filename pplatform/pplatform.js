@@ -36,6 +36,7 @@ var port = process.env.PORT || 80;
 //open the port for clients to connect
 http.listen(port, function(){
     console.log('listening on *:' + port);
+    console.log("PPlatform V1 started.");
     
 });
 
