@@ -23,6 +23,7 @@ namespace PPlatform
         {
             mSocket = gameObject.AddComponent<SocketIOComponent>();
             mSocket.url = _Url;
+            Debug.Log("Trying to connect to server " + _Url);
             mSocket.On("open", OnOpen);
             mSocket.On("connect", OnConnected);
             mSocket.On(MESSAGE_NAME, OnMessage);

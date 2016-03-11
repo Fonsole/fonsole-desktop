@@ -217,7 +217,6 @@ namespace PPlatform
 
             if (mConnectionState == ConnectionState.NotConnected)
             {
-                Debug.Log("Trying to connect to server ...");
                 mConnectionState = ConnectionState.Connecting;
                 InitSocket();
             }
@@ -227,71 +226,6 @@ namespace PPlatform
         {
             Cleanup();
         }
-
-
-
-        //private void OnClose(object ev)
-        //{
-        //    Debug.Log("Connection closed" + ev);
-        //    AddEvent(SignalingMessageType.Closed, ev);
-        //}
-        //Manager m;
-        //private void InitSocket()
-        //{
-
-        //    IO.Options opt = new IO.Options();
-        //    opt.AutoConnect = false;
-        //    opt.Reconnection = false;
-        //    opt.ForceNew = true;
-        //    opt.Timeout = 10000;
-
-
-        //    //m = new Manager(new Uri("http://localhost:3001"), opt);
-        //    mSocket = IO.Socket("http://localhost:3001", opt);
-        //    //mSocket = m.Socket("/");
-        //    mSocket.On(Socket.EVENT_CONNECT_TIMEOUT, (o) => { Debug.Log("Socket.io event:" + Socket.EVENT_CONNECT_TIMEOUT); OnClose(o); });
-        //    mSocket.On(Socket.EVENT_CONNECT_ERROR, (o) => { Debug.Log("Socket.io event:" + Socket.EVENT_CONNECT_ERROR); OnClose(o); });
-        //    mSocket.On(Socket.EVENT_DISCONNECT, (o) => { Debug.Log("Socket.io event:" + Socket.EVENT_DISCONNECT); OnClose(o); });
-        //    mSocket.On(Socket.EVENT_ERROR, (o) => { Debug.Log("Socket.io event:" + Socket.EVENT_ERROR); OnClose(o); });
-        //    mSocket.On(Socket.EVENT_RECONNECT, (o) => { Debug.Log("Socket.io event:" + Socket.EVENT_RECONNECT); });
-        //    mSocket.On(Socket.EVENT_RECONNECT_ATTEMPT, (o) => { Debug.Log("Socket.io event:" + Socket.EVENT_RECONNECT_ATTEMPT); });
-        //    mSocket.On(Socket.EVENT_RECONNECT_ERROR, (o) => { Debug.Log("Socket.io event:" + Socket.EVENT_RECONNECT_ERROR); });
-        //    mSocket.On(Socket.EVENT_RECONNECT_FAILED, (o) => { Debug.Log("Socket.io event:" + Socket.EVENT_RECONNECT_FAILED); });
-        //    mSocket.On(Socket.EVENT_RECONNECTING, (o) => { Debug.Log("Socket.io event:" + Socket.EVENT_RECONNECTING); });
-        //    //Socket io for unity doesn't seem to implement this the same way as the web version :/
-        //    mSocket.On(Socket.EVENT_CONNECT, () =>
-        //    {
-        //        Debug.Log("Connected to server! Opening room");
-        //        mSocket.Emit("open room", mRoomName);
-
-        //    });
-
-
-        //    //custom messages
-        //    mSocket.On(EVENT_ROOM_OPENED, (ev) =>
-        //    {
-        //        Debug.Log("Room opened " + ev);
-        //        AddEvent(SignalingMessageType.Connected, ev);
-        //    });
-        //    mSocket.On(EVENT_ROOM_JOINED, (ev) =>
-        //    {
-        //        Debug.Log("Room joined " + ev);
-        //        AddEvent(SignalingMessageType.Connected, ev);
-        //    });
-        //    mSocket.On(EVENT_USER_JOINED, (ev) =>
-        //    {
-        //        Debug.Log(ev);
-        //        AddEvent(SignalingMessageType.UserJoined, ev);
-        //    });
-        //    mSocket.On(EVENT_USER_LEFT, (ev) =>
-        //    {
-        //        AddEvent(SignalingMessageType.UserLeft, ev);
-        //    });
-        //    mSocket.On(EVENT_USER_MESSAGE, (ev) =>
-        //    {
-        //        AddEvent(SignalingMessageType.UserMessage, ev);
-        //    });
-        //}
     }
 
 }
