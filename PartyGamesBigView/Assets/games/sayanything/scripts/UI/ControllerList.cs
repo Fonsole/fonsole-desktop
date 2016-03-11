@@ -19,7 +19,7 @@ namespace PPlatform.SayAnything.Ui
         private void FixedUpdate()
         {
             int counter = 0;
-            foreach (var v in SayAnythingUi.Instance.GetActiveUsers())
+            foreach (var v in SayAnythingUi.Instance.GetActiveUsersOrderedByConnectionId())
             {
                 _ControllerUis[counter].Refresh(v, SayAnythingUi.Instance.CurrentData);
                 counter++;

@@ -133,7 +133,13 @@ namespace PPlatform.SayAnything.Ui
                     yield return v.Value.UserId;
             }
         }
-
+        public IEnumerable<int> GetActiveUsersOrderedByConnectionId()
+        {
+            foreach (var v in Platform.Instance.ActiveControllers.OrderBy(controller => controller.ConnectionId))
+            {
+                yield return v.UserId;
+            }
+        }
         public void FixedUpdate()
         {
             SharedData data = CurrentData;
