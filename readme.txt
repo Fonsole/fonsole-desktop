@@ -96,8 +96,32 @@ Structure (important files and folders):
 												
 									
 												
-												
-												
+
+How to test locally:
+	* first you need unity for the bigview part and node.js for the controller and server/network part
+	* Unity / bigview:
+		* get the personal edition at http://unity3d.com/get-unity
+		* open the project directory PartyGamesBigView
+		* open the scene PartyGamesBigView\Assets\games\gamelist\gamelist.unity to test games using http://fonsole.com
+		* open an indivudal game to test locally e.g. \PartyGamesBigView\Assets\games\sayanything\sayanything.unity
+			The game will start trying to connect to a local server until it finally finds one. See the unity console output for details
+	* Node.js:
+		* download at https://nodejs.org/en/download/
+		* after installation use the commant promt to run:
+			* "npm install" in folder \pplatform This will download and install all libraries needed for the project
+			* "node platform.js" will finally start the server itself
+		* Node js will start 2 servers in one:
+			* a webserver on port 80 accessable via http://localhost (don't use 127.0.0.1 the controller code checks for "localhost" in the domain name to start local testing mode)
+				NOTE: SKYPE MIGHT USE PORT 80! Stop skype and then restart the server if you have problems
+			* a socket.io server on port 3001
+	* Testing:
+		1. start node js server
+		2. start unity and select "sayanything.unity"
+		3. The command prompt of node.js should show you debug output in the moment unity connects. unity itself will show you a similar output in the console tab
+		4. Open http://localhost in your browser -> enter the game code shown in unity or in the debug output
+		5. Open multiple windows for multiple users and start testing!
+		
+	
 												
 How to add a new game:
 
