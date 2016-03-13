@@ -5432,6 +5432,7 @@ MonoBehaviour:
   _AnsweringUI: {fileID: 2088420980}
   _DisplayAnswersUI: {fileID: 2141443722}
   _JudgingAndVotingUI: {fileID: 1657592669}
+  _RulesUI: {fileID: 2015105813}
   _PlayerColors:
   - {r: 0.9632353, g: 0.32296708, b: 0.32296708, a: 1}
   - {r: 0.6666667, g: 0.53333336, b: 0.22352941, a: 1}
