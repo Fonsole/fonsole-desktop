@@ -13,6 +13,7 @@ public class AudioManager : SceneSingleton<AudioManager>
     private bool _MuteToggle;
 
 	void Start (){
+        AudioListener.volume = 0.50f;
 		PlayMusic(_BackgroundMusic);
 	}
 
