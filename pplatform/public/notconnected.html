@@ -27,7 +27,7 @@
 				<fieldset>
 					<div class="roomField">
 						<label for="roomname" class="text-signin">Room Code</label><br>
-						<input id="roomname" class="pure-input-1 jbg-input" type="text" tabindex="1" placeholder="ENTER 4-LETTER CODE" style="text-transform:uppercase;" maxlength="4" autocapitalize="off" autocorrect="off" autocomplete="off">
+						<input id="roomname" class="pure-input-1 jbg-input" type="text" tabindex="1" placeholder="ENTER 6-LETTER CODE" style="text-transform:uppercase;" maxlength="6" autocapitalize="off" autocorrect="off" autocomplete="off">
 					</div>
 					<div class="nameField">
 						<label for="playername" class="text-signin">Name (Limit 12 Characters)</label><br>
@@ -38,9 +38,11 @@
 			<div class="button">
                     <input type="submit" value="PLAY" id="button-join" tabindex="3" class="button-signin button-blue button-xlarge pure-button">
             </div>
+			<a href="./bigview.zip">
 			<div class="button">
                     <input type="submit" value="Download Desktop Game Client" id="button-join" tabindex="3" class="button-signin button-blue button-xlarge pure-button">
             </div>
+			</a>
 			
 		</div>
   
@@ -59,7 +61,7 @@
             
             gPlatform = parent.gPlatform;
     
-            $('#joinroom').click(function(){
+            $('#button-join').click(function(){
                 gPlatform.Log("Join room");
                 var gameid = $('#roomname').val().toUpperCase();
                 $('#gameid').val(gameid);
