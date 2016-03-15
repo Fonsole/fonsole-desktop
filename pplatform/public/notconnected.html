@@ -2,7 +2,7 @@
 <html>
   <head>
     <meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
  <!-- Copyright (C) 2015 Christoph Kutza -->
     <title>Game listt</title>
     <script src="https://cdn.socket.io/socket.io-1.2.0.js"></script>
@@ -20,33 +20,35 @@
     <script type="text/javascript" charset="utf-8" async="" data-requirecontext="_" data-requiremodule="bootstrap" src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js"></script>
   </head>
   <body>
-		<!--<div id="logo"></div> -->
-		<div class="container">
-			
-			<form>
-				<fieldset>
-					<div class="roomField">
-						<label for="roomname" class="text-signin">Room Code</label><br>
-						<input id="roomname" class="pure-input-1 jbg-input" type="text" tabindex="1" placeholder="ENTER 6-LETTER CODE" style="text-transform:uppercase;" maxlength="6" autocapitalize="off" autocorrect="off" autocomplete="off">
-					</div>
-					<div class="nameField">
-						<label for="playername" class="text-signin">Name (Limit 12 Characters)</label><br>
-						<input id="playername" class="pure-input-1 jbg-input" type="text" tabindex="2" placeholder="ENTER YOUR NAME" style="text-transform:uppercase;" maxlength="12" autocapitalize="off" autocorrect="off" autocomplete="off">
-					</div>
-				</fieldset>
-			</form>
-			<div class="button">
+        <div class="logo">
+            <img class="logo-img" src="http://placehold.it/300x125" />
+        </div> 
+        <div class="container">
+            
+            <form>
+                <fieldset>
+                    <div class="roomField">
+                        <label for="roomname" class="text-signin">Room Code</label><br>
+                        <input id="roomname" class="pure-input-1 jbg-input" type="text" tabindex="1" placeholder="ENTER 6-LETTER CODE" style="text-transform:uppercase;" maxlength="6" autocapitalize="off" autocorrect="off" autocomplete="off">
+                    </div>
+                    <div class="nameField">
+                        <label for="playername" class="text-signin">Name (Limit 12 Characters)</label><br>
+                        <input id="playername" class="pure-input-1 jbg-input" type="text" tabindex="2" placeholder="ENTER YOUR NAME" style="text-transform:uppercase;" maxlength="12" autocapitalize="off" autocorrect="off" autocomplete="off">
+                    </div>
+                </fieldset>
+            </form>
+            <div class="button">
                     <input type="submit" value="PLAY" id="button-join" tabindex="3" class="button-signin button-blue button-xlarge pure-button">
             </div>
-			<a href="./bigview.zip">
-			<div class="button">
-                    <input type="submit" value="Download Desktop Game Client" id="button-join" tabindex="3" class="button-signin button-blue button-xlarge pure-button">
+            <a href="./bigview.zip">
+            <div class="button">
+                    <input type="submit" value="Download Desktop Game Client" id="button-download" tabindex="3" class="button-signin button-blue button-xlarge pure-button">
             </div>
-			</a>
-			
-		</div>
+            </a>
+            
+        </div>
   
-		
+        
         <!--<div class="login">
             <div class="label"><label for="roomname">Game code: </label> <input id="roomname" autocomplete="off" /></div>
             <div class="label"><label for="playername">Name: </label><input id="playername" autocomplete="off" maxlength="12" /></div>
