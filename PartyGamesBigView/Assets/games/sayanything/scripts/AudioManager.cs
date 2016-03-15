@@ -10,15 +10,18 @@ public class AudioManager : SceneSingleton<AudioManager>
     public AudioSource _SoundSource;
     public AudioSource _MusicSource;
 
+    private bool _MuteToggle;
+
 	void Start (){
+        AudioListener.volume = 0.50f;
 		PlayMusic(_BackgroundMusic);
 	}
 
-	// Update is called once per frame
-	void Update () {
-	
-	}
-
+    public void MuteToggle()
+    {
+        _MuteToggle = _MuteToggle ? false : true;
+        AudioListener.pause = _MuteToggle ? true : false;
+    }
 
     public void OnUserJoin()
     {
@@ -50,6 +53,7 @@ public class AudioManager : SceneSingleton<AudioManager>
 			StartCoroutine(FadeMusic(1f));
         }
     }
+    //todo: fix audio fade for full/no volume
 	private IEnumerator FadeMusic (float target){
 		_MusicSource.volume = Mathf.Round(Mathf.Abs (target - 1f));
 		while (Mathf.Abs(_MusicSource.volume - target) > 0.05f) {
