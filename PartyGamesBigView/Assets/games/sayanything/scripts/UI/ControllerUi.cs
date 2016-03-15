@@ -38,7 +38,7 @@ public class ControllerUi : UserUi
         animator.SetBool("join", true);
         yield return null;
 
-        yield return new WaitForSeconds(1.25f);
+        yield return new WaitForSeconds(1.3f);
 
         Color current = _UsernameText.color;
         current.a = 0f;
