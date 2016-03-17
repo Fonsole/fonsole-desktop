@@ -43,7 +43,10 @@ namespace PPlatform.SayAnything.Ui
         protected virtual void Awake()
         {
 			anim = gameObject.AddComponent<AnimateUi> ();
-            mDefaultUsernameText = _UsernameText.text;
+            if (_UsernameText)
+            {
+                mDefaultUsernameText = _UsernameText.text;
+            }
             mDefaultColors = new Color[_UsernameColors.Length];
             for(int i = 0; i < mDefaultColors.Length; i++)
             {
