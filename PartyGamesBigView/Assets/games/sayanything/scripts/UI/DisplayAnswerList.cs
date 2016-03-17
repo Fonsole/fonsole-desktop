@@ -9,7 +9,11 @@ namespace PPlatform.SayAnything.Ui
 		void OnEnable (){
 			for(int i=0; i< _DisplayAnswerUis.Length; i++)
 			{
-				_DisplayAnswerUis[i].anim.rt.anchoredPosition = new Vector2 (-Screen.width - 600, -Screen.height - 600);
+                // answerlist has no animator components
+                if (_DisplayAnswerUis[i].anim)
+                {
+				    _DisplayAnswerUis[i].anim.rt.anchoredPosition = new Vector2 (-Screen.width - 600, -Screen.height - 600);             
+                }
 				_DisplayAnswerUis[i].displaying = false;
 				_DisplayAnswerUis[i].displayed = false;
 			}
