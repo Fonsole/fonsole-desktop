@@ -37,6 +37,8 @@ public class ControllerUi : UserUi
         animating = true;
         animator.SetBool("join", true);
         yield return null;
+        
+        /* old code using enumeration for some things, had bugs may come back to later
 
         yield return new WaitForSeconds(1.3f);
 
@@ -74,6 +76,28 @@ public class ControllerUi : UserUi
             _UsernameText.color = current;
             timer += Time.deltaTime;
         }
+        */
+    }
+
+    // called from anim event in joining.anim
+    private void SwitchActive()
+    {
+        Color current = _UsernameText.color;
+
+        SetColor(current);
+        SetUserName(SayAnythingUi.Instance.GetUserName(mUserId));
+        _UsernameParent.SetActive(true);
+
+        //send out sound event
+        if (AudioManager.Instance != null)
+            AudioManager.Instance.OnUserJoin();
+
+        animating = false;
+
+        //switched to active
+        //active user. change name and color
+        SetColor(SayAnythingUi.Instance.GetUserColor(mUserId));
+        SetJoinVisibile(false);
     }
 
 }
