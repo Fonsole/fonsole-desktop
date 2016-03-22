@@ -29,6 +29,7 @@ namespace PPlatform.SayAnything.Ui
 		public GameObject _DisplayAnswersUI;
         public GameObject _JudgingAndVotingUI;
         public GameObject _RulesUI;
+        public GameObject _ShowWinnerUI;
 
         public Color[] _PlayerColors = new Color[]
         {
@@ -153,7 +154,6 @@ namespace PPlatform.SayAnything.Ui
 
         private void ShowState(GameState state)
         {
-
             if (state == GameState.WaitForStart)
             {
                 _WaitForStartUI.SetActive(true);
@@ -162,6 +162,7 @@ namespace PPlatform.SayAnything.Ui
 				_DisplayAnswersUI.SetActive(false);
                 _JudgingAndVotingUI.SetActive(false);
                 _RulesUI.SetActive(false);
+                _ShowWinnerUI.SetActive(false);
             }
             else if (state == GameState.Questioning)
             {
@@ -171,6 +172,7 @@ namespace PPlatform.SayAnything.Ui
 				_DisplayAnswersUI.SetActive(false);
                 _JudgingAndVotingUI.SetActive(false);
                 _RulesUI.SetActive(false);
+                _ShowWinnerUI.SetActive(false);
             }
             else if (state == GameState.Answering)
             {
@@ -180,6 +182,7 @@ namespace PPlatform.SayAnything.Ui
 				_DisplayAnswersUI.SetActive(false);
                 _JudgingAndVotingUI.SetActive(false);
                 _RulesUI.SetActive(false);
+                _ShowWinnerUI.SetActive(false);
             }
             else if (state == GameState.DisplayAnswers)
 			{
@@ -189,6 +192,7 @@ namespace PPlatform.SayAnything.Ui
 				_DisplayAnswersUI.SetActive(true);
 				_JudgingAndVotingUI.SetActive(false);
                 _RulesUI.SetActive(false);
+                _ShowWinnerUI.SetActive(false);
             }
             else if (state == GameState.JudgingAndVoting)
             {
@@ -198,6 +202,7 @@ namespace PPlatform.SayAnything.Ui
 				_DisplayAnswersUI.SetActive(false);
                 _JudgingAndVotingUI.SetActive(true);
                 _RulesUI.SetActive(false);
+                _ShowWinnerUI.SetActive(false);
             }
             else if (state == GameState.ShowWinner)
             {
@@ -205,8 +210,10 @@ namespace PPlatform.SayAnything.Ui
                 _QuestioningUI.SetActive(false);
                 _AnsweringUI.SetActive(false);
 				_DisplayAnswersUI.SetActive(false);
-                _JudgingAndVotingUI.SetActive(true);
                 _RulesUI.SetActive(false);
+                // temp still using judging and voting UI
+                _JudgingAndVotingUI.SetActive(true);
+                _ShowWinnerUI.SetActive(true);
             }
             else if (state == GameState.ShowScore)
             {
@@ -216,6 +223,7 @@ namespace PPlatform.SayAnything.Ui
 				_DisplayAnswersUI.SetActive(false);
                 _JudgingAndVotingUI.SetActive(true);
                 _RulesUI.SetActive(false);
+                _ShowWinnerUI.SetActive(false);
             }
             else if(state == GameState.Rules)
             {
@@ -224,6 +232,7 @@ namespace PPlatform.SayAnything.Ui
                 _AnsweringUI.SetActive(false);
                 _DisplayAnswersUI.SetActive(false);
                 _JudgingAndVotingUI.SetActive(false);
+                _ShowWinnerUI.SetActive(false);
                 _RulesUI.SetActive(true);
             }
         }
