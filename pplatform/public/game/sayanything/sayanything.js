@@ -322,7 +322,16 @@
             {
                 console.log("show Answering");
 
-
+                if (ownUserId in lSharedData.answers)
+                {
+                    $('.preAnswer').attr("hidden", true);
+                    $('.postAnswer').attr("hidden", false);
+                }
+                else
+                {
+                    $('.preAnswer').attr("hidden", false);
+                    $('.postAnswer').attr("hidden", true);
+                }
 
                 $('#Answering').attr("hidden", false);
             }else if(lSharedData.state == SayAnything.GameState.ShowAnswers)
@@ -415,7 +424,10 @@
          */
         function questionListFill(lQ1, lQ2, lQ3, lQ4)
         {
-
+            $("input[name=questionList]").each(function (index, val)
+            {
+                $(this).prop("checked", false);
+            });
 
             $("#questionListQ1").val(lQ1);
             $("#questionListQ2").val(lQ2);
@@ -432,7 +444,6 @@
         {
             $(".chosenQuestion").empty().append(lSharedData.question);
 
-
             //this loop will go through all given answers and fill the UI with data (answers, id's of checkboxes/radio buttons, votes for the answers, player names that received and gave votes)
             var counter = 1;
             for(var userId in lSharedData.answers)
@@ -447,8 +458,11 @@
                 //A1, A2 and so on are used for spans that are suppose to contain the answers -> add them
                 $(parentElement + " .answer").empty().append(lSharedData.answers[userId]);
 
+
                 //set the id in the value attribute of checkboxes. we use that later to find out who the vote/judge belongs to
                 $(parentElement + " .CB").val(userId);
+                $(".judgeList " + parentElement + " #jr" + counter).prop("checked", false);
+                $(".voteList " + parentElement + " #vr1" + counter).prop("checked", false);
 
             //votes
                 var votes = lSharedData.getVotes(userId);
