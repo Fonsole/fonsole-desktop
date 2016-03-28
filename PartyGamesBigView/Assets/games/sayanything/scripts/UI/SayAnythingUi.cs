@@ -211,8 +211,7 @@ namespace PPlatform.SayAnything.Ui
                 _AnsweringUI.SetActive(false);
 				_DisplayAnswersUI.SetActive(false);
                 _RulesUI.SetActive(false);
-                // temp still using judging and voting UI
-                _JudgingAndVotingUI.SetActive(true);
+                _JudgingAndVotingUI.SetActive(false);
                 _ShowWinnerUI.SetActive(true);
             }
             else if (state == GameState.ShowScore)
