@@ -17,7 +17,8 @@ namespace PPlatform.SayAnything.Ui
             int counter = 0;
             foreach (var v in SayAnythingUi.Instance.GetActiveUsersOrderedByConnectionId())
             {
-                _ScoreUIs[counter++].gameObject.SetActive(true);
+                _ScoreUIs[counter].gameObject.SetActive(true);
+                counter++;
             }
 
             for (int i = counter; i < _ScoreUIs.Length; ++i)
