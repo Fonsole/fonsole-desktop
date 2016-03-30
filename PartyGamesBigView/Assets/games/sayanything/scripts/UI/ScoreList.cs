@@ -32,7 +32,8 @@ namespace PPlatform.SayAnything.Ui
             int counter = 0;
             foreach (var v in SayAnythingUi.Instance.GetActiveUsersOrderedByConnectionId())
             {
-                _ScoreUIs[counter++].Refresh(v, SayAnythingUi.Instance.CurrentData);
+                _ScoreUIs[counter].Refresh(v, SayAnythingUi.Instance.CurrentData);
+                counter++;
             }
         }
     }
