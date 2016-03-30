@@ -220,9 +220,9 @@ namespace PPlatform.SayAnything.Ui
                 _QuestioningUI.SetActive(false);
                 _AnsweringUI.SetActive(false);
 				_DisplayAnswersUI.SetActive(false);
-                _JudgingAndVotingUI.SetActive(true);
+                _JudgingAndVotingUI.SetActive(false);
                 _RulesUI.SetActive(false);
-                _ShowWinnerUI.SetActive(false);
+                _ShowWinnerUI.SetActive(true);
             }
             else if(state == GameState.Rules)
             {
