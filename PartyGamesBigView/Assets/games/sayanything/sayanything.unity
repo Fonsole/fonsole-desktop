@@ -309,7 +309,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &93216950
 RectTransform:
   m_ObjectHideFlags: 0
@@ -4908,7 +4908,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1249904127
 RectTransform:
   m_ObjectHideFlags: 0
@@ -6024,7 +6024,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1511668089
 RectTransform:
   m_ObjectHideFlags: 0
@@ -7904,6 +7904,7 @@ GameObject:
   serializedVersion: 4
   m_Component:
   - 224: {fileID: 1760802816}
+  - 114: {fileID: 1760802817}
   m_Layer: 0
   m_Name: ShowWinnerShowScore
   m_TagString: Untagged
@@ -7931,6 +7932,20 @@ RectTransform:
   m_AnchoredPosition: {x: 0.00005340576, y: -0.25}
   m_SizeDelta: {x: 0, y: 0.5}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &1760802817
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1760802815}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6edc485e68fc57543a4f700e5e0a56f3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _QuestionPanel: {fileID: 1511668088}
+  _WinnerPanel: {fileID: 1249904126}
+  _ScorePanel: {fileID: 93216949}
 --- !u!1001 &1763739612
 Prefab:
   m_ObjectHideFlags: 0
