@@ -8,9 +8,9 @@ namespace PPlatform.SayAnything.Ui
     /// </summary>
     public class WinnerUi : MonoBehaviour {
 
-        public GameObject _QuestionPanel;
-        public GameObject _WinnerPanel;
-        public GameObject _ScorePanel;
+        public GameObject _QuestionPanel; // JudgeUI.cs
+        public GameObject _WinnerPanel; // WinningAnswer.cs
+        public GameObject _ScorePanel; // ScoreList.cs
 
         void OnEnable()
         {
@@ -33,7 +33,7 @@ namespace PPlatform.SayAnything.Ui
 
         IEnumerator ShowWinnerPanel()
         {
-            yield return new WaitForSeconds(1f);
+            yield return new WaitForSeconds(3f);
             _WinnerPanel.SetActive(true);
         }
     }

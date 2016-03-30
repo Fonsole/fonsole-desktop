@@ -1494,7 +1494,7 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1511668089}
-  m_RootOrder: 0
+  m_RootOrder: 1
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
   m_AnchoredPosition: {x: 819, y: -103.00004}
@@ -6035,8 +6035,8 @@ RectTransform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
-  - {fileID: 529857916}
   - {fileID: 1526144235}
+  - {fileID: 529857916}
   m_Father: {fileID: 1760802816}
   m_RootOrder: 0
   m_AnchorMin: {x: 0.5, y: 0.5}
@@ -6088,6 +6088,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: faeb971079a4a2f409c72762282dfd9c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _Label: {fileID: 1526144236}
   _Text: {fileID: 529857917}
 --- !u!1 &1526144234
 GameObject:
@@ -6117,7 +6118,7 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1511668089}
-  m_RootOrder: 1
+  m_RootOrder: 0
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
   m_AnchoredPosition: {x: 229, y: -103}
@@ -7243,7 +7244,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ef9f4cd0bb60fa74abb48308384aac05, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _Debug: 0
+  _Debug: 1
   _LinkToLogic: {fileID: 1270192453}
   _WaitForStartUI: {fileID: 302153599}
   _QuestioningUI: {fileID: 2022252364}
