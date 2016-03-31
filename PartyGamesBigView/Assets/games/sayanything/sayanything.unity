@@ -4982,6 +4982,7 @@ MonoBehaviour:
   animating: 0
   _AnswerText: {fileID: 481063891}
   _WinnerText: {fileID: 741196220}
+  _WinnerInfo: {fileID: 586011151}
 --- !u!1 &1270192451
 GameObject:
   m_ObjectHideFlags: 0
