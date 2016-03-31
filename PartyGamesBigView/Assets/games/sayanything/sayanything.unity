@@ -7245,7 +7245,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ef9f4cd0bb60fa74abb48308384aac05, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _Debug: 1
+  _Debug: 0
   _LinkToLogic: {fileID: 1270192453}
   _WaitForStartUI: {fileID: 302153599}
   _QuestioningUI: {fileID: 2022252364}
