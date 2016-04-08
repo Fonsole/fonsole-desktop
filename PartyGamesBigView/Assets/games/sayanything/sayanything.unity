@@ -592,7 +592,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: www.saysomething.com
+  m_Text: www.fonsole.com
 --- !u!222 &147033942
 CanvasRenderer:
   m_ObjectHideFlags: 0
