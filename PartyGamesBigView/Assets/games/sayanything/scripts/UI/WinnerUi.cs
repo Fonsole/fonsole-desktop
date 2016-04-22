@@ -12,29 +12,35 @@ namespace PPlatform.SayAnything.Ui
         public GameObject _WinnerPanel; // WinningAnswer.cs
         public GameObject _ScorePanel; // ScoreList.cs
 
+        private bool _HasShownScores;
+
         void OnEnable()
         {
-            // Immediately show question panel
+            // Activate panels
             _QuestionPanel.SetActive(true);
-            // Wait then show winning answer panel
-            StartCoroutine(ShowWinnerPanel());
+            _WinnerPanel.SetActive(true);
+            _ScorePanel.SetActive(true);
+        }
+
+        void OnDisable()
+        {
+            _HasShownScores = false;
         }
 
         void FixedUpdate()
-        {
-            // Show Score Panel on state change
+        {            
+            // Show Score Panel info on state change
             SharedData data = SayAnythingUi.Instance.CurrentData;
-            if (data.state == GameState.ShowScore)
+            if (data.state == GameState.ShowScore && !_HasShownScores)
             {
-                if (!_ScorePanel.activeSelf)
-                    _ScorePanel.SetActive(true);
+                // old activate panel
+                // if (!_ScorePanel.activeSelf)
+                //    _ScorePanel.SetActive(true);
+                   
+                // tell scorepanel to show info
+                _ScorePanel.GetComponent<ScoreList>().ShowScoreInfo();
+                _HasShownScores = true;          
             }
-        }
-
-        IEnumerator ShowWinnerPanel()
-        {
-            yield return new WaitForSeconds(2f);
-            _WinnerPanel.SetActive(true);
         }
     }
 }

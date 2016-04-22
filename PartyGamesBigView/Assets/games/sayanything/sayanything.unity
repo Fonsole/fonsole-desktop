@@ -391,6 +391,7 @@ MonoBehaviour:
   - {fileID: 1038395960}
   - {fileID: 1643398365}
   - {fileID: 93972911}
+  _ScoreText: {fileID: 1076665581}
 --- !u!1001 &93432263
 Prefab:
   m_ObjectHideFlags: 0
@@ -7314,6 +7315,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _Debug: 0
+  _DebugGameState: 6
   _LinkToLogic: {fileID: 1270192453}
   _WaitForStartUI: {fileID: 302153599}
   _QuestioningUI: {fileID: 2022252364}

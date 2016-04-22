@@ -20,6 +20,7 @@ namespace PPlatform.SayAnything.Ui
     {
 
         public bool _Debug = true;
+        public GameState _DebugGameState;
         public SayAnythingLogic _LinkToLogic;
 
 
@@ -76,39 +77,41 @@ namespace PPlatform.SayAnything.Ui
         {
 
             SharedData data = new SharedData();
-            //data.judgeUserId = 0;
-            //data.judgedAnswerId = 1;
-            //data.question = "Which two people (real or fictional) would you most like to see fight each other?";
+            data.judgeUserId = 0;
+            data.judgedAnswerId = 1;
+            data.question = "Which two people (real or fictional) would you most like to see fight each other?";
             //data.state = GameState.ShowScore;
-            //data.answers.Add(1, "answer 1");
-            //data.answers.Add(2, "answer 2");
-            //data.answers.Add(3, "answer 3");
-            //data.answers.Add(4, "answer 4");
-            //data.answers.Add(5, "answer 5");
-            //data.AddVote(1, 2);
-            //data.AddVote(1, 3);
-            //data.AddVote(2, 1);
-            //data.AddVote(2, 1);
-            //data.AddVote(3, 1);
-            //data.AddVote(3, 1);
-            //data.AddVote(4, 1);
-            //data.AddVote(4, 1);
-            //data.AddVote(5, 1);
-            //data.AddVote(5, 1);
+            data.answers.Add(1, "answer 1");
+            data.answers.Add(2, "answer 2");
+            data.AddVote(1, 2);
+            data.AddVote(1, 3);
+            data.answers.Add(3, "answer 3");
+            data.answers.Add(4, "answer 4");
+            data.answers.Add(5, "answer 5");
+            data.AddVote(1, 2);
+            data.AddVote(1, 3);
+            data.AddVote(2, 1);
+            data.AddVote(2, 1);
+            data.AddVote(3, 1);
+            data.AddVote(3, 1);
+            data.AddVote(4, 1);
+            data.AddVote(4, 1);
+            data.AddVote(5, 1);
+            data.AddVote(5, 1);
 
-            //data.roundScore[0] = 0;
-            //data.roundScore[1] = 1;
-            //data.roundScore[2] = 2;
-            //data.roundScore[3] = 3;
-            //data.roundScore[4] = 4;
-            //data.roundScore[5] = 5;
-            //data.totalScore[0] = 6;
-            //data.totalScore[1] = 7;
-            //data.totalScore[2] = 8;
-            //data.totalScore[3] = 9;
-            //data.totalScore[4] = 10;
-            //data.totalScore[5] = 11;
-            data.state = GameState.Rules;
+            data.roundScore[0] = 0;
+            data.roundScore[1] = 1;
+            data.roundScore[2] = 2;
+            data.roundScore[3] = 3;
+            data.roundScore[4] = 4;
+            data.roundScore[5] = 5;
+            data.totalScore[0] = 6;
+            data.totalScore[1] = 7;
+            data.totalScore[2] = 8;
+            data.totalScore[3] = 9;
+            data.totalScore[4] = 10;
+            data.totalScore[5] = 11;
+            data.state = _DebugGameState;
             return data;
         }
 
