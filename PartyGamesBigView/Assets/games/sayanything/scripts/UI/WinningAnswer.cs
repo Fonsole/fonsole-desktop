@@ -52,10 +52,10 @@ namespace PPlatform.SayAnything.Ui
             
 
             SharedData data = SayAnythingUi.Instance.CurrentData;
-            _WinnerText.color = SayAnythingUi.Instance.GetUserColor(data.judgeUserId);
+            _WinnerText.color = SayAnythingUi.Instance.GetUserColor(data.judgedAnswerId);
             _AnswerText.text = data.answers[data.judgedAnswerId];
-            SetColor(SayAnythingUi.Instance.GetUserColor(data.judgeUserId));
-            SetUserName(SayAnythingUi.Instance.GetUserName(data.judgeUserId));
+            SetColor(SayAnythingUi.Instance.GetUserColor(data.judgedAnswerId));
+            SetUserName(SayAnythingUi.Instance.GetUserName(data.judgedAnswerId));
         }
 
         void OnDisable()
