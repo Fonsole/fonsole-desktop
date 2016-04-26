@@ -458,11 +458,17 @@
                 //A1, A2 and so on are used for spans that are suppose to contain the answers -> add them
                 $(parentElement + " .answer").empty().append(lSharedData.answers[userId]);
 
+                //making sure previously selected answers are unchecked in a new round
+                for(var i = counter; i <= 9; i++) //10 = max player numbers
+                {
+                    $(".judgeList " + parentElement + " #jr" + i).prop("checked", false);
+                    $(".voteList " + parentElement + " #vr1" + i).prop("checked", false);
+                    $(".voteList " + parentElement + " #vr2" + i).prop("checked", false);
+                }
+
 
                 //set the id in the value attribute of checkboxes. we use that later to find out who the vote/judge belongs to
                 $(parentElement + " .CB").val(userId);
-                $(".judgeList " + parentElement + " #jr" + counter).prop("checked", false);
-                $(".voteList " + parentElement + " #vr1" + counter).prop("checked", false);
 
             //votes
                 var votes = lSharedData.getVotes(userId);
