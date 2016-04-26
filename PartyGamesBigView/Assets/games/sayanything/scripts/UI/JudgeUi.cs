@@ -25,12 +25,15 @@ namespace PPlatform.SayAnything.Ui
                 .setEaseType(EaseType.SineOut)
                 .start();
 
-            _Label.rectTransform.localScale = Vector3.zero;
-            _Label.rectTransform.ZKlocalScaleTo(Vector3.one, 0.25f)
-                .setFrom(Vector3.zero)
-                .setDelay(0.5f)
-                .setEaseType(EaseType.SineOut)
-                .start();
+            if (_Label != null)
+            {
+                _Label.rectTransform.localScale = Vector3.zero;
+                _Label.rectTransform.ZKlocalScaleTo(Vector3.one, 0.25f)
+                    .setFrom(Vector3.zero)
+                    .setDelay(0.5f)
+                    .setEaseType(EaseType.SineOut)
+                    .start();
+            }
 
             _Text.rectTransform.localScale = Vector3.zero;
             _Text.rectTransform.ZKlocalScaleTo(Vector2.one, 0.5f)
@@ -44,23 +47,14 @@ namespace PPlatform.SayAnything.Ui
         {
             SharedData data = SayAnythingUi.Instance.CurrentData;
 
-            if(data.state != GameState.ShowScore)
+            if (SayAnythingUi.Instance.CurrentData.question != null)
             {
-                if (SayAnythingUi.Instance.CurrentData.question != null)
-                {
-                    _Text.text = SayAnythingUi.Instance.CurrentData.question;
-                }
-                else
-                {
-
-                    _Text.text = "No question?";
-                }
-            }else
-            {
-                //Show the judges score
-                _Text.text = SayAnythingUi.Instance.GetUserScoreText(data.judgeUserId);
+                _Text.text = SayAnythingUi.Instance.CurrentData.question;
             }
-
+            else
+            {
+                _Text.text = "No question?";
+            }
         }
     }
 }
