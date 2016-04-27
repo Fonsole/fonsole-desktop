@@ -69,6 +69,9 @@ namespace PPlatform.SayAnything.Ui
                 }
             }
         }
+        private GameObject _previousScreen;
+        private GameState _previousState = GameState.Answering;
+
         private void Start()
         {
 
@@ -148,9 +151,11 @@ namespace PPlatform.SayAnything.Ui
         public void FixedUpdate()
         {
             SharedData data = CurrentData;
-            if(data != null)
+            if(data != null && _previousState != data.state)
             {
+                Debug.Log("ShowState" + data.state);
                 ShowState(data.state);
+                _previousState = data.state;
             }
         }
 
@@ -159,83 +164,49 @@ namespace PPlatform.SayAnything.Ui
         {
             if (state == GameState.WaitForStart)
             {
-                _WaitForStartUI.SetActive(true);
+                if (_previousScreen != null)
+                {
+                    ScreenTransition transition = _previousScreen.GetComponent<ScreenTransition>();
+                    if (transition != null)
+                        transition.ShowScreen -= ShowScreen;
+                }
+
                 _QuestioningUI.SetActive(false);
                 _AnsweringUI.SetActive(false);
 				_DisplayAnswersUI.SetActive(false);
                 _JudgingAndVotingUI.SetActive(false);
                 _RulesUI.SetActive(false);
                 _ShowWinnerUI.SetActive(false);
+
+                ShowScreen(_WaitForStartUI);
             }
             else if (state == GameState.Questioning)
             {
-                _WaitForStartUI.SetActive(false);
-                _QuestioningUI.SetActive(true);
-                _AnsweringUI.SetActive(false);
-				_DisplayAnswersUI.SetActive(false);
-                _JudgingAndVotingUI.SetActive(false);
-                _RulesUI.SetActive(false);
-                _ShowWinnerUI.SetActive(false);
+                DelayedShowScreen(_QuestioningUI);
             }
             else if (state == GameState.Answering)
             {
-                _WaitForStartUI.SetActive(false);
-                _QuestioningUI.SetActive(false);
-                _AnsweringUI.SetActive(true);
-				_DisplayAnswersUI.SetActive(false);
-                _JudgingAndVotingUI.SetActive(false);
-                _RulesUI.SetActive(false);
-                _ShowWinnerUI.SetActive(false);
+                DelayedShowScreen(_AnsweringUI);
             }
             else if (state == GameState.DisplayAnswers)
 			{
-				_WaitForStartUI.SetActive(false);
-				_QuestioningUI.SetActive(false);
-				_AnsweringUI.SetActive(false);
-				_DisplayAnswersUI.SetActive(true);
-				_JudgingAndVotingUI.SetActive(false);
-                _RulesUI.SetActive(false);
-                _ShowWinnerUI.SetActive(false);
+                DelayedShowScreen(_DisplayAnswersUI);
             }
             else if (state == GameState.JudgingAndVoting)
             {
-                _WaitForStartUI.SetActive(false);
-                _QuestioningUI.SetActive(false);
-                _AnsweringUI.SetActive(false);
-				_DisplayAnswersUI.SetActive(false);
-                _JudgingAndVotingUI.SetActive(true);
-                _RulesUI.SetActive(false);
-                _ShowWinnerUI.SetActive(false);
+                DelayedShowScreen(_JudgingAndVotingUI);
             }
             else if (state == GameState.ShowWinner)
             {
-                _WaitForStartUI.SetActive(false);
-                _QuestioningUI.SetActive(false);
-                _AnsweringUI.SetActive(false);
-				_DisplayAnswersUI.SetActive(false);
-                _RulesUI.SetActive(false);
-                _JudgingAndVotingUI.SetActive(false);
-                _ShowWinnerUI.SetActive(true);
+                DelayedShowScreen(_ShowWinnerUI);
             }
             else if (state == GameState.ShowScore)
             {
-                _WaitForStartUI.SetActive(false);
-                _QuestioningUI.SetActive(false);
-                _AnsweringUI.SetActive(false);
-				_DisplayAnswersUI.SetActive(false);
-                _JudgingAndVotingUI.SetActive(false);
-                _RulesUI.SetActive(false);
-                _ShowWinnerUI.SetActive(true);
+                DelayedShowScreen(_ShowWinnerUI);
             }
             else if(state == GameState.Rules)
             {
-                _WaitForStartUI.SetActive(false);
-                _QuestioningUI.SetActive(false);
-                _AnsweringUI.SetActive(false);
-                _DisplayAnswersUI.SetActive(false);
-                _JudgingAndVotingUI.SetActive(false);
-                _ShowWinnerUI.SetActive(false);
-                _RulesUI.SetActive(true);
+                DelayedShowScreen(_RulesUI);
             }
         }
         public string GetUserName(int id)
@@ -247,8 +218,49 @@ namespace PPlatform.SayAnything.Ui
             return "Someone(" + id + ")";
         }
 
+        public void DelayedShowScreen(GameObject target)
+        {
+            Debug.Log("DelayedShowScreen " + target.name);
+            if (_previousScreen != null)
+            {
+                Debug.Log("Have previous screen");
+                ScreenTransition transition = _previousScreen.GetComponent<ScreenTransition>();
+                if (transition == null)
+                {
+                    ShowScreen(target);
+                }
+                else
+                {
+                    transition.ShowScreen += ShowScreen;
+                    transition.TransitionOut(target);
+                }
+            }
+            else
+                Debug.Log("Have no previous screen");
+        }
 
+        private void ShowScreen(GameObject target)
+        {
+            Debug.Log("ShowScreen " + target.name);
+            if (_previousScreen != null)
+            {
+                Debug.Log("Have previous screen");
+                ScreenTransition transition = _previousScreen.GetComponent<ScreenTransition>();
+                if (transition != null)
+                {
+                    Debug.Log("Have transition");
+                    transition.ShowScreen -= ShowScreen;
+                }
+                else
+                    Debug.Log("No transition");
 
+                _previousScreen.SetActive(false);
+            }
+
+            Debug.Log("Setting active");
+            target.SetActive(true);
+            _previousScreen = target;
+        }
 
 
         /// <summary>
