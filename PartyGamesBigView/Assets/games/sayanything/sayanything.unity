@@ -3119,6 +3119,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _OnUserJoin: {fileID: 8300000, guid: 394f482842816e440819abb10a686019, type: 3}
   _BackgroundMusic: {fileID: 8300000, guid: e0458a867ab5adb45bb50c49875dc689, type: 3}
+  _OnQuestionSelected:
+  - {fileID: 8300000, guid: 41ec03c0af35be346a1eae50ccd0d233, type: 3}
+  - {fileID: 8300000, guid: 3bde77627c777324b8a8edd19066a18f, type: 3}
+  - {fileID: 8300000, guid: b8b368cc8c95e0248ab7361530083305, type: 3}
   _SoundSource: {fileID: 866713305}
   _MusicSource: {fileID: 176868060}
 --- !u!4 &865171598

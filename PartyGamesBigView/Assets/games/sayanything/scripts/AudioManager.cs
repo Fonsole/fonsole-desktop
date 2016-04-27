@@ -6,6 +6,7 @@ public class AudioManager : SceneSingleton<AudioManager>
 {
     public AudioClip _OnUserJoin;
     public AudioClip _BackgroundMusic;
+    public AudioClip[] _OnQuestionSelected;
 
     public AudioSource _SoundSource;
     public AudioSource _MusicSource;
@@ -35,6 +36,10 @@ public class AudioManager : SceneSingleton<AudioManager>
 	{
 		StartCoroutine(FadeMusic(0));
 	}
+    public void OnQuestionSelected()
+    {
+        PlaySound(_OnQuestionSelected[Random.Range(0, _OnQuestionSelected.Length)]);
+    }
 
     private void PlaySound(AudioClip clip)
     {

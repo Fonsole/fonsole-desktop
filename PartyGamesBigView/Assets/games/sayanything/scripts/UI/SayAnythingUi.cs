@@ -202,7 +202,7 @@ namespace PPlatform.SayAnything.Ui
             }
             else if (state == GameState.ShowScore)
             {
-                DelayedShowScreen(_ShowWinnerUI);
+                //DelayedShowScreen(_ShowWinnerUI);
             }
             else if(state == GameState.Rules)
             {
@@ -220,10 +220,8 @@ namespace PPlatform.SayAnything.Ui
 
         public void DelayedShowScreen(GameObject target)
         {
-            Debug.Log("DelayedShowScreen " + target.name);
             if (_previousScreen != null)
             {
-                Debug.Log("Have previous screen");
                 ScreenTransition transition = _previousScreen.GetComponent<ScreenTransition>();
                 if (transition == null)
                 {
@@ -235,29 +233,21 @@ namespace PPlatform.SayAnything.Ui
                     transition.TransitionOut(target);
                 }
             }
-            else
-                Debug.Log("Have no previous screen");
         }
 
         private void ShowScreen(GameObject target)
         {
-            Debug.Log("ShowScreen " + target.name);
             if (_previousScreen != null)
             {
-                Debug.Log("Have previous screen");
                 ScreenTransition transition = _previousScreen.GetComponent<ScreenTransition>();
                 if (transition != null)
                 {
-                    Debug.Log("Have transition");
                     transition.ShowScreen -= ShowScreen;
                 }
-                else
-                    Debug.Log("No transition");
 
                 _previousScreen.SetActive(false);
             }
 
-            Debug.Log("Setting active");
             target.SetActive(true);
             _previousScreen = target;
         }

@@ -377,6 +377,7 @@ namespace PPlatform.SayAnything
             }
             else if (lTargetGameState == GameState.Answering && mData.state == GameState.Questioning)
             {
+                AudioManager.Instance.OnQuestionSelected();
                 EnterStateAnswering();
             }
 			else if (lTargetGameState == GameState.DisplayAnswers && mData.state == GameState.Answering)
