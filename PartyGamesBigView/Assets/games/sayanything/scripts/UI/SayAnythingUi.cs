@@ -153,7 +153,6 @@ namespace PPlatform.SayAnything.Ui
             SharedData data = CurrentData;
             if(data != null && _previousState != data.state)
             {
-                Debug.Log("ShowState" + data.state);
                 ShowState(data.state);
                 _previousState = data.state;
             }

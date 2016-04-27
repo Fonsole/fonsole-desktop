@@ -7,6 +7,9 @@ public class AudioManager : SceneSingleton<AudioManager>
     public AudioClip _OnUserJoin;
     public AudioClip _BackgroundMusic;
     public AudioClip[] _OnQuestionSelected;
+    public AudioClip[] _OnAnswerSubmitted;
+    private AudioClip[] _OnAnswerSubmittedShuffled;
+    private int _LastAnswerClipPlayed = 0;
 
     public AudioSource _SoundSource;
     public AudioSource _MusicSource;
@@ -16,6 +19,9 @@ public class AudioManager : SceneSingleton<AudioManager>
 	void Start (){
         AudioListener.volume = 0.50f;
 		PlayMusic(_BackgroundMusic);
+
+        _OnAnswerSubmittedShuffled = new AudioClip[_OnAnswerSubmitted.Length];
+        ShuffleAnswerSubmittedClips();
 	}
 
     public void MuteToggle()
@@ -39,6 +45,36 @@ public class AudioManager : SceneSingleton<AudioManager>
     public void OnQuestionSelected()
     {
         PlaySound(_OnQuestionSelected[Random.Range(0, _OnQuestionSelected.Length)]);
+    }
+    public void OnAnswerSubmitted()
+    {
+        int current = _LastAnswerClipPlayed++;
+        if (current >= _OnAnswerSubmittedShuffled.Length)
+        {
+            ShuffleAnswerSubmittedClips();
+            current = 0;
+        }
+
+        PlaySound(_OnAnswerSubmittedShuffled[current]);
+    }
+    private void ShuffleAnswerSubmittedClips()
+    {
+        int len = _OnAnswerSubmittedShuffled.Length;
+        for (int i = 0; i < len; ++i)
+        {
+            _OnAnswerSubmittedShuffled[i] = _OnAnswerSubmitted[i];
+        }
+
+        //cheap and easy array shuffle
+        while (len > 1)
+        {
+            int next = Random.Range(0, len);
+            --len;
+
+            AudioClip temp = _OnAnswerSubmittedShuffled[next];
+            _OnAnswerSubmittedShuffled[next] = _OnAnswerSubmittedShuffled[len];
+            _OnAnswerSubmittedShuffled[len] = temp;
+        }
     }
 
     private void PlaySound(AudioClip clip)

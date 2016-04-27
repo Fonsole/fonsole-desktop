@@ -3123,6 +3123,11 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 41ec03c0af35be346a1eae50ccd0d233, type: 3}
   - {fileID: 8300000, guid: 3bde77627c777324b8a8edd19066a18f, type: 3}
   - {fileID: 8300000, guid: b8b368cc8c95e0248ab7361530083305, type: 3}
+  _OnAnswerSubmitted:
+  - {fileID: 8300000, guid: 7a5a0caabd52cd448a82bd989d83c04f, type: 3}
+  - {fileID: 8300000, guid: 4d84c850fc882ac4d95f1743dc1886bd, type: 3}
+  - {fileID: 8300000, guid: 7d4f6a7e93941d443b620103b08f2a7f, type: 3}
+  - {fileID: 8300000, guid: 06d3f2701587e9b42b16507d246ef3fe, type: 3}
   _SoundSource: {fileID: 866713305}
   _MusicSource: {fileID: 176868060}
 --- !u!4 &865171598

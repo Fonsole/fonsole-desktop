@@ -35,6 +35,8 @@ namespace PPlatform.SayAnything.Ui
 
 
 		public void AnswerPopup (int position) {
+            AudioManager.Instance.OnAnswerSubmitted();
+
             anim.StartCoroutine (anim.Move (
 				new Vector2 (position *150f, -460f),
 				new Vector2 (position *150f, -460f),
