@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DebugTools;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -13,6 +14,7 @@ namespace PPlatform.SayAnything.Ui
     /// </summary>
     public abstract class UserUi : MonoBehaviour
     {
+        public static readonly string LOGTAG = "UserUI";
 		public AnimateUi anim;
 
         /// <summary>
@@ -85,7 +87,11 @@ namespace PPlatform.SayAnything.Ui
 
         protected void SetDefault()
         {
-            if (animating) return;
+            if (animating)
+            {
+                TL.L("Ignore set default. animating is true", UserUi.LOGTAG);
+                return;
+            }
 
             mCurrentColor = Color.white;
             ResetColors();

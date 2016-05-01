@@ -2,6 +2,7 @@
 using System.Collections;
 using PPlatform.SayAnything;
 using PPlatform;
+using PPlatform.SayAnything.Ui;
 
 namespace DebugTools
 {
@@ -16,6 +17,7 @@ namespace DebugTools
             TL.LogTag(TL.TAG_WARNING);
             //TL.LogTag(TL.TAG_INFO);
             TL.LogTag(typeof(Platform).Name);
+            TL.LogTag(UserUi.LOGTAG);
             
             string tags = "";
             foreach(string s in TL.VisibleTags)

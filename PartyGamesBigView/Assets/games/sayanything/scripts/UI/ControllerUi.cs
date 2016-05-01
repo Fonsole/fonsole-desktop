@@ -4,6 +4,7 @@ using UnityEngine.UI;
 using PPlatform;
 using PPlatform.SayAnything.Ui;
 using PPlatform.SayAnything;
+using DebugTools;
 
 public class ControllerUi : UserUi
 {
@@ -23,9 +24,18 @@ public class ControllerUi : UserUi
                 SetDefault();
                 animator.SetBool("join", false);
             }
+            else if (mUserId == SharedData.UNDEFINED)
+            {
+                //new user
+                StartCoroutine(join(userId));
+            }
             else
             {
-                StartCoroutine(join(userId));
+                //user got replaced by another user that logged out -> just change the icon without animation
+                //the animation never called SwitchActive so it just got stuck showing the old user
+                //change it already before this call so it updates the correct user
+                mUserId = userId;
+                SwitchActive();
             }
 
         }
@@ -34,6 +44,7 @@ public class ControllerUi : UserUi
 
     private IEnumerator join(int userId) {
 
+        TL.L("animating = true", UserUi.LOGTAG);
         animating = true;
         animator.SetBool("join", true);
         yield return null;
@@ -82,6 +93,7 @@ public class ControllerUi : UserUi
     // called from anim event in joining.anim
     private void SwitchActive()
     {
+        TL.L("SwitchActive", UserUi.LOGTAG);
         Color current = _UsernameText.color;
 
         SetColor(current);
@@ -92,8 +104,11 @@ public class ControllerUi : UserUi
         if (AudioManager.Instance != null)
             AudioManager.Instance.OnUserJoin();
 
+        TL.L("animating = false", UserUi.LOGTAG);
         animating = false;
 
+
+        TL.L("Set user " + SayAnythingUi.Instance.GetUserName(mUserId) + " color" + SayAnythingUi.Instance.GetUserColor(mUserId), UserUi.LOGTAG);
         //switched to active
         //active user. change name and color
         SetColor(SayAnythingUi.Instance.GetUserColor(mUserId));
