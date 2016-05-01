@@ -24,13 +24,24 @@ namespace PPlatform.SayAnything
         public const int UNDEFINED = -1;
 
 
-
+        /// <summary>
+        /// Current game state
+        /// </summary>
         public GameState state = SayAnything.GameState.WaitForStart;
         
-        //user id of the judge. only the connection id for now
+        /// <summary>
+        /// user id of the judge. only the connection id for now
+        /// </summary>
         public int judgeUserId = UNDEFINED;
-        
-        //simply the text of the question
+
+        /// <summary>
+        /// the questuins the user can choose from
+        /// </summary>
+        public string[] questions = null;
+
+        /// <summary>
+        /// simply the text of the question
+        /// </summary>
         public string question = null;
         
         //will contain the player id as key and then the answer.

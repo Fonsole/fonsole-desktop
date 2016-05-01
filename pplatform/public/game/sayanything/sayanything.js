@@ -115,6 +115,7 @@
 
             self.judgeUserId = null;
             self.question = null;
+            self.questions = [];
             self.answers = {};
             self.judgedAnswerId = null;
             self.votes = {};
@@ -315,8 +316,8 @@
                 //clear up answering field for next run
                 $('#answer').val("");
                 console.log("show Questioning");
-
-                questionListFill(GetRandomQuestion(), GetRandomQuestion(), GetRandomQuestion(), GetRandomQuestion());
+                
+                questionListFill(lSharedData.questions[0], lSharedData.questions[1], lSharedData.questions[2], lSharedData.questions[3]);
                 $('#Questioning').attr("hidden", false);
             }else if(lSharedData.state == SayAnything.GameState.Answering)
             {
