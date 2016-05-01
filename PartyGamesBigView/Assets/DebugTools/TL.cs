@@ -7,7 +7,7 @@ using System.Reflection;
 using System.Text;
 using UnityEngine;
 
-namespace Assets
+namespace DebugTools
 {
     public static class TL
     {
@@ -31,6 +31,11 @@ namespace Assets
         private static List<string> sCurrentTagList = new List<string>();
 
         private static List<String> visibleTags = new List<String>();
+
+        public static String[] VisibleTags
+        {
+            get { return TL.visibleTags.ToArray(); }
+        }
 
         public delegate void CustomFormatter(string msg, List<string> tags, bool isError, bool isWarning, StackFrame[] stackFrames, StringBuilder message);
 

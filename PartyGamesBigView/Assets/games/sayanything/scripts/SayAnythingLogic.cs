@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using PPlatform.SayAnything.Message;
 using System;
 using System.Linq;
-using Assets;
+using DebugTools;
 
 
 namespace PPlatform.SayAnything
@@ -76,14 +76,6 @@ namespace PPlatform.SayAnything
 
             Platform.Instance.Message += OnMessage;
             Platform.Instance.GameLoaded(GAME_NAME);
-            TL.ActivateLog();
-            TL.ActivateEditorDirectJump();
-            TL.LogTag(this.GetType().Name);
-            TL.LogTag(TL.TAG_ERROR);
-            TL.LogTag(TL.TAG_WARNING);
-            TL.LogTag(TL.TAG_INFO);
-            TL.LogTag(this.GetType().Name);
-            TL.L("test");
         }
 
         void OnDestroy()
@@ -189,25 +181,8 @@ namespace PPlatform.SayAnything
         }
 
 
-        private bool debugUi = false;
         private void OnGUI()
         {
-            GUILayout.BeginVertical();
-            debugUi = GUILayout.Toggle(debugUi, "debugui");
-            if (debugUi)
-            {
-                GUILayout.Label("state:" + mData);
-
-                GUILayout.Label("active Players:");
-                foreach(var v in Platform.Instance.ActiveControllers)
-                {
-                    GUILayout.BeginHorizontal();
-                    GUILayout.Label("    ");
-                    GUILayout.Label(v.UserId + "\t" + v.Name);
-                    GUILayout.EndHorizontal();
-                }
-            }
-            GUILayout.EndHorizontal();
         }
         /// <summary>
         /// Will cancel the round and either enter questioning state or the wait for start state if there aren't enough players

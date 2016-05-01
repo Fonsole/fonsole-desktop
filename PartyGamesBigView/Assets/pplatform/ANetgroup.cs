@@ -4,6 +4,7 @@ using System.Collections;
 using System;
 using System.Collections.Generic;
 using PPlatform.Helper;
+using System.Text;
 
 namespace PPlatform
 {
@@ -76,11 +77,25 @@ namespace PPlatform
                 this.content = s;
                 this.id = i;
             }
+
+            public override string ToString()
+            {
+                StringBuilder sb = new StringBuilder();
+                sb.Append("[");
+                sb.Append("Type: ");
+                sb.Append(type);
+                sb.Append(", Content: ");
+                sb.Append(content);
+                sb.Append(", Id: ");
+                sb.Append(id);
+                sb.Append("]");
+                return sb.ToString();
+            }
         }
 
 
         private Action<SignalingMessageType, int, string> mEventHandler = null;
-        private Queue<SMessage> mEventQueue = new Queue<SMessage>();
+        protected Queue<SMessage> mEventQueue = new Queue<SMessage>();
         private ConnectionState mConnectionState = ConnectionState.NotConnected;
 
         private int mOwnId = -1;
@@ -99,7 +114,7 @@ namespace PPlatform
 
 
         // Update is called once per frame
-        private void Update()
+        protected virtual void Update()
         {
             HandleEvents();
 

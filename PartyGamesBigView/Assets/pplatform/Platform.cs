@@ -7,8 +7,8 @@ using System.Collections.Generic;
 using PPlatform.Helper;
 using UnityEngine.SceneManagement;
 using System.Linq;
+using DebugTools;
 
-using Luz.Tools;
 
 namespace PPlatform
 {
@@ -102,9 +102,18 @@ namespace PPlatform
         private void Awake()
         {
             mNetgroup = GetComponent<UnityNetgroup>();
+
+            //No network setup? Create a default version of it
+            //this will run it in local test mode every time a scene is starte directly
             if(mNetgroup == null)
             {
                 mNetgroup = this.gameObject.AddComponent<UnityNetgroup>();
+            }
+
+            //add debug ui
+            if(GetComponent<DebugUI>() == null)
+            {
+                this.gameObject.AddComponent<DebugUI>();
             }
         }
 
@@ -113,20 +122,8 @@ namespace PPlatform
             DontDestroyOnLoad(this.gameObject);
             mGameCode = GetRandomKey();
             mNetgroup.Open(mGameCode, OnNetgroupMessageInternal);
-
-            DebugConsole.ActivateConsole();
         }
 
-        private void OnGUI()
-        {
-            DebugConsole.DrawConsole();
-            //GUILayout.BeginVertical();
-            //if (GUILayout.Button("Exit"))
-            //{
-            //    mNetgroup.Close();
-            //}
-            //GUILayout.EndHorizontal();
-        }
 
         public void EnterGame(string name)
         {
@@ -134,9 +131,8 @@ namespace PPlatform
         }
         private void ShowGame(string name)
         {
-            Debug.Log("Show game " + name);
+            TL.L("Show game " + name);
             SceneManager.LoadScene(name);
-            //mActiveName = name;
         }
 
         /// <summary>
@@ -173,20 +169,20 @@ namespace PPlatform
             if(mController.ContainsKey(userId))
             {
                 mController[userId].ConnectionId = connectionId;
-                Debug.Log("User reconnected " + mController[userId]);
+                TL.L("User reconnected " + mController[userId]);
                 mConnectionIdToUserId[connectionId] = userId;
             }
             else
             {
                 Controller c = new Controller(connectionId, userId, name);
-                Debug.Log("Added new " + c);
+                TL.L("Added new " + c);
                 mController.Add(userId, c);
                 mConnectionIdToUserId[connectionId] = userId;
             }
         }
         public void DeactivateController(int userId)
         {
-            Debug.Log("Deactivate " + mController[userId]);
+            TL.L("Deactivate " + mController[userId]);
             int connectionId = mController[userId].ConnectionId;
             mController[userId].ConnectionId = -1;
             mConnectionIdToUserId.Remove(connectionId);
@@ -218,6 +214,8 @@ namespace PPlatform
                 mOwnConnectionId = conId;
                 mGameCode = content;
                 mIsConnected = true;
+
+                TL.L("Room opened: " + mGameCode);
             }
             else if (type == ANetgroup.SignalingMessageType.Closed)
             {
@@ -292,7 +290,7 @@ namespace PPlatform
                             if (string.IsNullOrEmpty(msg.name))
                                 msg.name = "player " + userId;
 
-                            Debug.Log("ControllerRegisterMessage received");
+                            TL.L("ControllerRegisterMessage received. Name " + msg.name);
                             ControllerDiscoveryMessage discoveryMsg = new ControllerDiscoveryMessage();
                             discoveryMsg.connectionId = conId;
                             discoveryMsg.userId = userId;
@@ -350,7 +348,7 @@ namespace PPlatform
                     }
                     else
                     {
-                        Debug.LogWarning("Received a message from an unregistered connection " + conId + " content: " + content);
+                        TL.LW("Received a message from an unregistered connection " + conId + " content: " + content);
                     }
                 }
             }//end of if(type == ANetgroup.SignalingMessageType.UserMessage)
@@ -374,7 +372,7 @@ namespace PPlatform
             int connectionId = UserIdToConnectionId(lToUserId);
             if (lToUserId != -1 && connectionId == -1)
             {
-                Debug.Log("Can't send message to the given user. User isn't connected.");
+                TL.LW("Can't send message to the given user. User with connection id " + connectionId + " isn't connected.");
             }
             else
             {
@@ -423,7 +421,7 @@ namespace PPlatform
         {
             if(Input.GetKeyUp(_ExitKey))
             {
-                Debug.Log("Exit application.");
+                TL.L("Exit application.");
                 Application.Quit();
             }
         }

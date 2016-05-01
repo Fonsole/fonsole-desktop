@@ -241,6 +241,7 @@ GameObject:
   - 4: {fileID: 507225773}
   - 114: {fileID: 507225771}
   - 114: {fileID: 507225772}
+  - 114: {fileID: 507225774}
   m_Layer: 0
   m_Name: PPlatform
   m_TagString: Untagged
@@ -284,6 +285,17 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 2
+--- !u!114 &507225774
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 507225770}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1791d403b0fb6a746bb7257ab0611dcb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &715891237
 GameObject:
   m_ObjectHideFlags: 0
@@ -368,7 +380,6 @@ GameObject:
   - 223: {fileID: 815065488}
   - 114: {fileID: 815065487}
   - 114: {fileID: 815065486}
-  - 114: {fileID: 815065490}
   m_Layer: 5
   m_Name: PPlatformGui
   m_TagString: Untagged
@@ -428,6 +439,7 @@ Canvas:
   m_ReceivesEvents: 1
   m_OverrideSorting: 0
   m_OverridePixelPerfect: 0
+  m_SortingBucketNormalizedSize: 0
   m_SortingLayerID: 0
   m_SortingOrder: 0
   m_TargetDisplay: 0
@@ -452,17 +464,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
---- !u!114 &815065490
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 815065485}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: aacc268ac26b9dc4b9b8622c6345edd6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &920180091
 GameObject:
   m_ObjectHideFlags: 0
