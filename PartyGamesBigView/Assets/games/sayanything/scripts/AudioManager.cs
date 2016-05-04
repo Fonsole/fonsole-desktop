@@ -65,16 +65,7 @@ public class AudioManager : SceneSingleton<AudioManager>
             _OnAnswerSubmittedShuffled[i] = _OnAnswerSubmitted[i];
         }
 
-        //cheap and easy array shuffle
-        while (len > 1)
-        {
-            int next = Random.Range(0, len);
-            --len;
-
-            AudioClip temp = _OnAnswerSubmittedShuffled[next];
-            _OnAnswerSubmittedShuffled[next] = _OnAnswerSubmittedShuffled[len];
-            _OnAnswerSubmittedShuffled[len] = temp;
-        }
+        ArrayHelper.Shuffle<AudioClip>(_OnAnswerSubmittedShuffled);
     }
 
     private void PlaySound(AudioClip clip)

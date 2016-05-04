@@ -1,10 +1,12 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 namespace PPlatform.SayAnything.Ui
 {
 	public class DisplayAnswerList : MonoBehaviour
 	{
-		public DisplayAnswerUi[] _DisplayAnswerUis;
+        public DisplayAnswerUi[] _DisplayAnswerUis;
+        public KeyValuePair<int, string>[] ShuffledAnswers;
 
 		void OnEnable (){
 			for(int i=0; i< _DisplayAnswerUis.Length; i++)
@@ -23,7 +25,10 @@ namespace PPlatform.SayAnything.Ui
 		void FixedUpdate()
 		{
 			int counter = 0;
-			foreach(var v in SayAnythingUi.Instance.CurrentData.answers)
+            if (ShuffledAnswers == null)
+                GetShuffledAnswers();
+            
+			foreach(var v in ShuffledAnswers)
 			{
 				_DisplayAnswerUis[counter].Refresh(v.Key, SayAnythingUi.Instance.CurrentData);
 				if (_DisplayAnswerUis [counter].displayed) {
@@ -36,5 +41,20 @@ namespace PPlatform.SayAnything.Ui
 				_DisplayAnswerUis[i].Refresh(SharedData.UNDEFINED, SayAnythingUi.Instance.CurrentData);
 			}
 		}
+
+        void GetShuffledAnswers()
+        {
+            ShuffledAnswers = new KeyValuePair<int, string>[SayAnythingUi.Instance.CurrentData.answers.Keys.Count];
+            int counter = 0;
+            foreach (KeyValuePair<int, string> answer in SayAnythingUi.Instance.CurrentData.answers)
+                ShuffledAnswers[counter++] = answer;
+
+            ArrayHelper.Shuffle<KeyValuePair<int, string>>(ShuffledAnswers);
+        }
+
+        void OnDisable()
+        {
+            ShuffledAnswers = null;
+        }
 	}
 }
