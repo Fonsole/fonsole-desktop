@@ -88,7 +88,7 @@ public class AudioManager : SceneSingleton<AudioManager>
     private void PlayMusic(AudioClip clip)
     {
         //todo: if multiple sounds need to be played at the same time we can schedule multiple audio soruces here
-        if (clip != null)
+        if (clip != null && !_MusicSource.isPlaying)
         {
             _MusicSource.PlayOneShot(clip);
 			StartCoroutine(FadeMusic(1f));
