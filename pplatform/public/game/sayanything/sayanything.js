@@ -321,8 +321,6 @@
                 $('#Questioning').attr("hidden", false);
             }else if(lSharedData.state == SayAnything.GameState.Answering)
             {
-                console.log("show Answering");
-
                 if (ownUserId in lSharedData.answers)
                 {
                     $('.preAnswer').attr("hidden", true);
@@ -335,6 +333,7 @@
                 }
 
                 $('#Answering').attr("hidden", false);
+                $('#answer').attr("placeholder", "")
             }else if(lSharedData.state == SayAnything.GameState.ShowAnswers)
             {
                 console.log("show ShowAnswers");
@@ -534,7 +533,10 @@
         function startGame()
         {
             var controllers = gPlatform.getControllers();
-            if (controller.length >= 3)
+            var count = 0;
+            for (var id in controllers)
+                ++count;
+            if (count >= 0)
                 gPlatform.sendMessageObj(SayAnything.Message.StartGame.TAG, new SayAnything.Message.StartGame());
         }
 
@@ -571,11 +573,17 @@
          */
         function answerListConfirm()
         {
-            $('.preAnswer').attr("hidden", true);
-            $('.postAnswer').attr("hidden", false);
+            var answer = $("#answer").val().replace(/^\s+|\s+$/g, '');
+            if (answer != "")
+            {
 
-            var answer = $("#answer").val();
-            gPlatform.sendMessageObj(SayAnything.Message.Answer.TAG, new SayAnything.Message.Answer(answer));
+                $('.preAnswer').attr("hidden", true);
+                $('.postAnswer').attr("hidden", false);
+                gPlatform.sendMessageObj(SayAnything.Message.Answer.TAG, new SayAnything.Message.Answer(answer));
+
+            }
+            else
+                $('#answer').attr("placeholder", "Enter answer here.");
         }
 
         /**Confirm button of the judge input
