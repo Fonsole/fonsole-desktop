@@ -24,6 +24,12 @@ body
       color: red; 
       font-weight: bold;
 }
+.chosenQuestion
+{
+  color: red; 
+  font-weight: bold;
+}
+
 button
 {
       margin: 0 auto;
