@@ -394,9 +394,20 @@
             $('#playerlist').empty();
 
             var lControllers = gPlatform.getControllers();
+            var count = 0;
             for(var id in lControllers )
             {
                 $('#playerlist').append( "<li>" + getPlayerName(id) + "</li>" );
+                ++count;
+            }
+
+            if (count < 3)
+            {
+                $("#start_game_button").text("Game requires at least 3 players");
+            }
+            else
+            { 
+                $("#start_game_button").text("Start Game");
             }
         }
         /**
@@ -522,7 +533,9 @@
          */
         function startGame()
         {
-            gPlatform.sendMessageObj(SayAnything.Message.StartGame.TAG, new SayAnything.Message.StartGame());
+            var controllers = gPlatform.getControllers();
+            if (controller.length >= 3)
+                gPlatform.sendMessageObj(SayAnything.Message.StartGame.TAG, new SayAnything.Message.StartGame());
         }
 
 
