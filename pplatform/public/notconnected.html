@@ -74,6 +74,10 @@
                 localStorage.gameid = gameid;
                 localStorage.playername = playername;
                 gPlatform.join(gameid, playername);
+
+                //since the game redirects in case of an error, we can just
+                //disable the button once it's clicked to stop people spamming
+                $('#button-join').attr("hidden", true);
             });
 
 
