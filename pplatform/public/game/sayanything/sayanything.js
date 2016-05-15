@@ -449,6 +449,8 @@
             $("#questionListQ3Label").empty().append(lQ3);
             $("#questionListQ4Label").empty().append(lQ4);
             $("#questionCustom").val("");
+
+            customQuestionCancel();
         }
         //fills the list of answers into the GUI elements
         function answerListFill(lSharedData)
@@ -536,7 +538,7 @@
             var count = 0;
             for (var id in controllers)
                 ++count;
-            if (count >= 0)
+            if (count >= 3)
                 gPlatform.sendMessageObj(SayAnything.Message.StartGame.TAG, new SayAnything.Message.StartGame());
         }
 
@@ -566,6 +568,36 @@
             gPlatform.sendMessageObj(SayAnything.Message.Question.TAG, new SayAnything.Message.Question(question));
         }
 
+        /**Go back to the list of questions.
+         */
+        function customQuestionCancel()
+        {
+            for (var i = 1; i < 5; ++i)
+            {
+                $("#questionListQ" + i).parent().show();
+            }
+            $("#questionListQ5").parent().hide();
+            $("#questionListQ5").prop("checked", false);
+
+            $("#question_show").show();
+            $("#question_cancel").hide();
+        }
+
+        /**Show the custom question input box.
+         */
+        function customQuestionShow()
+        {
+            for (var i = 1; i < 5; ++i)
+            {
+                $("#questionListQ" + i).parent().hide();
+                $("#questionListQ" + i).prop("checked", false);
+            }
+            $("#questionListQ5").parent().show();
+            $("#questionListQ5").prop("checked", true);
+
+            $("#question_show").hide();
+            $("#question_cancel").show();
+        }
 
         /**Confirm button of the answer list
          *

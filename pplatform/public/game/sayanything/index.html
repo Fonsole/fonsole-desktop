@@ -47,9 +47,11 @@
                     <div><input type="radio" name="questionList" id="questionListQ2" value="Q2"><label for="questionListQ2"> <span id="questionListQ2Label">Q2</span></label> </div>
                     <div><input type="radio" name="questionList" id="questionListQ3" value="Q3"><label for="questionListQ3"> <span id="questionListQ3Label">Q3</span></label> </div>
                     <div><input type="radio" name="questionList" id="questionListQ4" value="Q4"><label for="questionListQ4"> <span id="questionListQ4Label">Q4</span></label> </div>
-                    <div><input type="radio" name="questionList" id="questionListQ5" value="custom"><label for="questionListQ5"> <input type="text" id="questionCustom" onclick="$('#questionListQ5').prop('checked', true);"></div>
+                    <div style="display:none"><input type="radio" name="questionList" id="questionListQ5" value="custom"><label for="questionListQ5"> <input type="text" id="questionCustom" onclick="$('#questionListQ5').prop('checked', true);"></div>
+                    <button id="question_show" class="confirm" onclick="customQuestionShow()">Write Answer</button>
 
                     <button class="confirm" onclick="questionListConfirm()">Confirm Selection</button>
+                    <button style="display:none" id="question_cancel" class="confirm" onclick="customQuestionCancel()">Cancel</button>
                 </div>
             </div>
         </div>
