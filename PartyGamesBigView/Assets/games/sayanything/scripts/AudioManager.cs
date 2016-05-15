@@ -35,6 +35,10 @@ public class AudioManager : SceneSingleton<AudioManager>
         PlaySound(_OnUserJoin);
 
     }
+    public void OnUserVote()
+    {
+        PlaySound(_OnUserJoin);
+    }
 	public void OnWaitForStart (){
 		PlayMusic(_BackgroundMusic);
 	}

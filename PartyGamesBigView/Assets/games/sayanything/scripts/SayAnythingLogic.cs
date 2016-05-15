@@ -271,6 +271,8 @@ namespace PPlatform.SayAnything
                 mData.AddVote(lConId, voteMsg.votePlayerId1);
                 mData.AddVote(lConId, voteMsg.votePlayerId2);
 
+                AudioManager.Instance.OnUserVote();
+
                 if (IsJudgeAndVotingFinished())
                 {
                     SwitchState(GameState.ShowWinner);
