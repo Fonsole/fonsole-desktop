@@ -38,7 +38,7 @@ namespace PPlatform.SayAnything.Ui
             _Text.rectTransform.localScale = Vector3.zero;
             _Text.rectTransform.ZKlocalScaleTo(Vector2.one, 0.5f)
                 .setFrom(Vector3.zero)
-                .setDelay(0.875f)
+                .setDelay(0.5f)
                 .setEaseType(EaseType.SineOut)
                 .start();
         }
