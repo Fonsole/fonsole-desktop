@@ -249,7 +249,7 @@ namespace PPlatform.SayAnything
 
 
                 //TODO: add timer and there could be answers that are from users that logged out by now...
-                if(mData.answers.Count == Platform.Instance.Controllers.Count -1)
+                if(mData.answers.Count == Platform.Instance.ActiveControllers.Count() -1)
                 {
 					EnterStateDisplay();
                 }
@@ -294,7 +294,7 @@ namespace PPlatform.SayAnything
                 votes += voteList.Value.Count;
             }
 
-            if(votes >= 2 * (Platform.Instance.Controllers.Count - 1) && mData.judgedAnswerId != SharedData.UNDEFINED)
+            if (votes >= 2 * (Platform.Instance.Controllers.Count - 1) && mData.judgedAnswerId != SharedData.UNDEFINED)
             {
                 return true;
             }
@@ -325,14 +325,14 @@ namespace PPlatform.SayAnything
         }
 		private StatusCode CanEnterStateDisplay()
 		{
-			if (mData.answers.Count < 1) //TODO: <= in the future. at least 2 answers needed but 1 is enough for testing
+            if (mData.answers.Count <= 1) //TODO: <= in the future. at least 2 answers needed but 1 is enough for testing
 				return StatusCode.NotEnoughAnswers;
 
 			return StatusCode.Ok;
 		}
         private StatusCode CanEnterStateJudgeAndVoting()
         {
-            if (mData.answers.Count < 1) //TODO: <= in the future. at least 2 answers needed but 1 is enough for testing
+            if (mData.answers.Count <= 1) //TODO: <= in the future. at least 2 answers needed but 1 is enough for testing
                 return StatusCode.NotEnoughAnswers;
 
             return StatusCode.Ok;
