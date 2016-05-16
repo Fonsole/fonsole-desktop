@@ -238,8 +238,14 @@ namespace PPlatform.SayAnything
             else if (mData.state == GameState.Questioning && lTag == Message.Question.TAG)
             {
                 Question questionMsg = JsonWrapper.FromJson<Question>(lContent);
-                mData.question = questionMsg.question;
-                SwitchState(GameState.Answering);
+
+                //A late click can have the previous judge's selected 
+                //question show up for the current judge.
+                if (mData.judgeUserId == lConId)
+                {
+                    mData.question = questionMsg.question;
+                    SwitchState(GameState.Answering);
+                }
             }
             else if (mData.state == GameState.Answering && lTag == Message.Answer.TAG)
             {
