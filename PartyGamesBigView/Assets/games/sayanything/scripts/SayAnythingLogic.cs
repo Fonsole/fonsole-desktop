@@ -265,7 +265,8 @@ namespace PPlatform.SayAnything
                 //TODO: add timer and there could be answers that are from users that logged out by now...
                 if (mData.answers.Count == Platform.Instance.ActiveControllers.Count() - 1)
                 {
-                    EnterStateDisplay();
+                    //set the timer to 3 and let it time out
+                    mData.timeLeft = 3;
                 }
             }
             else if (mData.state == GameState.JudgingAndVoting && lTag == Message.Judge.TAG)
