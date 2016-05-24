@@ -83,4 +83,10 @@ namespace PPlatform.SayAnything.Message
             this.votePlayerId2 = lVotePlayerId2;
         }
     }
+
+    public struct ShowCustom
+    {
+        public static readonly string TAG = "SayAnything_ShowCustom";
+        //show custom answer
+    }
 }

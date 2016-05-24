@@ -25,7 +25,7 @@ namespace PPlatform.SayAnything
         public static readonly float ANSWERING_TIME = 60;
 		public static readonly float DISPLAY_TIME = 5;
         public static readonly float VOTING_TIME = 30;
-        public static readonly float SHOWWINNER_TIME = 10;
+        public static readonly float SHOWWINNER_TIME = 5;
         public static readonly float SHOWSCORE_TIME = 10;
 
 
@@ -247,6 +247,14 @@ namespace PPlatform.SayAnything
                     SwitchState(GameState.Answering);
                 }
             }
+            else if (mData.state == GameState.Questioning && lTag == Message.ShowCustom.TAG)
+            {
+                if (!mData.customQuestionShown)
+                {
+                    mData.timeLeft = 30;
+                    mData.customQuestionShown = true;
+                }
+            }
             else if (mData.state == GameState.Answering && lTag == Message.Answer.TAG)
             {
                 Answer answerMsg = JsonWrapper.FromJson<Answer>(lContent);
@@ -255,9 +263,9 @@ namespace PPlatform.SayAnything
 
 
                 //TODO: add timer and there could be answers that are from users that logged out by now...
-                if(mData.answers.Count == Platform.Instance.ActiveControllers.Count() -1)
+                if (mData.answers.Count == Platform.Instance.ActiveControllers.Count() - 1)
                 {
-					EnterStateDisplay();
+                    EnterStateDisplay();
                 }
             }
             else if (mData.state == GameState.JudgingAndVoting && lTag == Message.Judge.TAG)
@@ -265,7 +273,7 @@ namespace PPlatform.SayAnything
                 Judge judgeMsg = JsonWrapper.FromJson<Judge>(lContent);
                 mData.judgedAnswerId = judgeMsg.playerId;
 
-                if(IsJudgeAndVotingFinished())
+                if (IsJudgeAndVotingFinished())
                 {
                     SwitchState(GameState.ShowWinner);
                 }

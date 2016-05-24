@@ -214,6 +214,12 @@
     };
     SayAnything.Message.Vote.TAG = "SayAnything_Vote";
 
+    SayAnything.Message.ShowCustom = function()
+    {
+        //no content
+    };
+    SayAnything.Message.ShowCustom.TAG = "SayAnything_ShowCustom";
+
 
 
 
@@ -597,6 +603,8 @@
 
             $("#question_show").hide();
             $("#question_cancel").show();
+
+            gPlatform.sendMessageObj(SayAnything.Message.ShowCustom.TAG, new SayAnything.Message.ShowCustom());
         }
 
         /**Confirm button of the answer list

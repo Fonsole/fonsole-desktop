@@ -62,6 +62,7 @@ namespace PPlatform.SayAnything
         public Dictionary<int, int> totalScore = new Dictionary<int, int>();
 
         public float timeLeft = 30;
+        public bool customQuestionShown = false;
          
          //functions to easily fill and read the data (ideall this should be done only via functions later to prevent bugs)
         public void CancelVotesBy(int lFrom)
@@ -110,6 +111,7 @@ namespace PPlatform.SayAnything
             this.judgedAnswerId = -1;
             this.votes = new Dictionary<int,List<int>>();
             this.roundScore = new Dictionary<int, int>();
+            this.customQuestionShown = false;
         }
 
         /// <summary>
@@ -228,6 +230,11 @@ namespace PPlatform.SayAnything
             st.Append("\t");
             st.Append("timeLeft: \t");
             st.Append(this.timeLeft);
+
+            st.Append("\t");
+            st.Append("customQuestionShown: \t");
+            st.Append(this.customQuestionShown);
+
             return st.ToString();
         }
 
