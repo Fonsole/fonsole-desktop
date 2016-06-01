@@ -35,10 +35,10 @@ namespace PPlatform.SayAnything.Ui
         void OnEnable()
         {
             // slide panel down
-            _rt.ZKanchoredPositionTo(_rt.anchoredPosition, 0.875f)
+            /*_rt.ZKanchoredPositionTo(_rt.anchoredPosition, 0.875f)
                 .setFrom(new Vector2(_rt.anchoredPosition.x, _rt.anchoredPosition.y + Screen.height * 3f))
                 .setEaseType(EaseType.SineOut)
-                .start();
+                .start();*/
         }
 
         void OnDisable()

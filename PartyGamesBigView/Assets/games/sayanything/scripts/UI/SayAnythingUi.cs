@@ -18,6 +18,7 @@ namespace PPlatform.SayAnything.Ui
     /// </summary>
     public class SayAnythingUi : SceneSingleton<SayAnythingUi>
     {
+        public event SayAnythingLogic.StateDelegate UIStateSwitched;
 
         public bool _Debug = true;
         public GameState _DebugGameState;
@@ -74,7 +75,21 @@ namespace PPlatform.SayAnything.Ui
 
         private void Start()
         {
-
+            if (_Debug)
+            {
+                _previousScreen = _WaitForStartUI;
+                if (_DebugGameState == _previousState)
+                {
+                    //gotta make sure the previous and current states are different
+                    int numStates = System.Enum.GetNames(typeof(GameState)).Length;
+                    _previousState = (GameState)(((int)_DebugGameState + 1) % numStates);
+                }
+            }
+            else
+            {
+                UIStateSwitched += _LinkToLogic.StateSwitched;
+                _LinkToLogic.StateChanging += StartStateChange;
+            }
         }
         private SharedData GetDebugData()
         {
@@ -153,11 +168,17 @@ namespace PPlatform.SayAnything.Ui
             SharedData data = CurrentData;
             if(data != null && _previousState != data.state)
             {
-                ShowState(data.state);
+                if (_Debug || data.state == GameState.WaitForStart)
+                    ShowState(data.state);
                 _previousState = data.state;
             }
         }
 
+        void StartStateChange(GameState targetState)
+        {
+            _LinkToLogic.WaitingForChange = true;
+            ShowState(targetState);
+        }
 
         private void ShowState(GameState state)
         {
@@ -165,47 +186,48 @@ namespace PPlatform.SayAnything.Ui
             {
                 if (_previousScreen != null)
                 {
-                    ScreenTransition transition = _previousScreen.GetComponent<ScreenTransition>();
-                    if (transition != null)
-                        transition.ShowScreen -= ShowScreen;
+                    DelayedShowScreen(_WaitForStartUI, state);
                 }
+                else
+                {
+                    _QuestioningUI.SetActive(false);
+                    _AnsweringUI.SetActive(false);
+                    _DisplayAnswersUI.SetActive(false);
+                    _JudgingAndVotingUI.SetActive(false);
+                    _RulesUI.SetActive(false);
+                    _ShowWinnerUI.SetActive(false);
 
-                _QuestioningUI.SetActive(false);
-                _AnsweringUI.SetActive(false);
-				_DisplayAnswersUI.SetActive(false);
-                _JudgingAndVotingUI.SetActive(false);
-                _RulesUI.SetActive(false);
-                _ShowWinnerUI.SetActive(false);
-
-                ShowScreen(_WaitForStartUI);
+                    ShowScreen(_WaitForStartUI, state);
+                }
             }
             else if (state == GameState.Questioning)
             {
-                DelayedShowScreen(_QuestioningUI);
+                DelayedShowScreen(_QuestioningUI, state);
             }
             else if (state == GameState.Answering)
             {
-                DelayedShowScreen(_AnsweringUI);
+                DelayedShowScreen(_AnsweringUI, state);
             }
             else if (state == GameState.DisplayAnswers)
 			{
-                DelayedShowScreen(_DisplayAnswersUI);
+                DelayedShowScreen(_DisplayAnswersUI, state);
             }
             else if (state == GameState.JudgingAndVoting)
             {
-                DelayedShowScreen(_JudgingAndVotingUI);
+                DelayedShowScreen(_JudgingAndVotingUI, state);
             }
             else if (state == GameState.ShowWinner)
             {
-                DelayedShowScreen(_ShowWinnerUI);
+                DelayedShowScreen(_ShowWinnerUI, state);
             }
             else if (state == GameState.ShowScore)
             {
-                //DelayedShowScreen(_ShowWinnerUI);
+                if (UIStateSwitched != null)
+                    UIStateSwitched(state);
             }
             else if(state == GameState.Rules)
             {
-                DelayedShowScreen(_RulesUI);
+                DelayedShowScreen(_RulesUI, state);
             }
         }
         public string GetUserName(int id)
@@ -217,24 +239,32 @@ namespace PPlatform.SayAnything.Ui
             return "Someone(" + id + ")";
         }
 
-        public void DelayedShowScreen(GameObject target)
+        public void DelayedShowScreen(GameObject target, GameState targetState)
         {
             if (_previousScreen != null)
             {
                 ScreenTransition transition = _previousScreen.GetComponent<ScreenTransition>();
                 if (transition == null)
                 {
-                    ShowScreen(target);
+                    ShowScreen(target, targetState);
                 }
                 else
                 {
                     transition.ShowScreen += ShowScreen;
-                    transition.TransitionOut(target);
+                    transition.TransitionOut(target, targetState);
+
+                    ComponentTweener[] tweeners = _previousScreen.GetComponentsInChildren<ComponentTweener>();
+                    foreach (ComponentTweener tweener in tweeners)
+                    {
+                        tweener.TweenOut(transition.DelayTime);
+                    }
                 }
             }
+            else
+                ShowScreen(target, targetState);
         }
 
-        private void ShowScreen(GameObject target)
+        private void ShowScreen(GameObject target, GameState targetState)
         {
             if (_previousScreen != null)
             {
@@ -249,6 +279,9 @@ namespace PPlatform.SayAnything.Ui
 
             target.SetActive(true);
             _previousScreen = target;
+
+            if (UIStateSwitched != null)
+                UIStateSwitched(targetState);
         }
 
 

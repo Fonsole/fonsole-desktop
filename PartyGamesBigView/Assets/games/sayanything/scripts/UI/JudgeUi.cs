@@ -2,10 +2,11 @@
 using System.Collections;
 using UnityEngine.UI;
 using Prime31.ZestKit;
+using System;
 
 namespace PPlatform.SayAnything.Ui
 {
-    public class JudgeUi : MonoBehaviour
+    public class JudgeUi : MonoBehaviour, ComponentTweener
     {
         // "Q:" text
         public Text _Label;
@@ -20,10 +21,10 @@ namespace PPlatform.SayAnything.Ui
 
         void OnEnable()
         {
-            _rt.ZKanchoredPositionTo(_rt.anchoredPosition, 0.875f)
+            /*_rt.ZKanchoredPositionTo(_rt.anchoredPosition, 0.875f)
                 .setFrom(new Vector2(_rt.anchoredPosition.x, _rt.anchoredPosition.y + 300f))
                 .setEaseType(EaseType.SineOut)
-                .start();
+                .start();*/
 
             if (_Label != null)
             {
@@ -55,6 +56,24 @@ namespace PPlatform.SayAnything.Ui
             {
                 _Text.text = "No question?";
             }
+        }
+
+        public void TweenOut(float time)
+        {
+            if (_Label != null)
+            {
+                _Label.rectTransform.ZKlocalScaleTo(Vector3.zero, 0.25f)
+                    .setFrom(Vector3.zero)
+                    .setDelay(time-0.25f)
+                    .setEaseType(EaseType.SineOut)
+                    .start();
+            }
+
+            _Text.rectTransform.ZKlocalScaleTo(Vector2.zero, 0.35f)
+                .setFrom(Vector3.one)
+                .setDelay(time-0.35f)
+                .setEaseType(EaseType.SineOut)
+                .start();
         }
     }
 }

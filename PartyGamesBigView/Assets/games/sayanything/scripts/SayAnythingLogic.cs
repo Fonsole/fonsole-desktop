@@ -28,7 +28,10 @@ namespace PPlatform.SayAnything
         public static readonly float SHOWWINNER_TIME = 5;
         public static readonly float SHOWSCORE_TIME = 10;
 
+        public delegate void StateDelegate(GameState target);
+        public event StateDelegate StateChanging;
 
+        public bool WaitingForChange;
 
         /// <summary>
         /// Must be the same as the scene name + folder name in unity and the same folder name of the controller!
@@ -94,7 +97,7 @@ namespace PPlatform.SayAnything
         {
             mData.timeLeft -= Time.fixedDeltaTime;
 
-            if(mData.timeLeft <= 0)
+            if(mData.timeLeft <= 0 && !WaitingForChange)
             {
                 //time ran out
                 if (mData.state == GameState.Rules)
@@ -102,7 +105,7 @@ namespace PPlatform.SayAnything
                     StatusCode code = CanEnterStateQuestioning();
                     if (code == StatusCode.Ok)
                     {
-                        SwitchState(GameState.Questioning);
+                        StateChanging(GameState.Questioning);
                     }
                     else
                     {
@@ -115,7 +118,7 @@ namespace PPlatform.SayAnything
                     StatusCode code = CanEnterStateAnswering();
                     if (code == StatusCode.Ok)
                     {
-                        SwitchState(GameState.Answering);
+                        StateChanging(GameState.Answering);
                     }
                     else
                     {
@@ -128,7 +131,7 @@ namespace PPlatform.SayAnything
                     StatusCode code = CanEnterStateDisplay();
                     if (code == StatusCode.Ok)
                     {
-                        SwitchState(GameState.DisplayAnswers);
+                        StateChanging(GameState.DisplayAnswers);
                     }
                     else
                     {
@@ -140,7 +143,7 @@ namespace PPlatform.SayAnything
                     StatusCode code = CanEnterStateJudgeAndVoting();
                     if (code == StatusCode.Ok)
                     {
-                        SwitchState(GameState.JudgingAndVoting);
+                        StateChanging(GameState.JudgingAndVoting);
                     }
                     else
                     {
@@ -154,7 +157,7 @@ namespace PPlatform.SayAnything
                     StatusCode code = CanEnterStateShowWinner();
                     if (code == StatusCode.Ok)
                     {
-                        SwitchState(GameState.ShowWinner);
+                        StateChanging(GameState.ShowWinner);
                     }
                     else
                     {
@@ -163,21 +166,27 @@ namespace PPlatform.SayAnything
                 }
                 else if (mData.state == GameState.ShowWinner)
                 {
-                    SwitchState(GameState.ShowScore);
+                    StateChanging(GameState.ShowScore);
                 }
                 else if (mData.state == GameState.ShowScore)
                 {
                     if (CanEnterStateQuestioning() == StatusCode.Ok)
                     {
-                        SwitchState(GameState.Questioning);
+                        StateChanging(GameState.Questioning);
                     }
                     else
                     {
-                        SwitchState(GameState.WaitForStart);
+                        StateChanging(GameState.WaitForStart);
                     }
                 }
             }
 
+        }
+
+        public void StateSwitched(GameState targetState)
+        {
+            WaitingForChange = false;
+            SwitchState(targetState);
         }
 
 
@@ -192,11 +201,11 @@ namespace PPlatform.SayAnything
             Debug.Log("Status code: " + reason);
             if (CanEnterStateQuestioning() == StatusCode.Ok)
             {
-                SwitchState(GameState.Questioning);
+                StateChanging(GameState.Questioning);
             }
             else
             {
-                SwitchState(GameState.WaitForStart);
+                StateChanging(GameState.WaitForStart);
             }
             
         }
@@ -228,12 +237,12 @@ namespace PPlatform.SayAnything
                 //controller send the start game event.
                 //TODO: check for player count and send back an error if there aren't enough player
                 //OR hide the button until there are enough player (risky though because it could change until the message arrives)
-                SwitchState(GameState.Rules);
+                StateChanging(GameState.Rules);
 
             }
             else if (mData.state == GameState.Rules && lTag == Message.Rules.TAG)
             {
-                SwitchState(GameState.Questioning);
+                StateChanging(GameState.Questioning);
             }
             else if (mData.state == GameState.Questioning && lTag == Message.Question.TAG)
             {
@@ -244,7 +253,7 @@ namespace PPlatform.SayAnything
                 if (mData.judgeUserId == lConId)
                 {
                     mData.question = questionMsg.question;
-                    SwitchState(GameState.Answering);
+                    StateChanging(GameState.Answering);
                 }
             }
             else if (mData.state == GameState.Questioning && lTag == Message.ShowCustom.TAG)
@@ -276,7 +285,7 @@ namespace PPlatform.SayAnything
 
                 if (IsJudgeAndVotingFinished())
                 {
-                    SwitchState(GameState.ShowWinner);
+                    StateChanging(GameState.ShowWinner);
                 }
             }
             else if (mData.state == GameState.JudgingAndVoting && lTag == Message.Vote.TAG)
@@ -290,7 +299,7 @@ namespace PPlatform.SayAnything
 
                 if (IsJudgeAndVotingFinished())
                 {
-                    SwitchState(GameState.ShowWinner);
+                    StateChanging(GameState.ShowWinner);
                 }
             }
             else
@@ -413,7 +422,6 @@ namespace PPlatform.SayAnything
             }
 
         }
-
         
         private void EnterStateWaitForStart()
         {

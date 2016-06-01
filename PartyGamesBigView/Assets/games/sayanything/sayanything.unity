@@ -352,6 +352,7 @@ GameObject:
   - 222: {fileID: 93216952}
   - 114: {fileID: 93216951}
   - 114: {fileID: 93216953}
+  - 114: {fileID: 93216954}
   m_Layer: 0
   m_Name: Scores
   m_TagString: Untagged
@@ -441,6 +442,20 @@ MonoBehaviour:
   - {fileID: 1643398365}
   - {fileID: 93972911}
   _ScoreText: {fileID: 1076665581}
+--- !u!114 &93216954
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 93216949}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f1569e44c3c036444a235db7e38e722e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  QuestionPanel: {fileID: 93216950}
+  TweenInTime: 0.6
+  TweenOutTime: 0.6
 --- !u!1001 &93432263
 Prefab:
   m_ObjectHideFlags: 0
@@ -1910,6 +1925,11 @@ Prefab:
       propertyPath: m_Name
       value: AnsweredUI (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 11475460, guid: 65e92fea889291d4d9dfdfd82e7c7814, type: 2}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: d705a7e33b4ab294bbbdf8f254a26164,
+        type: 3}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 65e92fea889291d4d9dfdfd82e7c7814, type: 2}
   m_IsPrefabParent: 0
@@ -1934,6 +1954,7 @@ GameObject:
   - 224: {fileID: 575440733}
   - 222: {fileID: 575440735}
   - 114: {fileID: 575440734}
+  - 114: {fileID: 575440736}
   m_Layer: 0
   m_Name: QuestionPanel
   m_TagString: Untagged
@@ -1993,6 +2014,19 @@ CanvasRenderer:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 575440732}
+--- !u!114 &575440736
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 575440732}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0954e532ccb7be944a968940397c0daa, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  AnswerPanel: {fileID: 575440733}
+  TimerUI: {fileID: 0}
 --- !u!1001 &581411161
 Prefab:
   m_ObjectHideFlags: 0
@@ -2210,6 +2244,18 @@ Prefab:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 11456206, guid: 694269427199ff84091f142b182654a1, type: 2}
+      propertyPath: TweenInDelay
+      value: 0.4
+      objectReference: {fileID: 0}
+    - target: {fileID: 11456206, guid: 694269427199ff84091f142b182654a1, type: 2}
+      propertyPath: TweenInTime
+      value: 0.85
+      objectReference: {fileID: 0}
+    - target: {fileID: 11456206, guid: 694269427199ff84091f142b182654a1, type: 2}
+      propertyPath: TweenOutTime
+      value: 0.35
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 694269427199ff84091f142b182654a1, type: 2}
   m_IsPrefabParent: 0
@@ -2234,6 +2280,7 @@ GameObject:
   - 224: {fileID: 608863854}
   - 222: {fileID: 608863856}
   - 114: {fileID: 608863855}
+  - 114: {fileID: 608863857}
   m_Layer: 0
   m_Name: JudgePanel
   m_TagString: Untagged
@@ -2292,6 +2339,19 @@ CanvasRenderer:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 608863853}
+--- !u!114 &608863857
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 608863853}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0954e532ccb7be944a968940397c0daa, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  AnswerPanel: {fileID: 608863854}
+  TimerUI: {fileID: 0}
 --- !u!1 &631699336
 GameObject:
   m_ObjectHideFlags: 0
@@ -2555,6 +2615,11 @@ Prefab:
       propertyPath: m_Name
       value: AnsweredUI (6)
       objectReference: {fileID: 0}
+    - target: {fileID: 11475460, guid: 65e92fea889291d4d9dfdfd82e7c7814, type: 2}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: d705a7e33b4ab294bbbdf8f254a26164,
+        type: 3}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 65e92fea889291d4d9dfdfd82e7c7814, type: 2}
   m_IsPrefabParent: 0
@@ -2756,6 +2821,18 @@ Prefab:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 11456206, guid: 694269427199ff84091f142b182654a1, type: 2}
+      propertyPath: TweenInTime
+      value: 0.85
+      objectReference: {fileID: 0}
+    - target: {fileID: 11456206, guid: 694269427199ff84091f142b182654a1, type: 2}
+      propertyPath: TweenInDelay
+      value: 0.8
+      objectReference: {fileID: 0}
+    - target: {fileID: 11456206, guid: 694269427199ff84091f142b182654a1, type: 2}
+      propertyPath: TweenOutTime
+      value: 0.35
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 694269427199ff84091f142b182654a1, type: 2}
   m_IsPrefabParent: 0
@@ -2868,6 +2945,18 @@ Prefab:
     - target: {fileID: 172612, guid: 694269427199ff84091f142b182654a1, type: 2}
       propertyPath: m_IsActive
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 11456206, guid: 694269427199ff84091f142b182654a1, type: 2}
+      propertyPath: TweenInTime
+      value: 0.85
+      objectReference: {fileID: 0}
+    - target: {fileID: 11456206, guid: 694269427199ff84091f142b182654a1, type: 2}
+      propertyPath: TweenInDelay
+      value: 0.8
+      objectReference: {fileID: 0}
+    - target: {fileID: 11456206, guid: 694269427199ff84091f142b182654a1, type: 2}
+      propertyPath: TweenOutTime
+      value: 0.35
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 694269427199ff84091f142b182654a1, type: 2}
@@ -3329,6 +3418,11 @@ Prefab:
       propertyPath: m_Name
       value: AnsweredUI (3)
       objectReference: {fileID: 0}
+    - target: {fileID: 11475460, guid: 65e92fea889291d4d9dfdfd82e7c7814, type: 2}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: d705a7e33b4ab294bbbdf8f254a26164,
+        type: 3}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 65e92fea889291d4d9dfdfd82e7c7814, type: 2}
   m_IsPrefabParent: 0
@@ -3629,6 +3723,11 @@ Prefab:
       propertyPath: m_Name
       value: AnsweredUI (7)
       objectReference: {fileID: 0}
+    - target: {fileID: 11475460, guid: 65e92fea889291d4d9dfdfd82e7c7814, type: 2}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: d705a7e33b4ab294bbbdf8f254a26164,
+        type: 3}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 65e92fea889291d4d9dfdfd82e7c7814, type: 2}
   m_IsPrefabParent: 0
@@ -4629,6 +4728,14 @@ Prefab:
       propertyPath: m_Name
       value: Answer9
       objectReference: {fileID: 0}
+    - target: {fileID: 11456206, guid: 694269427199ff84091f142b182654a1, type: 2}
+      propertyPath: TweenOutTime
+      value: 0.35
+      objectReference: {fileID: 0}
+    - target: {fileID: 11456206, guid: 694269427199ff84091f142b182654a1, type: 2}
+      propertyPath: TweenInTime
+      value: 0.85
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 694269427199ff84091f142b182654a1, type: 2}
   m_IsPrefabParent: 0
@@ -4847,7 +4954,13 @@ Prefab:
       propertyPath: m_Pivot.y
       value: 0.5
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    - target: {fileID: 11475460, guid: 65e92fea889291d4d9dfdfd82e7c7814, type: 2}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: d705a7e33b4ab294bbbdf8f254a26164,
+        type: 3}
+    m_RemovedComponents:
+    - {fileID: 9504330, guid: 65e92fea889291d4d9dfdfd82e7c7814, type: 2}
   m_ParentPrefab: {fileID: 100100000, guid: 65e92fea889291d4d9dfdfd82e7c7814, type: 2}
   m_IsPrefabParent: 0
 --- !u!224 &1164441279 stripped
@@ -5285,6 +5398,18 @@ Prefab:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 11456206, guid: 694269427199ff84091f142b182654a1, type: 2}
+      propertyPath: TweenInDelay
+      value: 0.4
+      objectReference: {fileID: 0}
+    - target: {fileID: 11456206, guid: 694269427199ff84091f142b182654a1, type: 2}
+      propertyPath: TweenInTime
+      value: 0.85
+      objectReference: {fileID: 0}
+    - target: {fileID: 11456206, guid: 694269427199ff84091f142b182654a1, type: 2}
+      propertyPath: TweenOutTime
+      value: 0.35
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 694269427199ff84091f142b182654a1, type: 2}
   m_IsPrefabParent: 0
@@ -5310,6 +5435,7 @@ GameObject:
   - 222: {fileID: 1249904129}
   - 114: {fileID: 1249904128}
   - 114: {fileID: 1249904130}
+  - 114: {fileID: 1249904131}
   m_Layer: 0
   m_Name: WinnerAnswer
   m_TagString: Untagged
@@ -5391,6 +5517,20 @@ MonoBehaviour:
   _AnswerText: {fileID: 481063891}
   _WinnerText: {fileID: 741196220}
   _WinnerInfo: {fileID: 586011151}
+--- !u!114 &1249904131
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1249904126}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f1569e44c3c036444a235db7e38e722e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  QuestionPanel: {fileID: 1249904127}
+  TweenInTime: 0.6
+  TweenOutTime: 0.6
 --- !u!1 &1270192451
 GameObject:
   m_ObjectHideFlags: 0
@@ -5430,6 +5570,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cb0c41dba525ab947a618d96d798f90e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  WaitingForChange: 0
 --- !u!1001 &1288719421
 Prefab:
   m_ObjectHideFlags: 0
@@ -5786,6 +5927,14 @@ Prefab:
       propertyPath: m_Name
       value: Answer8
       objectReference: {fileID: 0}
+    - target: {fileID: 11456206, guid: 694269427199ff84091f142b182654a1, type: 2}
+      propertyPath: TweenOutTime
+      value: 0.35
+      objectReference: {fileID: 0}
+    - target: {fileID: 11456206, guid: 694269427199ff84091f142b182654a1, type: 2}
+      propertyPath: TweenInTime
+      value: 0.85
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 694269427199ff84091f142b182654a1, type: 2}
   m_IsPrefabParent: 0
@@ -5883,6 +6032,11 @@ Prefab:
       propertyPath: m_Name
       value: AnsweredUI (4)
       objectReference: {fileID: 0}
+    - target: {fileID: 11475460, guid: 65e92fea889291d4d9dfdfd82e7c7814, type: 2}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: d705a7e33b4ab294bbbdf8f254a26164,
+        type: 3}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 65e92fea889291d4d9dfdfd82e7c7814, type: 2}
   m_IsPrefabParent: 0
@@ -6411,6 +6565,7 @@ GameObject:
   - 222: {fileID: 1511668091}
   - 114: {fileID: 1511668090}
   - 114: {fileID: 1511668092}
+  - 114: {fileID: 1511668093}
   m_Layer: 0
   m_Name: Question
   m_TagString: Untagged
@@ -6484,6 +6639,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _Label: {fileID: 1526144236}
   _Text: {fileID: 529857917}
+--- !u!114 &1511668093
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1511668088}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f1569e44c3c036444a235db7e38e722e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  QuestionPanel: {fileID: 1511668089}
+  TweenInTime: 0.6
+  TweenOutTime: 0.6
 --- !u!1 &1526144234
 GameObject:
   m_ObjectHideFlags: 0
@@ -7545,7 +7714,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ef9f4cd0bb60fa74abb48308384aac05, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _Debug: 0
+  _Debug: 1
   _DebugGameState: 6
   _LinkToLogic: {fileID: 1270192453}
   _WaitForStartUI: {fileID: 302153599}
@@ -7734,6 +7903,11 @@ Prefab:
       propertyPath: m_Name
       value: AnsweredUI (2)
       objectReference: {fileID: 0}
+    - target: {fileID: 11475460, guid: 65e92fea889291d4d9dfdfd82e7c7814, type: 2}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: d705a7e33b4ab294bbbdf8f254a26164,
+        type: 3}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 65e92fea889291d4d9dfdfd82e7c7814, type: 2}
   m_IsPrefabParent: 0
@@ -7975,6 +8149,11 @@ Prefab:
       propertyPath: m_Name
       value: AnsweredUI (5)
       objectReference: {fileID: 0}
+    - target: {fileID: 11475460, guid: 65e92fea889291d4d9dfdfd82e7c7814, type: 2}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: d705a7e33b4ab294bbbdf8f254a26164,
+        type: 3}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 65e92fea889291d4d9dfdfd82e7c7814, type: 2}
   m_IsPrefabParent: 0
@@ -8071,6 +8250,14 @@ Prefab:
     - target: {fileID: 172612, guid: 694269427199ff84091f142b182654a1, type: 2}
       propertyPath: m_Name
       value: Answer7
+      objectReference: {fileID: 0}
+    - target: {fileID: 11456206, guid: 694269427199ff84091f142b182654a1, type: 2}
+      propertyPath: TweenOutTime
+      value: 0.35
+      objectReference: {fileID: 0}
+    - target: {fileID: 11456206, guid: 694269427199ff84091f142b182654a1, type: 2}
+      propertyPath: TweenInTime
+      value: 0.85
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 694269427199ff84091f142b182654a1, type: 2}
@@ -8193,6 +8380,7 @@ GameObject:
   m_Component:
   - 224: {fileID: 1760802816}
   - 114: {fileID: 1760802817}
+  - 114: {fileID: 1760802818}
   m_Layer: 0
   m_Name: ShowWinnerShowScore
   m_TagString: Untagged
@@ -8234,6 +8422,18 @@ MonoBehaviour:
   _QuestionPanel: {fileID: 1511668088}
   _WinnerPanel: {fileID: 1249904126}
   _ScorePanel: {fileID: 93216949}
+--- !u!114 &1760802818
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1760802815}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f746c01aaeb193e4895e071a829181b2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  DelayTime: 2
 --- !u!1001 &1763739612
 Prefab:
   m_ObjectHideFlags: 0
@@ -9206,6 +9406,10 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 2
+--- !u!1 &1907720822 stripped
+GameObject:
+  m_PrefabParentObject: {fileID: 134864, guid: 4d94ba866928c0443bced314944f03d9, type: 2}
+  m_PrefabInternal: {fileID: 1622533519}
 --- !u!1001 &1919858075
 Prefab:
   m_ObjectHideFlags: 0
@@ -9320,6 +9524,18 @@ Prefab:
     - target: {fileID: 168204, guid: 694269427199ff84091f142b182654a1, type: 2}
       propertyPath: m_IsActive
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 11456206, guid: 694269427199ff84091f142b182654a1, type: 2}
+      propertyPath: TweenInTime
+      value: 0.85
+      objectReference: {fileID: 0}
+    - target: {fileID: 11456206, guid: 694269427199ff84091f142b182654a1, type: 2}
+      propertyPath: TweenInDelay
+      value: 0.8
+      objectReference: {fileID: 0}
+    - target: {fileID: 11456206, guid: 694269427199ff84091f142b182654a1, type: 2}
+      propertyPath: TweenOutTime
+      value: 0.35
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 694269427199ff84091f142b182654a1, type: 2}
@@ -9464,6 +9680,8 @@ GameObject:
   - 224: {fileID: 2015105814}
   - 222: {fileID: 2015105816}
   - 114: {fileID: 2015105815}
+  - 114: {fileID: 2015105818}
+  - 114: {fileID: 2015105817}
   m_Layer: 0
   m_Name: Rules
   m_TagString: Untagged
@@ -9523,6 +9741,31 @@ CanvasRenderer:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 2015105813}
+--- !u!114 &2015105817
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 2015105813}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 84cd233ad777e7247ae4834b739f5f75, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  RulesLabel: {fileID: 1379509792}
+  LabelsBG: {fileID: 1731124161}
+--- !u!114 &2015105818
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 2015105813}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f746c01aaeb193e4895e071a829181b2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  DelayTime: 1
 --- !u!1 &2022252364
 GameObject:
   m_ObjectHideFlags: 0
@@ -9533,6 +9776,8 @@ GameObject:
   - 224: {fileID: 2022252365}
   - 222: {fileID: 2022252368}
   - 114: {fileID: 2022252367}
+  - 114: {fileID: 2022252366}
+  - 114: {fileID: 2022252369}
   m_Layer: 0
   m_Name: Questioning
   m_TagString: Untagged
@@ -9559,6 +9804,20 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &2022252366
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 2022252364}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f1569e44c3c036444a235db7e38e722e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  QuestionPanel: {fileID: 990563019}
+  TweenInTime: 1.15
+  TweenOutTime: 0.85
 --- !u!114 &2022252367
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9592,6 +9851,18 @@ CanvasRenderer:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 2022252364}
+--- !u!114 &2022252369
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 2022252364}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f746c01aaeb193e4895e071a829181b2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  DelayTime: 1
 --- !u!1 &2088420980
 GameObject:
   m_ObjectHideFlags: 0
@@ -9602,6 +9873,8 @@ GameObject:
   - 224: {fileID: 2088420981}
   - 222: {fileID: 2088420984}
   - 114: {fileID: 2088420983}
+  - 114: {fileID: 2088420982}
+  - 114: {fileID: 2088420985}
   m_Layer: 0
   m_Name: Answering
   m_TagString: Untagged
@@ -9630,6 +9903,18 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &2088420982
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 2088420980}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f746c01aaeb193e4895e071a829181b2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  DelayTime: 2
 --- !u!114 &2088420983
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9663,6 +9948,19 @@ CanvasRenderer:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 2088420980}
+--- !u!114 &2088420985
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 2088420980}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0954e532ccb7be944a968940397c0daa, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  AnswerPanel: {fileID: 1194203188}
+  TimerUI: {fileID: 1907720822}
 --- !u!1001 &2089696706
 Prefab:
   m_ObjectHideFlags: 0
@@ -9931,6 +10229,11 @@ Prefab:
       propertyPath: m_Name
       value: AnsweredUI (8)
       objectReference: {fileID: 0}
+    - target: {fileID: 11475460, guid: 65e92fea889291d4d9dfdfd82e7c7814, type: 2}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: d705a7e33b4ab294bbbdf8f254a26164,
+        type: 3}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 65e92fea889291d4d9dfdfd82e7c7814, type: 2}
   m_IsPrefabParent: 0
@@ -10137,6 +10440,7 @@ GameObject:
   - 224: {fileID: 2141443723}
   - 222: {fileID: 2141443725}
   - 114: {fileID: 2141443724}
+  - 114: {fileID: 2141443726}
   m_Layer: 0
   m_Name: DisplayAnswers
   m_TagString: Untagged
@@ -10197,3 +10501,15 @@ CanvasRenderer:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 2141443722}
+--- !u!114 &2141443726
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 2141443722}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f746c01aaeb193e4895e071a829181b2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  DelayTime: 2

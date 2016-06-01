@@ -1,6 +1,8 @@
 ﻿using UnityEngine;
 using System.Collections;
 using UnityEngine.UI;
+using Prime31.ZestKit;
+
 namespace PPlatform.SayAnything.Ui
 {
 	/// <summary>
@@ -13,7 +15,7 @@ namespace PPlatform.SayAnything.Ui
 	/// answer UI's have to be refreshed and gives it a user id in the process. This user id is used
 	/// to find out all data shown.
 	/// </summary>
-	public class AnswerUi : UserUi
+	public class AnswerUi : UserUi, ComponentTweener
 	{
 
 		/// <summary>
@@ -22,6 +24,32 @@ namespace PPlatform.SayAnything.Ui
 		public Text _Text;
 		public GameObject _SelectedMarker;
 		public VoteList _VoteParent;
+
+        public float TweenInDelay;
+        public float TweenInTime;
+        public float TweenOutTime;
+
+        Vector3 TargetPosition;
+
+        protected override void Awake()
+        {
+            base.Awake();
+
+            TargetPosition = transform.localPosition;
+        }
+
+        void OnEnable()
+        {
+            transform.localPosition = TargetPosition - Vector3.right * Screen.width;
+            transform.ZKlocalPositionTo(TargetPosition, TweenInTime)
+                .setDelay(TweenInDelay)
+                .start();
+
+            _Text.transform.localScale = Vector3.zero;
+            _Text.transform.ZKlocalScaleTo(Vector3.one, TweenInTime * 0.5f)
+                .setDelay(TweenInDelay + TweenInTime * 0.5f)
+                .start();
+        }
 
 		public void Refresh(int userId, SharedData data)
 		{
@@ -92,5 +120,12 @@ namespace PPlatform.SayAnything.Ui
 			}
 		}
 
+        public void TweenOut(float Time)
+        {
+            Vector3 outPosition = TargetPosition + Vector3.right * Screen.width * 2f;
+            transform.ZKlocalPositionTo(outPosition, TweenOutTime)
+                .setDelay(Time-TweenInDelay)
+                .start();
+        }
 	}
 }

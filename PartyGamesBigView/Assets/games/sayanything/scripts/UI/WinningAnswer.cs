@@ -24,30 +24,32 @@ namespace PPlatform.SayAnything.Ui
 
         public void OnEnable()
         {
-            _rt.ZKanchoredPositionTo(_rt.anchoredPosition, 0.875f)
+            /*_rt.ZKanchoredPositionTo(_rt.anchoredPosition, 0.875f)
                 .setFrom(new Vector2(_rt.anchoredPosition.x, _rt.anchoredPosition.y + Screen.height * 2f))
                 .setEaseType(EaseType.SineOut)
-                .start();
+                .start();*/
 
             var showWinnerDelay = 2f;
-            
+
+            _WinnerText.transform.localScale = Vector3.zero;
             _WinnerText.rectTransform.ZKlocalScaleTo(Vector3.one, 0.5f)
                 .setFrom(Vector3.zero)
                 .setEaseType(EaseType.SineOut)
                 .setDelay(showWinnerDelay)
                 .start();
 
+            _AnswerText.transform.localScale = Vector3.zero;
             _AnswerText.rectTransform.ZKlocalScaleTo(Vector3.one, 0.5f)
                 .setFrom(Vector3.zero)
                 .setEaseType(EaseType.SineOut)
                 .setDelay(showWinnerDelay + 0.5f)
-                .start();                       
-            
+                .start();
+
+            _WinnerInfo.transform.localScale = Vector3.zero;
             _WinnerInfo.ZKlocalScaleTo(Vector3.one, 0.5f)
                 .setFrom(Vector3.zero)
                 .setEaseType(EaseType.SineOut)
                 .setDelay(showWinnerDelay + 0.5f)
-
                 .start();
             
 
