@@ -15,7 +15,8 @@ namespace PPlatform.SayAnything
 		DisplayAnswers = 4,
         JudgingAndVoting = 5,
         ShowWinner = 6,
-        ShowScore = 7
+        ShowScore = 7,
+        Paused = 8
     }
 
 
@@ -63,6 +64,31 @@ namespace PPlatform.SayAnything
 
         public float timeLeft = 30;
         public bool customQuestionShown = false;
+
+        public static float PauseCutoff = 15f;
+
+        public float pauseTime;
+        public int pausePlayerId;
+        public bool _paused;
+        public bool paused
+        {
+            get { return _paused; }
+            set
+            {
+                _paused = value;
+                if (_paused && state != GameState.Paused)
+                {
+                    unpausedState = state;
+                    state = GameState.Paused;
+                    pauseTime = 0f;
+                }
+                else if (!_paused && state == GameState.Paused)
+                {
+                    state = unpausedState;
+                }
+            }
+        }
+        public GameState unpausedState;
          
          //functions to easily fill and read the data (ideall this should be done only via functions later to prevent bugs)
         public void CancelVotesBy(int lFrom)
@@ -112,6 +138,7 @@ namespace PPlatform.SayAnything
             this.votes = new Dictionary<int,List<int>>();
             this.roundScore = new Dictionary<int, int>();
             this.customQuestionShown = false;
+            this.paused = false;
         }
 
         /// <summary>
@@ -234,6 +261,14 @@ namespace PPlatform.SayAnything
             st.Append("\t");
             st.Append("customQuestionShown: \t");
             st.Append(this.customQuestionShown);
+
+            st.Append("\t");
+            st.Append("paused: \t");
+            st.Append(this.paused);
+
+            st.Append("\t");
+            st.Append("pauseTime: \t");
+            st.Append(this.pauseTime);
 
             return st.ToString();
         }

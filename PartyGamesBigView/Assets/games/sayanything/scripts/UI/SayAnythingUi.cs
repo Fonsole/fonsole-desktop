@@ -32,6 +32,7 @@ namespace PPlatform.SayAnything.Ui
         public GameObject _JudgingAndVotingUI;
         public GameObject _RulesUI;
         public GameObject _ShowWinnerUI;
+        public GameObject _PausedOverlay;
 
         public Color[] _PlayerColors = new Color[]
         {
@@ -180,9 +181,27 @@ namespace PPlatform.SayAnything.Ui
             ShowState(targetState);
         }
 
+        /** Show the appropriate screen for a given state
+          * make sure to dispatch UIStateSwitched if you do anything
+          * out of the ordinary here.
+          */
         private void ShowState(GameState state)
         {
-            if (state == GameState.WaitForStart)
+            if (_previousState == GameState.Paused)
+            {
+                _PausedOverlay.gameObject.SetActive(false);
+
+                if (UIStateSwitched != null)
+                    UIStateSwitched(state);
+            }
+            else if (state == GameState.Paused)
+            {
+                _PausedOverlay.gameObject.SetActive(true);
+
+                if (UIStateSwitched != null)
+                    UIStateSwitched(state);
+            }
+            else if (state == GameState.WaitForStart)
             {
                 if (_previousScreen != null)
                 {

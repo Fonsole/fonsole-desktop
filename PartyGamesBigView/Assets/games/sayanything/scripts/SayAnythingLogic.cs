@@ -29,6 +29,9 @@ namespace PPlatform.SayAnything
         public static readonly float SHOWSCORE_TIME = 10;
 
         public delegate void StateDelegate(GameState target);
+        //Tell the UI that we're changing state, so it can tween out screen elements and so on
+        //This will make its way back to StateSwitched here, with the new state, after the 
+        //transitions have completed.
         public event StateDelegate StateChanging;
 
         public bool WaitingForChange;
@@ -95,92 +98,98 @@ namespace PPlatform.SayAnything
 
         private void FixedUpdate()
         {
-            mData.timeLeft -= Time.fixedDeltaTime;
-
-            if(mData.timeLeft <= 0 && !WaitingForChange)
+            if (mData.paused)
             {
-                //time ran out
-                if (mData.state == GameState.Rules)
+                mData.pauseTime += Time.fixedDeltaTime;
+            }
+            else
+            {
+                mData.timeLeft -= Time.fixedDeltaTime;
+
+                if (mData.timeLeft <= 0 && !WaitingForChange)
                 {
-                    StatusCode code = CanEnterStateQuestioning();
-                    if (code == StatusCode.Ok)
+                    //time ran out
+                    if (mData.state == GameState.Rules)
                     {
-                        StateChanging(GameState.Questioning);
+                        StatusCode code = CanEnterStateQuestioning();
+                        if (code == StatusCode.Ok)
+                        {
+                            StateChanging(GameState.Questioning);
+                        }
+                        else
+                        {
+                            CancelCurrentRound(code);
+                        }
+                        //start next round
                     }
-                    else
+                    else if (mData.state == GameState.Questioning)
                     {
-                        CancelCurrentRound(code);
+                        StatusCode code = CanEnterStateAnswering();
+                        if (code == StatusCode.Ok)
+                        {
+                            StateChanging(GameState.Answering);
+                        }
+                        else
+                        {
+                            CancelCurrentRound(code);
+                        }
+                        //start next round
                     }
-                    //start next round
-                }
-                else if (mData.state == GameState.Questioning)
-                {
-                    StatusCode code = CanEnterStateAnswering();
-                    if (code == StatusCode.Ok)
+                    else if (mData.state == GameState.Answering)
                     {
-                        StateChanging(GameState.Answering);
+                        StatusCode code = CanEnterStateDisplay();
+                        if (code == StatusCode.Ok)
+                        {
+                            StateChanging(GameState.DisplayAnswers);
+                        }
+                        else
+                        {
+                            CancelCurrentRound(code);
+                        }
                     }
-                    else
+                    else if (mData.state == GameState.DisplayAnswers)
                     {
-                        CancelCurrentRound(code);
+                        StatusCode code = CanEnterStateJudgeAndVoting();
+                        if (code == StatusCode.Ok)
+                        {
+                            StateChanging(GameState.JudgingAndVoting);
+                        }
+                        else
+                        {
+                            CancelCurrentRound(code);
+                        }
                     }
-                    //start next round
-                }
-                else if (mData.state == GameState.Answering)
-                {
-                    StatusCode code = CanEnterStateDisplay();
-                    if (code == StatusCode.Ok)
+                    else if (mData.state == GameState.JudgingAndVoting)
                     {
-                        StateChanging(GameState.DisplayAnswers);
+                        //game fails if the judge didn't choose anything
+                        //but no votes are fine
+                        StatusCode code = CanEnterStateShowWinner();
+                        if (code == StatusCode.Ok)
+                        {
+                            StateChanging(GameState.ShowWinner);
+                        }
+                        else
+                        {
+                            CancelCurrentRound(code);
+                        }
                     }
-                    else
+                    else if (mData.state == GameState.ShowWinner)
                     {
-                        CancelCurrentRound(code);
+                        StateChanging(GameState.ShowScore);
                     }
-                }
-                else if (mData.state == GameState.DisplayAnswers)
-                {
-                    StatusCode code = CanEnterStateJudgeAndVoting();
-                    if (code == StatusCode.Ok)
+                    else if (mData.state == GameState.ShowScore)
                     {
-                        StateChanging(GameState.JudgingAndVoting);
-                    }
-                    else
-                    {
-                        CancelCurrentRound(code);
-                    }
-                }
-                else if (mData.state == GameState.JudgingAndVoting)
-                {
-                    //game fails if the judge didn't choose anything
-                    //but no votes are fine
-                    StatusCode code = CanEnterStateShowWinner();
-                    if (code == StatusCode.Ok)
-                    {
-                        StateChanging(GameState.ShowWinner);
-                    }
-                    else
-                    {
-                        CancelCurrentRound(code);
-                    }
-                }
-                else if (mData.state == GameState.ShowWinner)
-                {
-                    StateChanging(GameState.ShowScore);
-                }
-                else if (mData.state == GameState.ShowScore)
-                {
-                    if (CanEnterStateQuestioning() == StatusCode.Ok)
-                    {
-                        StateChanging(GameState.Questioning);
-                    }
-                    else
-                    {
-                        StateChanging(GameState.WaitForStart);
+                        if (CanEnterStateQuestioning() == StatusCode.Ok)
+                        {
+                            StateChanging(GameState.Questioning);
+                        }
+                        else
+                        {
+                            StateChanging(GameState.WaitForStart);
+                        }
                     }
                 }
             }
-
         }
 
         public void StateSwitched(GameState targetState)
@@ -231,8 +240,22 @@ namespace PPlatform.SayAnything
                 RefreshState();
             }
 
-
-            if (mData.state == GameState.WaitForStart && lTag == Message.StartGame.TAG)
+            if (mData.state != GameState.WaitForStart && lTag == Message.PauseGame.TAG)
+            {
+                if (!WaitingForChange)
+                {
+                    mData.pausePlayerId = lConId;
+                    StateChanging(GameState.Paused);
+                }
+            }
+            else if (mData.state == GameState.Paused && lTag == Message.ResumeGame.TAG)
+            {
+                if (!WaitingForChange && (mData.pauseTime > SharedData.PauseCutoff || mData.pausePlayerId == lConId))
+                {
+                    StateChanging(mData.unpausedState);
+                }
+            }
+            else if (mData.state == GameState.WaitForStart && lTag == Message.StartGame.TAG)
             {
                 //controller send the start game event.
                 //TODO: check for player count and send back an error if there aren't enough player
@@ -376,8 +399,16 @@ namespace PPlatform.SayAnything
         {
             Debug.Log("Change state from " + mData.state + " to " + lTargetGameState);
 
+            if (lTargetGameState == GameState.Paused)
+            {
+                EnterStatePaused();
+            }
+            else if (lTargetGameState != GameState.Paused && mData.state == GameState.Paused)
+            {
+                ExitStatePaused();
+            }
             //questening state can always be entered no matter from which state (the whole round will be cancelt if ShowScore wasn't reached)
-            if (lTargetGameState == GameState.WaitForStart)
+            else if (lTargetGameState == GameState.WaitForStart)
             {
                 AudioManager.Instance.OnWaitForStart();
                 EnterStateWaitForStart();
@@ -421,6 +452,18 @@ namespace PPlatform.SayAnything
                 Debug.Log("Invalid state change blocked: From " + mData.state + " to " + lTargetGameState);
             }
 
+        }
+
+        private void EnterStatePaused()
+        {
+            mData.paused = true;
+            RefreshState();
+        }
+
+        private void ExitStatePaused()
+        {
+            mData.paused = false;
+            RefreshState();
         }
         
         private void EnterStateWaitForStart()

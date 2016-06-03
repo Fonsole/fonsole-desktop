@@ -89,4 +89,28 @@ namespace PPlatform.SayAnything.Message
         public static readonly string TAG = "SayAnything_ShowCustom";
         //show custom answer
     }
+
+    public struct PauseGame
+    {
+        public static readonly string TAG = "SayAnything_PauseGame";
+
+        public int pausePlayerId;
+
+        public PauseGame(int lPlayerId)
+        {
+            this.pausePlayerId = lPlayerId;
+        }
+    }
+
+    public struct ResumeGame
+    {
+        public static readonly string TAG = "SayAnything_ResumeGame";
+
+        public int resumePlayerId;
+
+        public ResumeGame(int lPlayerId)
+        {
+            this.resumePlayerId = lPlayerId;
+        }
+    }
 }
