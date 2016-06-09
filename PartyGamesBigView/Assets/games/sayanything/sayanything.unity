@@ -7549,6 +7549,7 @@ MonoBehaviour:
   - {fileID: 2002648782}
   - {fileID: 1791709045}
   - {fileID: 921012585}
+  WaitTime: 1.5
 --- !u!1001 &1581303046
 Prefab:
   m_ObjectHideFlags: 0
@@ -7869,7 +7870,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f746c01aaeb193e4895e071a829181b2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  DelayTime: 2
+  DelayTime: 0.75
 --- !u!114 &1657592672
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7934,7 +7935,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _Debug: 0
-  _DebugGameState: 7
+  _DebugGameState: 4
   _LinkToLogic: {fileID: 1270192453}
   _WaitForStartUI: {fileID: 302153599}
   _QuestioningUI: {fileID: 2022252364}
@@ -10223,7 +10224,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f746c01aaeb193e4895e071a829181b2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  DelayTime: 2
+  DelayTime: 0.75
 --- !u!114 &2088420983
 MonoBehaviour:
   m_ObjectHideFlags: 0
