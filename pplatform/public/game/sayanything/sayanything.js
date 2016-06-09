@@ -152,7 +152,8 @@
             ShowAnswers : 4,
             JudgingAndVoting : 5,
             ShowWinner : 6,
-            ShowScore : 7
+            ShowScore : 7,
+            Paused : 8
         };
 
 //pre build messages content so it is clear what a message is suppose to contain
@@ -219,6 +220,20 @@
         //no content
     };
     SayAnything.Message.ShowCustom.TAG = "SayAnything_ShowCustom";
+
+    SayAnything.Message.PauseGame = function(lPlayerId)
+    {
+        //no content
+        this.pausedPlayerID = lPlayerId;
+    };
+    SayAnything.Message.PauseGame.TAG = "SayAnything_PauseGame";
+
+    SayAnything.Message.ResumeGame = function(lPlayerId)
+    {
+        //no content
+        this.resumePlayerID = lPlayerId;
+    };
+    SayAnything.Message.ResumeGame.TAG = "SayAnything_ResumeGame";
 
 
 
@@ -307,6 +322,20 @@
                 $(".myScore").empty().append(ownScore);
 
             $('.timeLeft').empty().append(lSharedData.timeLeft);
+
+            if (lSharedData.state == SayAnything.GameState.Paused)
+            {
+                console.log("paused");
+                $('#Paused').attr("hidden", false);
+                $('#UnPaused').attr("hidden", true);
+            }
+            else
+            {
+                console.log("unpaused");
+                $('#Paused').attr("hidden", true);
+                $('#UnPaused').attr("hidden", false);    
+            }
+
             //show the correct state view
             if(lSharedData.state == SayAnything.GameState.WaitForStart)
             {
@@ -570,8 +599,16 @@
             {
                 question = $("#questionCustom").val();
             }
-            //alert(question);
-            gPlatform.sendMessageObj(SayAnything.Message.Question.TAG, new SayAnything.Message.Question(question));
+
+            question = question.replace(/^\s+|\s+$/g, '');
+            if (question == "")
+            {
+                $('#questionCustom').attr("placeholder", "Enter question here.");
+            }
+            else
+            {
+                gPlatform.sendMessageObj(SayAnything.Message.Question.TAG, new SayAnything.Message.Question(question));
+            }
         }
 
         /**Go back to the list of questions.
@@ -605,6 +642,18 @@
             $("#question_cancel").show();
 
             gPlatform.sendMessageObj(SayAnything.Message.ShowCustom.TAG, new SayAnything.Message.ShowCustom());
+        }
+
+        /**Toggle pause.
+          */
+        function pauseGame()
+        {
+            gPlatform.sendMessageObj(SayAnything.Message.PauseGame.TAG, new SayAnything.Message.PauseGame(gPlatform.getOwnId()));
+        }
+
+        function resumeGame()
+        {
+            gPlatform.sendMessageObj(SayAnything.Message.ResumeGame.TAG, new SayAnything.Message.ResumeGame(gPlatform.getOwnId()));
         }
 
         /**Confirm button of the answer list
