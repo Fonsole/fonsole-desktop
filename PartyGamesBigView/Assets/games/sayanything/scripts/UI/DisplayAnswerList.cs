@@ -8,6 +8,10 @@ namespace PPlatform.SayAnything.Ui
         public DisplayAnswerUi[] _DisplayAnswerUis;
         public KeyValuePair<int, string>[] ShuffledAnswers;
 
+        public float WaitTime;
+
+        private float _showTime = 0f;
+
 		void OnEnable (){
 			for(int i=0; i< _DisplayAnswerUis.Length; i++)
 			{
@@ -19,27 +23,34 @@ namespace PPlatform.SayAnything.Ui
 				_DisplayAnswerUis[i].displaying = false;
 				_DisplayAnswerUis[i].displayed = false;
 			}
+
+            _showTime = 0f;
 		}
 
 		// Update is called once per frame
 		void FixedUpdate()
 		{
-			int counter = 0;
-            if (ShuffledAnswers == null)
-                GetShuffledAnswers();
-            
-			foreach(var v in ShuffledAnswers)
-			{
-				_DisplayAnswerUis[counter].Refresh(v.Key, SayAnythingUi.Instance.CurrentData);
-				if (_DisplayAnswerUis [counter].displayed) {
-					counter++;
-				}
-			}
-			for (int i = counter; i < _DisplayAnswerUis.Length; i++)
-			{
-				//give them an invalid user. they are going to hide themselves
-				_DisplayAnswerUis[i].Refresh(SharedData.UNDEFINED, SayAnythingUi.Instance.CurrentData);
-			}
+            _showTime += Time.deltaTime;
+            if (_showTime >= WaitTime)
+            {
+                int counter = 0;
+                if (ShuffledAnswers == null)
+                    GetShuffledAnswers();
+
+                foreach (var v in ShuffledAnswers)
+                {
+                    _DisplayAnswerUis[counter].Refresh(v.Key, SayAnythingUi.Instance.CurrentData);
+                    if (_DisplayAnswerUis[counter].displayed)
+                    {
+                        counter++;
+                    }
+                }
+                for (int i = counter; i < _DisplayAnswerUis.Length; i++)
+                {
+                    //give them an invalid user. they are going to hide themselves
+                    _DisplayAnswerUis[i].Refresh(SharedData.UNDEFINED, SayAnythingUi.Instance.CurrentData);
+                }
+            }
 		}
 
         void GetShuffledAnswers()
