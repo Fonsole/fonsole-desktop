@@ -26,7 +26,7 @@ namespace PPlatform.SayAnything
 		public static readonly float DISPLAY_TIME = 5;
         public static readonly float VOTING_TIME = 30;
         public static readonly float SHOWWINNER_TIME = 5;
-        public static readonly float SHOWSCORE_TIME = 10;
+        public static readonly float SHOWSCORE_TIME = 5;
 
         public delegate void StateDelegate(GameState target);
         //Tell the UI that we're changing state, so it can tween out screen elements and so on
@@ -308,7 +308,7 @@ namespace PPlatform.SayAnything
 
                 if (IsJudgeAndVotingFinished())
                 {
-                    StateChanging(GameState.ShowWinner);
+                    mData.timeLeft = 3;
                 }
             }
             else if (mData.state == GameState.JudgingAndVoting && lTag == Message.Vote.TAG)
@@ -322,7 +322,7 @@ namespace PPlatform.SayAnything
 
                 if (IsJudgeAndVotingFinished())
                 {
-                    StateChanging(GameState.ShowWinner);
+                    mData.timeLeft = 3;
                 }
             }
             else
