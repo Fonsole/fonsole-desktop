@@ -14,6 +14,7 @@
     </head>
     <body>
 
+    <div id="UnPaused">
         <div class="stateview" id="WaitForStart">
             <h2 class="debug">State: WaitForStart</h2>
             <div class="controller">
@@ -54,6 +55,8 @@
                     <button id="question_show" class="confirm" onclick="customQuestionShow()">Write Answer</button>
                 </div>
             </div>
+
+            <button class="confirm" onclick="pauseGame()" style="vertical-align: bottom">Pause Game</button>
         </div>
 
         <div class="stateview" id="Answering">
@@ -72,6 +75,8 @@
             <div class="judgecontroller">
                 <p>Waiting for players to answer your question.</p>
             </div>
+
+            <button class="confirm" onclick="pauseGame()" style="vertical-align:bottom">Pause Game</button>
         </div>
 
         <div class="stateview" id="ShowAnswers">
@@ -84,6 +89,8 @@
                 <p> Score: <span class="myScore">0</span></p>
                 Wait for all answers to be presented.
             </div>
+
+            <button class="confirm" onclick="pauseGame()" style="vertical-align:bottom">Pause Game</button>
         </div>
 
         <div class="stateview" id="JudgingAndVoting">
@@ -129,6 +136,8 @@
                 <div class="answerList">
                 </div>
             </div>
+
+            <button class="confirm" onclick="pauseGame()" style="vertical-align:bottom">Pause Game</button>
         </div>
 
         <div class="stateview" id="ShowWinner">
@@ -140,6 +149,7 @@
             <div class="judgecontroller">
                 <p> Score: <span class="myScore">0</span></p>
             </div>
+            <button class="confirm" onclick="pauseGame()" style="vertical-align:bottom">Pause Game</button>
         </div>
 
         <div class="stateview" id="ShowScore">
@@ -151,7 +161,15 @@
             <div class="judgecontroller">
                 <p> Score: <span class="myScore">0</span></p>
             </div>
+
+            <button class="confirm" onclick="pauseGame()" style="vertical-align:bottom">Pause Game</button>
         </div>
+
+        </div>
+        <div class="stateview" id="Paused">
+            <button class="confirm" onclick="resumeGame()">Resume Game</button>
+        </div>
+
         <script>
 
 $(".voteList input").click( function(){
