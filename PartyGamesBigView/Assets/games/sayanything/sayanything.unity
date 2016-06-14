@@ -5722,6 +5722,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cb0c41dba525ab947a618d96d798f90e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  RoomCodes:
+  - cat
+  - dog
+  - bear
+  - panda
+  - car
+  - bike
+  - boat
+  - house
+  - book
+  - pencil
   WaitingForChange: 0
 --- !u!1001 &1288719421
 Prefab:

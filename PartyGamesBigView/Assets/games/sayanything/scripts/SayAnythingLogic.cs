@@ -20,6 +20,8 @@ namespace PPlatform.SayAnything
     /// </summary>
     public class SayAnythingLogic : MonoBehaviour
     {
+        public string[] RoomCodes;
+
         public static readonly float RULES_TIME = 15;
         public static readonly float QUESTIONING_TIME = 30;
         public static readonly float ANSWERING_TIME = 60;
@@ -82,6 +84,9 @@ namespace PPlatform.SayAnything
 
             Platform.Instance.Message += OnMessage;
             Platform.Instance.GameLoaded(GAME_NAME);
+
+            if (RoomCodes.Length != 0)
+                Platform.Instance.RoomCodes = RoomCodes;
         }
 
         void OnDestroy()

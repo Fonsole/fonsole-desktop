@@ -19,6 +19,23 @@ namespace PPlatform
     /// </summary>
     public class Platform : UnitySingleton<Platform>
     {
+        public string[] mRoomCodes;
+        public string[] RoomCodes
+        {
+            set
+            {
+                mRoomCodes = value;
+                foreach (string code in value)
+                {
+                    RoomCodeAvailability[code] = true;
+                }
+            }
+            get { return mRoomCodes; }
+        }
+        public int CurrentRoomCode;
+        public Dictionary<string, bool> RoomCodeAvailability = new Dictionary<string, bool>();
+
+
         public static readonly int VIEW_USER_ID = 0;
         public static readonly int HOST_CONTROLLER_USER_ID = 1;
         public static readonly int MAX_CONTROLLERS = 9;
@@ -426,7 +443,15 @@ namespace PPlatform
 
         private string GetRandomKey()
         {
-
+            for (int i = 0, l = RoomCodes.Length; i < l; ++i)
+            {
+                if (RoomCodeAvailability[RoomCodes[i]])
+                {
+                    RoomCodeAvailability[RoomCodes[i]] = false;
+                    return RoomCodes[i].ToUpper();
+                }
+            }
+            
             StringBuilder result = new StringBuilder();
             for (var i = 0; i < 6; i++)
             {
