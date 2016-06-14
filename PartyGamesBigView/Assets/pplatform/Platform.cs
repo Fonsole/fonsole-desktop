@@ -88,7 +88,18 @@ namespace PPlatform
 
         string TAG_SERVER_FULL = "PLATFORM_SERVER_FULL";
         string TAG_NAME_IN_USE = "PLATFORM_NAME_IN_USE";
+        string TAG_ROOM_LOCKED = "PLATFORM_ROOM_LOCKED";
 
+
+        public bool mLocked = false;
+        public bool Locked
+        {
+            get { return mLocked; }
+            set
+            {
+                mLocked = value;
+            }
+        }
 
         private int mOwnConnectionId = -1;
         public event Action<string, string, int> Message;
@@ -245,7 +256,6 @@ namespace PPlatform
                 //special platform messages which are handled before controllers are fully registerd
                 if (pm.tag == TAG_CONTROLLER_REGISTER)
                 {
-
                     //server full?
                     if (ActiveControllers.Count() >= MAX_CONTROLLERS)
                     {
@@ -280,28 +290,36 @@ namespace PPlatform
                                     userId = v.Value.UserId;
                                 }
                             }
-                            if (userId == -1)
+
+                            if (Locked)
                             {
-                                //couldn't find the user based on his name -> give new id
-                                userId = mNextUserId;
-                                mNextUserId++;
+                                SendInternal(TAG_ROOM_LOCKED, "", conId);
                             }
+                            else
+                            {
+                                if (userId == -1)
+                                {
+                                    //couldn't find the user based on his name -> give new id
+                                    userId = mNextUserId;
+                                    mNextUserId++;
+                                }
 
-                            if (string.IsNullOrEmpty(msg.name))
-                                msg.name = "player " + userId;
+                                if (string.IsNullOrEmpty(msg.name))
+                                    msg.name = "player " + userId;
 
-                            TL.L("ControllerRegisterMessage received. Name " + msg.name);
-                            ControllerDiscoveryMessage discoveryMsg = new ControllerDiscoveryMessage();
-                            discoveryMsg.connectionId = conId;
-                            discoveryMsg.userId = userId;
-                            discoveryMsg.name = msg.name;
+                                TL.L("ControllerRegisterMessage received. Name " + msg.name);
+                                ControllerDiscoveryMessage discoveryMsg = new ControllerDiscoveryMessage();
+                                discoveryMsg.connectionId = conId;
+                                discoveryMsg.userId = userId;
+                                discoveryMsg.name = msg.name;
 
-                            //send a broadcast that a new user was registered telling the user id
-                            SendInternal(TAG_CONTROLLER_DISCOVERY, JsonWrapper.ToJson(discoveryMsg));
+                                //send a broadcast that a new user was registered telling the user id
+                                SendInternal(TAG_CONTROLLER_DISCOVERY, JsonWrapper.ToJson(discoveryMsg));
 
 
-                            //DO NOT PASS THIS MESSAGE TO HandlePlatformMessage. this message is internal only
-                            //wait until controller discovery is received.
+                                //DO NOT PASS THIS MESSAGE TO HandlePlatformMessage. this message is internal only
+                                //wait until controller discovery is received.
+                            }
                         }
                     }
                 } //end of if (pm.tag == TAG_CONTROLLER_REGISTER)

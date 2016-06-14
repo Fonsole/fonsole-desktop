@@ -17,6 +17,7 @@ TAG.VIEW_DISCOVERY = "PLATFORM_VIEW_DISCOVERY";
 TAG.ENTER_GAME = "PLATFORM_ENTER_GAME";
 TAG.SERVER_FULL = "PLATFORM_SERVER_FULL";
 TAG.NAME_IN_USE = "PLATFORM_NAME_IN_USE";
+TAG.ROOM_LOCKED = "PLATFORM_ROOM_LOCKED";
 
 //special message to inform the games and other things connected to the platform
 //that the connection was disconnected. current ui will reload the page

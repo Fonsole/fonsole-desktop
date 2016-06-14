@@ -283,7 +283,7 @@ namespace PPlatform.SayAnything
             {
                 if (!mData.customQuestionShown)
                 {
-                    mData.timeLeft = 30;
+                    mData.timeLeft += 30;
                     mData.customQuestionShown = true;
                 }
             }
@@ -293,9 +293,17 @@ namespace PPlatform.SayAnything
 
                 mData.answers[lConId] = answerMsg.answer;
 
+                int count = 0;
+                foreach (int playerID in Platform.Instance.Controllers.Keys)
+                {
+                    string answer;
+
+                    if (mData.answers.TryGetValue(playerID, out answer))
+                        ++count;
+                }
 
                 //TODO: add timer and there could be answers that are from users that logged out by now...
-                if (mData.answers.Count == Platform.Instance.ActiveControllers.Count() - 1)
+                if (count == Platform.Instance.ActiveControllers.Count() - 1)
                 {
                     //set the timer to 3 and let it time out
                     mData.timeLeft = 3;
@@ -471,12 +479,16 @@ namespace PPlatform.SayAnything
 
             mData.resetRoundData();
             mData.state = GameState.WaitForStart;
+            Platform.Instance.Locked = false;
+
             RefreshState();
         }
         private void EnterStateRules()
         {
             mData.state = GameState.Rules;
             mData.timeLeft = RULES_TIME;
+            Platform.Instance.Locked = true;
+
             RefreshState();
         }
         private void EnterStateQuestioning()
