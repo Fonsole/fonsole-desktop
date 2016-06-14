@@ -34,11 +34,11 @@ namespace PPlatform.SayAnything.Ui
 
         void OnEnable()
         {
-            // slide panel down
-            /*_rt.ZKanchoredPositionTo(_rt.anchoredPosition, 0.875f)
-                .setFrom(new Vector2(_rt.anchoredPosition.x, _rt.anchoredPosition.y + Screen.height * 3f))
-                .setEaseType(EaseType.SineOut)
-                .start();*/
+            int counter = 0;
+            foreach (var v in SayAnythingUi.Instance.GetActiveUsersOrderedByConnectionId())
+            {
+                _ScoreUIs[counter++].ShowPreviousRoundScore(v, SayAnythingUi.Instance.CurrentData);
+            }
         }
 
         void OnDisable()
@@ -70,11 +70,16 @@ namespace PPlatform.SayAnything.Ui
             {
                 _ScoreUIs[i].gameObject.transform.localScale = Vector3.zero;
                 _ScoreUIs[i].gameObject.SetActive(true);
-                _ScoreUIs[i].gameObject.transform.ZKlocalScaleTo(Vector3.one, 0.25f)
+
+                ITween<Vector3> tween = _ScoreUIs[i].gameObject.transform.ZKlocalScaleTo(Vector3.one, 0.25f)
                     .setFrom(Vector3.zero)
                     .setDelay(showScoreDelay + 0.5f + playerScoreDelay)
-                    .setEaseType(EaseType.SineOut)
-                    .start();
+                    .setEaseType(EaseType.SineOut);
+
+                if (i == _PlayerCount - 1)
+                    tween.setCompletionHandler(TweensComplete);
+
+                tween.start();
                 playerScoreDelay = playerScoreDelay + 0.15f;
             }
 
@@ -93,13 +98,14 @@ namespace PPlatform.SayAnything.Ui
             */
         }
 
-        void FixedUpdate()
+        void TweensComplete(ITween<Vector3> target)
         {
+            SharedData data = SayAnythingUi.Instance.CurrentData;
+
             int counter = 0;
             foreach (var v in SayAnythingUi.Instance.GetActiveUsersOrderedByConnectionId())
             {
-                _ScoreUIs[counter].Refresh(v, SayAnythingUi.Instance.CurrentData);
-                counter++;
+                _ScoreUIs[counter++].TickUpScore(v, SayAnythingUi.Instance.CurrentData);
             }
         }
     }

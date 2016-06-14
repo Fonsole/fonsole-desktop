@@ -522,6 +522,11 @@ namespace PPlatform.SayAnything
                 mData.questions[i] = qst;
             }
 
+            foreach (int pid in mData.totalScore.Keys)
+            {
+                mData.previousRoundScore[pid] = mData.totalScore[pid];
+                Debug.Log(pid + ", " + mData.previousRoundScore[pid]);
+            }
 
             mData.state = GameState.Questioning;
             mData.timeLeft = QUESTIONING_TIME;

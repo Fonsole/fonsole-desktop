@@ -1068,7 +1068,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 22476344, guid: 8c1c56291f9b49242805c66f151bb6a3, type: 2}
       propertyPath: m_AnchoredPosition.x
-      value: -436.99994
+      value: -485
       objectReference: {fileID: 0}
     - target: {fileID: 22476344, guid: 8c1c56291f9b49242805c66f151bb6a3, type: 2}
       propertyPath: m_AnchoredPosition.y
@@ -1076,7 +1076,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 22476344, guid: 8c1c56291f9b49242805c66f151bb6a3, type: 2}
       propertyPath: m_SizeDelta.x
-      value: 395
+      value: 468.5
       objectReference: {fileID: 0}
     - target: {fileID: 22476344, guid: 8c1c56291f9b49242805c66f151bb6a3, type: 2}
       propertyPath: m_SizeDelta.y
@@ -1121,6 +1121,26 @@ Prefab:
     - target: {fileID: 165294, guid: 8c1c56291f9b49242805c66f151bb6a3, type: 2}
       propertyPath: m_Name
       value: PlayerScoreUi (3)
+      objectReference: {fileID: 0}
+    - target: {fileID: 11464424, guid: 8c1c56291f9b49242805c66f151bb6a3, type: 2}
+      propertyPath: ScoreShowTime
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 11464424, guid: 8c1c56291f9b49242805c66f151bb6a3, type: 2}
+      propertyPath: TickTime
+      value: 0.25
+      objectReference: {fileID: 0}
+    - target: {fileID: 11464424, guid: 8c1c56291f9b49242805c66f151bb6a3, type: 2}
+      propertyPath: TickScale
+      value: 1.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 105794, guid: 8c1c56291f9b49242805c66f151bb6a3, type: 2}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 11461672, guid: 8c1c56291f9b49242805c66f151bb6a3, type: 2}
+      propertyPath: m_Color.b
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 8c1c56291f9b49242805c66f151bb6a3, type: 2}
@@ -1300,7 +1320,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 22476344, guid: 8c1c56291f9b49242805c66f151bb6a3, type: 2}
       propertyPath: m_AnchoredPosition.x
-      value: -436.99994
+      value: -485
       objectReference: {fileID: 0}
     - target: {fileID: 22476344, guid: 8c1c56291f9b49242805c66f151bb6a3, type: 2}
       propertyPath: m_AnchoredPosition.y
@@ -1308,7 +1328,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 22476344, guid: 8c1c56291f9b49242805c66f151bb6a3, type: 2}
       propertyPath: m_SizeDelta.x
-      value: 395
+      value: 468.5
       objectReference: {fileID: 0}
     - target: {fileID: 22476344, guid: 8c1c56291f9b49242805c66f151bb6a3, type: 2}
       propertyPath: m_SizeDelta.y
@@ -1353,6 +1373,34 @@ Prefab:
     - target: {fileID: 165294, guid: 8c1c56291f9b49242805c66f151bb6a3, type: 2}
       propertyPath: m_Name
       value: PlayerScoreUi (6)
+      objectReference: {fileID: 0}
+    - target: {fileID: 11464424, guid: 8c1c56291f9b49242805c66f151bb6a3, type: 2}
+      propertyPath: ScoreShowTime
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 11464424, guid: 8c1c56291f9b49242805c66f151bb6a3, type: 2}
+      propertyPath: TickTime
+      value: 0.25
+      objectReference: {fileID: 0}
+    - target: {fileID: 11464424, guid: 8c1c56291f9b49242805c66f151bb6a3, type: 2}
+      propertyPath: TickScale
+      value: 1.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 22486586, guid: 8c1c56291f9b49242805c66f151bb6a3, type: 2}
+      propertyPath: m_AnchoredPosition.x
+      value: -194.575
+      objectReference: {fileID: 0}
+    - target: {fileID: 22486586, guid: 8c1c56291f9b49242805c66f151bb6a3, type: 2}
+      propertyPath: m_SizeDelta.x
+      value: -424.85
+      objectReference: {fileID: 0}
+    - target: {fileID: 105794, guid: 8c1c56291f9b49242805c66f151bb6a3, type: 2}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 11461672, guid: 8c1c56291f9b49242805c66f151bb6a3, type: 2}
+      propertyPath: m_Color.b
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 8c1c56291f9b49242805c66f151bb6a3, type: 2}
@@ -1497,7 +1545,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 22476344, guid: 8c1c56291f9b49242805c66f151bb6a3, type: 2}
       propertyPath: m_AnchoredPosition.x
-      value: -436.99988
+      value: -485
       objectReference: {fileID: 0}
     - target: {fileID: 22476344, guid: 8c1c56291f9b49242805c66f151bb6a3, type: 2}
       propertyPath: m_AnchoredPosition.y
@@ -1505,7 +1553,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 22476344, guid: 8c1c56291f9b49242805c66f151bb6a3, type: 2}
       propertyPath: m_SizeDelta.x
-      value: 395
+      value: 468
       objectReference: {fileID: 0}
     - target: {fileID: 22476344, guid: 8c1c56291f9b49242805c66f151bb6a3, type: 2}
       propertyPath: m_SizeDelta.y
@@ -1534,6 +1582,14 @@ Prefab:
     - target: {fileID: 22476344, guid: 8c1c56291f9b49242805c66f151bb6a3, type: 2}
       propertyPath: m_Pivot.y
       value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 105794, guid: 8c1c56291f9b49242805c66f151bb6a3, type: 2}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 11461672, guid: 8c1c56291f9b49242805c66f151bb6a3, type: 2}
+      propertyPath: m_Color.b
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 8c1c56291f9b49242805c66f151bb6a3, type: 2}
@@ -3086,7 +3142,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 22476344, guid: 8c1c56291f9b49242805c66f151bb6a3, type: 2}
       propertyPath: m_AnchoredPosition.x
-      value: 85.00006
+      value: -18
       objectReference: {fileID: 0}
     - target: {fileID: 22476344, guid: 8c1c56291f9b49242805c66f151bb6a3, type: 2}
       propertyPath: m_AnchoredPosition.y
@@ -3094,7 +3150,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 22476344, guid: 8c1c56291f9b49242805c66f151bb6a3, type: 2}
       propertyPath: m_SizeDelta.x
-      value: 395
+      value: 468
       objectReference: {fileID: 0}
     - target: {fileID: 22476344, guid: 8c1c56291f9b49242805c66f151bb6a3, type: 2}
       propertyPath: m_SizeDelta.y
@@ -3140,6 +3196,26 @@ Prefab:
       propertyPath: m_Name
       value: PlayerScoreUi (7)
       objectReference: {fileID: 0}
+    - target: {fileID: 11464424, guid: 8c1c56291f9b49242805c66f151bb6a3, type: 2}
+      propertyPath: ScoreShowTime
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 11464424, guid: 8c1c56291f9b49242805c66f151bb6a3, type: 2}
+      propertyPath: TickTime
+      value: 0.25
+      objectReference: {fileID: 0}
+    - target: {fileID: 11464424, guid: 8c1c56291f9b49242805c66f151bb6a3, type: 2}
+      propertyPath: TickScale
+      value: 1.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 105794, guid: 8c1c56291f9b49242805c66f151bb6a3, type: 2}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 11461672, guid: 8c1c56291f9b49242805c66f151bb6a3, type: 2}
+      propertyPath: m_Color.b
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 8c1c56291f9b49242805c66f151bb6a3, type: 2}
   m_IsPrefabParent: 0
@@ -3184,15 +3260,15 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 22476344, guid: 8c1c56291f9b49242805c66f151bb6a3, type: 2}
       propertyPath: m_AnchoredPosition.x
-      value: 553
+      value: 443
       objectReference: {fileID: 0}
     - target: {fileID: 22476344, guid: 8c1c56291f9b49242805c66f151bb6a3, type: 2}
       propertyPath: m_AnchoredPosition.y
-      value: 3
+      value: 2.000017
       objectReference: {fileID: 0}
     - target: {fileID: 22476344, guid: 8c1c56291f9b49242805c66f151bb6a3, type: 2}
       propertyPath: m_SizeDelta.x
-      value: 395
+      value: 468
       objectReference: {fileID: 0}
     - target: {fileID: 22476344, guid: 8c1c56291f9b49242805c66f151bb6a3, type: 2}
       propertyPath: m_SizeDelta.y
@@ -3237,6 +3313,26 @@ Prefab:
     - target: {fileID: 165294, guid: 8c1c56291f9b49242805c66f151bb6a3, type: 2}
       propertyPath: m_Name
       value: PlayerScoreUi (5)
+      objectReference: {fileID: 0}
+    - target: {fileID: 11464424, guid: 8c1c56291f9b49242805c66f151bb6a3, type: 2}
+      propertyPath: ScoreShowTime
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 11464424, guid: 8c1c56291f9b49242805c66f151bb6a3, type: 2}
+      propertyPath: TickTime
+      value: 0.25
+      objectReference: {fileID: 0}
+    - target: {fileID: 11464424, guid: 8c1c56291f9b49242805c66f151bb6a3, type: 2}
+      propertyPath: TickScale
+      value: 1.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 105794, guid: 8c1c56291f9b49242805c66f151bb6a3, type: 2}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 11461672, guid: 8c1c56291f9b49242805c66f151bb6a3, type: 2}
+      propertyPath: m_Color.b
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 8c1c56291f9b49242805c66f151bb6a3, type: 2}
@@ -5775,7 +5871,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 22476344, guid: 8c1c56291f9b49242805c66f151bb6a3, type: 2}
       propertyPath: m_AnchoredPosition.x
-      value: 85
+      value: -18
       objectReference: {fileID: 0}
     - target: {fileID: 22476344, guid: 8c1c56291f9b49242805c66f151bb6a3, type: 2}
       propertyPath: m_AnchoredPosition.y
@@ -5783,7 +5879,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 22476344, guid: 8c1c56291f9b49242805c66f151bb6a3, type: 2}
       propertyPath: m_SizeDelta.x
-      value: 395
+      value: 468
       objectReference: {fileID: 0}
     - target: {fileID: 22476344, guid: 8c1c56291f9b49242805c66f151bb6a3, type: 2}
       propertyPath: m_SizeDelta.y
@@ -5828,6 +5924,26 @@ Prefab:
     - target: {fileID: 165294, guid: 8c1c56291f9b49242805c66f151bb6a3, type: 2}
       propertyPath: m_Name
       value: PlayerScoreUi (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 11464424, guid: 8c1c56291f9b49242805c66f151bb6a3, type: 2}
+      propertyPath: ScoreShowTime
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 11464424, guid: 8c1c56291f9b49242805c66f151bb6a3, type: 2}
+      propertyPath: TickTime
+      value: 0.25
+      objectReference: {fileID: 0}
+    - target: {fileID: 11464424, guid: 8c1c56291f9b49242805c66f151bb6a3, type: 2}
+      propertyPath: TickScale
+      value: 1.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 105794, guid: 8c1c56291f9b49242805c66f151bb6a3, type: 2}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 11461672, guid: 8c1c56291f9b49242805c66f151bb6a3, type: 2}
+      propertyPath: m_Color.b
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 8c1c56291f9b49242805c66f151bb6a3, type: 2}
@@ -7946,7 +8062,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _Debug: 0
-  _DebugGameState: 4
+  _DebugGameState: 7
   _LinkToLogic: {fileID: 1270192453}
   _WaitForStartUI: {fileID: 302153599}
   _QuestioningUI: {fileID: 2022252364}
@@ -8635,7 +8751,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 22476344, guid: 8c1c56291f9b49242805c66f151bb6a3, type: 2}
       propertyPath: m_AnchoredPosition.x
-      value: 553
+      value: 443
       objectReference: {fileID: 0}
     - target: {fileID: 22476344, guid: 8c1c56291f9b49242805c66f151bb6a3, type: 2}
       propertyPath: m_AnchoredPosition.y
@@ -8643,7 +8759,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 22476344, guid: 8c1c56291f9b49242805c66f151bb6a3, type: 2}
       propertyPath: m_SizeDelta.x
-      value: 395
+      value: 468
       objectReference: {fileID: 0}
     - target: {fileID: 22476344, guid: 8c1c56291f9b49242805c66f151bb6a3, type: 2}
       propertyPath: m_SizeDelta.y
@@ -8688,6 +8804,26 @@ Prefab:
     - target: {fileID: 165294, guid: 8c1c56291f9b49242805c66f151bb6a3, type: 2}
       propertyPath: m_Name
       value: PlayerScoreUi (8)
+      objectReference: {fileID: 0}
+    - target: {fileID: 11464424, guid: 8c1c56291f9b49242805c66f151bb6a3, type: 2}
+      propertyPath: ScoreShowTime
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 11464424, guid: 8c1c56291f9b49242805c66f151bb6a3, type: 2}
+      propertyPath: TickTime
+      value: 0.25
+      objectReference: {fileID: 0}
+    - target: {fileID: 11464424, guid: 8c1c56291f9b49242805c66f151bb6a3, type: 2}
+      propertyPath: TickScale
+      value: 1.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 105794, guid: 8c1c56291f9b49242805c66f151bb6a3, type: 2}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 11461672, guid: 8c1c56291f9b49242805c66f151bb6a3, type: 2}
+      propertyPath: m_Color.b
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 8c1c56291f9b49242805c66f151bb6a3, type: 2}
@@ -9609,7 +9745,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 22476344, guid: 8c1c56291f9b49242805c66f151bb6a3, type: 2}
       propertyPath: m_AnchoredPosition.x
-      value: 85.00006
+      value: -18
       objectReference: {fileID: 0}
     - target: {fileID: 22476344, guid: 8c1c56291f9b49242805c66f151bb6a3, type: 2}
       propertyPath: m_AnchoredPosition.y
@@ -9617,7 +9753,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 22476344, guid: 8c1c56291f9b49242805c66f151bb6a3, type: 2}
       propertyPath: m_SizeDelta.x
-      value: 395
+      value: 468
       objectReference: {fileID: 0}
     - target: {fileID: 22476344, guid: 8c1c56291f9b49242805c66f151bb6a3, type: 2}
       propertyPath: m_SizeDelta.y
@@ -9662,6 +9798,26 @@ Prefab:
     - target: {fileID: 165294, guid: 8c1c56291f9b49242805c66f151bb6a3, type: 2}
       propertyPath: m_Name
       value: PlayerScoreUi (4)
+      objectReference: {fileID: 0}
+    - target: {fileID: 11464424, guid: 8c1c56291f9b49242805c66f151bb6a3, type: 2}
+      propertyPath: ScoreShowTime
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 11464424, guid: 8c1c56291f9b49242805c66f151bb6a3, type: 2}
+      propertyPath: TickTime
+      value: 0.25
+      objectReference: {fileID: 0}
+    - target: {fileID: 11464424, guid: 8c1c56291f9b49242805c66f151bb6a3, type: 2}
+      propertyPath: TickScale
+      value: 1.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 105794, guid: 8c1c56291f9b49242805c66f151bb6a3, type: 2}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 11461672, guid: 8c1c56291f9b49242805c66f151bb6a3, type: 2}
+      propertyPath: m_Color.b
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 8c1c56291f9b49242805c66f151bb6a3, type: 2}
@@ -10410,7 +10566,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 22476344, guid: 8c1c56291f9b49242805c66f151bb6a3, type: 2}
       propertyPath: m_AnchoredPosition.x
-      value: 553
+      value: 443
       objectReference: {fileID: 0}
     - target: {fileID: 22476344, guid: 8c1c56291f9b49242805c66f151bb6a3, type: 2}
       propertyPath: m_AnchoredPosition.y
@@ -10418,7 +10574,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 22476344, guid: 8c1c56291f9b49242805c66f151bb6a3, type: 2}
       propertyPath: m_SizeDelta.x
-      value: 395
+      value: 468
       objectReference: {fileID: 0}
     - target: {fileID: 22476344, guid: 8c1c56291f9b49242805c66f151bb6a3, type: 2}
       propertyPath: m_SizeDelta.y
@@ -10463,6 +10619,26 @@ Prefab:
     - target: {fileID: 165294, guid: 8c1c56291f9b49242805c66f151bb6a3, type: 2}
       propertyPath: m_Name
       value: PlayerScoreUi (2)
+      objectReference: {fileID: 0}
+    - target: {fileID: 11464424, guid: 8c1c56291f9b49242805c66f151bb6a3, type: 2}
+      propertyPath: ScoreShowTime
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 11464424, guid: 8c1c56291f9b49242805c66f151bb6a3, type: 2}
+      propertyPath: TickTime
+      value: 0.25
+      objectReference: {fileID: 0}
+    - target: {fileID: 11464424, guid: 8c1c56291f9b49242805c66f151bb6a3, type: 2}
+      propertyPath: TickScale
+      value: 1.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 105794, guid: 8c1c56291f9b49242805c66f151bb6a3, type: 2}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 11461672, guid: 8c1c56291f9b49242805c66f151bb6a3, type: 2}
+      propertyPath: m_Color.b
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 8c1c56291f9b49242805c66f151bb6a3, type: 2}

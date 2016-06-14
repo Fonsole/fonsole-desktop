@@ -58,7 +58,10 @@ namespace PPlatform.SayAnything
         
         //scores in this round (move to local data, view only?)
         public Dictionary<int, int> roundScore = new Dictionary<int, int>();
-        
+
+        //scores in the previous round
+        public Dictionary<int, int> previousRoundScore = new Dictionary<int, int>();
+
         //scores overall (move to local data, view only?)
         public Dictionary<int, int> totalScore = new Dictionary<int, int>();
 
