@@ -64,6 +64,7 @@
             <div class="controller">
                 <div class="preAnswer">
                     <p> Score: <span class="myScore">0</span></p>
+                    <p> Question: <span class="chosenQuestion" id="judge_answer"></span></p>
                     <p>Write your Answer</p>
                     <input type="text" id="answer" />
                     <button class="confirm" onclick="answerListConfirm()">Confirm</button>
@@ -100,7 +101,8 @@
             <div class="controller">
 
                 <p> Score: <span class="myScore">0</span></p>
-                <p> Choose Your Favourite: <span class="chosenQuestion" id="judge_answer"></span></p>
+                <p> Question: <span class="chosenQuestion" id="judge_answer"></span></p>
+                <p> Choose Your Favourite: </p>
                 <div class="voteList">
                      <div class="A1"> <input type="radio" name="votingRadio1" value="1" class="CB" id="vr11"> <input type="radio" name="votingRadio2" value="1" class="CB" id="vr21"><label for="vr11"> <span class="answer">A1</span></label></div>
                      <div class="A2"> <input type="radio" name="votingRadio1" value="1" class="CB" id="vr12"> <input type="radio" name="votingRadio2" value="2" class="CB" id="vr22"><label for="vr12"> <span class="answer">A2</span></label></div>
@@ -118,7 +120,8 @@
 
             <div class="judgecontroller">
                 <p> Score: <span class="myScore">0</span></p>
-                <p> Choose Your Favorite: <span class="chosenQuestion" id="judge_answer"></span></p>
+                <p> Question: <span class="chosenQuestion" id="judge_answer"></span></p>
+                <p> Choose Your Favorite: </p>
 
                 <div class="judgeList">
                     <div class="A1"><input type="radio" name="judgingRadio" value="1" class="CB" id="jr1"><label for="jr1"><span class="answer">A1</span></label> </div>
