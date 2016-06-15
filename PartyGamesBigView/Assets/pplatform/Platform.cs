@@ -358,7 +358,7 @@ namespace PPlatform
                                 }
                             }
 
-                            if (Locked)
+                            if (userId == -1 && Locked)
                             {
                                 SendInternal(TAG_ROOM_LOCKED, "", conId);
                             }
