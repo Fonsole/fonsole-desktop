@@ -19,15 +19,28 @@ namespace PPlatform
     /// </summary>
     public class Platform : UnitySingleton<Platform>
     {
+        public delegate void RoomNameDiscovery(string name);
+        public event RoomNameDiscovery RoomNameDiscovered;
+
+        public string[] InitialRoomCodes;
+
         public string[] mRoomCodes;
         public string[] RoomCodes
         {
             set
             {
-                mRoomCodes = value;
-                foreach (string code in value)
+                if (mRoomCodes == null || mRoomCodes.Length == 0)
                 {
-                    RoomCodeAvailability[code] = true;
+                    mRoomCodes = new string[value.Length];
+                    for (int i = 0, l = value.Length; i < l; ++i)
+                    {
+                        mRoomCodes[i] = value[i].ToUpper();
+                    }
+
+                    foreach (string code in mRoomCodes)
+                    {
+                        RoomCodeAvailability[code] = true;
+                    }
                 }
             }
             get { return mRoomCodes; }
@@ -107,7 +120,6 @@ namespace PPlatform
         string TAG_NAME_IN_USE = "PLATFORM_NAME_IN_USE";
         string TAG_ROOM_LOCKED = "PLATFORM_ROOM_LOCKED";
 
-
         public bool mLocked = false;
         public bool Locked
         {
@@ -129,6 +141,9 @@ namespace PPlatform
 
         private void Awake()
         {
+            if (InitialRoomCodes != null && InitialRoomCodes.Length != 0)
+                RoomCodes = InitialRoomCodes;
+
             mNetgroup = GetComponent<UnityNetgroup>();
 
             //No network setup? Create a default version of it
@@ -148,7 +163,6 @@ namespace PPlatform
         private void Start()
         {
             DontDestroyOnLoad(this.gameObject);
-            mGameCode = GetRandomKey();
             mNetgroup.Open(mGameCode, OnNetgroupMessageInternal);
         }
 
@@ -189,7 +203,39 @@ namespace PPlatform
                 //remove controller
                 DeactivateController(userId);
             }
+        }
 
+        private void RoomNamesDiscovered(string content)
+        {
+            string[] names = content.Split(',');
+
+            foreach (string name in names)
+            {
+                RoomCodeAvailability[name] = false;
+            }
+
+            bool available = false;
+            string code = "";
+            for (int i = 0, l = mRoomCodes.Length; i < l; ++i)
+            {
+                if (RoomCodeAvailability[mRoomCodes[i]])
+                {
+                    code = mRoomCodes[i].ToUpper();
+                    available = true;
+                    break;
+                }
+            }
+
+            if (!available)
+            {
+                code = GetRandomKey();
+            }
+            
+            mNetgroup.SendOpenRoom(code);
+            mGameCode = code;
+
+            if (RoomNameDiscovered != null)
+                RoomNameDiscovered(code);
         }
 
         private void ActivateController(int connectionId, int userId, string name)
@@ -262,8 +308,12 @@ namespace PPlatform
 
                 //only forward if the connection had a user id. if not the user wasn't known in the first place
                 //and probably failed to register due to too many players, wrong version, ....
-                if(userId != -1)
+                if (userId != -1)
                     HandlePlatformMessage(TAG_CONTROLLER_LEFT, null, userId);
+            }
+            else if (type == ANetgroup.SignalingMessageType.RoomNamesDiscovered)
+            {
+                RoomNamesDiscovered(content);
             }
             else if (type == ANetgroup.SignalingMessageType.UserMessage)
             {
@@ -348,7 +398,7 @@ namespace PPlatform
                     ActivateController(incDiscoveryMsg.connectionId, incDiscoveryMsg.userId, incDiscoveryMsg.name);
 
 
-                    foreach(var c in mController.Values)
+                    foreach (var c in mController.Values)
                     {
                         if (c.IsAvailable && c.UserId != incDiscoveryMsg.userId) //all available user except the new user itself
                         {
@@ -443,15 +493,6 @@ namespace PPlatform
 
         private string GetRandomKey()
         {
-            for (int i = 0, l = RoomCodes.Length; i < l; ++i)
-            {
-                if (RoomCodeAvailability[RoomCodes[i]])
-                {
-                    RoomCodeAvailability[RoomCodes[i]] = false;
-                    return RoomCodes[i].ToUpper();
-                }
-            }
-            
             StringBuilder result = new StringBuilder();
             for (var i = 0; i < 6; i++)
             {
@@ -467,6 +508,11 @@ namespace PPlatform
                 TL.L("Exit application.");
                 Application.Quit();
             }
+        }
+
+        public void GameStarted()
+        {
+            mNetgroup.SendGameStarted();
         }
 
     }

@@ -16,7 +16,9 @@ module.exports = function()
         UserJoined : 4,
         UserLeft : 5,
         OpenRoom : 6,
-        JoinRoom : 7
+        JoinRoom : 7,
+        GameStarted : 8,
+        RoomNamesDiscovered : 9
     };
     
     
@@ -160,6 +162,9 @@ module.exports = function()
                 }else if(lMsg.type == SignalingMessageType.JoinRoom)
                 {
                     onJoinRoom(lMsg.content);
+                }else if(lMsg.type == SignalingMessageType.GameStarted)
+                {
+                    onRoomNameDiscovery();
                 }else if(lMsg.type == SignalingMessageType.UserMessage)
                 {
                     onUserMessage(lMsg.content, lMsg.id);
@@ -190,7 +195,7 @@ module.exports = function()
         
         function onOpenRoom(lRoomName)
         {
-            console.log('Try to openn room ' + lRoomName);
+            console.log('Try to open room ' + lRoomName);
             mConnecting = false;
             
             //room name still free? 
@@ -228,7 +233,7 @@ module.exports = function()
                 mRoom.addConnection(self);
                 
                 console.log('user ' + mOwnId + ' joined room: ' + lRoomName);
-                
+
                 var lMsgObj = new SMessage(SignalingMessageType.Connected, mRoom.getName(), mOwnId);
                 mSocket.emit(MESSAGE_NAME, lMsgObj);
                 console.log('SND: ' + JSON.stringify(lMsgObj));
@@ -268,7 +273,17 @@ module.exports = function()
             console.log('user ' + mOwnId + ' disconnected');
         }
         
-        
+        function onRoomNameDiscovery()
+        {
+            var names = [];
+            for (lRoomName in gRooms)
+            {
+                names.push(lRoomName);
+            }
+
+            var lMsgObj = new SMessage(SignalingMessageType.RoomNamesDiscovered, names.join(","), mOwnId);
+            mSocket.emit(MESSAGE_NAME, lMsgObj);
+        }
         
     }
 }

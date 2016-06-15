@@ -70,7 +70,7 @@ namespace PPlatform
                     mReadyForOpenRoom = false;
                     if (RoomOwner)
                     {
-                        Send(new SMessage(SignalingMessageType.OpenRoom, RoomName, -1));
+                        Send(new SMessage(SignalingMessageType.GameStarted, "", -1));
                     }
                     else
                     {

@@ -19,7 +19,9 @@ namespace PPlatform
             UserJoined = 4,
             UserLeft = 5,
             OpenRoom = 6,
-            JoinRoom = 7
+            JoinRoom = 7,
+            GameStarted = 8,
+            RoomNamesDiscovered = 9
         };
 
 
@@ -128,6 +130,21 @@ namespace PPlatform
             //Debug.Log("Snd " + msg);
             SendMessageViaSocketIo(msg);
         }
+        public void SendGameStarted()
+        {
+            Debug.Log("Sending game started");
+            SMessage msg = new SMessage();
+            msg.type = SignalingMessageType.GameStarted;
+
+            SendMessageViaSocketIo(msg);
+        }
+        public void SendOpenRoom(string roomName)
+        {
+            mRoomName = roomName;
+            SMessage msg = new SMessage(SignalingMessageType.OpenRoom, RoomName, -1);
+
+            SendMessageViaSocketIo(msg);
+        }
 
         private void HandleEvents()
         {
@@ -157,8 +174,6 @@ namespace PPlatform
             }
                 
             DeliverEvent(message.type, message.id, message.content);
-
-            
         }
 
         private void DeliverEvent(SignalingMessageType type, int relatedConId, string content)
