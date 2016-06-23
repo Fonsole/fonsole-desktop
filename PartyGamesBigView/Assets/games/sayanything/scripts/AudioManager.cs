@@ -74,6 +74,10 @@ public class AudioManager : SceneSingleton<AudioManager>
     {
         PlayMusic(_WinnerMusic, delay);
     }
+    public void OnScoreShow(float delay)
+    {
+        PlaySound(_OnUserJoin, delay);
+    }
 
     IEnumerator DelayedStop(float delay)
     {

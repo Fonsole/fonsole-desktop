@@ -76,6 +76,8 @@ namespace PPlatform.SayAnything.Ui
                     .setDelay(showScoreDelay + 0.5f + playerScoreDelay)
                     .setEaseType(EaseType.SineOut);
 
+                AudioManager.Instance.OnScoreShow(showScoreDelay + 0.5f + playerScoreDelay);
+
                 tween.setCompletionHandler(_ScoreUIs[i].PopOutTweenComplete);
 
                 tween.start();
