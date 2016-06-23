@@ -331,7 +331,8 @@ namespace PPlatform.SayAnything
                 mData.AddVote(lConId, voteMsg.votePlayerId1);
                 mData.AddVote(lConId, voteMsg.votePlayerId2);
 
-                AudioManager.Instance.OnUserVote();
+                if (mData.judgedAnswerId != SharedData.UNDEFINED)
+                    AudioManager.Instance.OnUserVote();
 
                 if (IsJudgeAndVotingFinished())
                 {
