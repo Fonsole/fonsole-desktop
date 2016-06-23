@@ -29,6 +29,8 @@ namespace PPlatform.SayAnything.Ui
         public float TweenInTime;
         public float TweenOutTime;
 
+        public bool PlaysEntrySound;
+
         Vector3 TargetPosition;
 
         protected override void Awake()
@@ -44,6 +46,9 @@ namespace PPlatform.SayAnything.Ui
             transform.ZKlocalPositionTo(TargetPosition, TweenInTime)
                 .setDelay(TweenInDelay)
                 .start();
+
+            if (PlaysEntrySound)
+                AudioManager.Instance.PlayWhoosh(TweenInDelay + (TweenInTime*0.5f));
 
             _Text.transform.localScale = Vector3.zero;
             _Text.transform.ZKlocalScaleTo(Vector3.one, TweenInTime * 0.5f)

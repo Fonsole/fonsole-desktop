@@ -754,7 +754,7 @@ AudioSource:
       tangentMode: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
-    m_RotationOrder: 4
+    m_RotationOrder: 0
   reverbZoneMixCustomCurve:
     serializedVersion: 2
     m_Curve:
@@ -2386,6 +2386,10 @@ Prefab:
       propertyPath: TweenOutTime
       value: 0.35
       objectReference: {fileID: 0}
+    - target: {fileID: 11456206, guid: 694269427199ff84091f142b182654a1, type: 2}
+      propertyPath: PlaysEntrySound
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 694269427199ff84091f142b182654a1, type: 2}
   m_IsPrefabParent: 0
@@ -3387,6 +3391,11 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 4d84c850fc882ac4d95f1743dc1886bd, type: 3}
   - {fileID: 8300000, guid: 7d4f6a7e93941d443b620103b08f2a7f, type: 3}
   - {fileID: 8300000, guid: 06d3f2701587e9b42b16507d246ef3fe, type: 3}
+  _WhooshSounds:
+  - {fileID: 8300000, guid: 4d5f3edc565da5341abc66e0c41e0229, type: 3}
+  - {fileID: 8300000, guid: 30a89e0173d082d4e9e64a50840311df, type: 3}
+  - {fileID: 8300000, guid: 6de378500f0e11c43830347f154e4745, type: 3}
+  - {fileID: 8300000, guid: da59c0b990b85334784be2211deaca1d, type: 3}
   _SoundSource: {fileID: 866713305}
   _MusicSource: {fileID: 176868060}
 --- !u!4 &865171598
@@ -8074,7 +8083,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _Debug: 0
-  _DebugGameState: 7
+  _DebugGameState: 5
   _LinkToLogic: {fileID: 1270192453}
   _WaitForStartUI: {fileID: 302153599}
   _QuestioningUI: {fileID: 2022252364}
@@ -8707,6 +8716,10 @@ Prefab:
     - target: {fileID: 11456206, guid: 694269427199ff84091f142b182654a1, type: 2}
       propertyPath: TweenInTime
       value: 0.85
+      objectReference: {fileID: 0}
+    - target: {fileID: 11456206, guid: 694269427199ff84091f142b182654a1, type: 2}
+      propertyPath: PlaysEntrySound
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 694269427199ff84091f142b182654a1, type: 2}
@@ -10025,6 +10038,10 @@ Prefab:
     - target: {fileID: 11456206, guid: 694269427199ff84091f142b182654a1, type: 2}
       propertyPath: TweenOutTime
       value: 0.35
+      objectReference: {fileID: 0}
+    - target: {fileID: 11456206, guid: 694269427199ff84091f142b182654a1, type: 2}
+      propertyPath: PlaysEntrySound
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 694269427199ff84091f142b182654a1, type: 2}

@@ -28,6 +28,8 @@ namespace PPlatform.SayAnything.Ui
                     //_UsernameText.text = SayAnythingUi.Instance.GetUserName(userId);
                     //_UsernameText.color = SayAnythingUi.Instance.GetUserColor(userId);
                     StartCoroutine(AnswerDisplay (userId));
+
+                    AudioManager.Instance.PlayWhoosh();
 				}
 			}
 			else

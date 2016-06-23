@@ -42,6 +42,8 @@ namespace PPlatform.SayAnything.Ui
                 .setDelay(0.5f)
                 .setEaseType(EaseType.SineOut)
                 .start();
+
+            AudioManager.Instance.PlayWhoosh(0.5f);
         }
 
         void FixedUpdate()
