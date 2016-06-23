@@ -14,7 +14,7 @@ namespace PPlatform.SayAnything.Ui
 	
             if(SayAnythingUi.Instance != null && _Timer != null)
             {
-                int timeLeft = (int)Mathf.Max(SayAnythingUi.Instance.CurrentData.timeLeft,0);
+                int timeLeft = (int)Mathf.Ceil(Mathf.Max(SayAnythingUi.Instance.CurrentData.timeLeft,0));
                 _Timer.text = "" + timeLeft;
 
             }

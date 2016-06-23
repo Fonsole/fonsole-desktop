@@ -51,7 +51,8 @@ namespace PPlatform.SayAnything.Ui
                 .setEaseType(EaseType.SineOut)
                 .setDelay(showWinnerDelay + 0.5f)
                 .start();
-            
+
+            AudioManager.Instance.PlayWinnerMusic(1f);
 
             SharedData data = SayAnythingUi.Instance.CurrentData;
             _WinnerText.color = SayAnythingUi.Instance.GetUserColor(data.judgedAnswerId);

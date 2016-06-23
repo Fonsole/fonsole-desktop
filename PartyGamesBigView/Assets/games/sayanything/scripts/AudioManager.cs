@@ -6,9 +6,11 @@ public class AudioManager : SceneSingleton<AudioManager>
 {
     public AudioClip _OnUserJoin;
     public AudioClip _BackgroundMusic;
+    public AudioClip _WinnerMusic;
     public AudioClip[] _OnQuestionSelected;
     public AudioClip[] _OnAnswerSubmitted;
     public AudioClip[] _WhooshSounds;
+    public AudioClip _DrumRoll;
 
     public ClipShuffler AnswerSubmittedShuffler;
     public ClipShuffler WhooshShuffler;
@@ -32,8 +34,6 @@ public class AudioManager : SceneSingleton<AudioManager>
     {
         _MuteToggle = _MuteToggle ? false : true;
         AudioListener.pause = _MuteToggle ? true : false;
-
-        Debug.Log("_MuteToggle " + _MuteToggle);
     }
 
     public void OnUserJoin()
@@ -64,6 +64,23 @@ public class AudioManager : SceneSingleton<AudioManager>
     {
         PlaySound(WhooshShuffler.GetNext(), delay);
     }
+    public void PlayDrumRoll(float time, float delay = 0f)
+    {
+        PlaySound(_DrumRoll, delay);
+
+        StartCoroutine(DelayedStop(time + delay));
+    }
+    public void PlayWinnerMusic(float delay=0f)
+    {
+        PlayMusic(_WinnerMusic, delay);
+    }
+
+    IEnumerator DelayedStop(float delay)
+    {
+        yield return new WaitForSeconds(delay);
+
+        _SoundSource.Stop();
+    }
 
     private void PlaySound(AudioClip clip, float delay = 0f)
     {
@@ -83,15 +100,22 @@ public class AudioManager : SceneSingleton<AudioManager>
         _SoundSource.PlayOneShot(clip);
     }
 
-    private void PlayMusic(AudioClip clip)
+    private void PlayMusic(AudioClip clip, float delay=0f)
     {
         //todo: if multiple sounds need to be played at the same time we can schedule multiple audio soruces here
         if (clip != null && !_MusicSource.isPlaying)
         {
-            _MusicSource.PlayOneShot(clip);
-			StartCoroutine(FadeMusic(1f));
+            StartCoroutine(DelayedPlayMusic(clip, delay));
         }
     }
+    IEnumerator DelayedPlayMusic(AudioClip clip, float delay)
+    {
+        yield return new WaitForSeconds(delay);
+
+        _MusicSource.PlayOneShot(clip);
+        StartCoroutine(FadeMusic(1f));
+    }
+    
     //todo: fix audio fade for full/no volume
 	private IEnumerator FadeMusic (float target){
 		_MusicSource.volume = Mathf.Round(Mathf.Abs (target - 1f));

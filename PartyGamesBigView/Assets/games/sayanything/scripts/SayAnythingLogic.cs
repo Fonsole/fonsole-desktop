@@ -37,6 +37,7 @@ namespace PPlatform.SayAnything
         public event StateDelegate StateChanging;
 
         public bool WaitingForChange;
+        public bool DrumRollPlaying;
 
         /// <summary>
         /// Must be the same as the scene name + folder name in unity and the same folder name of the controller!
@@ -193,6 +194,11 @@ namespace PPlatform.SayAnything
                             StateChanging(GameState.WaitForStart);
                         }
                     }
+                }
+                else if (mData.state == GameState.JudgingAndVoting && mData.timeLeft <= 3f && !DrumRollPlaying)
+                {
+                    AudioManager.Instance.PlayDrumRoll(3.75f, 0f);
+                    DrumRollPlaying = true;
                 }
             }
         }
@@ -588,6 +594,7 @@ namespace PPlatform.SayAnything
             mData.state = GameState.JudgingAndVoting;
             mData.timeLeft = VOTING_TIME;
             RefreshState();
+            DrumRollPlaying = false;
         }
 
 

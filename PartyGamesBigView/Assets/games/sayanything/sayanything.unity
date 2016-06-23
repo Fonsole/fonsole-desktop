@@ -3382,6 +3382,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _OnUserJoin: {fileID: 8300000, guid: 394f482842816e440819abb10a686019, type: 3}
   _BackgroundMusic: {fileID: 8300000, guid: e0458a867ab5adb45bb50c49875dc689, type: 3}
+  _WinnerMusic: {fileID: 8300000, guid: d92e54d3069ae3b4cbf5c159f2a602b9, type: 3}
   _OnQuestionSelected:
   - {fileID: 8300000, guid: 41ec03c0af35be346a1eae50ccd0d233, type: 3}
   - {fileID: 8300000, guid: 3bde77627c777324b8a8edd19066a18f, type: 3}
@@ -3396,6 +3397,7 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 30a89e0173d082d4e9e64a50840311df, type: 3}
   - {fileID: 8300000, guid: 6de378500f0e11c43830347f154e4745, type: 3}
   - {fileID: 8300000, guid: da59c0b990b85334784be2211deaca1d, type: 3}
+  _DrumRoll: {fileID: 8300000, guid: 06203527ec57a2744bcf3f2ebfbbe6cc, type: 3}
   _SoundSource: {fileID: 866713305}
   _MusicSource: {fileID: 176868060}
 --- !u!4 &865171598
@@ -5851,6 +5853,7 @@ MonoBehaviour:
   - book
   - pencil
   WaitingForChange: 0
+  DrumRollPlaying: 0
 --- !u!1001 &1288719421
 Prefab:
   m_ObjectHideFlags: 0
@@ -8083,7 +8086,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _Debug: 0
-  _DebugGameState: 5
+  _DebugGameState: 6
   _LinkToLogic: {fileID: 1270192453}
   _WaitForStartUI: {fileID: 302153599}
   _QuestioningUI: {fileID: 2022252364}
