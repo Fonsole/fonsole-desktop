@@ -1128,11 +1128,11 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 11464424, guid: 8c1c56291f9b49242805c66f151bb6a3, type: 2}
       propertyPath: TickTime
-      value: 0.25
+      value: 0.35
       objectReference: {fileID: 0}
     - target: {fileID: 11464424, guid: 8c1c56291f9b49242805c66f151bb6a3, type: 2}
       propertyPath: TickScale
-      value: 1.5
+      value: 1.75
       objectReference: {fileID: 0}
     - target: {fileID: 105794, guid: 8c1c56291f9b49242805c66f151bb6a3, type: 2}
       propertyPath: m_IsActive
@@ -1380,11 +1380,11 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 11464424, guid: 8c1c56291f9b49242805c66f151bb6a3, type: 2}
       propertyPath: TickTime
-      value: 0.25
+      value: 0.35
       objectReference: {fileID: 0}
     - target: {fileID: 11464424, guid: 8c1c56291f9b49242805c66f151bb6a3, type: 2}
       propertyPath: TickScale
-      value: 1.5
+      value: 1.75
       objectReference: {fileID: 0}
     - target: {fileID: 22486586, guid: 8c1c56291f9b49242805c66f151bb6a3, type: 2}
       propertyPath: m_AnchoredPosition.x
@@ -1590,6 +1590,18 @@ Prefab:
     - target: {fileID: 11461672, guid: 8c1c56291f9b49242805c66f151bb6a3, type: 2}
       propertyPath: m_Color.b
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 11464424, guid: 8c1c56291f9b49242805c66f151bb6a3, type: 2}
+      propertyPath: TickTime
+      value: 0.35
+      objectReference: {fileID: 0}
+    - target: {fileID: 11464424, guid: 8c1c56291f9b49242805c66f151bb6a3, type: 2}
+      propertyPath: ScoreShowTime
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 11464424, guid: 8c1c56291f9b49242805c66f151bb6a3, type: 2}
+      propertyPath: TickScale
+      value: 1.75
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 8c1c56291f9b49242805c66f151bb6a3, type: 2}
@@ -3202,11 +3214,11 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 11464424, guid: 8c1c56291f9b49242805c66f151bb6a3, type: 2}
       propertyPath: TickTime
-      value: 0.25
+      value: 0.35
       objectReference: {fileID: 0}
     - target: {fileID: 11464424, guid: 8c1c56291f9b49242805c66f151bb6a3, type: 2}
       propertyPath: TickScale
-      value: 1.5
+      value: 1.75
       objectReference: {fileID: 0}
     - target: {fileID: 105794, guid: 8c1c56291f9b49242805c66f151bb6a3, type: 2}
       propertyPath: m_IsActive
@@ -3320,11 +3332,11 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 11464424, guid: 8c1c56291f9b49242805c66f151bb6a3, type: 2}
       propertyPath: TickTime
-      value: 0.25
+      value: 0.35
       objectReference: {fileID: 0}
     - target: {fileID: 11464424, guid: 8c1c56291f9b49242805c66f151bb6a3, type: 2}
       propertyPath: TickScale
-      value: 1.5
+      value: 1.75
       objectReference: {fileID: 0}
     - target: {fileID: 105794, guid: 8c1c56291f9b49242805c66f151bb6a3, type: 2}
       propertyPath: m_IsActive
@@ -5931,11 +5943,11 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 11464424, guid: 8c1c56291f9b49242805c66f151bb6a3, type: 2}
       propertyPath: TickTime
-      value: 0.25
+      value: 0.35
       objectReference: {fileID: 0}
     - target: {fileID: 11464424, guid: 8c1c56291f9b49242805c66f151bb6a3, type: 2}
       propertyPath: TickScale
-      value: 1.5
+      value: 1.75
       objectReference: {fileID: 0}
     - target: {fileID: 105794, guid: 8c1c56291f9b49242805c66f151bb6a3, type: 2}
       propertyPath: m_IsActive
@@ -8811,11 +8823,11 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 11464424, guid: 8c1c56291f9b49242805c66f151bb6a3, type: 2}
       propertyPath: TickTime
-      value: 0.25
+      value: 0.35
       objectReference: {fileID: 0}
     - target: {fileID: 11464424, guid: 8c1c56291f9b49242805c66f151bb6a3, type: 2}
       propertyPath: TickScale
-      value: 1.5
+      value: 1.75
       objectReference: {fileID: 0}
     - target: {fileID: 105794, guid: 8c1c56291f9b49242805c66f151bb6a3, type: 2}
       propertyPath: m_IsActive
@@ -9805,11 +9817,11 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 11464424, guid: 8c1c56291f9b49242805c66f151bb6a3, type: 2}
       propertyPath: TickTime
-      value: 0.25
+      value: 0.35
       objectReference: {fileID: 0}
     - target: {fileID: 11464424, guid: 8c1c56291f9b49242805c66f151bb6a3, type: 2}
       propertyPath: TickScale
-      value: 1.5
+      value: 1.75
       objectReference: {fileID: 0}
     - target: {fileID: 105794, guid: 8c1c56291f9b49242805c66f151bb6a3, type: 2}
       propertyPath: m_IsActive
@@ -10626,11 +10638,11 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 11464424, guid: 8c1c56291f9b49242805c66f151bb6a3, type: 2}
       propertyPath: TickTime
-      value: 0.25
+      value: 0.35
       objectReference: {fileID: 0}
     - target: {fileID: 11464424, guid: 8c1c56291f9b49242805c66f151bb6a3, type: 2}
       propertyPath: TickScale
-      value: 1.5
+      value: 1.75
       objectReference: {fileID: 0}
     - target: {fileID: 105794, guid: 8c1c56291f9b49242805c66f151bb6a3, type: 2}
       propertyPath: m_IsActive

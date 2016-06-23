@@ -76,8 +76,7 @@ namespace PPlatform.SayAnything.Ui
                     .setDelay(showScoreDelay + 0.5f + playerScoreDelay)
                     .setEaseType(EaseType.SineOut);
 
-                if (i == _PlayerCount - 1)
-                    tween.setCompletionHandler(TweensComplete);
+                tween.setCompletionHandler(_ScoreUIs[i].PopOutTweenComplete);
 
                 tween.start();
                 playerScoreDelay = playerScoreDelay + 0.15f;
@@ -96,17 +95,6 @@ namespace PPlatform.SayAnything.Ui
                 _ScoreUIs[i].gameObject.SetActive(false);
             }
             */
-        }
-
-        void TweensComplete(ITween<Vector3> target)
-        {
-            SharedData data = SayAnythingUi.Instance.CurrentData;
-
-            int counter = 0;
-            foreach (var v in SayAnythingUi.Instance.GetActiveUsersOrderedByConnectionId())
-            {
-                _ScoreUIs[counter++].TickUpScore(v, SayAnythingUi.Instance.CurrentData);
-            }
         }
     }
 }

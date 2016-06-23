@@ -16,8 +16,12 @@ namespace PPlatform.SayAnything.Ui
         public float TickTime;
         public float TickScale;
 
+        public int UserId;
+
         public void ShowPreviousRoundScore(int userId, SharedData data)
         {
+            UserId = userId;
+
             _RoundScoreText.gameObject.SetActive(false);
 
             int score = 0;
@@ -27,6 +31,11 @@ namespace PPlatform.SayAnything.Ui
             SetColor(SayAnythingUi.Instance.GetUserColor(userId));
             SetUserName(SayAnythingUi.Instance.GetUserName(userId));
             _ScoreText.transform.localScale = Vector2.one;
+        }
+
+        public void PopOutTweenComplete(ITween<Vector3> target)
+        {
+            TickUpScore(UserId, SayAnythingUi.Instance.CurrentData);
         }
 
         public void TickUpScore(int userId, SharedData data)
@@ -47,14 +56,13 @@ namespace PPlatform.SayAnything.Ui
                 _RoundScoreText.gameObject.SetActive(true);
                 _RoundScoreText.text = "+" + roundScore;
 
-                Debug.Log(userId + ", Score " + score + ", " + roundScore);
-
                 yield return new WaitForSeconds(ScoreShowTime);
 
                 float scaleDiff = TickScale - 1f;
                 for (int i = 0; i < roundScore; ++i)
                 {
                     _ScoreText.text = (++score).ToString();
+                    _RoundScoreText.text = "+" + (roundScore - (i+1));
                     _ScoreText.transform.localScale = new Vector3(TickScale, TickScale, TickScale);
 
                     float time = 0f;
