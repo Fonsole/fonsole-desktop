@@ -13,7 +13,7 @@ namespace PPlatform
     {
         private SocketIOComponent mSocket;
 
-        public string _Url = "ws://localhost:3001/socket.io/?EIO=4&transport=websocket";
+        public string _Url = "ws://fonsole.us-3.evennode.com/socket.io/?EIO=4&transport=websocket";
 
 
         private bool mReadyForOpenRoom = false;
@@ -52,7 +52,7 @@ namespace PPlatform
         {
             Debug.Log("connected " + e);
             //WARNING: SocketIO plugin calls this from a different thread! this isn't suppose to happen might cause bugs
-            
+
             //we just set a flag for now to avoid bugs through multi threading
             lock (mEventQueue)
             {
