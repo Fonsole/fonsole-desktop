@@ -90,7 +90,7 @@ namespace DebugTools
 
             if (sShowConsole == false)
             {
-                if (GUI.Button(new Rect(Screen.width - 40, Screen.height - 20, 40, 20), "Show"))
+                if (GUI.Button(new Rect(Screen.width - 40, Screen.height - 40, 40, 20), "Show"))
                 {
                     sShowConsole = true;
                 }

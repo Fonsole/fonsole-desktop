@@ -39,7 +39,7 @@ namespace DebugTools
         private bool debugUi = false;
         private void OnGUI()
         {
-
+            GUILayout.BeginArea(new Rect(0, 100, Screen.width, Screen.height));
             GUILayout.BeginVertical();
             debugUi = GUILayout.Toggle(debugUi, "debugui");
             if (debugUi)
@@ -61,7 +61,7 @@ namespace DebugTools
                 }
             }
             GUILayout.EndHorizontal();
-
+            GUILayout.EndArea();
 
             DebugConsole.DrawConsole();
         }
