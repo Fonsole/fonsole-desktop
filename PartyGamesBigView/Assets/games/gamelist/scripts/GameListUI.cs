@@ -12,6 +12,7 @@ public class GameListUI : MonoBehaviour {
     public static readonly int CONTENT_ID_SHOP = 4;
     public static readonly int CONTENT_ID_COMMUNITY = 5;
     public static readonly int CONTENT_ID_SETTINGS = 6;
+    public static readonly int CONTENT_ID_GAME_VIEW = 7;
 
     // Use this for initialization
     void Start () {
