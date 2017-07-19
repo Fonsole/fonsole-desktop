@@ -7,5 +7,7 @@ EditorBuildSettings:
   m_Scenes:
   - enabled: 1
     path: Assets/games/gamelist/gamelist.unity
-  - enabled: 1
+    guid: 6335628f6ee00c147a6ca4b0a3fe0f2f
+  - enabled: 0
     path: Assets/games/sayanything/sayanything.unity
+    guid: 631c9a547486d5740be412c8891bd4fd

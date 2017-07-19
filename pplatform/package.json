@@ -3,7 +3,7 @@
   "version": "1.1.0",
   "description": "Allows to group webusers via a code they can share",
   "dependencies": {
-    "express": "^4.10.2",
+    "express": "^4.15.3",
     "socket.io": "^1.7.4"
   },
   "scripts": {

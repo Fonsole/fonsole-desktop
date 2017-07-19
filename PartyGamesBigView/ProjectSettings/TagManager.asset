@@ -41,3 +41,6 @@ TagManager:
   - name: Default
     uniqueID: 0
     locked: 0
+  - name: BackgroundUIEffects
+    uniqueID: 3576369799
+    locked: 0
