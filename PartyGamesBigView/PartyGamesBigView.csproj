@@ -85,6 +85,7 @@
     <Compile Include="Assets\DebugTools\DebugUI.cs" />
     <Compile Include="Assets\DebugTools\TL.cs" />
     <Compile Include="Assets\games\gamelist\scripts\CustomDropdownEventContainer.cs" />
+    <Compile Include="Assets\games\gamelist\scripts\DynamicGrid.cs" />
     <Compile Include="Assets\games\gamelist\scripts\GameListUI.cs" />
     <Compile Include="Assets\games\gamelist\scripts\TopBarTabButton.cs" />
     <Compile Include="Assets\games\gamelist\scripts\TopBarTabDropdown.cs" />
