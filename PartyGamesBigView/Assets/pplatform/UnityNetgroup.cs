@@ -13,8 +13,12 @@ namespace PPlatform
     {
         private SocketIOComponent mSocket;
 
-        public string _Url = "ws://localhost:3001/socket.io/?EIO=4&transport=websocket";
+        public string _Url = "ws://fonsole.us-3.evennode.com/socket.io/?EIO=4&transport=websocket";
 
+        public void OnLocalServerToggle(bool b)
+        {
+            _Url = mSocket.url = b ? "ws://localhost:3001/socket.io/?EIO=4&transport=websocket" : "ws://fonsole.us-3.evennode.com:3000/socket.io/?EIO=4&transport=websocket";
+        }
 
         private bool mReadyForOpenRoom = false;
 

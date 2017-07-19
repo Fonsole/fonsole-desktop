@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class TopBarTabButton : Selectable {
+public class TopBarTabButton : Button {
 
     private Text textComponent;
 

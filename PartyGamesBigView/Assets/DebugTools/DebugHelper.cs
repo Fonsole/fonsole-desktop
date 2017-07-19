@@ -17,8 +17,6 @@ namespace DebugTools
         public static bool sShowConsole = false;
         public static bool sConsoleAutoScroll = true;
 
-
-
         private static Vector2 mDebugConsoleScrollPos = new Vector2();
         private static StringBuilder mLog = null;
         private static int mLines = 0;
@@ -88,20 +86,8 @@ namespace DebugTools
             GUILayout.EndHorizontal();
             GUILayout.EndArea();
 
-            if (sShowConsole == false)
+            if (sShowConsole)
             {
-                if (GUI.Button(new Rect(Screen.width - 40, Screen.height - 40, 40, 20), "Show"))
-                {
-                    sShowConsole = true;
-                }
-            }
-            else
-            {
-                if (GUI.Button(new Rect(Screen.width - 40, Screen.height * 0.75f - 20, 40, 20), "Hide"))
-                {
-                    //Debug.Log(mDebugConsoleScrollPos);
-                    sShowConsole = false;
-                }
                 if (GUI.Button(new Rect(Screen.width - 90, Screen.height * 0.75f - 20, 40, 20), "Auto"))
                 {
                     sConsoleAutoScroll = !sConsoleAutoScroll;

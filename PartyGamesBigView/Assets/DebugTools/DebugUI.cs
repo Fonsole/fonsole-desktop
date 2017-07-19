@@ -8,6 +8,8 @@ namespace DebugTools
 {
     public class DebugUI : MonoBehaviour
     {
+        public static bool debugUI = false;
+
         void Awake()
         {
             DebugConsole.ActivateConsole();
@@ -36,13 +38,11 @@ namespace DebugTools
         {
 
         }
-        private bool debugUi = false;
         private void OnGUI()
         {
             GUILayout.BeginArea(new Rect(0, 100, Screen.width, Screen.height));
             GUILayout.BeginVertical();
-            debugUi = GUILayout.Toggle(debugUi, "debugui");
-            if (debugUi)
+            if (debugUI)
             {
                 SayAnythingLogic logic = FindObjectOfType<SayAnythingLogic>();
                 if (logic != null)
