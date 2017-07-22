@@ -13,11 +13,14 @@ namespace PPlatform
     {
         private SocketIOComponent mSocket;
 
-        public string _Url = "ws://fonsole.us-3.evennode.com/socket.io/?EIO=4&transport=websocket";
+        private static string _LocalURL = "ws://localhost:3001/socket.io/?EIO=4&transport=websocket";
+        private static string _RemoteURL = "ws://fonsole.us-3.evennode.com:80/socket.io/?EIO=4&transport=websocket";
+
+        public string _Url = _RemoteURL;
 
         public void OnLocalServerToggle(bool b)
         {
-            _Url = mSocket.url = b ? "ws://localhost:3001/socket.io/?EIO=4&transport=websocket" : "ws://fonsole.us-3.evennode.com:3000/socket.io/?EIO=4&transport=websocket";
+            _Url = mSocket.url = b ? _LocalURL : _RemoteURL;
         }
 
         private bool mReadyForOpenRoom = false;
