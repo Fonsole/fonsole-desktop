@@ -17,7 +17,7 @@ public class GameListUI : MonoBehaviour {
 
     public List<RectTransform> contentList;
 
-    private int currentContent = 0;
+    protected int currentContent = 0;
 
     // Use this for initialization
     void Start () {
@@ -37,15 +37,25 @@ public class GameListUI : MonoBehaviour {
 
     public void OnShowContent(int contentID)
     {
-        Debug.Log(contentID);
-        contentList[contentID].gameObject.SetActive(true);
-        contentList[contentID].DOAnchorPosX(Screen.width, 0.5f).From().SetEase(Ease.OutQuad);
-
         RectTransform oldContent = contentList[currentContent];
-        Tween hideTween = oldContent.DOAnchorPosX(-Screen.width, 0.5f);
-        hideTween.SetEase(Ease.OutQuad);
-        hideTween.OnComplete(() => OnHideComplete(hideTween, oldContent.gameObject));
 
-        currentContent = contentID;
+        if (contentID == currentContent)
+        {
+            if (!DOTween.IsTweening(oldContent))
+            {
+                oldContent.DOShakePosition(0.6f, new Vector3(15.0f, 0.0f, 0.0f), 50, 90, false, true);
+            }
+        } 
+        else
+        {
+            contentList[contentID].gameObject.SetActive(true);
+            contentList[contentID].DOAnchorPosX(Screen.width, 0.5f).From().SetEase(Ease.OutQuad);
+
+            Tween hideTween = oldContent.DOAnchorPosX(-Screen.width, 0.5f);
+            hideTween.SetEase(Ease.OutQuad);
+            hideTween.OnComplete(() => OnHideComplete(hideTween, oldContent.gameObject));
+
+            currentContent = contentID;
+        }
     }
 }
