@@ -3,7 +3,9 @@
   "version": "1.1.0",
   "description": "Allows to group webusers via a code they can share",
   "dependencies": {
+    "body-parser": "^1.17.2",
     "express": "^4.15.3",
+    "mongodb": "^2.2.30",
     "socket.io": "^1.7.4"
   },
   "scripts": {

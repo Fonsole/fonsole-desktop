@@ -14,6 +14,9 @@ var http = require('http').Server(app);
 var netgroup = require('./netgroup');
 
 
+var database = require('./database');
+database.init(app);
+
 
 //the app/express module will host all files in the public folder like a good old normal webpage
 app.use(express.static('public'));
