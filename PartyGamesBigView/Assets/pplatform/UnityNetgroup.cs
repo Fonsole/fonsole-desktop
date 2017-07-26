@@ -14,7 +14,7 @@ namespace PPlatform
         private SocketIOComponent mSocket;
 
         private static string _LocalURL = "ws://localhost:3001/socket.io/?EIO=4&transport=websocket";
-        private static string _RemoteURL = "ws://fonsole.us-3.evennode.com:80/socket.io/?EIO=4&transport=websocket";
+        private static string _RemoteURL = "ws://fonsole-tides.c9users.io:8081/socket.io/?EIO=4&transport=websocket";
 
         public string _Url = _RemoteURL;
 

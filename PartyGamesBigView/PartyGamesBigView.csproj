@@ -82,27 +82,32 @@
     <Reference Include="DOTween">
       <HintPath>Assets\DOTween\DOTween.dll</HintPath>
     </Reference>
-    <Reference Include="DOTween50">
-      <HintPath>Assets\DOTween\DOTween50.dll</HintPath>
-    </Reference>
     <Reference Include="DOTween43">
       <HintPath>Assets\DOTween\DOTween43.dll</HintPath>
     </Reference>
     <Reference Include="DOTween46">
       <HintPath>Assets\DOTween\DOTween46.dll</HintPath>
     </Reference>
+    <Reference Include="DOTween50">
+      <HintPath>Assets\DOTween\DOTween50.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assets\DebugTools\DebugHelper.cs" />
     <Compile Include="Assets\DebugTools\DebugUI.cs" />
     <Compile Include="Assets\DebugTools\TL.cs" />
+    <Compile Include="Assets\games\gamelist\scripts\BestFitOutline.cs" />
     <Compile Include="Assets\games\gamelist\scripts\CustomDropdownEventContainer.cs" />
     <Compile Include="Assets\games\gamelist\scripts\DynamicGrid.cs" />
+    <Compile Include="Assets\games\gamelist\scripts\FlowLayoutGroup.cs" />
     <Compile Include="Assets\games\gamelist\scripts\GameListUI.cs" />
+    <Compile Include="Assets\games\gamelist\scripts\GameView.cs" />
+    <Compile Include="Assets\games\gamelist\scripts\ScreenshotPreview.cs" />
     <Compile Include="Assets\games\gamelist\scripts\SettingsTab.cs" />
     <Compile Include="Assets\games\gamelist\scripts\TopBarTabButton.cs" />
     <Compile Include="Assets\games\gamelist\scripts\TopBarTabDropdown.cs" />
     <Compile Include="Assets\games\gamelist\scripts\UIParticleSystem.cs" />
+    <Compile Include="Assets\games\gamelist\scripts\VideoPreview.cs" />
     <Compile Include="Assets\games\sayanything\scripts\ArrayHelper.cs" />
     <Compile Include="Assets\games\sayanything\scripts\AudioManager.cs" />
     <Compile Include="Assets\games\sayanything\scripts\ClipShuffler.cs" />
