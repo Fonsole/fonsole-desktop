@@ -4,6 +4,11 @@
 
 ## Build Setup
 
+Make sure to have npm >= 3.0.0.  To update, run (with admin privileges):
+
+		npm install npm@latest -g
+
+
 ``` bash
 # install dependencies
 npm install
@@ -22,7 +27,7 @@ For detailed explanation on how things work, checkout the [guide](http://vuejs-t
 # fonsole-playground
 
 ### All Repositories:
-[Desktop Repo](https://github.com/darklordabc/fonsole-desktop): Main repo, this is the desktop version of the game (bigscreen), it is the main view that all the players will see for the games, typically on a large monitor/tv, uses electron. 
+[Desktop Repo](https://github.com/darklordabc/fonsole-desktop): Main repo, this is the desktop version of the game (bigscreen), it is the main view that all the players will see for the games, typically on a large monitor/tv, uses electron.
 
 [API Repo](https://github.com/darklordabc/fonsole-api): This is the public API that developers can explore to see how to develop games for fonsole.
 
