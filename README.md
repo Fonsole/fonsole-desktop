@@ -1,4 +1,4 @@
-# fonsole
+# fonsole1
 
 ## Project Overview 
 Fonsole is a platform that offers a series of multiplayer party games where the smartphone is the controller. Games are similar to board games, party games, card games and other social games that people typically play at gatherings/parties. Games will be mostly turn-based, or asynchronous games. Real time games will not be offered (initially). THE unique feature of this platform, is that players use their phones to control the games that will be displayed on a big screen (laptop or TV screen), via a simple website that they can access through their smart phone's web browser. The platform will provide the tools the infrastructure for devs to easily create additional games. 
