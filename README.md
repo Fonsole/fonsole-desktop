@@ -9,6 +9,7 @@ Fonsole is a platform that offers a series of multiplayer party games where the 
 
 ## Frameworks Used (To be filled)
 * Vue.js
+* Electron
 * socket.io
 
 ## Build Setup Instructions
