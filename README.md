@@ -15,7 +15,7 @@
 
   ```npm install```
 
-* Serve with hot reload at localhost:8080
+* Serve with hot reload at localhost:8080. Hot reload means that server will automatically update when changes are made to the code.
 
   ```npm run dev```
 
