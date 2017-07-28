@@ -16,7 +16,13 @@ var webpackConfig = merge(baseWebpackConfig, {
     rules: utils.styleLoaders({
       sourceMap: config.build.productionSourceMap,
       extract: true
-    })
+    }),
+    loaders: [
+      {
+        test: /\.json$/,
+        loader: 'json-loader'
+      }
+    ],
   },
   devtool: config.build.productionSourceMap ? '#source-map' : false,
   output: {

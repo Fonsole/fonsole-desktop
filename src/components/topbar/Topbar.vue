@@ -3,7 +3,7 @@
     <ul>
       <li><img src="../../assets/menu_logo.png"></img></li>
       <li v-for="(buttonName,index) in buttons">
-        <a @click="onButtonClicked" :id="buttonName">{{ buttonName }}</a>
+        <a @click="onButtonClicked" :id="buttonName">{{ 'topbar_'.concat(buttonName) | translate }}</a>
       </li>
     </ul>
   </div>
@@ -14,7 +14,7 @@
     name: 'topbar',
     data() {
       return {
-        buttons: ['Home', 'Games', 'Shop', 'Community', 'Settings'],
+        buttons: ['home', 'games', 'shop', 'community', 'settings'],
       };
     },
     methods: {
@@ -52,10 +52,14 @@
         text-decoration: none
         text-transform: uppercase
         font-size: 20px
+        transition: transform 0.1s linear 0.0s
         cursor: pointer
 
       img
-        max-height: 25px
+        max-height: 24px
+
+      a:hover, img:hover
+        transform: scale(1.1)
 
 
   #topbar
