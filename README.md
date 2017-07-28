@@ -8,8 +8,8 @@ Fonsole is a platform that offers a series of multiplayer party games where the 
 [Useful Links](https://discord.gg/TZpJ4S8)
 
 ## Frameworks Used (To be filled)
-
-> A Vue.js project
+* Vue.js
+* socket.io
 
 ## Build Setup Instructions
 * Download Repo Manually or Clone it (Recommended)
@@ -35,6 +35,10 @@ Fonsole is a platform that offers a series of multiplayer party games where the 
 * Build for production and view the bundle analyzer report
 
   ```npm run build --report```
+  
+* Run ESlint to fix possible style errors
+
+  ```npm run lint-fix```
 
 For detailed explanation on how things work, checkout the [guide](http://vuejs-templates.github.io/webpack/) and [docs for vue-loader](http://vuejs.github.io/vue-loader).
 # fonsole-playground
