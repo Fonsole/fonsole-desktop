@@ -3,6 +3,7 @@
 > A Vue.js project
 
 ## Build Setup Instructions
+* Download Repo Manually or Clone it (Recommended)
 
 * Make sure to have [NPM (node package manager)](https://www.npmjs.com/get-npm?utm_source=house&utm_medium=homepage&utm_campaign=free%20orgs&utm_term=Install%20npm) installed on your system and its version greater than or equal to 3.0.0.  To update, run (with admin privileges):
 
