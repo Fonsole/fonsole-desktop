@@ -63,5 +63,5 @@
     width: 100%
     // height: 70px
     background-color: rgba(20,20,20,.8)
-    position:absolute
+    position: absolute
 </style>
