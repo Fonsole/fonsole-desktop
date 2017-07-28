@@ -1,14 +1,21 @@
+import vuexI18n from 'vuex-i18n';
+
+const languages = [
+  // First language will be used as default
+  'english',
+
+  'russian',
+];
+
 const Localization = {
-  install(Vue) {
-    Vue.setupLocalization = function setupLocalization() {
-      const translationEnglish = require('../assets/localization/fonsole_english.json');
-      const translationRussian = require('../assets/localization/fonsole_russian.json');
-
-      Vue.i18n.add('en', translationEnglish);
-      Vue.i18n.add('ru', translationRussian);
-
-      Vue.i18n.set('en');
-    };
+  install(Vue, store) {
+    Vue.use(vuexI18n.plugin, store);
+    languages.forEach((language) => {
+      // eslint-disable-next-line import/no-dynamic-require
+      const translation = require(`../assets/localization/fonsole_${language}.json`);
+      Vue.i18n.add(language, translation);
+    });
+    Vue.i18n.set(languages[0]);
   },
 };
 

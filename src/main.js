@@ -2,7 +2,6 @@
 // (runtime-only or standalone) has been set in webpack.base.conf with an alias.
 import Vue from 'vue';
 import Vuex from 'vuex';
-import vuexI18n from 'vuex-i18n';
 
 import App from './App';
 import Localization from './localization';
@@ -27,9 +26,7 @@ const store = new Vuex.Store({
   },
 });
 
-Vue.use(vuexI18n.plugin, store);
-Vue.use(Localization);
-Vue.setupLocalization();
+Vue.use(Localization, store);
 
 /* eslint-disable no-new */
 new Vue({
