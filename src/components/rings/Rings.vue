@@ -51,7 +51,7 @@
         emitter.emit();
         proton.addEmitter(emitter);
         renderer = new Proton.Renderer('canvas', proton, canvas);
-        renderer.onProtonUpdate = function () {
+        renderer.onProtonUpdate = function onProtonUpdate() {
           context.fillStyle = 'rgba(0, 0, 0, 0.1)';
           context.fillRect(0, 0, canvas.width, canvas.height);
         };

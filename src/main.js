@@ -18,8 +18,8 @@ const store = new Vuex.Store({
     injectPlatform: (state, frame) => {
       gPlatform.injectAPI(frame.contentWindow);
     },
-    createRoom: (state, roomName) => {
-      gPlatform.join()
+    createRoom: (/* state, roomName */) => {
+      gPlatform.join();
     },
   },
 });
