@@ -18,7 +18,7 @@ const Localization = {
     Vue.i18n.set(languages[0]);
 
     const localize = function $localize(key, options, pluralization) {
-      key = this.$options.name.concat('_').concat(key);
+      key = `${this.$options.name}_${key}`;
 
       return Vue.prototype.$t(key, options, pluralization);
     };
