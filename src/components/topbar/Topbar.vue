@@ -19,7 +19,7 @@
     },
     methods: {
       onButtonClicked(event) {
-        if (event.target.id === 'Games') {
+        if (event.target.id === 'games') {
           this.$router.push('/game/test');
         }
       },
