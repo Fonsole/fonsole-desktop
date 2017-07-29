@@ -3,7 +3,7 @@
     <ul>
       <li><img src="../../assets/menu_logo.png"></img></li>
       <li v-for="(buttonName,index) in buttons">
-        <a @click="onButtonClicked" :id="buttonName">{{ $options.name + '_' + buttonName | translate }}</a>
+        <a @click="onButtonClicked" :id="buttonName">{{ $localize(buttonName) }}</a>
       </li>
     </ul>
   </div>

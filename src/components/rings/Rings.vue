@@ -27,44 +27,35 @@
       },
     },
     mounted() {
-      let emitter;
-      let proton;
-      let renderer;
-
       const canvas = this.$refs.particles;
       canvas.width = window.innerWidth;
       canvas.height = window.innerHeight;
 
       const context = canvas.getContext('2d');
 
-      function createProton() {
-        proton = new Proton();
-        emitter = new Proton.Emitter();
-        emitter.rate = new Proton.Rate(new Proton.Span(0.5));
-        // emitter.addInitialize(new Proton.Mass(1));
-        emitter.addInitialize(new Proton.Radius(10));
-        emitter.addInitialize(new Proton.Life(20));
-        emitter.addBehaviour(new Proton.Color('random'));
-        emitter.addBehaviour(new Proton.Scale(1, 200));
-        emitter.p.x = canvas.width;
-        emitter.p.y = canvas.height;
-        emitter.emit();
-        proton.addEmitter(emitter);
-        renderer = new Proton.Renderer('canvas', proton, canvas);
-        renderer.onProtonUpdate = function onProtonUpdate() {
-          context.fillStyle = 'rgba(0, 0, 0, 0.1)';
-          context.fillRect(0, 0, canvas.width, canvas.height);
-        };
-        renderer.start();
-      }
+      const proton = new Proton();
+      const emitter = new Proton.Emitter();
+      emitter.rate = new Proton.Rate(new Proton.Span(1), new Proton.Span(1));
+      // emitter.addInitialize(new Proton.Mass(1));
+      emitter.addInitialize(new Proton.Radius(10));
+      emitter.addInitialize(new Proton.Life(20));
+      emitter.addBehaviour(new Proton.Color('random'));
+      emitter.addBehaviour(new Proton.Scale(1, 200));
+      emitter.p.x = canvas.width;
+      emitter.p.y = canvas.height;
+      emitter.emit();
+      proton.addEmitter(emitter);
+      const renderer = new Proton.Renderer('canvas', proton, canvas);
+      renderer.onProtonUpdate = function onProtonUpdate() {
+        context.fillStyle = 'rgba(0, 0, 0, 0.1)';
+        context.fillRect(0, 0, canvas.width, canvas.height);
+      };
+      renderer.start();
 
       function tick() {
         requestAnimationFrame(tick);
-        // emitter.rotation += 1.5;
         proton.update();
       }
-
-      createProton();
       tick();
     },
   };
