@@ -1,5 +1,5 @@
 <template>
-  <div id="games">
+  <div id="games" class="tabContents">
     Games
   </div>
 </template>

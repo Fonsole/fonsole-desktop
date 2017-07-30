@@ -1,5 +1,5 @@
 <template>
-  <div id="community">
+  <div id="community" class="tabContents">
     Community
   </div>
 </template>

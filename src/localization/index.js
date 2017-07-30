@@ -23,6 +23,9 @@ const Localization = {
     };
 
     Vue.prototype.$localize = localize;
+    Vue.getLocalizationList = function getLocalizationList() {
+      return languages;
+    };
   },
 };
 

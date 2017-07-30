@@ -2,10 +2,14 @@
   <div id="app">
     <body>
       <rings></rings>
-      <div id="router-container">
-        <router-view></router-view>
+      <div id="appContent">
+        <div id="topbarContainer">
+          <topbar></topbar>
+        </div>
+        <div id="routerContainer">
+          <router-view></router-view>
+        </div>
       </div>
-      <topbar></topbar>
     </body>
   </div>
 </template>
@@ -30,19 +34,41 @@
 </script>
 
 <style lang="sass">
-  $font-stack:    Helvetica, sans-serif;
-  $primary-color: #333;
+  @font-face
+    font-family: 'zekton'
+    src: url('./assets/zekton.ttf') format('truetype')
+    font-weight: normal
+    font-style: normal
 
+  $font-stack:    zekton, Helvetica, sans-serif
+  $primary-color: white
+  
   body
-    width: 100%
-    height: 100%
     margin: 0
     padding: 0
     overflow: hidden
     background-color: #222
-  #router-container
-    width: 100%
+    color: $primary-color
+    font-family: 'zekton'
+    
+  #appContent
     height: 100%
+    width: 100%
     position: absolute
-    top: 53px
+    display: flex
+    flex-direction: column
+    
+  #topbarContainer
+    flex: 0 1 auto
+    background-color: rgba(20,20,20,.8)
+
+  #routerContainer
+    flex: 1 1 auto
+    margin: 15px
+    display: flex
+    flex-direction: column
+    
+    .tabContents
+      flex: 1 1 auto
+      margin: 0px
 </style>

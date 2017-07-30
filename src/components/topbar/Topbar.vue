@@ -29,13 +29,7 @@
   };
 </script>
 
-<style lang="sass">
-  @font-face
-    font-family: 'zekton'
-    src: url('../../assets/zekton.ttf') format('truetype')
-    font-weight: normal
-    font-style: normal
-
+<style lang="sass" scoped>
   ul
     list-style-type: none
     margin: 0
@@ -62,12 +56,4 @@
 
       a:hover, img:hover
         transform: scale(1.1)
-
-
-  #topbar
-    margin: 0px
-    width: 100%
-    // height: 70px
-    background-color: rgba(20,20,20,.8)
-    position: absolute
 </style>
