@@ -1,6 +1,6 @@
 <template>
-  <div id="settings">
-    Settings
+  <div id="games">
+    Games
   </div>
 </template>
 <script>
@@ -12,7 +12,7 @@ export default {
 };
 </script>
 <style lang="sass" scoped>
-  #settings
+  #games
     display: block;
     width: 100%;
     height: 100%;

@@ -1,6 +1,6 @@
 <template>
-  <div id="settings">
-    Settings
+  <div id="shop">
+    Shop
   </div>
 </template>
 <script>
@@ -12,7 +12,7 @@ export default {
 };
 </script>
 <style lang="sass" scoped>
-  #settings
+  #shop
     display: block;
     width: 100%;
     height: 100%;
