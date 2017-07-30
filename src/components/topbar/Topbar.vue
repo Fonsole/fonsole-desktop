@@ -21,6 +21,8 @@
       onButtonClicked(event) {
         if (event.target.id === 'games') {
           this.$router.push('/game/test');
+        } else {
+          this.$router.push(`/${event.target.id}`);
         }
       },
     },

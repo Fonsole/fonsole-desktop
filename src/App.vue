@@ -11,25 +11,20 @@
 </template>
 
 <script>
-  import Topbar from './components/topbar/Topbar';
   import Rings from './components/rings/Rings';
+  import Topbar from './components/topbar/Topbar';
 
   export default {
     name: 'app',
-    data() {
-      return {
-      };
-    },
+    data: () => ({
+    }),
     components: {
-      Rings,
-      Topbar,
+      rings: Rings,
+      topbar: Topbar,
     },
     methods: {
-      random(m, n) {
-        const mi = parseInt(m, 10);
-        const ni = parseInt(n, 10);
-        return Math.floor(Math.random() * ((ni - mi) + 1)) + mi;
-      },
+    },
+    computed: {
     },
   };
 </script>

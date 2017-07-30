@@ -11,8 +11,7 @@
     name: 'rings',
     data() {
       return {
-        particleSize: 100,
-        particleCount: 280,
+        initialRadius: 10,
         colours: ['#69D2E7', '#A7DBD8', '#E0E4CC', '#F38630', '#FA6900', '#FF4E50', '#F9D423'],
       };
     },
@@ -35,12 +34,13 @@
 
       const proton = new Proton();
       const emitter = new Proton.Emitter();
-      emitter.rate = new Proton.Rate(new Proton.Span(1), new Proton.Span(1));
-      // emitter.addInitialize(new Proton.Mass(1));
-      emitter.addInitialize(new Proton.Radius(10));
+      const scaleFactor = Math.sqrt((window.innerWidth ** 2) + (window.innerHeight ** 2))
+        / this.initialRadius;
+      emitter.rate = new Proton.Rate(new Proton.Span(1));
+      emitter.addInitialize(new Proton.Radius(this.initialRadius));
       emitter.addInitialize(new Proton.Life(20));
       emitter.addBehaviour(new Proton.Color('random'));
-      emitter.addBehaviour(new Proton.Scale(1, 200));
+      emitter.addBehaviour(new Proton.Scale(1, scaleFactor));
       emitter.p.x = canvas.width;
       emitter.p.y = canvas.height;
       emitter.emit();
