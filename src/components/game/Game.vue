@@ -1,6 +1,5 @@
 <template>
   <div>
-    <!-- webview hasn't contentWindow property -->
     <iframe id="game" ref="game" :src="url"></iframe>
   </div>
 </template>
