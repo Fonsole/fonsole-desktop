@@ -6,7 +6,6 @@ import Vuex from 'vuex';
 
 import App from './App';
 import Localization from './localization';
-import router from './router';
 
 Vue.use(Vuex);
 Vue.config.productionTip = false;
@@ -14,6 +13,7 @@ Vue.config.productionTip = false;
 const networking = new NetworkingAPI();
 const store = new Vuex.Store({
   state: {
+    currentContentIndex: 'home',
     roomName: '',
   },
   mutations: {
@@ -40,7 +40,6 @@ Vue.use(Localization, store);
 /* eslint-disable no-new */
 new Vue({
   el: '#app',
-  router,
   store,
   template: '<App/>',
   components: { App },

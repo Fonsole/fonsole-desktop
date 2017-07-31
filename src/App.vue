@@ -7,7 +7,7 @@
           <topbar></topbar>
         </div>
         <div id="routerContainer">
-          <router-view></router-view>
+          <component :is="currentContentIndex" transition="fade" transition-mode="out-in"></component>
         </div>
       </div>
     </body>
@@ -17,6 +17,12 @@
 <script>
   import Rings from './components/rings/Rings';
   import Topbar from './components/topbar/Topbar';
+  import Game from './components/game/Game';
+  import Home from './components/home/Home';
+  import Games from './components/games/Games';
+  import Shop from './components/shop/Shop';
+  import Community from './components/community/Community';
+  import Settings from './components/settings/Settings';
 
   export default {
     name: 'app',
@@ -25,10 +31,19 @@
     components: {
       rings: Rings,
       topbar: Topbar,
+      game: Game,
+      home: Home,
+      games: Games,
+      shop: Shop,
+      community: Community,
+      settings: Settings,
     },
     methods: {
     },
     computed: {
+      currentContentIndex() {
+        return this.$store.state.currentContentIndex;
+      },
     },
   };
 </script>
@@ -42,7 +57,7 @@
 
   $font-stack:    zekton, Helvetica, sans-serif
   $primary-color: white
-  
+
   body
     margin: 0
     padding: 0
@@ -50,14 +65,14 @@
     background-color: #222
     color: $primary-color
     font-family: 'zekton'
-    
+
   #appContent
     height: 100%
     width: 100%
     position: absolute
     display: flex
     flex-direction: column
-    
+
   #topbarContainer
     flex: 0 1 auto
     background-color: rgba(20,20,20,.8)
@@ -67,8 +82,15 @@
     margin: 15px
     display: flex
     flex-direction: column
-    
+
     .tabContents
       flex: 1 1 auto
       margin: 0px
+
+  .fade-transition
+    transition: transform .3s, opacity .3s
+
+  .fade-enter, .fade-leave
+    transform: translateX(200px)
+    opacity: 0
 </style>

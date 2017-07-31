@@ -20,9 +20,9 @@
     methods: {
       onButtonClicked(event) {
         if (event.target.id === 'games') {
-          this.$router.push('/game/test');
+          this.$store.state.currentContentIndex = 'game';
         } else {
-          this.$router.push(`/${event.target.id}`);
+          this.$store.state.currentContentIndex = event.target.id;
         }
       },
     },
