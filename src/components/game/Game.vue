@@ -12,7 +12,7 @@ export default {
     };
   },
   mounted() {
-    this.$store.commit('injectPlatform', this.$refs.game);
+    this.$store.commit('attachNetworkingApi', this.$refs.game);
     this.url = '/static/games/test.html';
   },
 };

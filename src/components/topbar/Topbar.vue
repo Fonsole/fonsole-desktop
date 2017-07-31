@@ -5,6 +5,9 @@
       <li v-for="(buttonName,index) in buttons">
         <a @click="onButtonClicked" :id="buttonName">{{ $localize(buttonName) }}</a>
       </li>
+      <li id="roomName">
+        ROOM CODE: {{ roomName }}
+      </li>
     </ul>
   </div>
 </template>
@@ -24,6 +27,11 @@
         } else {
           this.$store.state.currentContentIndex = event.target.id;
         }
+      },
+    },
+    computed: {
+      roomName() {
+        return this.$store.state.roomName;
       },
     },
   };
@@ -56,4 +64,16 @@
 
       a:hover, img:hover
         transform: scale(1.1)
+
+  #roomName
+    float: right
+    font-weight: 900
+    font-family: 'zekton'
+    text-align: center
+    padding: 14px 16px
+    text-decoration: none
+    text-transform: uppercase
+    font-size: 20px
+    transition: transform 0.1s linear 0.0s
+    color: lime
 </style>

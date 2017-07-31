@@ -20,24 +20,23 @@ const store = new Vuex.Store({
     setRoomName: (state, roomName) => {
       state.roomName = roomName;
     },
-    injectPlatform: (state, frame) => {
-      console.log(networking.gameEmitToPlayer);
-      frame.contentWindow.gameEmitToPlayer = networking.gameEmitToPlayer.bind(networking);
-      frame.contentWindow.gameEmitToEveryone = networking.gameEmitToEveryone.bind(networking);
-      frame.contentWindow.gameOn = networking.gameOn.bind(networking);
-      frame.contentWindow.gameOnce = networking.gameOnce.bind(networking);
-      frame.contentWindow.platformType = networking.platform;
+    attachNetworkingApi: (state, frame) => {
+      // eslint-disable-next-line no-underscore-dangle
+      frame.__NetworkingAPI = networking.export();
     },
   },
 });
-networking.once('room-joined', (roomName) => {
-  alert(roomName);
-  store.commit('setRoomName', roomName);
-});
+networking.openRoom()
+  .then((status) => {
+    store.commit('setRoomName', status.roomName);
+  })
+  .catch((message) => {
+    throw new Error(message);
+  });
 
 Vue.use(Localization, store);
 
-/* eslint-disable no-new */
+// eslint-disable-next-line no-new
 new Vue({
   el: '#app',
   store,
