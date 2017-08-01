@@ -27,7 +27,7 @@ Fonsole is a platform that offers a series of multiplayer party games where the 
 
 * Launch electron with "hot reload" at localhost:8080
 
-	```npm run dev:web```
+	```npm run dev```
 
 * Launch webpack-dev-server with "hot reload" at localhost:8080
 
