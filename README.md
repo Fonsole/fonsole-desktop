@@ -1,13 +1,13 @@
 # fonsole
 
-## Project Overview 
-Fonsole is a platform that offers a series of multiplayer party games where the smartphone is the controller. Games are similar to board games, party games, card games and other social games that people typically play at gatherings/parties. Games will be mostly turn-based, or asynchronous games. Real time games will not be offered (initially). THE unique feature of this platform, is that players use their phones to control the games that will be displayed on a big screen (laptop or TV screen), via a simple website that they can access through their smart phone's web browser. The platform will provide the tools the infrastructure for devs to easily create additional games. 
+## Project Overview
+Fonsole is a platform that offers a series of multiplayer party games where the smartphone is the controller. Games are similar to board games, party games, card games and other social games that people typically play at gatherings/parties. Games will be mostly turn-based, or asynchronous games. Real time games will not be offered (initially). THE unique feature of this platform, is that players use their phones to control the games that will be displayed on a big screen (laptop or TV screen), via a simple website that they can access through their smart phone's web browser. The platform will provide the tools the infrastructure for devs to easily create additional games.
 
 [Developer Discord](https://discord.gg/SmjaHGt)
 
 [Useful Links](https://discord.gg/TZpJ4S8)
 
-## Frameworks Used (To be filled)
+## Frameworks Used
 * Vue.js
 * Electron
 * socket.io
@@ -15,28 +15,28 @@ Fonsole is a platform that offers a series of multiplayer party games where the 
 ## Build Setup Instructions
 * Download Repo Manually or Clone it (Recommended)
 
-* Make sure to have [NPM (node package manager)](https://www.npmjs.com/get-npm?utm_source=house&utm_medium=homepage&utm_campaign=free%20orgs&utm_term=Install%20npm) installed on your system and its version greater than or equal to 3.0.0. 
+* Make sure to have [NPM (node package manager)](https://www.npmjs.com/get-npm?utm_source=house&utm_medium=homepage&utm_campaign=free%20orgs&utm_term=Install%20npm) installed on your system and its version greater than or equal to 3.0.0.
 
 * Open cmd.exe with admin privileges, browse to repo folder, and run the following command
 
-	```npm install npm@latest -g```
+	```npm install npm@5.2 -g```
 
 * Install dependencies:
 
   ```npm install```
 
-* Serve with "hot reload" at localhost:8080. Hot reload means that server will automatically update when changes are made to the code.
+* Launch electron with "hot reload" at localhost:8080
 
-  ```npm run dev```
+	```npm run dev:web```
 
-* Build for production with minification
+* Launch webpack-dev-server with "hot reload" at localhost:8080
 
-  ```npm run build```
+  ```npm run dev:web```
 
-* Build for production and view the bundle analyzer report
+* Build binaries, checkout ```package.json``` for all possible targets
 
-  ```npm run build --report```
-  
+  ```npm run build:win32```
+
 * Run ESlint to fix possible style errors
 
   ```npm run lint-fix```

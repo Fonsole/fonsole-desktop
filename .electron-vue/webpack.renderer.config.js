@@ -129,7 +129,7 @@ let rendererConfig = {
     },
     extensions: ['.js', '.vue', '.json', '.css', '.node']
   },
-  target: 'electron-renderer'
+  target: process.env.WEBDEV == true ? 'web' : 'electron-renderer'
 }
 
 /**

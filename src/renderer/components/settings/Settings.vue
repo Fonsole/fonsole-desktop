@@ -14,7 +14,11 @@
 <script>
   import Checkbox from './Checkbox';
 
-  const { remote } = require('electron');
+  let electron;
+
+  if (process.env.IS_WEB === undefined) {
+    electron = require('electron');
+  }
 
   export default {
     name: 'settings',
@@ -22,11 +26,11 @@
       checkbox: Checkbox,
     },
     data: () => ({
-      isFullscreen: remote.getCurrentWindow().isFullScreen(),
+      isFullscreen: electron.remote.getCurrentWindow().isFullScreen(),
     }),
     watch: {
       isFullscreen() {
-        remote.getCurrentWindow().setFullScreen(this.isFullscreen);
+        electron.remote.getCurrentWindow().setFullScreen(this.isFullscreen);
       },
     },
   };
