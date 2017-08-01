@@ -1,2 +1,2 @@
-src/assets/libs/*.js
+src/renderer/assets/libs/*.js
 dist/*
