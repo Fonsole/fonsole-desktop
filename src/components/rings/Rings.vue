@@ -57,6 +57,16 @@
         proton.update();
       }
       tick();
+
+      function resize() {
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+
+        emitter.p.x = canvas.width;
+        emitter.p.y = canvas.height;
+      }
+
+      window.addEventListener('resize', resize, false);
     },
   };
 </script>

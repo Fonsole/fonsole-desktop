@@ -38,4 +38,5 @@ module.exports = merge(baseWebpackConfig, {
     }),
     new FriendlyErrorsPlugin(),
   ],
+  target: "electron",
 });

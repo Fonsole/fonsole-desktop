@@ -88,9 +88,8 @@
       margin: 0px
 
   .fade-transition
-    transition: transform .3s, opacity .3s
+    transition: opacity 0.2s ease
 
   .fade-enter, .fade-leave
-    transform: translateX(200px)
     opacity: 0
 </style>

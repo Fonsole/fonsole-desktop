@@ -3,5 +3,9 @@
   "topbar_games" : "games",
   "topbar_shop" : "shop",
   "topbar_community" : "community",
-  "topbar_settings" : "settings"
+  "topbar_settings" : "settings",
+
+  "settings_general" : "general",
+  "settings_profile" : "profile",
+  "settings_fullscreen" : "fullscreen mode"
 }
