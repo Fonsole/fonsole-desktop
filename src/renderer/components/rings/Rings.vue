@@ -5,6 +5,7 @@
 </template>
 
 <script>
+  require('proton');
   const Proton = window.Proton;
 
   export default {

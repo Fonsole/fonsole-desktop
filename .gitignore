@@ -8,7 +8,8 @@
 node_modules/
 dist/electron/*
 dist/web/*
-# !build/icons
+build/*
+!build/icons
 node_modules/
 npm-debug.log
 npm-debug.log.*
