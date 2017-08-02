@@ -73,5 +73,6 @@
           opacity: 0.5
 
     .contents
+      display: flex
       flex: 1 1 auto
 </style>

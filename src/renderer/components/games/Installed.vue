@@ -1,6 +1,6 @@
 <template>
   <div id="installed" ref="dick">
-    <carousel-3d :height="height" :controls-visible="true">
+    <carousel-3d height="50" width="80" :controls-visible="true">
       <slide v-for="(id,index) in installedGames" :index="index">
         <preview :gameID="id"></preview>
       </slide>
@@ -20,7 +20,6 @@
       Preview,
     },
     data: () => ({
-      height: 0,
       installedGames: [0, 1, 2, 3, 4, 5],
     }),
     created() {
@@ -32,7 +31,7 @@
 </script>
 <style lang="sass" scoped>
   #installed
-    width: 90%
+    width: 100%
     margin: 0 auto
     display: flex
     flex-direction: row

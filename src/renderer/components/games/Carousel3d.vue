@@ -1,6 +1,6 @@
 <template>
-    <div class="carousel-3d-container" :style="{height: this.slideHeight + 'px'}">
-        <div class="carousel-3d-slider" :style="{width: this.slideWidth + 'px', height: this.slideHeight + 'px'}">
+    <div class="carousel-3d-container" :style="{height: this.slideHeight + 'vh'}">
+        <div class="carousel-3d-slider" :style="{width: this.slideWidth + 'vh', height: this.slideHeight + 'vh'}">
             <slot></slot>
         </div>
         <controls v-if="controlsVisible" :next-html="controlsNextHtml" :prev-html="controlsPrevHtml"
@@ -432,7 +432,6 @@
         position: relative;
         z-index: 0;
         overflow: hidden;
-        margin: 20px auto;
         box-sizing: border-box;
     }
 
@@ -440,9 +439,6 @@
         position: relative;
         margin: 0 auto;
         transform-style: preserve-3d;
-        -webkit-perspective: 1000px;
-        -moz-perspective: 1000px;
-        perspective: 1000px;
+        perspective: 500vh;
     }
-
 </style>
