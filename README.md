@@ -50,3 +50,5 @@ For detailed explanation on how things work, checkout the [guide](http://vuejs-t
 [API Repo](https://github.com/darklordabc/fonsole-api): This is the public API that developers can explore to see how to develop games for fonsole.
 
 [Server Repo](https://github.com/darklordabc/fonsole-server): This is the server component of fonsole. It will eventually be made private.
+
+[Networking Repo](https://github.com/darklordabc/fonsole-networking): TO BE DESCRIBED
