@@ -69,9 +69,6 @@
 </script>
 
 <style lang="sass" scoped>
-  $dividerColor: rgba(255,255,255,0.65)
-  $dividerColorTransparent: rgba(255,255,255,0)
-
   h1, h2
     margin: 0px
 
@@ -83,12 +80,4 @@
     .block
       min-width: 400px
       float: left
-
-  .divider
-    margin-top: 6px
-    margin-bottom: 6px
-    margin-left: 1px
-    width: 100%
-    height: 1px
-    background: linear-gradient(left, $dividerColor 0%,$dividerColor 5%,$dividerColor 50%,$dividerColorTransparent 95%,$dividerColorTransparent 100%)
 </style>

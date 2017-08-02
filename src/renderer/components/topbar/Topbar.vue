@@ -22,11 +22,7 @@
     },
     methods: {
       onButtonClicked(event) {
-        if (event.target.id === 'games') {
-          this.$store.state.currentContentIndex = 'game';
-        } else {
-          this.$store.state.currentContentIndex = event.target.id;
-        }
+        this.$store.state.currentContentIndex = event.target.id;
       },
     },
     computed: {
