@@ -21,7 +21,7 @@
 
   let electron;
 
-  if (process.env.IS_WEB === undefined) {
+  if (!process.env.IS_WEB) {
     electron = require('electron');
   }
 
