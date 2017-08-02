@@ -3,6 +3,8 @@ node_modules/
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+thumbs.db
+!.gitkeep
 
 # Editor directories and files
 .idea
@@ -11,4 +13,6 @@ yarn-error.log*
 *.njsproj
 *.sln
 
-dist/
+dist/*
+build/*
+!build/icons

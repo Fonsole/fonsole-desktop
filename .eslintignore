@@ -1,2 +1,5 @@
-src/assets/libs/*.js
+src/renderer/assets/libs/*.js
 dist/*
+Slide.vue
+Carousel3d.vue
+Controls.vue
