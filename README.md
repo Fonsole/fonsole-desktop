@@ -15,7 +15,7 @@ Fonsole is a platform that offers a series of multiplayer party games where the 
 ## Build Setup Instructions
 * Download Repo Manually or Clone it (Recommended)
 
-* Make sure to have [NPM (node package manager)](https://www.npmjs.com/get-npm?utm_source=house&utm_medium=homepage&utm_campaign=free%20orgs&utm_term=Install%20npm) installed on your system and its version greater than or equal to 3.0.0. 
+* Make sure to have [NPM (node package manager)](https://www.npmjs.com/get-npm) installed on your system and its version greater than or equal to 3.0.0. 
 
 * Open cmd.exe with admin privileges, browse to repo folder, and run the following command
 
@@ -42,13 +42,25 @@ Fonsole is a platform that offers a series of multiplayer party games where the 
   ```npm run lint-fix```
 
 For detailed explanation on how things work, checkout the [guide](http://vuejs-templates.github.io/webpack/) and [docs for vue-loader](http://vuejs.github.io/vue-loader).
-# fonsole-playground
 
 ### All Repositories:
-[Desktop Repo](https://github.com/darklordabc/fonsole-desktop): Main repo, this is the desktop version of the game (bigscreen), it is the main view that all the players will see for the games, typically on a large monitor/tv, uses electron.
+#### [Desktop Repo](https://github.com/darklordabc/fonsole-desktop)
+Main repo, this is the desktop version of the game (bigscreen), it is the main view that all the players will see for the games, typically on a large monitor/tv, uses electron.
 
-[API Repo](https://github.com/darklordabc/fonsole-api): This is the public API that developers can explore to see how to develop games for fonsole.
+**Dependencies:**
+* [Networking Repo](#networking-repo)
 
-[Server Repo](https://github.com/darklordabc/fonsole-server): This is the server component of fonsole. It will eventually be made private.
+#### [API Repo](https://github.com/darklordabc/fonsole-api)
+This is the public API that developers can explore to see how to develop games for fonsole.
 
-[Networking Repo](https://github.com/darklordabc/fonsole-networking): TO BE DESCRIBED
+#### [Server Repo](https://github.com/darklordabc/fonsole-server)
+This is the server component of fonsole. It will eventually be made private.
+
+**Dependencies:**
+* [Networking Repo](#networking-repo)
+* [API Repo](#api-repo)
+
+#### [Networking Repo](https://github.com/darklordabc/fonsole-networking)
+This is a socket.io-based component, that inclueds both client and server files. This repository most likely also will be private.
+* Server is located in `networking.js` file and is exported by default. Contains everything that is releated to rooms and working with client connections.
+* Client part is located in `client` directory. Has everything that can be used for communication with server part. Also has a `export` that returns object with functions, that can be used by [Public API](#api-repo).
