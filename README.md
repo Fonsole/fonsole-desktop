@@ -47,7 +47,7 @@ For detailed explanation on how things work, checkout the [guide](http://vuejs-t
 #### [Desktop Repo](https://github.com/darklordabc/fonsole-desktop)
 Main repo, this is the desktop version of the game (bigscreen), it is the main view that all the players will see for the games, typically on a large monitor/tv, uses electron.
 
-**Dependencies:**
+Dependencies:
 * [Networking Repo](#networking-repo)
 
 #### [API Repo](https://github.com/darklordabc/fonsole-api)
@@ -56,7 +56,7 @@ This is the public API that developers can explore to see how to develop games f
 #### [Server Repo](https://github.com/darklordabc/fonsole-server)
 This is the server component of fonsole. It will eventually be made private.
 
-**Dependencies:**
+Dependencies:
 * [Networking Repo](#networking-repo)
 * [API Repo](#api-repo)
 
