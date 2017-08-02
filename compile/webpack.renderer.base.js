@@ -118,10 +118,10 @@ if (process.env.NODE_ENV === 'production') {
 
   baseConfig.plugins.push(
     new ExtractTextPlugin('style.css'),
-   /* new BabiliWebpackPlugin({
+    new BabiliWebpackPlugin({
       removeConsole: true,
       removeDebugger: true,
-    }),*/
+    }),
     new CopyWebpackPlugin([
       {
         from: path.join(__dirname, '../static'),
