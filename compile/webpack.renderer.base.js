@@ -82,7 +82,7 @@ const baseConfig = {
   },
   plugins: [
     new webpack.DefinePlugin({
-      IS_WEB: !!process.env.IS_WEB,
+      'process.env.IS_WEB': !!process.env.IS_WEB,
     }),
     new webpack.HotModuleReplacementPlugin(),
     new webpack.NoEmitOnErrorsPlugin(),

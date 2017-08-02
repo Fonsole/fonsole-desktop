@@ -1,5 +1,3 @@
-
-
 const chalk = require('chalk');
 const electron = require('electron');
 const path = require('path');
@@ -8,7 +6,6 @@ const webpack = require('webpack');
 const WebpackDevServer = require('webpack-dev-server');
 const webpackHotMiddleware = require('webpack-hot-middleware');
 const opn = require('opn');
-
 const mainConfig = require('./webpack.main.config');
 const rendererConfig = process.env.IS_WEB ?
   require('./webpack.renderer.web.config') :
