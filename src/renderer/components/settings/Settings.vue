@@ -4,6 +4,10 @@
       <h2>{{ $localize('general') }}</h2>
       <div class="divider"/>
       <checkbox id="fullscreenCheckbox" v-bind:text="$localize('fullscreen')" v-model="isFullscreen"/>
+      <dropdown id="resolutionDropdown" v-bind:text="$localize('resolution')" v-model="resolution" :closeAfterClick="true">
+        <button slot="toggle">{{ `◂${getCurrentResolution()}▸` }}</button>
+        <div v-for="(resolution,index) in getAvailableResolutions" class="s-dropdown-item" @click="changeResolution(resolution)" :id="resolution">{{resolution}}</div>
+      </dropdown>
     </div>
     <div class="block">
       <h2>{{ $localize('profile') }}</h2>
@@ -13,6 +17,7 @@
 </template>
 <script>
   import Checkbox from './Checkbox';
+  import Dropdown from './Dropdown';
 
   let electron;
 
@@ -24,9 +29,36 @@
     name: 'settings',
     components: {
       checkbox: Checkbox,
+      dropdown: Dropdown,
+    },
+    computed: {
+      getAvailableResolutions() {
+        return this.allResolutions;
+      },
+    },
+    methods: {
+      stringToResolution(s) {
+        return s.split('x').map(Number);
+      },
+      resolutionToString(s) {
+        return `${s[0]}x${s[1]}`;
+      },
+      getCurrentResolution() {
+        return this.resolutionToString(electron.remote.getCurrentWindow().getSize());
+      },
+      changeResolution(r) {
+        const width = this.stringToResolution(r)[0];
+        const height = this.stringToResolution(r)[1];
+
+        electron.remote.getCurrentWindow().setSize(width, height, true);
+
+        this.resolution = this.getCurrentResolution();
+      },
     },
     data: () => ({
       isFullscreen: electron.remote.getCurrentWindow().isFullScreen(),
+      resolution: electron.remote.getCurrentWindow().getSize(),
+      allResolutions: ['1280x720', '1280x800', '1280x1024', '1920x1080'],
     }),
     watch: {
       isFullscreen() {

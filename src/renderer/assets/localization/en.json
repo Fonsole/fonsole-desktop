@@ -7,5 +7,7 @@
 
   "settings_general" : "general",
   "settings_profile" : "profile",
-  "settings_fullscreen" : "fullscreen mode"
+  "settings_fullscreen" : "fullscreen mode",
+  "settings_borderless" : "borderless",
+  "settings_resolution" : "screen resolution"
 }
