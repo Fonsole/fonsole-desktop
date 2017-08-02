@@ -2,7 +2,7 @@
   <div id="topbar">
     <ul>
       <li><img src="../../assets/menu_logo.png"></img></li>
-      <li v-for="(buttonName,index) in buttons">
+      <li v-for="buttonName in buttons" :key="buttonName">
         <a @click="onButtonClicked" :id="buttonName">{{ $localize(buttonName) }}</a>
       </li>
       <li id="roomName">
@@ -14,20 +14,18 @@
 
 <script>
   export default {
-    name: 'topbar',
-    data() {
-      return {
-        buttons: ['home', 'games', 'shop', 'community', 'settings'],
-      };
+    name: 'Topbar',
+    data: () => ({
+      buttons: ['home', 'games', 'shop', 'community', 'settings'],
+    }),
+    computed: {
+      roomName() {
+        return this.$store.state.roomName;
+      },
     },
     methods: {
       onButtonClicked(event) {
         this.$store.state.currentContentIndex = event.target.id;
-      },
-    },
-    computed: {
-      roomName() {
-        return this.$store.state.roomName;
       },
     },
   };

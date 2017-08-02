@@ -9,8 +9,8 @@
 </template>
 
 <script>
-    import Controls from './Controls.vue';
-    import Slide from './Slide.vue';
+    import Controls from './Controls';
+    import Slide from './Slide';
 
     const noop = () => {
     };

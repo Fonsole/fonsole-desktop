@@ -6,7 +6,7 @@
 </template>
 <script>
 export default {
-  name: 'checkbox',
+  name: 'Checkbox',
   props: ['text', 'value'],
   data: () => ({
     checkboxValue: false,

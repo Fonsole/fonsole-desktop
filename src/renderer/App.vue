@@ -7,7 +7,11 @@
           <topbar></topbar>
         </div>
         <div id="routerContainer">
-          <component :is="currentContentIndex" transition="fade" transition-mode="out-in"></component>
+          <component
+            :is="currentContentIndex"
+            transition="fade"
+            transition-mode="out-in"
+          ></component>
         </div>
       </div>
     </body>
@@ -25,9 +29,7 @@
   import Settings from '@/components/settings/Settings';
 
   export default {
-    name: 'app',
-    data: () => ({
-    }),
+    name: 'App',
     components: {
       rings: Rings,
       topbar: Topbar,
@@ -38,14 +40,15 @@
       community: Community,
       settings: Settings,
     },
-    methods: {
-    },
     computed: {
       currentContentIndex() {
         return this.$store.state.currentContentIndex;
       },
     },
+    methods: {
+    },
   };
+/* eslint-disable max-len */
 </script>
 
 <style lang="sass">
@@ -100,7 +103,7 @@
     margin-left: 1px
     width: 100%
     height: 2px
-    background: linear-gradient(left, $dividerColor 0%,$dividerColor 5%,$dividerColor 50%,$dividerColorTransparent 95%,$dividerColorTransparent 100%)
+    background: linear-gradient(left, $dividerColor 0%, $dividerColor 5%, $dividerColor 50%, $dividerColorTransparent 95%, $dividerColorTransparent 100%)
 
   .fade-transition
     transition: opacity 0.2s ease

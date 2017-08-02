@@ -2,19 +2,32 @@
   <div id="settings" class="tabContents">
     <div class="block">
       <h2>{{ $localize('general') }}</h2>
-      <div class="divider"/>
-      <checkbox id="fullscreenCheckbox" v-bind:text="$localize('fullscreen')" v-model="isFullscreen"/>
-      <dropdown id="resolutionDropdown" v-bind:text="$localize('resolution')" v-model="resolution" :closeAfterClick="true">
+      <div class="divider"></div>
+      <checkbox
+        id="fullscreenCheckbox"
+        :text="$localize('fullscreen')"
+        v-model="isFullscreen"
+      ></checkbox>
+      <dropdown
+        id="resolutionDropdown"
+        :text="$localize('resolution')"
+        v-model="resolution"
+        :closeAfterClick="true">
         <button slot="toggle">{{ `◂${getCurrentResolution()}▸` }}</button>
-        <div v-for="(resolution,index) in getAvailableResolutions" class="s-dropdown-item" @click="changeResolution(resolution)" :id="resolution">{{resolution}}</div>
+        <div
+          v-for="(resolution,index) in getAvailableResolutions"
+          class="s-dropdown-item"
+          @click="changeResolution(resolution)"
+          :id="resolution"
+          :key="resolution">{{resolution}}</div>
       </dropdown>
     </div>
     <div class="block">
       <h2>{{ $localize('profile') }}</h2>
-      <div class="divider"/>
+      <div class="divider"></div>
     </div>
   </div>
-</template>
+</div></template>
 <script>
   import Checkbox from './Checkbox';
   import Dropdown from './Dropdown';
@@ -26,14 +39,24 @@
   }
 
   export default {
-    name: 'settings',
+    name: 'Settings',
     components: {
       checkbox: Checkbox,
       dropdown: Dropdown,
     },
+    data: () => ({
+      isFullscreen: electron.remote.getCurrentWindow().isFullScreen(),
+      resolution: electron.remote.getCurrentWindow().getSize(),
+      allResolutions: ['1280x720', '1280x800', '1280x1024', '1920x1080'],
+    }),
     computed: {
       getAvailableResolutions() {
         return this.allResolutions;
+      },
+    },
+    watch: {
+      isFullscreen() {
+        electron.remote.getCurrentWindow().setFullScreen(this.isFullscreen);
       },
     },
     methods: {
@@ -53,16 +76,6 @@
         electron.remote.getCurrentWindow().setSize(width, height, true);
 
         this.resolution = this.getCurrentResolution();
-      },
-    },
-    data: () => ({
-      isFullscreen: electron.remote.getCurrentWindow().isFullScreen(),
-      resolution: electron.remote.getCurrentWindow().getSize(),
-      allResolutions: ['1280x720', '1280x800', '1280x1024', '1920x1080'],
-    }),
-    watch: {
-      isFullscreen() {
-        electron.remote.getCurrentWindow().setFullScreen(this.isFullscreen);
       },
     },
   };

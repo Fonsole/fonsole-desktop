@@ -13,8 +13,8 @@ export default {
 </script>
 <style lang="sass" scoped>
   #home
-    display: block;
-    width: 100%;
-    height: 100%;
+    display: block
+    width: 100%
+    height: 100%
     background-color: rgba(20,20,20,.8)
 </style>

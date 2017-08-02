@@ -14,6 +14,7 @@
 </template>
 
 <script>
+
 export default {
   props: {
     closeAfterClick: {

@@ -1,10 +1,10 @@
 {
-  "topbar_home" : "главная",
-  "topbar_games" : "игры",
-  "topbar_shop" : "магазин",
-  "topbar_community" : "сообщество",
-  "topbar_settings" : "настройки",
+  "Topbar_home" : "главная",
+  "Topbar_games" : "игры",
+  "Topbar_shop" : "магазин",
+  "Topbar_community" : "сообщество",
+  "Topbar_settings" : "настройки",
 
-  "settings_general" : "Основные",
-  "settings_profile" : "Профиль"
+  "Settings_general" : "основные",
+  "Settings_profile" : "профиль"
 }

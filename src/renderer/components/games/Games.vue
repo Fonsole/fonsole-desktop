@@ -3,29 +3,33 @@
     <ul id="categories">
       <li>
         <input type="radio" v-model="showInstalled" value="0" id="radio1" checked="true"></input>
-        <label for='radio1'>{{ $localize('installed') }}</label>
+        <label for="radio1">{{ $localize('installed') }}</label>
       </li>
       <li>
         <label style="opacity: 0.5">|</label>
       </li>
       <li>
         <input type="radio" v-model="showInstalled" value="1" id="radio2"></input>
-        <label for='radio2'>{{ $localize('library') }}</label>
+        <label for="radio2">{{ $localize('library') }}</label>
       </li>
     </ul>
-    <div class="divider"/>
+    <div class="divider"></div>
     <div class="contents">
-      <component :is="showInstalled == 1 ? 'library' : 'installed'" transition="fade" transition-mode="out-in"></component>
+      <component
+        :is="showInstalled == 1 ? 'library' : 'installed'"
+        transition="fade"
+        transition-mode="out-in"
+      ></component>
     </div>
   </div>
-</template>
+</div></template>
 
 <script>
   import Installed from './Installed';
   import Library from './Library';
 
   export default {
-    name: 'games',
+    name: 'Games',
     components: {
       installed: Installed,
       library: Library,

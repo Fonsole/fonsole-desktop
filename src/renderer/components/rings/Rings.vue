@@ -10,22 +10,12 @@
   const Proton = window.Proton;
 
   export default {
-    name: 'rings',
+    name: 'Rings',
     data() {
       return {
         initialRadius: 10,
         colours: ['#69D2E7', '#A7DBD8', '#E0E4CC', '#F38630', '#FA6900', '#FF4E50', '#F9D423'],
       };
-    },
-    methods: {
-      random(m, n) {
-        if (Array.isArray(m)) {
-          return m[Math.floor(Math.random() * m.length)];
-        }
-        const mi = parseInt(m, 10);
-        const ni = parseInt(n, 10);
-        return Math.floor(Math.random() * ((ni - mi) + 1)) + mi;
-      },
     },
     mounted() {
       const canvas = this.$refs.particles;
@@ -69,6 +59,16 @@
       }
 
       window.addEventListener('resize', resize, false);
+    },
+    methods: {
+      random(m, n) {
+        if (Array.isArray(m)) {
+          return m[Math.floor(Math.random() * m.length)];
+        }
+        const mi = parseInt(m, 10);
+        const ni = parseInt(n, 10);
+        return Math.floor(Math.random() * ((ni - mi) + 1)) + mi;
+      },
     },
   };
 </script>

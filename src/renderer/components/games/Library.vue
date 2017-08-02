@@ -5,10 +5,7 @@
 </template>
 <script>
 export default {
-  name: 'library',
-  data: () => ({
-
-  }),
+  name: 'Library',
 };
 </script>
 <style lang="sass" scoped>

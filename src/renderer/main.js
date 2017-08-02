@@ -36,8 +36,8 @@ Vue.use(Localization, store);
 
 // eslint-disable-next-line no-new
 new Vue({
-  el: '#app',
-  store,
-  template: '<App/>',
   components: { App },
+  el: '#app',
+  template: '<App/>',
+  store,
 });

@@ -1,7 +1,7 @@
 <template>
   <div id="installed" ref="dick">
     <carousel-3d height="50" width="80" :controls-visible="true">
-      <slide v-for="(id,index) in installedGames" :index="index">
+      <slide v-for="(id,index) in installedGames" :index="index" :key="id">
         <preview :gameID="id"></preview>
       </slide>
     </carousel-3d>
@@ -13,7 +13,7 @@
   import Preview from './Preview';
 
   export default {
-    name: 'installed',
+    name: 'Installed',
     components: {
       Carousel3d,
       Slide,

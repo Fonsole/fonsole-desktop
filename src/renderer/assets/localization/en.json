@@ -1,16 +1,16 @@
 {
-  "topbar_home" : "home",
-  "topbar_games" : "games",
-  "topbar_shop" : "shop",
-  "topbar_community" : "community",
-  "topbar_settings" : "settings",
+  "Topbar_home" : "home",
+  "Topbar_games" : "games",
+  "Topbar_shop" : "shop",
+  "Topbar_community" : "community",
+  "Topbar_settings" : "settings",
 
-  "settings_general" : "general",
-  "settings_profile" : "profile",
-  "settings_fullscreen" : "fullscreen mode",
-  "settings_borderless" : "borderless",
-  "settings_resolution" : "screen resolution",
+  "Settings_general" : "general",
+  "Settings_profile" : "profile",
+  "Settings_fullscreen" : "fullscreen mode",
+  "Settings_borderless" : "borderless",
+  "Settings_resolution" : "screen resolution",
 
-  "games_installed" : "installed",
-  "games_library" : "library"
+  "Games_installed" : "installed",
+  "Games_library" : "library"
 }

@@ -7,11 +7,8 @@
 
 <script>
   export default {
-    name: 'preview',
+    name: 'Preview',
     props: ['gameID'],
-    data: () => ({
-
-    }),
     methods: {
       openGameView() {
         this.$store.state.currentContentIndex = 'games';
