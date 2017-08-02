@@ -103,11 +103,9 @@ const baseConfig = {
  * Adjust baseConfig for development settings
  */
 if (process.env.NODE_ENV !== 'production') {
-  baseConfig.plugins.push(
-    new webpack.DefinePlugin({
-      __static: `"${path.join(__dirname, '../static').replace(/\\/g, '\\\\')}"`,
-    }),
-  );
+  baseConfig.plugins.push(new webpack.DefinePlugin({
+    __static: `"${path.join(__dirname, '../static').replace(/\\/g, '\\\\')}"`,
+  }));
 }
 
 /**
@@ -134,8 +132,7 @@ if (process.env.NODE_ENV === 'production') {
     }),
     new webpack.LoaderOptionsPlugin({
       minimize: true,
-    }),
-  );
+    }));
 }
 
 module.exports = baseConfig;

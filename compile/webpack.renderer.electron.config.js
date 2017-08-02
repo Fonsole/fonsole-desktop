@@ -53,11 +53,9 @@ const rendererConfig = {
  * Adjust rendererConfig for development settings
  */
 if (process.env.NODE_ENV !== 'production') {
-  rendererConfig.plugins.push(
-    new webpack.DefinePlugin({
-      __static: `"${path.join(__dirname, '../static').replace(/\\/g, '\\\\')}"`,
-    }),
-  );
+  rendererConfig.plugins.push(new webpack.DefinePlugin({
+    __static: `"${path.join(__dirname, '../static').replace(/\\/g, '\\\\')}"`,
+  }));
 }
 
 module.exports = merge(require('./webpack.renderer.base'), rendererConfig);
