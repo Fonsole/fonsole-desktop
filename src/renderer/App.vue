@@ -15,14 +15,14 @@
 </template>
 
 <script>
-  import Rings from './components/rings/Rings';
-  import Topbar from './components/topbar/Topbar';
-  import Game from './components/game/Game';
-  import Home from './components/home/Home';
-  import Games from './components/games/Games';
-  import Shop from './components/shop/Shop';
-  import Community from './components/community/Community';
-  import Settings from './components/settings/Settings';
+  import Rings from '@/components/rings/Rings';
+  import Topbar from '@/components/topbar/Topbar';
+  import Game from '@/components/game/Game';
+  import Home from '@/components/home/Home';
+  import Games from '@/components/games/Games';
+  import Shop from '@/components/shop/Shop';
+  import Community from '@/components/community/Community';
+  import Settings from '@/components/settings/Settings';
 
   export default {
     name: 'app',

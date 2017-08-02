@@ -1,11 +1,12 @@
-const hotClient = require('webpack-hot-middleware/client?noInfo=true&reload=true')
+// eslint-disable-next-line import/no-unresolved
+const hotClient = require('webpack-hot-middleware/client?noInfo=true&reload=true');
 
-hotClient.subscribe(event => {
+hotClient.subscribe((event) => {
   /**
    * Reload browser when HTMLWebpackPlugin emits a new index.html
    */
   if (event.action === 'reload') {
-    window.location.reload()
+    window.location.reload();
   }
 
   /**
@@ -31,6 +32,6 @@ hotClient.subscribe(event => {
       <div id="dev-client">
         Compiling Main Process...
       </div>
-    `
+    `;
   }
-})
+});
