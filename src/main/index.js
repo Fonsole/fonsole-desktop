@@ -1,7 +1,3 @@
-// {{#if_eq eslintConfig 'standard'}}
-// 'use strict'
-//
-// {{/if_eq}}
 import { app, BrowserWindow } from 'electron';
 
 /**
