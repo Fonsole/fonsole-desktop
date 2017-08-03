@@ -28,8 +28,8 @@ networking.openRoom()
   .then((status) => {
     store.commit('setRoomName', status.roomName);
   })
-  .catch((message) => {
-    throw new Error(message);
+  .catch((err) => {
+    throw new Error(err);
   });
 
 Vue.use(Localization, store);

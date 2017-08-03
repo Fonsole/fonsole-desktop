@@ -10,10 +10,14 @@ module.exports = {
   extends: [
     'airbnb-base',
     'plugin:vue/recommended',
+    'plugin:unicorn/recommended',
   ],
   globals: {
     __static: true,
   },
+  plugins: [
+    'unicorn',
+  ],
   rules: {
     // don't require .vue extension when importing
     'import/extensions': ['error', 'always', {
@@ -46,5 +50,11 @@ module.exports = {
     'vue/return-in-computed-property': 2,
     'vue/v-bind-style': 2,
     'vue/v-on-style': 2,
+
+    // eslint-plugin-unicorn configuration
+    'unicorn/filename-case': 0,
+    'unicorn/explicit-length-check': [0, {
+      'non-zero': 'greater-than',
+    }],
   },
 };
