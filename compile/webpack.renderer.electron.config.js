@@ -23,6 +23,7 @@ const rendererConfig = {
   },
   externals: [
     ...Object.keys(dependencies || {}).filter(d => !whiteListedModules.includes(d)),
+    'ws',
   ],
   node: {
     __dirname: process.env.NODE_ENV !== 'production',
