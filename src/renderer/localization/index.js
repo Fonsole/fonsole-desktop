@@ -29,7 +29,7 @@ const Localization = {
     // Try to detect client language
     let clientLanguage = /(\w+)-?\w*/g.exec(navigator.language)[1];
     // If fonsole is not localized for client's language fallback to english
-    if (!(clientLanguage in languages)) clientLanguage = 'en';
+    if (!languages.includes(clientLanguage)) clientLanguage = 'en';
 
     Vue.i18n.set(clientLanguage);
   },
