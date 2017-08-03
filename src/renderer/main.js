@@ -24,13 +24,10 @@ const store = new Vuex.Store({
     },
   },
 });
-networking.openRoom()
-  .then((status) => {
-    store.commit('setRoomName', status.roomName);
-  })
-  .catch((err) => {
-    throw new Error(err);
-  });
+(async () => {
+  const roomStatus = await networking.openRoom();
+  roomStatus.commit('setRoomName', status.roomName);
+})();
 
 Vue.use(Localization, store);
 
