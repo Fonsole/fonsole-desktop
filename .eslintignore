@@ -1,3 +1,4 @@
+!**/.eslintrc.js
 src/renderer/assets/libs/*.js
 dist/*
 Slide.vue

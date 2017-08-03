@@ -8,21 +8,21 @@ module.exports = {
     node: true,
   },
   extends: [
-  	'airbnb-base',
-  	'plugin:vue/recommended',
+    'airbnb-base',
+    'plugin:vue/recommended',
   ],
   globals: {
-    __static: true
+    __static: true,
   },
-  'rules': {
+  rules: {
     // don't require .vue extension when importing
     'import/extensions': ['error', 'always', {
-      'js': 'never',
-      'vue': 'never',
+      js: 'never',
+      vue: 'never',
     }],
     // allow optionalDependencies
     'import/no-extraneous-dependencies': ['error', {
-      'optionalDependencies': ['test/unit/index.js'],
+      optionalDependencies: ['test/unit/index.js'],
     }],
     // allow debugger during development
     'no-debugger': process.env.NODE_ENV === 'production' ? 2 : 0,
