@@ -8,7 +8,7 @@
         </div>
         <div id="routerContainer">
           <component
-            :is="currentContentIndex"
+            :is="page"
             transition="fade"
             transition-mode="out-in"
           ></component>
@@ -43,11 +43,13 @@
       settings: Settings,
     },
     computed: {
-      currentContentIndex() {
-        return this.$store.state.currentContentIndex;
+      page() {
+        return this.$store.state.gui.page;
       },
     },
-    methods: {
+    async mounted() {
+      // Initialize gameLibrary module
+      await this.$store.dispatch('init');
     },
   };
 /* eslint-disable max-len */

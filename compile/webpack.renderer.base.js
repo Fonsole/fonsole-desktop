@@ -89,6 +89,7 @@ const baseConfig = {
   },
   resolve: {
     alias: {
+      '=': path.join(__dirname, '../src/shared'),
       '@': path.join(__dirname, '../src/renderer'),
       vue$: 'vue/dist/vue.esm.js',
     },

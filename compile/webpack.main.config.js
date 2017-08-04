@@ -45,6 +45,9 @@ const mainConfig = {
     new webpack.NoEmitOnErrorsPlugin(),
   ],
   resolve: {
+    alias: {
+      '=': path.join(__dirname, '../src/shared'),
+    },
     extensions: ['.js', '.json'],
   },
   target: 'electron-main',
@@ -54,18 +57,19 @@ const mainConfig = {
  * Adjust mainConfig for development settings
  */
 if (process.env.NODE_ENV !== 'production') {
-  mainConfig.plugins.push(
+  mainConfig.plugins.push(...[
     new webpack.DefinePlugin({
       __static: `"${path.join(__dirname, '../static').replace(/\\/g, '\\\\')}"`,
     }),
-  );
+    new webpack.HotModuleReplacementPlugin(),
+  ]);
 }
 
 /**
  * Adjust mainConfig for production settings
  */
 if (process.env.NODE_ENV === 'production') {
-  mainConfig.plugins.push(
+  mainConfig.plugins.push(...[
     new BabiliWebpackPlugin({
       removeConsole: true,
       removeDebugger: true,
@@ -73,7 +77,7 @@ if (process.env.NODE_ENV === 'production') {
     new webpack.DefinePlugin({
       'process.env.NODE_ENV': '"production"',
     }),
-  );
+  ]);
 }
 
 module.exports = mainConfig;

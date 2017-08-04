@@ -33,7 +33,7 @@
     },
     methods: {
       onButtonClicked(event) {
-        this.$store.state.currentContentIndex = event.target.id;
+        this.$store.commit('setPage', event.target.id);
       },
     },
   };

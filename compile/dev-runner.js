@@ -147,6 +147,12 @@ function startMain() {
   });
 }
 
-Promise.all([startRenderer(), startMain()])
-  .then(() => (process.env.IS_WEB ? startBrowser() : startElectron()))
-  .catch(console.error);
+(async () => {
+  try {
+    await Promise.all([startRenderer(), startMain()]);
+    if (process.env.IS_WEB) startBrowser();
+    else startElectron();
+  } catch (err) {
+    console.error(err);
+  }
+})();

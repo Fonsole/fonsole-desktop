@@ -1,4 +1,5 @@
 import { app, BrowserWindow } from 'electron';
+import gameLibrary from './gameLibrary';
 
 /**
  * Set `__static` path to static files in production
@@ -19,10 +20,10 @@ function createWindow() {
    * Initial window options
    */
   mainWindow = new BrowserWindow({ width: 1280, height: 720, resizable: false });
-
   mainWindow.setMenu(null);
-
   mainWindow.loadURL(winURL);
+
+  gameLibrary();
 
   mainWindow.on('closed', () => {
     mainWindow = null;
@@ -42,23 +43,3 @@ app.on('activate', () => {
     createWindow();
   }
 });
-
-/**
- * Auto Updater
- *
- * Uncomment the following code below and install `electron-updater` to
- * support auto updating. Code Signing with a valid certificate is required.
- * https://simulatedgreg.gitbooks.io/electron-vue/content/en/using-electron-builder.html#auto-updating
- */
-
-/*
-import { autoUpdater } from 'electron-updater'
-
-autoUpdater.on('update-downloaded', () => {
-  autoUpdater.quitAndInstall()
-})
-
-app.on('ready', () => {
-  if (process.env.NODE_ENV === 'production') autoUpdater.checkForUpdates()
-})
- */
