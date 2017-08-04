@@ -21,6 +21,7 @@
 <script>
   import Rings from '@/components/rings/Rings';
   import Topbar from '@/components/topbar/Topbar';
+  import About from '@/components/about/About';
   import Game from '@/components/game/Game';
   import Home from '@/components/home/Home';
   import Games from '@/components/games/Games';
@@ -33,6 +34,7 @@
     components: {
       rings: Rings,
       topbar: Topbar,
+      about: About,
       game: Game,
       home: Home,
       games: Games,
@@ -73,8 +75,10 @@
     font-family: 'zekton'
     text-transform: uppercase
 
-  label
-    cursor: pointer
+  label, h1, h2, div
+    cursor: default
+    user-select: none
+    font-weight: 100
 
   #appContent
     height: 100%

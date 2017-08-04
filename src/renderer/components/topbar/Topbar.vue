@@ -1,12 +1,20 @@
 <template>
   <div id="topbar">
     <ul>
-      <li><img src="../../assets/menu_logo.png"></img></li>
+      <li>
+        <div class="">
+          <img src="../../assets/menu_logo.png" @click="onButtonClicked" id="about"></img>
+        </div>
+      </li>
       <li v-for="buttonName in buttons" :key="buttonName">
-        <a @click="onButtonClicked" :id="buttonName">{{ $localize(buttonName) }}</a>
+        <div class="">
+          <a @click="onButtonClicked" :id="buttonName">{{ $localize(buttonName) }}</a>
+        </div>
       </li>
       <li id="roomName">
-        ROOM CODE: {{ roomName }}
+        <div class="">
+          <a @click="onButtonClicked" id="room">{{ $localize('room') + ': ' + roomName }}</a>
+        </div>
       </li>
     </ul>
   </div>
@@ -20,7 +28,7 @@
     }),
     computed: {
       roomName() {
-        return this.$store.state.roomName;
+        return this.$store.state.roomName || '322';
       },
     },
     methods: {
@@ -39,6 +47,12 @@
 
     li
       float: left
+      vertical-align: middle
+
+      & div
+        height: 6vh
+        display: table-cell
+        vertical-align : middle
 
       a, img
         font-family: 'zekton'
@@ -46,28 +60,19 @@
         color: white
         opacity: 0.8
         text-align: center
-        padding: 14px 16px
+        padding: 0px 14px
         text-decoration: none
         text-transform: uppercase
-        font-size: 20px
+        font-size: 2.5vh
         transition: transform 0.1s linear 0.0s
         cursor: pointer
 
       img
-        max-height: 24px
+        width: 2.5vh
 
       a:hover, img:hover
         transform: scale(1.1)
 
   #roomName
     float: right
-    font-weight: 900
-    font-family: 'zekton'
-    text-align: center
-    padding: 14px 16px
-    text-decoration: none
-    text-transform: uppercase
-    font-size: 20px
-    transition: transform 0.1s linear 0.0s
-    color: lime
 </style>

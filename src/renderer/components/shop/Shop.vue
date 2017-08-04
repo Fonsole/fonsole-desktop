@@ -1,6 +1,8 @@
 <template>
   <div id="shop" class="tabContents">
-    <fbutton width="27" height="6">FButton</fbutton>
+    <fbutton width="22" height="6">install</fbutton>
+    <fbutton width="22" height="6" type="progress">installing</fbutton>
+    <fbutton width="22" height="6" type="progress-dark">removing</fbutton>
   </div>
 </template>
 

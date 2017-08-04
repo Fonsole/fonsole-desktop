@@ -3,17 +3,17 @@
     <div class="block">
       <h2>{{ $localize('general') }}</h2>
       <div class="divider"></div>
-      <checkbox
+      <checkbox class="row"
         id="fullscreenCheckbox"
         :text="$localize('fullscreen')"
         v-model="isFullscreen"
       ></checkbox>
-      <dropdown
+      <dropdown class="row"
         id="resolutionDropdown"
         :text="$localize('resolution')"
         v-model="resolution"
         :closeAfterClick="true">
-        <button slot="toggle">{{ `◂${getCurrentResolution()}▸` }}</button>
+        <label slot="toggle">{{ `◂${getCurrentResolution()}▸` }}</label>
         <div
           v-for="(resolution,index) in getAvailableResolutions"
           class="s-dropdown-item"
@@ -27,7 +27,7 @@
       <div class="divider"></div>
     </div>
   </div>
-</div></template>
+</template>
 <script>
   import Checkbox from './Checkbox';
   import Dropdown from './Dropdown';
@@ -82,7 +82,8 @@
 </script>
 
 <style lang="sass" scoped>
-  h1, h2
+  h2
+    font-size: 4.5vh
     margin: 0px
 
   #settings
@@ -90,7 +91,12 @@
     text-transform: uppercase
     padding: 20px
 
-    .block
-      min-width: 400px
-      float: left
+    flex-direction: row
+    display: flex
+
+    .block:nth-child(1)
+      flex: 0.4 1 auto
+
+    .block:nth-child(2)
+      flex: 0.6 1 auto
 </style>

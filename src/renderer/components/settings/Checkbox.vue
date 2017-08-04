@@ -22,7 +22,12 @@ export default {
   #checkbox
     width: 100%
 
+  label
+    font-size: 2.0vh
+
   input
     float: right
     margin-right: 20px
+    width: 1.8vh
+    height: 1.8vh
 </style>

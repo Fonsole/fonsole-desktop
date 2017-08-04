@@ -1,4 +1,3 @@
-<!-- <label>{{ text }}</label> -->
 <template>
   <div id="dropdown">
     <label>{{ text }}</label>
@@ -77,26 +76,10 @@ export default {
   #dropdown
     width: 100%
 
-  button
-    position: relative
-    padding: 0px
-    margin: 0px
-    font-family: 'zekton'
-    border: none
-    background: none
-    color: white
-    text-align: right
-    font-size: 14px
-
-  button:focus
-    outline: 0
-
-  button:hover
-    opacity: 0.7
+  label
+    font-size: 2.0vh
 
   .s-dropdown
-    position: relative
-    display: inline-block
     float: right
     margin-right: 20px
 
@@ -108,8 +91,16 @@ export default {
       &:hover
         opacity: 0.7
 
-    &-toggle
-      cursor: pointer
+
+    &-toggle > *
+      position: relative
+      font-family: 'zekton'
+      color: white
+      text-align: right
+      font-size: 2.0vh
+
+    &-toggle > *:hover
+      opacity: 0.7
 
     &-menu
       position: relative
