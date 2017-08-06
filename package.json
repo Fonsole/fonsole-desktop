@@ -21,7 +21,6 @@
     "pack:renderer": "cross-env NODE_ENV=production webpack --progress --colors --config compile/webpack.renderer.config.js",
     "lint": "eslint --ext .js,.vue src",
     "lint-fix": "eslint --ext .js,.vue src --fix",
-
     "postmerge": "node hooks/postmerge.js"
   },
   "build": {
@@ -113,6 +112,8 @@
     "opn": "^5.1.0",
     "optimize-css-assets-webpack-plugin": "^2.0.0",
     "ora": "^1.2.0",
+    "postcss": "^6.0.8",
+    "postcss-loader": "^2.0.6",
     "proton": "git+https://github.com/a-jie/Proton.git",
     "rimraf": "^2.6.0",
     "sass-loader": "^6.0.6",
