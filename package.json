@@ -64,11 +64,11 @@
   },
   "devDependencies": {
     "autoprefixer": "^7.1.2",
-    "babel-core": "^6.25.0",
+    "babel-core": "^7.0.0-alpha.18",
     "babel-eslint": "^7.2.3",
     "babel-loader": "^7.1.1",
     "babel-plugin-transform-runtime": "^6.23.0",
-    "babel-preset-env": "^1.6.0",
+    "babel-preset-env": "^2.0.0-alpha.18",
     "babel-preset-stage-2": "^6.24.1",
     "babel-register": "^6.22.0",
     "babili-webpack-plugin": "^0.1.2",
@@ -132,9 +132,14 @@
     "node": ">= 4.0.0",
     "npm": ">= 3.0.0"
   },
-  "browserslist": [
-    "> 1%",
-    "last 2 versions",
-    "not ie <= 8"
-  ]
+  "browserslist": {
+    "production": [
+      "> 1%",
+      "last 2 versions",
+      "not ie <= 8"
+    ],
+    "development": [
+      "last 1 version"
+    ]
+  }
 }
