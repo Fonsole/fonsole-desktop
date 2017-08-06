@@ -55,6 +55,7 @@ function electronLog(data, color) {
 }
 
 function startRenderer() {
+  // eslint-disable-next-line promise/avoid-new
   return new Promise((resolve) => {
     // Add dev-client to all rendered pages
     const bundle = Object.keys(rendererConfig.entry)[0];
@@ -103,6 +104,7 @@ function startElectron() {
   });
 
   electronProcess.on('close', () => {
+    // eslint-disable-next-line unicorn/no-process-exit
     if (!manualRestart) process.exit();
   });
 }
@@ -113,6 +115,7 @@ function startBrowser() {
 
 function startMain() {
   if (process.env.IS_WEB) return Promise.resolve();
+  // eslint-disable-next-line promise/avoid-new
   return new Promise((resolve) => {
     mainConfig.entry.main = [path.join(__dirname, '../src/main/index.dev.js')].concat(mainConfig.entry.main);
     const compiler = webpack(mainConfig);

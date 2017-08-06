@@ -1,5 +1,4 @@
-
-
+/* eslint-disable unicorn/no-process-exit */
 process.env.NODE_ENV = 'production';
 
 const chalk = require('chalk');
@@ -25,6 +24,7 @@ function clean() {
 }
 
 function pack(config) {
+  // eslint-disable-next-line promise/avoid-new
   return new Promise((resolve, reject) => {
     webpack(config, (compilerErr, stats) => {
       if (compilerErr) {
@@ -74,7 +74,7 @@ function web() {
   });
 }
 
-function build() {
+async function build() {
   del.sync(['dist/electron/*', '!.gitkeep']);
 
   const tasks = ['main', 'renderer'];
@@ -91,26 +91,29 @@ function build() {
     console.log(`${okayLog}take it away ${chalk.yellow('`electron-packager`')}\n`);
     bundleApp();
   });
+  await Promise.all([
+    /* eslint-disable promise/always-return */
+    pack(mainConfig).then((result) => {
+      results += `${result}\n\n`;
+      m.success('main');
+    }).catch((err) => {
+      m.error('main');
+      console.log(`\n  ${errorLog}failed to build main process`);
+      console.error(`\n${err}\n`);
+      process.exit(1);
+    }),
 
-  pack(mainConfig).then((result) => {
-    results += `${result}\n\n`;
-    m.success('main');
-  }).catch((err) => {
-    m.error('main');
-    console.log(`\n  ${errorLog}failed to build main process`);
-    console.error(`\n${err}\n`);
-    process.exit(1);
-  });
-
-  pack(electronConfig).then((result) => {
-    results += `${result}\n\n`;
-    m.success('renderer');
-  }).catch((err) => {
-    m.error('renderer');
-    console.log(`\n  ${errorLog}failed to build renderer process`);
-    console.error(`\n${err}\n`);
-    process.exit(1);
-  });
+    pack(electronConfig).then((result) => {
+      results += `${result}\n\n`;
+      m.success('renderer');
+    }).catch((err) => {
+      m.error('renderer');
+      console.log(`\n  ${errorLog}failed to build renderer process`);
+      console.error(`\n${err}\n`);
+      process.exit(1);
+    }),
+    /* eslint-enable promise/always-return */
+  ]);
 }
 
 switch (process.env.BUILD_TARGET) {
