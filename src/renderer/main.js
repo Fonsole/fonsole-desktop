@@ -10,9 +10,12 @@ Vue.config.devtools = true;
 Vue.use(Localization, store);
 
 // eslint-disable-next-line no-new
-new Vue({
+const vm = new Vue({
   components: { App },
   el: '#app',
   template: '<App/>',
   store,
 });
+
+// Initialize gameLibrary module
+vm.$store.dispatch('init');

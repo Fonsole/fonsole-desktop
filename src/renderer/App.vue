@@ -47,10 +47,6 @@
         return this.$store.state.gui.page;
       },
     },
-    async mounted() {
-      // Initialize gameLibrary module
-      await this.$store.dispatch('init');
-    },
   };
 /* eslint-disable max-len */
 </script>
