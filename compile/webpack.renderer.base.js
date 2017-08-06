@@ -13,9 +13,6 @@ const ExtractTextPlugin = require('extract-text-webpack-plugin');
 
 const baseConfig = {
   devtool: '#cheap-module-eval-source-map',
-  entry: {
-    renderer: path.join(__dirname, '../src/renderer/main.js'),
-  },
   module: {
     rules: [
       {
