@@ -110,7 +110,7 @@ if (process.env.NODE_ENV !== 'production') {
  * Adjust baseConfig for production settings
  */
 if (process.env.NODE_ENV === 'production') {
-  baseConfig.devtool = '';
+  baseConfig.devtool = '#source-map';
 
   baseConfig.plugins.push(
     new ExtractTextPlugin('style.css'),
