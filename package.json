@@ -16,9 +16,6 @@
     "build:web": "cross-env BUILD_TARGET=web node compile/build.js",
     "dev": "node compile/dev-runner.js",
     "dev:web": "cross-env IS_WEB=true node compile/dev-runner.js",
-    "pack": "npm run pack:main && npm run pack:renderer",
-    "pack:main": "cross-env NODE_ENV=production webpack --progress --colors --config compile/webpack.main.config.js",
-    "pack:renderer": "cross-env NODE_ENV=production webpack --progress --colors --config compile/webpack.renderer.config.js",
     "lint": "eslint --ext .js,.vue src",
     "lint-fix": "eslint --ext .js,.vue src --fix",
     "postmerge": "node hooks/postmerge.js"
