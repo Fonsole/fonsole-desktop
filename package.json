@@ -23,40 +23,6 @@
     "lint-fix": "eslint --ext .js,.vue src --fix",
     "postmerge": "node hooks/postmerge.js"
   },
-  "build": {
-    "productName": "fonsole",
-    "appId": "com.fonsole.desktop",
-    "directories": {
-      "output": "build"
-    },
-    "files": [
-      "dist/electron/**/*"
-    ],
-    "dmg": {
-      "contents": [
-        {
-          "x": 410,
-          "y": 150,
-          "type": "link",
-          "path": "/Applications"
-        },
-        {
-          "x": 130,
-          "y": 150,
-          "type": "file"
-        }
-      ]
-    },
-    "mac": {
-      "icon": "build/icons/icon.icns"
-    },
-    "win": {
-      "icon": "build/icons/icon.ico"
-    },
-    "linux": {
-      "icon": "build/icons"
-    }
-  },
   "dependencies": {
     "electron": "^1.6.11",
     "request": "^2.81.0",
