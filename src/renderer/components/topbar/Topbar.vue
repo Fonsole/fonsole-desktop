@@ -28,7 +28,7 @@
     }),
     computed: {
       roomName() {
-        return this.$store.state.roomName || '322';
+        return this.$store.state.networking.roomName || '...';
       },
     },
     methods: {
