@@ -9,7 +9,6 @@ Vue.config.devtools = true;
 
 Vue.use(Localization, store);
 
-// eslint-disable-next-line no-new
 const vm = new Vue({
   components: { App },
   el: '#app',
@@ -19,3 +18,6 @@ const vm = new Vue({
 
 // Initialize gameLibrary module
 vm.$store.dispatch('init');
+
+// Open room
+vm.$store.dispatch('openRoom');
