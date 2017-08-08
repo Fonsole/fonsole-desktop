@@ -18,7 +18,8 @@ export default {
   actions: {
     async openRoom(store) {
       const roomStatus = await networking.openRoom();
-      store.commit('setRoomName', roomStatus.roomName);
+      // Room name is formed by server index + room name on server.
+      store.commit('setRoomName', `${networking.serverIndex}${roomStatus.roomName}`);
     },
   },
 };
