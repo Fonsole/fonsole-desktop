@@ -13,7 +13,7 @@
       </li>
       <li id="roomName">
         <div class="">
-          <a @click="onButtonClicked" id="room">{{ $localize('room') + ': ' + roomName }}</a>
+          <a @click="onButtonClicked" id="room">{{ $localize('room', { roomName: roomName }) }}</a>
         </div>
       </li>
     </ul>
