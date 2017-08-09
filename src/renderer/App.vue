@@ -25,6 +25,7 @@
   import Game from '@/components/game/Game';
   import Home from '@/components/home/Home';
   import Games from '@/components/games/Games';
+  import GameView from '@/components/games/GameView';
   import Shop from '@/components/shop/Shop';
   import Community from '@/components/community/Community';
   import Settings from '@/components/settings/Settings';
@@ -38,6 +39,7 @@
       game: Game,
       home: Home,
       games: Games,
+      gameView: GameView,
       shop: Shop,
       community: Community,
       settings: Settings,
@@ -91,7 +93,7 @@
 
   #routerContainer
     flex: 1 1 auto
-    margin: 15px
+    margin: 2vh
     display: flex
     flex-direction: column
 

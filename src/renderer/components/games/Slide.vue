@@ -99,7 +99,7 @@
       },
       goTo() {
         if (this.isCurrent) {
-          this.$store.commit('setPage', 'about');
+          this.$store.commit('setPage', 'gameView');
         } else {
           if (this.parent.clickable === true) {
             this.parent.goFar(this.index);

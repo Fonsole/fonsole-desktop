@@ -3,7 +3,7 @@
   :class="this.type">
     <div id="background">
     </div>
-    <div id="button" :style="{fontSize: this.height/2 + 'vh'}">
+    <div id="button" :style="{fontSize: this.height/2 + 'vh'}" @click="handleClick">
       <slot>
       </slot>
     </div>
@@ -30,8 +30,10 @@
     data: () => ({
       colours: ['#69D2E7', '#A7DBD8', '#E0E4CC', '#F38630', '#FA6900', '#FF4E50', '#F9D423'],
     }),
-    mounted() {
-
+    methods: {
+      handleClick(e) {
+        this.$emit('click', e);
+      },
     },
   };
 </script>
@@ -40,7 +42,6 @@
   $primary-background-width: 23.5vh
 
   #fbutton
-    position: relative
     margin: 10px
 
     & > div
@@ -79,21 +80,11 @@
         height: 100%
 
     &.progress
-      box-shadow: 0px 0px 0px #750014
       background: radial-gradient(ellipse at center, #D60D2E 0%,#C20020 100%)
       transition: transform 0.15s, box-shadow 0.15s
-      transform: rotateX(0deg) translateY(0)
       -webkit-font-smoothing: antialiased
-
-      &:hover
-        box-shadow: 0px 5px 0px #750014
-        transform: rotateX(30deg) translateY(0)
-
-      &:hover:active
-        box-shadow: 0 1px 0 #423847
-        background: radial-gradient(ellipse at center, #FF002B 0%,#ED0028 100%)
-        transition: transform 0.05s, box-shadow 0.05s
-        transform: rotateX(30deg) translateY(4px)
+      box-shadow: 0px 5px 0px #750014
+      transform: rotateX(30deg) translateY(0)
 
       > #background
         background: linear-gradient(-45deg,
@@ -108,21 +99,11 @@
         height: 100%
 
     &.progress-dark
-      box-shadow: 0px 0px 0px #222
       background: radial-gradient(ellipse at center, #222 0%,#222 100%)
       transition: transform 0.15s, box-shadow 0.15s
-      transform: rotateX(0deg) translateY(0)
       -webkit-font-smoothing: antialiased
-
-      &:hover
-        box-shadow: 0px 5px 0px #111
-        transform: rotateX(30deg) translateY(0)
-
-      &:hover:active
-        box-shadow: 0 1px 0 #111
-        background: radial-gradient(ellipse at center, #222 0%,#222 100%)
-        transition: transform 0.05s, box-shadow 0.05s
-        transform: rotateX(30deg) translateY(4px)
+      box-shadow: 0px 5px 0px #111
+      transform: rotateX(30deg) translateY(0)
 
       > #background
         background: linear-gradient(-45deg,

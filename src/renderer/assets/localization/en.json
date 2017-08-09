@@ -13,5 +13,8 @@
   "Settings_resolution" : "screen resolution",
 
   "Games_installed" : "installed",
-  "Games_library" : "library"
+  "Games_library" : "library",
+
+  "GameView_install" : "download",
+  "GameView_progress" : "downloading"
 }
