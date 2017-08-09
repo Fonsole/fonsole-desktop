@@ -1,5 +1,5 @@
 <template>
-  <div id="preview" @click="openGameView">
+  <div id="preview">
     <img src="../../assets/preview_vignette.png" id="previewImage">
     <label :id="'gameName'+gameID">{{ 'a game that is called ' + gameID }}</label>
   </div>
@@ -10,9 +10,6 @@
     name: 'Preview',
     props: ['gameID'],
     methods: {
-      openGameView() {
-        this.$store.state.currentContentIndex = 'games';
-      },
     },
   };
 </script>

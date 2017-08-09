@@ -31,6 +31,11 @@
         return this.$store.state.networking.roomName || '...';
       },
     },
+    created() {
+      this.$store.watch(this.$store.getters.getPage, (n) => {
+        console.log('watched: ', n);
+      });
+    },
     methods: {
       onButtonClicked(event) {
         this.$store.commit('setPage', event.target.id);

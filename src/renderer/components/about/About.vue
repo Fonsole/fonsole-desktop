@@ -1,9 +1,16 @@
 <template>
   <div id="about" class="tabContents">
     <div class="container" transition="fade" transition-mode="out-in" appear>
-      <!-- <img src="../../assets/menu_logo.png"></img> -->
+      <a class="logoContainer">
+        <div class="logo animateGears">
+          <div class="logoInner">
+            <div class="logoGear small"></div>
+            <div class="logoGear large"></div>
+          </div>
+        </div>
+      </a>
       <a class="gradient">Fonsole</a>
-      <a>2017</a>
+      <a>alpha</a>
     </div>
   </div>
 </template>
@@ -18,6 +25,8 @@
 </script>
 
 <style lang="sass" scoped>
+  @import "../styles/global.scss";
+
   #about
     display: block
     width: 100%
@@ -33,7 +42,7 @@
       display: flex
       flex-direction: column
 
-      font-size: 4vh
+      font-size: 3vh
       text-align: center
 
       img
@@ -45,6 +54,9 @@
         -webkit-background-clip: text
         -webkit-text-fill-color: transparent
         font-size: 8vh
+
+      .logoContainer
+        flex: 0 1 auto
 
       & > *
         // flex: 0 1 auto

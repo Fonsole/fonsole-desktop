@@ -8,9 +8,13 @@ const mutations = {
   },
 };
 
+const getters = {
+  getPage: state => () => state.page,
+};
+
 export default {
   state: initialState,
-  // getters,
+  getters,
   // actions,
   mutations,
 };

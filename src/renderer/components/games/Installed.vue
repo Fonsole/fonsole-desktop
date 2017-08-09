@@ -1,8 +1,7 @@
 <template>
   <div id="installed" ref="dick">
     <carousel-3d height="50" width="80" :controls-visible="true">
-      <slide v-for="(id,index) in installedGames" :index="index" :key="id">
-        <preview :gameID="id"></preview>
+      <slide v-for="(id,index) in installedGames" :index="index" :key="id" :gameID="id">
       </slide>
     </carousel-3d>
   </div>

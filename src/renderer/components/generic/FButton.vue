@@ -49,6 +49,35 @@
       left: 50%
       transform: translate(-50%, -50%)
 
+    &.install
+      box-shadow: 0px 0px 0px #232530
+      background: radial-gradient(ellipse at center, #232530 0%,#232530 100%)
+      transition: transform 0.15s, box-shadow 0.15s
+      transform: rotateX(0deg) translateY(0)
+      -webkit-font-smoothing: antialiased
+
+      &:hover
+        box-shadow: 0px 5px 0px #232530
+        transform: rotateX(30deg) translateY(0)
+
+      &:hover:active
+        box-shadow: 0 1px 0 #423847
+        background: radial-gradient(ellipse at center, #232530 0%,#232530 100%)
+        transition: transform 0.05s, box-shadow 0.05s
+        transform: rotateX(30deg) translateY(4px)
+
+      > #background
+        background: linear-gradient(-45deg,
+        #5e6aa7 10%, #8e96c1 10%,
+        #8e96c1 30%, #5e6aa7 30%,
+        #5e6aa7 50%, #8e96c1 50%,
+        #8e96c1 70%, #5e6aa7 70%,
+        #5e6aa7 90%, #8e96c1 90%)
+        background-size: $primary-background-width 100%
+        -webkit-animation: 'progress-forward' 12s infinite linear
+        width: 100%
+        height: 100%
+
     &.progress
       box-shadow: 0px 0px 0px #750014
       background: radial-gradient(ellipse at center, #D60D2E 0%,#C20020 100%)

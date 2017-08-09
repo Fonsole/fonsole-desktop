@@ -1,134 +1,145 @@
 <template>
-    <div class="carousel-3d-slide" :style="slideStyle" :class="{ 'current': isCurrent }" @click="goTo()">
-        <slot></slot>
-    </div>
+  <div class="carousel-3d-slide" :style="slideStyle" :class="{ 'current': isCurrent }" @click="goTo()">
+    <preview :gameID="`${ this.gameID }`"></preview>
+  </div>
 </template>
 
 <script>
-    export default {
-      name: 'slide',
-      props: {
-        index: {
-          type: Number,
-        },
+  import Preview from './Preview';
+
+  export default {
+    name: 'slide',
+    components: {
+      preview: Preview,
+    },
+    props: {
+      index: {
+        type: Number,
       },
-      data() {
-        return {
-          parent: this.$parent,
-          styles: {},
-          zIndex: 999,
-        };
+      gameID: {
+        type: Number,
       },
-      computed: {
-        isCurrent() {
-          return this.index === this.parent.currentIndex;
-        },
-        slideStyle() {
-          let styles = {};
+    },
+    data() {
+      return {
+        parent: this.$parent,
+        styles: {},
+        zIndex: 999,
+      };
+    },
+    computed: {
+      isCurrent() {
+        return this.index === this.parent.currentIndex;
+      },
+      slideStyle() {
+        let styles = {};
 
-          if (!this.isCurrent) {
-            const rIndex = this.getSideIndex(this.parent.rightIndices);
-            const lIndex = this.getSideIndex(this.parent.leftIndices);
+        if (!this.isCurrent) {
+          const rIndex = this.getSideIndex(this.parent.rightIndices);
+          const lIndex = this.getSideIndex(this.parent.leftIndices);
 
-            if (rIndex >= 0 || lIndex >= 0) {
-              styles = rIndex >= 0 ? this.calculatePosition(rIndex, true, this.zIndex) : this.calculatePosition(lIndex, false, this.zIndex);
-              styles.opacity = 1;
-              styles.visibility = 'visible';
-            }
-
-            if (this.parent.hasHiddenSlides) {
-              if (this.matchIndex(this.parent.leftOutIndex)) {
-                styles = this.calculatePosition(this.parent.leftIndices.length - 1, false, this.zIndex);
-              } else if (this.matchIndex(this.parent.rightOutIndex)) {
-                styles = this.calculatePosition(this.parent.rightIndices.length - 1, true, this.zIndex);
-              }
-            }
+          if (rIndex >= 0 || lIndex >= 0) {
+            styles = rIndex >= 0 ? this.calculatePosition(rIndex, true, this.zIndex) : this.calculatePosition(lIndex, false, this.zIndex);
+            styles.opacity = 1;
+            styles.visibility = 'visible';
           }
 
-          return Object.assign(styles, {
-            'border-width': `${this.parent.border}px`,
-            width: `${this.parent.slideWidth}vh`,
-            height: `${this.parent.slideHeight}vh`,
-            transition: ` transform ${this.parent.animationSpeed}ms, ` +
-                `               opacity ${this.parent.animationSpeed}ms, ` +
-                `               visibility ${this.parent.animationSpeed}ms`,
-          });
-        },
-      },
-      methods: {
-        getSideIndex(array) {
-          let index = -1;
-
-          array.forEach((pos, i) => {
-            if (this.matchIndex(pos)) {
-              index = i;
+          if (this.parent.hasHiddenSlides) {
+            if (this.matchIndex(this.parent.leftOutIndex)) {
+              styles = this.calculatePosition(this.parent.leftIndices.length - 1, false, this.zIndex);
+            } else if (this.matchIndex(this.parent.rightOutIndex)) {
+              styles = this.calculatePosition(this.parent.rightIndices.length - 1, true, this.zIndex);
             }
-          });
+          }
+        }
 
-          return index;
-        },
-        matchIndex(index) {
-          return (index >= 0) ? this.index === index : (this.parent.total + index) === this.index;
-        },
-        calculatePosition(i, positive, zIndex) {
-          const z = !this.parent.disable3d ? parseInt(this.parent.inverseScaling) + ((i + 1) * 100) : 0;
-          const y = !this.parent.disable3d ? parseInt(this.parent.perspective) : 0;
-          const leftRemain = (this.parent.space === 'auto')
-                    ? parseInt((i + 1) * (this.parent.width / 2.5), 10)
-                    : parseInt((i + 1) * (this.parent.space), 10);
-          const transform = (positive)
-                    ? `translateX(${leftRemain}vh) translateZ(-${z}vh) ` +
-                `rotateY(-${y}deg)`
-                    : `translateX(-${leftRemain}vh) translateZ(-${z}vh) ` +
-                `rotateY(${y}deg)`;
-          const top = this.parent.space === 'auto' ? 0 : parseInt((i + 1) * (this.parent.space));
+        return Object.assign(styles, {
+          'border-width': `${this.parent.border}px`,
+          width: `${this.parent.slideWidth}vh`,
+          height: `${this.parent.slideHeight}vh`,
+          transition: ` transform ${this.parent.animationSpeed}ms, ` +
+              `               opacity ${this.parent.animationSpeed}ms, ` +
+              `               visibility ${this.parent.animationSpeed}ms`,
+        });
+      },
+    },
+    methods: {
+      getSideIndex(array) {
+        let index = -1;
 
-          return {
-            transform,
-            top,
-            zIndex: zIndex - (Math.abs(i) + 1),
-          };
-        },
-        goTo() {
+        array.forEach((pos, i) => {
+          if (this.matchIndex(pos)) {
+            index = i;
+          }
+        });
+
+        return index;
+      },
+      matchIndex(index) {
+        return (index >= 0) ? this.index === index : (this.parent.total + index) === this.index;
+      },
+      calculatePosition(i, positive, zIndex) {
+        const z = !this.parent.disable3d ? parseInt(this.parent.inverseScaling) + ((i + 1) * 100) : 0;
+        const y = !this.parent.disable3d ? parseInt(this.parent.perspective) : 0;
+        const leftRemain = (this.parent.space === 'auto')
+                  ? parseInt((i + 1) * (this.parent.width / 2.5), 10)
+                  : parseInt((i + 1) * (this.parent.space), 10);
+        const transform = (positive)
+                  ? `translateX(${leftRemain}vh) translateZ(-${z}vh) ` +
+              `rotateY(-${y}deg)`
+                  : `translateX(-${leftRemain}vh) translateZ(-${z}vh) ` +
+              `rotateY(${y}deg)`;
+        const top = this.parent.space === 'auto' ? 0 : parseInt((i + 1) * (this.parent.space));
+
+        return {
+          transform,
+          top,
+          zIndex: zIndex - (Math.abs(i) + 1),
+        };
+      },
+      goTo() {
+        if (this.isCurrent) {
+          this.$store.commit('setPage', 'about');
+        } else {
           if (this.parent.clickable === true) {
             this.parent.goFar(this.index);
           }
-        },
+        }
       },
-    };
+    },
+  };
 </script>
 
 <style>
-    .carousel-3d-slide {
-        position: absolute;
-        opacity: 0;
-        visibility: hidden;
-        overflow: hidden;
-        top: 0;
-        border-radius: 1px;
-        border-color: #000;
-        border-color: rgba(0, 0, 0, 0.4);
-        border-style: solid;
-        background-size: cover;
-        background-color: #ccc;
-        display: block;
-        margin: 0;
-        box-sizing: border-box;
-    }
+  .carousel-3d-slide {
+      position: absolute;
+      opacity: 0;
+      visibility: hidden;
+      overflow: hidden;
+      top: 0;
+      border-radius: 1px;
+      border-color: #000;
+      border-color: rgba(0, 0, 0, 0.4);
+      border-style: solid;
+      background-size: cover;
+      background-color: #ccc;
+      display: block;
+      margin: 0;
+      box-sizing: border-box;
+  }
 
-    .carousel-3d-slide {
-        text-align: left;
-    }
+  .carousel-3d-slide {
+      text-align: left;
+  }
 
-    .carousel-3d-slide img {
-        width: 100%;
-    }
+  .carousel-3d-slide img {
+      width: 100%;
+  }
 
-    .carousel-3d-slide.current {
-        opacity: 1 !important;
-        visibility: visible !important;
-        transform: none !important;
-        z-index: 999;
-    }
-
+  .carousel-3d-slide.current {
+      opacity: 1 !important;
+      visibility: visible !important;
+      transform: none !important;
+      z-index: 999;
+  }
 </style>
