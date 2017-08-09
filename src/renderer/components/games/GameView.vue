@@ -29,7 +29,7 @@
 
 <script>
   import FButton from '../generic/FButton';
-  import StarRating from '../generic/StarRating';
+  // import StarRating from '../generic/StarRating';
 
   export default {
     name: 'GameView',
