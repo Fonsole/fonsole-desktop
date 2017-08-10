@@ -110,36 +110,28 @@
   };
 </script>
 
-<style>
-  .carousel-3d-slide {
-      position: absolute;
-      opacity: 0;
-      visibility: hidden;
-      overflow: hidden;
-      top: 0;
-      border-radius: 1px;
-      border-color: #000;
-      border-color: rgba(0, 0, 0, 0.4);
-      border-style: solid;
-      background-size: cover;
-      background-color: #ccc;
-      display: block;
-      margin: 0;
-      box-sizing: border-box;
-  }
+<style lang="sass" scoped>
+.carousel-3d-slide
+  position: absolute
+  opacity: 0
+  visibility: hidden
+  overflow: hidden
+  top: 0
+  border-radius: 1px
+  border-color: rgba(0, 0, 0, 0.4)
+  border-style: solid
+  background-size: cover
+  background-color: #ccc
+  display: block
+  margin: 0
+  box-sizing: border-box
+  text-align: left
+  img
+    width: 100%
 
-  .carousel-3d-slide {
-      text-align: left;
-  }
-
-  .carousel-3d-slide img {
-      width: 100%;
-  }
-
-  .carousel-3d-slide.current {
-      opacity: 1 !important;
-      visibility: visible !important;
-      transform: none !important;
-      z-index: 999;
-  }
+  &.current
+    opacity: 1 !important
+    visibility: visible !important
+    transform: none !important
+    z-index: 999
 </style>

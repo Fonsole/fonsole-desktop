@@ -54,55 +54,54 @@
     }
 </script>
 
-<style scoped>
-    .carousel-3d-controls {
-        position: absolute;
-        top: 50%;
-        height: 0;
-        margin-top: -30px;
-        left: 0;
-        width: 100%;
-        z-index: 9099;
-    }
+<style lang="sass" scoped>
+  .carousel-3d-controls
+    position: absolute
+    top: 50%
+    height: 0
+    margin-top: -30px
+    left: 0
+    width: 100%
+    z-index: 9099
 
-    .next, .prev {
-        width: 60px;
-        position: absolute;
-        z-index: 9999;
-        font-size: 60px;
-        height: 60px;
-        line-height: 60px;
-        color: white;
-        -webkit-user-select: none;
-        -moz-user-select: none;
-        -ms-user-select: none;
-        user-select: none;
-        text-decoration: none;
-        top: 0;
-    }
+  .next
+    width: 60px
+    position: absolute
+    z-index: 9999
+    font-size: 60px
+    height: 60px
+    line-height: 60px
+    color: white
+    user-select: none
+    text-decoration: none
+    top: 0
+    right: 10px
+    text-align: right
+    &:hover
+      cursor: pointer
+      opacity: 0.7
 
-    .next:hover, .prev:hover {
-        cursor: pointer;
-        opacity: 0.7;
-    }
+  .prev
+    width: 60px
+    position: absolute
+    z-index: 9999
+    font-size: 60px
+    height: 60px
+    line-height: 60px
+    color: white
+    user-select: none
+    text-decoration: none
+    top: 0
+    left: 10px
+    text-align: left
+    &:hover
+      cursor: pointer
+      opacity: 0.7
 
-    .prev {
-        left: 10px;
-        text-align: left;
-    }
-
-    .next {
-        right: 10px;
-        text-align: right;
-    }
-
-    .disabled {
-        opacity: 0.2;
-        cursor: default;
-    }
-
-    .disabled:hover {
-        cursor: default;
-        opacity: 0.2;
-    }
+  .disabled
+    opacity: 0.2
+    cursor: default
+    &:hover
+      cursor: default
+      opacity: 0.2
 </style>

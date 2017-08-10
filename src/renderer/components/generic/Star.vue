@@ -2,7 +2,6 @@
   <div>
     <img src="~@/assets/star.png" :height="getSize" :width="getSize" @mousemove="mouseMoving"
     @click="selected()" style="overflow:visible;" :class="`${ this.lit }`">
-
     </img>
   </div>
 </template>

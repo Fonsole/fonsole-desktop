@@ -425,20 +425,18 @@
     };
 </script>
 
-<style scoped>
-    .carousel-3d-container {
-        min-height: 1px;
-        width: 100%;
-        position: relative;
-        z-index: 0;
-        overflow: hidden;
-        box-sizing: border-box;
-    }
+<style lang="sass" scoped>
+  .carousel-3d-container
+    min-height: 1px
+    width: 100%
+    position: relative
+    z-index: 0
+    overflow: hidden
+    box-sizing: border-box
 
-    .carousel-3d-slider {
-        position: relative;
-        margin: 0 auto;
-        transform-style: preserve-3d;
-        perspective: 500vh;
-    }
+  .carousel-3d-slider
+    position: relative
+    margin: 0 auto
+    transform-style: preserve-3d
+    perspective: 500vh
 </style>
