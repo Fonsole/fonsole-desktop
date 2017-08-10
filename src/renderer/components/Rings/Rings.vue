@@ -73,8 +73,7 @@
   };
 </script>
 
-<style lang="scss">
-  #rings {
-    position:absolute;
-  }
+<style lang="sass" scoped>
+  #rings
+    position: absolute
 </style>

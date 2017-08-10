@@ -25,7 +25,7 @@
 </script>
 
 <style lang="sass" scoped>
-  @import "../styles/global.scss";
+  @import "~@/assets/styles/global.sass"
 
   #about
     display: block

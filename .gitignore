@@ -13,6 +13,7 @@ thumbs.db
 *.njsproj
 *.sln
 
+test/unit/coverage/*
 dist/*
 build/*
 !build/icons

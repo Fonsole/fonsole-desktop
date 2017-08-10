@@ -15,6 +15,7 @@
 <script>
 
 export default {
+  name: 'Dropdown',
   props: {
     closeAfterClick: {
       type: Boolean,

@@ -1,18 +1,15 @@
 <template>
-  <div id="home" class="tabContents">
-    Home
+  <div id="community" class="tabContents">
+    Community
   </div>
 </template>
 <script>
 export default {
-  name: '',
-  data: () => ({
-
-  }),
+  name: 'Community',
 };
 </script>
 <style lang="sass" scoped>
-  #home
+  #community
     display: block
     width: 100%
     height: 100%

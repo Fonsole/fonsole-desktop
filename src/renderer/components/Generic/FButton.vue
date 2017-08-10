@@ -12,7 +12,7 @@
 
 <script>
   export default {
-    name: 'Fbutton',
+    name: 'FButton',
     props: {
       width: {
         type: [Number, String],
@@ -75,7 +75,7 @@
         #8e96c1 70%, #5e6aa7 70%,
         #5e6aa7 90%, #8e96c1 90%)
         background-size: $primary-background-width 100%
-        -webkit-animation: 'progress-forward' 12s infinite linear
+        animation: 'progress-forward' 12s infinite linear
         width: 100%
         height: 100%
 
@@ -94,7 +94,7 @@
         #ec2045 70%, #A7DBD8 70%,
         #A7DBD8 90%, #c7c12f 90%)
         background-size: $primary-background-width 100%
-        -webkit-animation: 'progress-forward' 3s infinite linear
+        animation: 'progress-forward' 3s infinite linear
         width: 100%
         height: 100%
 
@@ -113,7 +113,7 @@
         #333 70%, #222 70%,
         #222 90%, #333 90%)
         background-size: $primary-background-width 100%
-        -webkit-animation: 'progress-backward' 3s infinite linear
+        animation: 'progress-backward' 3s infinite linear
         width: 100%
         height: 100%
 
@@ -123,21 +123,21 @@
     // transform: perspective(1px) translateZ(0)
 
     & > *:hover
-      -webkit-animation: 'wobble-horizontal' 1s 1 ease-in-out
+      animation: 'wobble-horizontal' 1s 1 ease-in-out
 
-  @-webkit-keyframes 'progress-forward'
+  @keyframes 'progress-forward'
     0%
       background-position-x: 0vh
     100%
       background-position-x: $primary-background-width
 
-  @-webkit-keyframes 'progress-backward'
+  @keyframes 'progress-backward'
     0%
       background-position-x: $primary-background-width
     100%
       background-position-x: 0vh
 
-  @-webkit-keyframes 'wobble-horizontal'
+  @keyframes 'wobble-horizontal'
     16.65%
       transform: translateX(8px)
     33.3%

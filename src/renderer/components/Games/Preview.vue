@@ -1,6 +1,6 @@
 <template>
   <div id="preview">
-    <img src="../../assets/preview_vignette.png" id="previewImage">
+    <img src="~@/assets/preview_vignette.png" id="previewImage">
     <label :id="'gameName'+gameID">{{ 'a game that is called ' + gameID }}</label>
   </div>
 </template>
@@ -17,11 +17,8 @@
 <style lang="sass" scoped>
   #preview
     height: 100%
-    background: url('../../assets/preview_background.png') center
+    background: url('~@/assets/preview_background.png') center
     background-size: cover
-    -webkit-background-size: cover
-    -moz-background-size: cover
-    -o-background-size: cover
     background-repeat: no-repeat
 
     #previewImage

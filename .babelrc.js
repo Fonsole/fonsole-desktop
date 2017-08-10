@@ -1,15 +1,16 @@
+const plugins = ['transform-runtime'];
+const presets = [
+  ['env', {
+    modules: false,
+  }],
+  'stage-0',
+];
+
+if (process.env.NODE_ENV === 'testing') {
+  plugins.push('istanbul');
+}
+
 module.exports = {
-  presets: [
-    ["env", {
-      "modules": false,
-    }],
-    "stage-0",
-  ],
-  plugins: ["transform-runtime"],
-  env: {
-    test: {
-      presets: ["env", "stage-0"],
-      plugins: ["istanbul"],
-    },
-  },
+  presets,
+  plugins,
 };

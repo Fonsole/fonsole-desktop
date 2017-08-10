@@ -97,44 +97,33 @@ const baseConfig = {
   },
 };
 
-/**
- * Adjust baseConfig for development settings
- */
-if (process.env.NODE_ENV !== 'production') {
-  baseConfig.plugins.push(new webpack.DefinePlugin({
-    __static: `"${path.join(__dirname, '../static').replace(/\\/g, '\\\\')}"`,
-  }));
-}
+switch (process.env.NODE_ENV) {
+  case 'production': {
+    baseConfig.devtool = '#source-map';
 
-/**
- * Adjust baseConfig for production settings
- */
-if (process.env.NODE_ENV === 'production') {
-  baseConfig.devtool = '#source-map';
-
-  baseConfig.plugins.push(
-    new ExtractTextPlugin('style.css'),
-    new BabiliWebpackPlugin({
-      removeConsole: true,
-      removeDebugger: true,
-    }),
-    new CopyWebpackPlugin([
-      {
-        from: path.join(__dirname, '../static'),
-        to: path.join(__dirname, '../dist/electron/static'),
-        ignore: ['.*'],
-      },
-    ]),
-    new webpack.DefinePlugin({
-      'process.env.NODE_ENV': '"production"',
-    }),
-    new webpack.LoaderOptionsPlugin({
-      minimize: true,
-    }),
-    new webpack.BannerPlugin({
-      test: /\.js$/,
-      exclude: /node_modules/,
-      banner: `
+    baseConfig.plugins.push(
+      new webpack.DefinePlugin({
+        'process.env.NODE_ENV': 'production',
+      }),
+      new ExtractTextPlugin('style.css'),
+      new BabiliWebpackPlugin({
+        removeConsole: true,
+        removeDebugger: true,
+      }),
+      new CopyWebpackPlugin([
+        {
+          from: path.join(__dirname, '../static'),
+          to: path.join(__dirname, '../dist/electron/static'),
+          ignore: ['.*'],
+        },
+      ]),
+      new webpack.LoaderOptionsPlugin({
+        minimize: true,
+      }),
+      new webpack.BannerPlugin({
+        test: /\.js$/,
+        exclude: /node_modules/,
+        banner: `
 ███████╗ ██████╗ ███╗   ██╗███████╗ ██████╗ ██╗     ███████╗
 ██╔════╝██╔═══██╗████╗  ██║██╔════╝██╔═══██╗██║     ██╔════╝
 █████╗  ██║   ██║██╔██╗ ██║███████╗██║   ██║██║     █████╗
@@ -142,6 +131,23 @@ if (process.env.NODE_ENV === 'production') {
 ██║     ╚██████╔╝██║ ╚████║███████║╚██████╔╝███████╗███████╗
 ╚═╝      ╚═════╝ ╚═╝  ╚═══╝╚══════╝ ╚═════╝ ╚══════╝╚══════╝
 ` }));
+    break;
+  }
+  case 'testing': {
+    // apply vue option to apply isparta-loader on js
+    baseConfig.module.rules
+      .find(rule => rule.use.loader === 'vue-loader').use.options.loaders.js = 'babel-loader';
+    baseConfig.devtool = '#inline-source-map';
+    delete baseConfig.entry;
+    delete baseConfig.externals;
+    delete baseConfig.output.libraryTarget;
+    break;
+  }
+  default: { // development
+    baseConfig.plugins.push(new webpack.DefinePlugin({
+      __static: `"${path.join(__dirname, '../static').replace(/\\/g, '\\\\')}"`,
+    }));
+  }
 }
 
 module.exports = baseConfig;
