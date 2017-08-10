@@ -19,16 +19,16 @@
 </template>
 
 <script>
-  import Rings from '@/components/rings/Rings';
-  import Topbar from '@/components/topbar/Topbar';
-  import About from '@/components/about/About';
-  import Game from '@/components/game/Game';
-  import Home from '@/components/home/Home';
-  import Games from '@/components/games/Games';
-  import GameView from '@/components/games/GameView';
-  import Shop from '@/components/shop/Shop';
-  import Community from '@/components/community/Community';
-  import Settings from '@/components/settings/Settings';
+  import Rings from '@/components/Rings/Rings';
+  import Topbar from '@/components/Topbar/Topbar';
+  import About from '@/components/About/About';
+  import Game from '@/components/Game/Game';
+  import Home from '@/components/Home/Home';
+  import Games from '@/components/Games/Games';
+  import GameView from '@/components/Games/GameView';
+  import Shop from '@/components/Shop/Shop';
+  import Community from '@/components/Community/Community';
+  import Settings from '@/components/Settings/Settings';
 
   export default {
     name: 'App',

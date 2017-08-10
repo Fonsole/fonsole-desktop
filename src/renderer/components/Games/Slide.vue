@@ -8,7 +8,7 @@
   import Preview from './Preview';
 
   export default {
-    name: 'slide',
+    name: 'Slide',
     components: {
       preview: Preview,
     },

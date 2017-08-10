@@ -8,11 +8,11 @@
 </template>
 
 <script>
-  import FButton from '@/components/generic/FButton';
-  import StarRating from '@/components/generic/StarRating';
+  import FButton from '@/components/Generic/FButton';
+  import StarRating from '@/components/Generic/StarRating';
 
   export default {
-    name: '',
+    name: 'Shop',
     components: {
       fbutton: FButton,
       'star-rating': StarRating,

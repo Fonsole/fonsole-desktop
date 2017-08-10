@@ -20,6 +20,7 @@
 import star from './Star';
 
 export default {
+  name: 'StarRating',
   model: {
     prop: 'rating',
     event: 'rating-selected',

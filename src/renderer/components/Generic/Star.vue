@@ -8,6 +8,7 @@
 
 <script type="text/javascript">
 export default {
+  name: 'Star',
   props: {
     fill: {
       type: Number,

@@ -12,7 +12,7 @@
 
 <script>
   export default {
-    name: 'Fbutton',
+    name: 'FButton',
     props: {
       width: {
         type: [Number, String],

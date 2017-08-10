@@ -12,11 +12,10 @@
     import Controls from './Controls';
     import Slide from './Slide';
 
-    const noop = () => {
-    };
+    const noop = () => {};
 
     export default {
-      name: 'carousel3d',
+      name: 'Carousel3d',
       components: {
         Controls,
         Slide,
