@@ -8,8 +8,8 @@
 </template>
 
 <script>
-  import FButton from '../generic/FButton';
-  import StarRating from '../generic/StarRating';
+  import FButton from '@/components/generic/FButton';
+  import StarRating from '@/components/generic/StarRating';
 
   export default {
     name: '',

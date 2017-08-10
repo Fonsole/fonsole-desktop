@@ -28,8 +28,8 @@
 </template>
 
 <script>
-  import FButton from '../generic/FButton';
-  // import StarRating from '../generic/StarRating';
+  import FButton from '@/components/generic/FButton';
+  // import StarRating from '@/components/generic/StarRating';
 
   export default {
     name: 'GameView',
@@ -63,7 +63,7 @@
     flex-direction: row
     width: 100%
     height: 100%
-    // background-image: url('../../assets/preview_background.png')
+    // background-image: url('~@/assets/preview_background.png')
     // background-position: center center
     // background-repeat: no-repeat
     // box-shadow: inset 0px 0px 20vh 3vh rgba(0, 0, 0, 0.8)
@@ -86,7 +86,7 @@
           margin-left: 2vh
 
         .gameTitle:before
-          background-image: url('../../assets/gamepad.png')
+          background-image: url('~@/assets/gamepad.png')
           background-size: 4.5vh 4.5vh
           background-repeat: no-repeat
           display: inline-block
@@ -104,7 +104,7 @@
           .stars
             width: 100%
             height: 100%
-            background-image: url('../../assets/star.png')
+            background-image: url('~@/assets/star.png')
             background-size: 4.5vh 4.5vh
             background-position: 50% 50%
             background-repeat: repeat-x

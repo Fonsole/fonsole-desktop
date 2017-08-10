@@ -3,7 +3,7 @@
     <ul>
       <li>
         <div class="">
-          <img src="../../assets/menu_logo.png" @click="onButtonClicked" id="about"></img>
+          <img src="~@/assets/menu_logo.png" @click="onButtonClicked" id="about"></img>
         </div>
       </li>
       <li v-for="buttonName in buttons" :key="buttonName">
