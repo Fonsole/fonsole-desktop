@@ -5,13 +5,14 @@
       <span v-for="n in maxRating" :key="n"
       :class="[{'vue-star-rating-pointer': !readOnly }, 'vue-star-rating-star']">
         <star :fill="fillLevel[n-1]" :size="starSize" :star-id="n" :step="step"
-        :active-color="activeColor" :inactive-color="inactiveColor" :border-color="borderColor"
-        :border-width="borderWidth" :padding="padding" @star-selected="setRating($event, true)"
-        @star-mouse-move="setRating" :rtl="rtl" :lit="n <= rating">
+        :current-rating="currentRating"
+        :padding="padding" @star-selected="setRating($event, true)"
+        @star-mouse-move="setRating" :rtl="rtl">
         </star>
       </span>
-      <span v-if="showRating"
-      :class="['vue-star-rating-rating-text', textClass]"> {{formattedRating}}</span>
+      <span v-if="showRating" :class="['vue-star-rating-rating-text', textClass]">
+        {{formattedRating}}
+      </span>
     </div>
   </div>
 </template>
@@ -36,21 +37,13 @@ export default {
       type: Number,
       default: 3,
     },
-    activeColor: {
-      type: String,
-      default: '#ffd055',
-    },
-    inactiveColor: {
-      type: String,
-      default: '#d8d8d8',
-    },
     maxRating: {
       type: Number,
       default: 5,
     },
     starSize: {
-      type: Number,
-      default: 50,
+      type: [Number, String],
+      default: 10,
     },
     showRating: {
       type: Boolean,
@@ -67,14 +60,6 @@ export default {
     inline: {
       type: Boolean,
       default: false,
-    },
-    borderColor: {
-      type: String,
-      default: '#999',
-    },
-    borderWidth: {
-      type: Number,
-      default: 0,
     },
     padding: {
       type: Number,
@@ -157,34 +142,35 @@ export default {
 </script>
 
 <style scoped>
-.vue-star-rating-star {
+  .vue-star-rating-star {
     display: inline-block;
-}
+  }
 
-.vue-star-rating-pointer {
+  .vue-star-rating-pointer {
     cursor: pointer;
-}
+  }
 
-.vue-star-rating {
+  .vue-star-rating {
+    vertical-align: middle;
     display: flex;
     align-items: center;
-}
+  }
 
-.vue-star-rating-inline {
+  .vue-star-rating-inline {
     display: inline-flex;
-}
+  }
 
-.vue-star-rating-rating-text {
+  .vue-star-rating-rating-text {
     margin-top: 7px;
     margin-left: 7px;
-}
+  }
 
-.vue-star-rating-rtl {
+  .vue-star-rating-rtl {
     direction: rtl;
-}
+  }
 
-.vue-star-rating-rtl .vue-star-rating-rating-text {
+  .vue-star-rating-rtl .vue-star-rating-rating-text {
     margin-right: 10px;
     direction:rtl;
-}
+  }
 </style>

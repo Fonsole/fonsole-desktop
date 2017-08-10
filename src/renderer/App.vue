@@ -63,8 +63,8 @@
   $font-stack:    zekton, Helvetica, sans-serif
   $primary-color: white
 
-  $dividerColor: rgba(255,255,255,0.65)
-  $dividerColorTransparent: rgba(255,255,255,0)
+  $dividerColor: rgba(255, 255, 255, 0.65)
+  $dividerColorTransparent: rgba(255, 255, 255, 0)
 
   body
     margin: 0
@@ -106,8 +106,8 @@
     margin-bottom: 6px
     margin-left: 1px
     width: 100%
-    height: 2px
-    background: linear-gradient(left, $dividerColor 0%, $dividerColor 5%, $dividerColor 50%, $dividerColorTransparent 95%, $dividerColorTransparent 100%)
+    height: 0.20vh
+    background: linear-gradient(to right, $dividerColor 0%, $dividerColor 5%, $dividerColor 50%, $dividerColorTransparent 95%, $dividerColorTransparent 100%)
 
   .fade-transition
     transition: opacity 0.2s ease
