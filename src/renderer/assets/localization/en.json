@@ -16,5 +16,8 @@
   "Games_library" : "library",
 
   "GameView_install" : "download",
-  "GameView_progress" : "downloading"
+  "GameView_progress" : "downloading",
+  "GameView_play" : "play",
+  "GameView_uninstall" : "uninstall",
+  "GameView_progress-dark" : "uninstalling"
 }

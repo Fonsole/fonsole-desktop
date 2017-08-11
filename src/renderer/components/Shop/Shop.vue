@@ -1,6 +1,7 @@
 <template>
   <div id="shop" class="tabContents">
     <fbutton width="22" height="6" type="install">install</fbutton>
+    <fbutton width="22" height="6" type="uninstall">uninstall</fbutton>
     <fbutton width="22" height="6" type="progress">installing</fbutton>
     <fbutton width="22" height="6" type="progress-dark">removing</fbutton>
     <star-rating v-model="rating"></star-rating>

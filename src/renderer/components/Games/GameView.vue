@@ -14,9 +14,26 @@
     </div>
     <div class="column rightColumn">
       <div class="header">
-        <h2 class="headerTitle">GAME INFO</h2>
+        <h2 class="headerTitle">INFO</h2>
       </div>
-      <fbutton width="22" height="6" :type="getButtonState" @click.native="onButtonClick()">
+      <div class="infoIcon">
+        <img src="../../assets/players.png">
+        <h2 class="playerCount">3-6</h2>
+      </div>
+      <div class="infoIcon">
+        <img src="../../assets/time.png">
+        <h2 class="time">15-20′</h2>
+      </div>
+      <div class="infoIcon">
+        <img src="../../assets/wifi.png">
+        <h2 class="wifi">300mb</h2>
+      </div>
+      <fbutton class="button" width="30" height="8" :disabled="this.gameState !== 'installed'"
+      type="play" @click.native="onPlayButtonClick()">
+        {{ $localize('play') }}
+      </fbutton>
+      <fbutton class="button" width="30" height="6"
+      :type="buttonState" @click.native="onStatusButtonClick()">
         {{ $localize(this.buttonState) }}
       </fbutton>
     </div>
@@ -34,18 +51,52 @@
       'star-rating': StarRating,
     },
     data: () => ({
-      buttonState: 'install',
+      gameState: 'notInstalled',
       rating: 3,
     }),
     computed: {
-      getButtonState() {
-        return this.buttonState;
+      buttonState() {
+        switch (this.gameState) {
+          case 'notInstalled':
+            return 'install';
+          case 'installing':
+            return 'progress';
+          case 'uninstalling':
+            return 'progress-dark';
+          case 'installed':
+            return 'uninstall';
+          default:
+            return 'install';
+        }
+      },
+      isInstalled() {
+        return this.gameState === 'installed';
       },
     },
     methods: {
-      onButtonClick() {
-        console.log('asds');
-        this.buttonState = 'progress';
+      onPlayButtonClick() {
+        console.log('play');
+      },
+      onStatusButtonClick() {
+        switch (this.gameState) {
+          case 'notInstalled':
+            this.gameState = 'installing';
+            window.setTimeout(() => {
+              this.gameState = 'installed';
+            }, 1000);
+            break;
+          case 'installing':
+            break;
+          case 'uninstalling':
+            break;
+          case 'installed':
+            this.gameState = 'uninstalling';
+            window.setTimeout(() => {
+              this.gameState = 'notInstalled';
+            }, 1000);
+            break;
+          default:
+        }
       },
     },
   };
@@ -103,4 +154,18 @@
     .rightColumn
       flex: 0.25 1 auto
       margin-left: 2vh
+
+      .infoIcon
+        margin-top: 5vh
+        text-align: center
+        img
+          height: 8.5vh
+          width: 8.5vh
+
+        h2
+          margin: 0
+          font-size: 5vh
+
+      .button
+        margin: 2vh auto
 </style>

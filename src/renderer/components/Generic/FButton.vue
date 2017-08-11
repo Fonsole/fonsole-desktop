@@ -1,6 +1,6 @@
 <template>
   <div id="fbutton" :style="{width: this.width + 'vh', height: this.height + 'vh'}"
-  :class="this.type">
+  :class="`${ this.type }` + ' ' + `${ this.disabled ? 'disabled' : 'enabled' }`">
     <div id="background">
     </div>
     <div id="button" :style="{fontSize: this.height/2 + 'vh'}" @click="handleClick">
@@ -26,6 +26,10 @@
         type: [String],
         default: 'default',
       },
+      disabled: {
+        type: [Boolean, String],
+        default: false,
+      },
     },
     data: () => ({
       colours: ['#69D2E7', '#A7DBD8', '#E0E4CC', '#F38630', '#FA6900', '#FF4E50', '#F9D423'],
@@ -50,8 +54,32 @@
       left: 50%
       transform: translate(-50%, -50%)
 
+    &.play
+      box-shadow: 0px 5px 0px #335E38
+      background: #48834B
+      transition: transform 0.15s, box-shadow 0.15s
+      transform: rotateX(0deg) translateY(0)
+      -webkit-font-smoothing: antialiased
+
+      &:hover
+        box-shadow: 0px 5px 0px #335E38
+        transform: rotateX(0deg) translateY(0)
+
+      &:hover:active
+        box-shadow: 0 1px 0 #335E38
+        background: #48834B
+        transition: transform 0.05s, box-shadow 0.05s
+        transform: rotateX(15deg) translateY(4px)
+
+      > #background
+        visibility: collapse
+
+      &.disabled
+        box-shadow: 0px 5px 0px #283329
+        opacity: 0.5
+
     &.install
-      box-shadow: 0px 0px 0px #232530
+      box-shadow: 0px 5px 0px #232530
       background: radial-gradient(ellipse at center, #232530 0%,#232530 100%)
       transition: transform 0.15s, box-shadow 0.15s
       transform: rotateX(0deg) translateY(0)
@@ -59,13 +87,13 @@
 
       &:hover
         box-shadow: 0px 5px 0px #232530
-        transform: rotateX(30deg) translateY(0)
+        transform: rotateX(0deg) translateY(0)
 
       &:hover:active
         box-shadow: 0 1px 0 #423847
         background: radial-gradient(ellipse at center, #232530 0%,#232530 100%)
         transition: transform 0.05s, box-shadow 0.05s
-        transform: rotateX(30deg) translateY(4px)
+        transform: rotateX(15deg) translateY(4px)
 
       > #background
         background: linear-gradient(-45deg,
@@ -79,12 +107,41 @@
         width: 100%
         height: 100%
 
+    &.uninstall
+      box-shadow: 0px 5px 0px #111
+      background: radial-gradient(ellipse at center, #232530 0%,#232530 100%)
+      transition: transform 0.15s, box-shadow 0.15s
+      transform: rotateX(0deg) translateY(0)
+      -webkit-font-smoothing: antialiased
+
+      &:hover
+        box-shadow: 0px 5px 0px #111
+        transform: rotateX(0deg) translateY(0)
+
+      &:hover:active
+        box-shadow: 0 1px 0 #111
+        background: radial-gradient(ellipse at center, #232530 0%,#232530 100%)
+        transition: transform 0.05s, box-shadow 0.05s
+        transform: rotateX(15deg) translateY(4px)
+
+      > #background
+        background: linear-gradient(-45deg,
+        #222 10%, #333 10%,
+        #333 30%, #222 30%,
+        #222 50%, #333 50%,
+        #333 70%, #222 70%,
+        #222 90%, #333 90%)
+        background-size: $primary-background-width 100%
+        -webkit-animation: 'progress-forward' 12s infinite linear
+        width: 100%
+        height: 100%
+
     &.progress
       background: radial-gradient(ellipse at center, #D60D2E 0%,#C20020 100%)
       transition: transform 0.15s, box-shadow 0.15s
       -webkit-font-smoothing: antialiased
       box-shadow: 0px 5px 0px #750014
-      transform: rotateX(30deg) translateY(0)
+      transform: rotateX(0deg) translateY(0)
 
       > #background
         background: linear-gradient(-45deg,
@@ -103,7 +160,7 @@
       transition: transform 0.15s, box-shadow 0.15s
       -webkit-font-smoothing: antialiased
       box-shadow: 0px 5px 0px #111
-      transform: rotateX(30deg) translateY(0)
+      transform: rotateX(0deg) translateY(0)
 
       > #background
         background: linear-gradient(-45deg,
