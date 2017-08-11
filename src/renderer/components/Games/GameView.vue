@@ -24,8 +24,8 @@
 </template>
 
 <script>
-  import FButton from '../generic/FButton';
-  import StarRating from '../generic/StarRating';
+  import FButton from '../Generic/FButton';
+  import StarRating from '../Generic/StarRating';
 
   export default {
     name: 'GameView',

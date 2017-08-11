@@ -13,7 +13,7 @@
         <label for="radio2">{{ $localize('library') }}</label>
       </li>
     </ul>
-    <div class="divider"></div>
+    <!-- <div class="divider"></div> -->
     <div class="contents">
       <component
         :is="showInstalled == 1 ? 'library' : 'installed'"

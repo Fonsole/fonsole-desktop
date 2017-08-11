@@ -75,7 +75,7 @@
         #8e96c1 70%, #5e6aa7 70%,
         #5e6aa7 90%, #8e96c1 90%)
         background-size: $primary-background-width 100%
-        animation: 'progress-forward' 12s infinite linear
+        -webkit-animation: 'progress-forward' 12s infinite linear
         width: 100%
         height: 100%
 
@@ -94,7 +94,7 @@
         #ec2045 70%, #A7DBD8 70%,
         #A7DBD8 90%, #c7c12f 90%)
         background-size: $primary-background-width 100%
-        animation: 'progress-forward' 3s infinite linear
+        -webkit-animation: 'progress-forward' 3s infinite linear
         width: 100%
         height: 100%
 
@@ -113,7 +113,7 @@
         #333 70%, #222 70%,
         #222 90%, #333 90%)
         background-size: $primary-background-width 100%
-        animation: 'progress-backward' 3s infinite linear
+        -webkit-animation: 'progress-backward' 3s infinite linear
         width: 100%
         height: 100%
 
@@ -125,19 +125,19 @@
     & > *:hover
       animation: 'wobble-horizontal' 1s 1 ease-in-out
 
-  @keyframes 'progress-forward'
+  @-webkit-keyframes 'progress-forward'
     0%
       background-position-x: 0vh
     100%
       background-position-x: $primary-background-width
 
-  @keyframes 'progress-backward'
+  @-webkit-keyframes 'progress-backward'
     0%
       background-position-x: $primary-background-width
     100%
       background-position-x: 0vh
 
-  @keyframes 'wobble-horizontal'
+  @-webkit-keyframes 'wobble-horizontal'
     16.65%
       transform: translateX(8px)
     33.3%

@@ -47,7 +47,7 @@
     data: () => ({
       isFullscreen: electron.remote.getCurrentWindow().isFullScreen(),
       resolution: electron.remote.getCurrentWindow().getSize(),
-      allResolutions: ['1280x720', '1280x800', '1280x1024', '1920x1080'],
+      allResolutions: ['1280x720', '1280x800', '1280x1024', '1600x900', '1920x1080'],
     }),
     computed: {
       getAvailableResolutions() {
