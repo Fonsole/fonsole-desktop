@@ -5,11 +5,30 @@
         <h2 class="headerTitle game">SAY ANYTHING!</h2>
         <star-rating v-model="rating" starSize="4.5" class="rating"></star-rating>
       </div>
-      <div class="frame">
-
-      </div>
       <div class="media">
-
+        <div class="currentFrame">
+          <img src="../../assets/preview_background.png">
+          <div class="screenshotCaption">
+            <h2>best gaem this is not a drill</h2>
+          </div>
+        </div>
+        <div class="screenshots">
+          <div v-for="n in 4" :key="n"
+          :class="[{'current': currentMedia == n }, 'screenshot']" @click="currentMedia = n">
+            <img src="../../assets/preview_background.png">
+          </div>
+        </div>
+      </div>
+      <div class="description">
+        <div class="text">
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+          eiusmod tempor incididunt ut labore et dolore magna aliqua.
+          Ut enim ad minim veniam, quis nostrud exercitation ullamco
+          laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure
+          dolor in reprehenderit in voluptate velit esse cillum dolore eu
+          fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
+          proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+        </div>
       </div>
     </div>
     <div class="column rightColumn">
@@ -52,6 +71,7 @@
     },
     data: () => ({
       gameState: 'notInstalled',
+      currentMedia: 1,
       rating: 3,
     }),
     computed: {
@@ -147,12 +167,70 @@
         margin-right: 2vh
 
     .leftColumn
-      flex: 0.75 1 auto
+      flex: 0.7 1 auto
       display: flex
       flex-direction: column
 
+      .media
+        flex: 0.8 1 auto
+        display: flex
+        justify-content: space-between
+        flex-direction: row
+
+        .currentFrame
+          flex: 0.7 1 auto
+          overflow: hidden
+          margin: 2vh
+          box-shadow: 0 0 10px rgba(0,0,0,0.5)
+          position: relative
+
+          img
+            width: 100%
+            height: 100%
+
+          .screenshotCaption
+            position: absolute
+            bottom: 0
+            width: 100%
+            background: linear-gradient(to top, rgba(0,0,0,0.8), rgba(0,0,0,0))
+            margin: 0
+
+        .screenshots
+          flex: 0.3 1 auto
+          display: flex
+          flex-direction: column
+          margin: 2vh
+          margin-left: 0
+
+          .screenshot
+            margin-bottom: 1.5vh
+            width: 25vh
+            height: 14vh
+            box-shadow: 0 0 10px rgba(0,0,0,0.5)
+            transition: all 0.25s ease
+            box-sizing: border-box
+
+            img
+              width: 100%
+              height: 100%
+              box-shadow: 0 0 10vh rgba(0,0,0,0.9) inset
+              filter: hue-rotate(90deg)
+
+            &.current
+              border: 1px dashed white
+
+            &:hover
+              opacity: 0.8
+
+      .description
+        flex: 0.2 1 auto
+
+        .text
+          margin: 2vh
+          margin-top: 0
+
     .rightColumn
-      flex: 0.25 1 auto
+      flex: 0.3 1 auto
       margin-left: 2vh
 
       .infoIcon
@@ -168,4 +246,6 @@
 
       .button
         margin: 2vh auto
+        margin-left: 2vh
+        margin-right: 2vh
 </style>
