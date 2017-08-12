@@ -27,7 +27,7 @@
         },
         perspective: {
           type: [Number, String],
-          default: 35,
+          default: 40,
         },
         display: {
           type: [Number, String],
@@ -79,7 +79,7 @@
         },
         inverseScaling: {
           type: [Number, String],
-          default: 300,
+          default: 100,
         },
         controlsVisible: {
           type: Boolean,

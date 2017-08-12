@@ -90,15 +90,15 @@
           (1 - maxDeckSize);
         offsetInDeck = Math.max(offsetInDeck, minOffset)
         const z = !this.parent.disable3d ? parseInt(this.parent.inverseScaling) + ((i + 1) * 100) : 0;
-        const y = 180 + (!this.parent.disable3d ? parseInt(this.parent.perspective) : 0);
+        const y = (!this.parent.disable3d ? parseInt(this.parent.perspective) : 0);
         const leftRemain = (this.parent.space === 'auto')
-                  ? parseInt((this.parent.width * 1.5 + i * offsetInDeck), 10)
+                  ? parseInt((this.parent.width * 1 + i * offsetInDeck), 10)
                   : parseInt((this.parent.space), 10);
         const transform = (positive)
                   ? `translateX(${leftRemain}vh) translateZ(-${z}vh) ` +
-              `rotateY(${y}deg) rotateX(180deg)`
+              `rotateY(-${y}deg)`
                   : `translateX(-${leftRemain}vh) translateZ(-${z}vh) ` +
-              `rotateY(-${y}deg) rotateX(180deg)`;
+              `rotateY(${y}deg)`;
         const top = this.parent.space === 'auto' ? 0 : parseInt((i + 1) * (this.parent.space));
 
         return {
