@@ -19,5 +19,12 @@
   "GameView_progress" : "downloading",
   "GameView_play" : "play",
   "GameView_uninstall" : "uninstall",
-  "GameView_progress-dark" : "uninstalling"
+  "GameView_progress-dark" : "uninstalling",
+
+  "Library_featured" : "featured",
+  "Library_featured_Descr" : "selected community games of the week",
+  "Library_new" : "new",
+  "Library_new_Descr" : "recently uploaded/updated games",
+  "Library_best" : "best",
+  "Library_best_Descr" : "most popular and most rated games"
 }
