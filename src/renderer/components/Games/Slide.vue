@@ -36,21 +36,25 @@
 
         if (!this.isCurrent) {
           const rIndex = this.getSideIndex(this.parent.rightIndices);
-          const lIndex = this.getSideIndex(this.parent.leftIndices);
+          const lIndex = this.getSideIndex(this.parent.leftIndices);          
 
           if (rIndex >= 0 || lIndex >= 0) {
-            styles = rIndex >= 0 ? this.calculatePosition(rIndex, true, this.zIndex) : this.calculatePosition(lIndex, false, this.zIndex);
+            styles = rIndex >= 0 ? this.calculatePosition(rIndex, true, this.zIndex, this.parent.rightIndices.length) : 
+                                   this.calculatePosition(lIndex, false, this.zIndex, this.parent.leftIndices.length);
             styles.opacity = 1;
             styles.visibility = 'visible';
           }
+          else {
+            styles.opacity = 0;
+          }
 
-          if (this.parent.hasHiddenSlides) {
+          /*if (this.parent.hasHiddenSlides) {
             if (this.matchIndex(this.parent.leftOutIndex)) {
               styles = this.calculatePosition(this.parent.leftIndices.length - 1, false, this.zIndex);
             } else if (this.matchIndex(this.parent.rightOutIndex)) {
               styles = this.calculatePosition(this.parent.rightIndices.length - 1, true, this.zIndex);
             }
-          }
+          }*/
         }
 
         return Object.assign(styles, {
@@ -58,7 +62,6 @@
           width: `${this.parent.slideWidth}vh`,
           height: `${this.parent.slideHeight}vh`,
           transition: ` transform ${this.parent.animationSpeed}ms, ` +
-              `               opacity ${this.parent.animationSpeed}ms, ` +
               `               visibility ${this.parent.animationSpeed}ms`,
         });
       },
@@ -78,17 +81,24 @@
       matchIndex(index) {
         return (index >= 0) ? this.index === index : (this.parent.total + index) === this.index;
       },
-      calculatePosition(i, positive, zIndex) {
+      calculatePosition(i, positive, zIndex, deckSize) {
+        const minOffset = 18
+        const maxOffset = 25
+        const maxDeckSize = 5
+        let offsetInDeck = 
+          ((maxOffset - minOffset) * deckSize + (minOffset - maxOffset * maxDeckSize)) / 
+          (1 - maxDeckSize);
+        offsetInDeck = Math.max(offsetInDeck, minOffset)
         const z = !this.parent.disable3d ? parseInt(this.parent.inverseScaling) + ((i + 1) * 100) : 0;
-        const y = !this.parent.disable3d ? parseInt(this.parent.perspective) : 0;
+        const y = 180 + (!this.parent.disable3d ? parseInt(this.parent.perspective) : 0);
         const leftRemain = (this.parent.space === 'auto')
-                  ? parseInt((i + 1) * (this.parent.width / 2.5), 10)
-                  : parseInt((i + 1) * (this.parent.space), 10);
+                  ? parseInt((this.parent.width * 1.5 + i * offsetInDeck), 10)
+                  : parseInt((this.parent.space), 10);
         const transform = (positive)
                   ? `translateX(${leftRemain}vh) translateZ(-${z}vh) ` +
-              `rotateY(-${y}deg)`
+              `rotateY(${y}deg) rotateX(180deg)`
                   : `translateX(-${leftRemain}vh) translateZ(-${z}vh) ` +
-              `rotateY(${y}deg)`;
+              `rotateY(-${y}deg) rotateX(180deg)`;
         const top = this.parent.space === 'auto' ? 0 : parseInt((i + 1) * (this.parent.space));
 
         return {

@@ -155,26 +155,28 @@
         },
         visible() {
           const v = (this.display > this.total) ? this.total : this.display;
-
-          return v !== 2 ? (v % 2) ? v : v - 1 : v;
+          return v;
         },
         hasHiddenSlides() {
           return this.total > this.visible;
         },
         leftIndices() {
-          const n = Math.floor(this.visible / 2) + 1;
+          const n = this.loop ? this.visible + 1 : 
+                                Math.min(this.visible, this.currentIndex) + 1;
           const indices = [];
-
+          
           for (let m = 1; m < n; m++) {
             indices.push((this.dir === 'ltr')
                         ? (this.currentIndex + m) % (this.total)
                         : (this.currentIndex - m) % (this.total));
           }
+          
 
           return indices;
         },
         rightIndices() {
-          const n = Math.floor(this.visible / 2) + 1;
+          const n = this.loop ? this.visible + 1 :
+                                Math.min(this.visible, this.total - 1 - this.currentIndex) + 1;
           const indices = [];
 
           for (let m = 1; m < n; m++) {
@@ -184,27 +186,7 @@
           }
 
           return indices;
-        },
-        leftOutIndex() {
-          const n = Math.floor(this.visible / 2) + 1;
-
-          if (this.dir === 'ltr') {
-            return ((this.total - this.currentIndex - n) <= 0)
-                    ? (-parseInt(this.total - this.currentIndex - n))
-                    : (this.currentIndex + n);
-          }
-          return (this.currentIndex - n);
-        },
-        rightOutIndex() {
-          const n = Math.floor(this.visible / 2) + 1;
-
-          if (this.dir === 'ltr') {
-            return (this.currentIndex - n);
-          }
-          return ((this.total - this.currentIndex - n) <= 0)
-                    ? (-parseInt(this.total - this.currentIndex - n, 10))
-                    : (this.currentIndex + n);
-        },
+        }        
       },
       methods: {
             /**
