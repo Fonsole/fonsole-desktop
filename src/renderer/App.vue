@@ -3,7 +3,7 @@
     <body>
       <rings></rings>
       <div id="appContent">
-        <div id="topbarContainer">
+        <div id="topbarContainer" style="box-shadow: 0 0 1vh rgba(0,0,0,0.5);">
           <topbar></topbar>
         </div>
         <div id="routerContainer">

@@ -6,9 +6,14 @@
           <img src="~@/assets/menu_logo.png" @click="onButtonClicked" id="about"></img>
         </div>
       </li>
-      <li v-for="buttonName in buttons" :key="buttonName">
+      <li v-for="(buttonName,n) in buttons" :key="n">
         <div class="">
           <a @click="onButtonClicked" :id="buttonName">{{ $localize(buttonName) }}</a>
+        </div>
+        <div :class="['pointer', {'lit':buttonName == currentPage}]">
+          <div class="circle">
+
+          </div>
         </div>
       </li>
       <li id="roomName">
@@ -30,6 +35,9 @@
       roomName() {
         return this.$store.state.networking.roomName || '...';
       },
+      currentPage() {
+        return this.$store.state.gui.page;
+      },
     },
     methods: {
       onButtonClicked(event) {
@@ -48,6 +56,34 @@
     li
       float: left
       vertical-align: middle
+      position: relative
+
+      &:hover
+        .pointer
+          opacity: 0.9
+
+      .pointer
+        width: 1vh
+        height: 1vh
+        position: absolute
+        bottom: 5%
+        left: 47%
+        transition: all 0.65s ease
+        opacity: 0.0
+
+        .circle
+          margin: 0 auto
+          width: 0.6vh
+          height: 0.6vh
+          background: #2da0e3
+          border-radius: 0.3vh
+          margin: auto
+          transition: box-shadow 0.3s ease
+
+        &.lit
+          opacity: 0.9
+          .circle
+            box-shadow: 0 0 0.6vh rgba(255,255,255,0.5)
 
       & div
         height: 6vh

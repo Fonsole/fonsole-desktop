@@ -26,5 +26,11 @@
   "Library_new" : "new",
   "Library_new_Descr" : "recently uploaded/updated games",
   "Library_best" : "best",
-  "Library_best_Descr" : "most popular and most rated games"
+  "Library_best_Descr" : "most popular and most rated games",
+
+  "Home_featured" : "featured",
+  "Home_quick" : "quick game",
+  "Home_promo" : "shop promo",
+  "Home_tutorials" : "tutorials",
+  "Home_news" : "news"
 }
