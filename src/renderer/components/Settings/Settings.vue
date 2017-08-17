@@ -29,14 +29,11 @@
   </div>
 </template>
 <script>
+  // @ifdef ELECTRON
+  import { remote } from 'electron';
+  // @endif
   import Checkbox from './Checkbox';
   import Dropdown from './Dropdown';
-
-  let electron;
-
-  if (!process.env.IS_WEB) {
-    electron = require('electron');
-  }
 
   export default {
     name: 'Settings',
@@ -45,8 +42,8 @@
       dropdown: Dropdown,
     },
     data: () => ({
-      isFullscreen: electron.remote.getCurrentWindow().isFullScreen(),
-      resolution: electron.remote.getCurrentWindow().getSize(),
+      isFullscreen: remote.getCurrentWindow().isFullScreen(),
+      resolution: remote.getCurrentWindow().getSize(),
       allResolutions: ['1280x720', '1280x800', '1280x1024', '1600x900', '1920x1080'],
     }),
     computed: {
@@ -56,7 +53,7 @@
     },
     watch: {
       isFullscreen() {
-        electron.remote.getCurrentWindow().setFullScreen(this.isFullscreen);
+        remote.getCurrentWindow().setFullScreen(this.isFullscreen);
       },
     },
     methods: {
@@ -67,13 +64,13 @@
         return `${s[0]}x${s[1]}`;
       },
       getCurrentResolution() {
-        return this.resolutionToString(electron.remote.getCurrentWindow().getSize());
+        return this.resolutionToString(remote.getCurrentWindow().getSize());
       },
       changeResolution(r) {
         const width = this.stringToResolution(r)[0];
         const height = this.stringToResolution(r)[1];
 
-        electron.remote.getCurrentWindow().setSize(width, height, true);
+        remote.getCurrentWindow().setSize(width, height, true);
 
         this.resolution = this.getCurrentResolution();
       },

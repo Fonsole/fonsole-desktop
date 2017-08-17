@@ -2,10 +2,11 @@
  * @file This file implements everything that is used to communicate with local game library.
  */
 
+// @ifdef ELECTRON
+import { ipcRenderer } from 'electron';
+// @endif
 import _ from 'lodash';
 import { GAME_STATUS } from '=/enums';
-
-const { ipcRenderer } = process.env.IS_WEB ? {} : require('electron');
 
 const initialState = {
   gameStatuses: {},
