@@ -4,6 +4,7 @@
  */
 process.env.BABEL_ENV = 'renderer';
 
+const _ = require('lodash');
 const path = require('path');
 const webpack = require('webpack');
 
@@ -11,17 +12,16 @@ const BabiliWebpackPlugin = require('babili-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 
-const preprocessLoaderLine = `preprocess-loader?${
-  Object.entries({
-    WEB: process.env.IS_WEB,
-    ELECTRON: !process.env.IS_WEB,
-    PRODUCTION: process.env.NODE_ENV === 'production' || process.env.NODE_ENV === 'testing',
-    DEBUG: process.env.NODE_ENV !== 'production' && process.env.NODE_ENV !== 'testing',
-  })
-    .filter(([, value]) => value) // Remove all falsy values
-    .map(([key]) => key) // Map keys to array
-    .join('&')
-}`;
+const preprocessLoaderLine = `preprocess-loader?${JSON.stringify(_.pickBy({
+  // Assume that all code in .vue files will be js,
+  // because preprocess lib not supports vue completely.
+  ppOptions: { type: 'js' },
+
+  WEB: process.env.IS_WEB,
+  ELECTRON: !process.env.IS_WEB,
+  PRODUCTION: process.env.NODE_ENV === 'production' || process.env.NODE_ENV === 'testing',
+  DEBUG: process.env.NODE_ENV !== 'production' && process.env.NODE_ENV !== 'testing',
+}, Boolean))}`;
 
 const baseConfig = {
   devtool: '#cheap-module-eval-source-map',
