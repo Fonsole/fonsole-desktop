@@ -1,5 +1,5 @@
 <template>
-  <div id="topbar">
+  <div id="topbar" v-show="$store.state.gui.showTopbar">
     <ul>
       <li>
         <div class="">
@@ -11,13 +11,11 @@
           <a @click="onButtonClicked" :id="buttonName">{{ $localize(buttonName) }}</a>
         </div>
         <div :class="['pointer', {'lit':buttonName == currentPage}]">
-          <div class="circle">
-
-          </div>
+          <div class="circle"></div>
         </div>
       </li>
       <li id="roomName">
-        <div class="">
+        <div>
           <a @click="onButtonClicked" id="room">{{ $localize('room', { roomName: roomName }) }}</a>
         </div>
       </li>
@@ -29,7 +27,7 @@
   export default {
     name: 'Topbar',
     data: () => ({
-      buttons: ['home', 'games', 'shop', 'community', 'settings'],
+      buttons: ['home', 'games', 'shop', 'community', 'settings', 'workshop'],
     }),
     computed: {
       roomName() {

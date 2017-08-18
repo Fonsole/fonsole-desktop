@@ -29,6 +29,9 @@
   import Shop from '@/components/Shop/Shop';
   import Community from '@/components/Community/Community';
   import Settings from '@/components/Settings/Settings';
+  import Workshop from '@/components/Workshop/Workshop';
+  import Workspace from '@/components/Workspace/Workspace';
+  import CreateGame from '@/components/Workshop/CreateGame';
 
   export default {
     name: 'App',
@@ -43,6 +46,9 @@
       shop: Shop,
       community: Community,
       settings: Settings,
+      Workshop,
+      Workspace,
+      createGame: CreateGame,
     },
     computed: {
       page() {

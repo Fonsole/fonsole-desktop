@@ -1,5 +1,6 @@
 import { app, BrowserWindow } from 'electron';
 import gameLibrary from './gameLibrary';
+import workshop from './workshop';
 
 /**
  * Set `__static` path to static files in production
@@ -24,6 +25,7 @@ function createWindow() {
   mainWindow.loadURL(winURL);
 
   gameLibrary();
+  workshop();
 
   mainWindow.on('closed', () => {
     mainWindow = null;

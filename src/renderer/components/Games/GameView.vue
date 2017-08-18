@@ -67,7 +67,7 @@
     name: 'GameView',
     components: {
       fbutton: FButton,
-      'star-rating': StarRating,
+      StarRating,
     },
     data: () => ({
       gameState: 'notInstalled',

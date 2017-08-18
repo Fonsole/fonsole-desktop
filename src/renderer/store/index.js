@@ -5,6 +5,8 @@ import * as getters from './getters';
 import gui from './modules/gui';
 import networking from './modules/networking';
 import gameLibrary from './modules/gameLibrary';
+import workshop from './modules/workshop';
+import workspace from './modules/workspace';
 
 Vue.use(Vuex);
 
@@ -15,5 +17,7 @@ export default new Vuex.Store({
     gui,
     networking,
     gameLibrary,
+    workshop,
+    workspace,
   },
 });
