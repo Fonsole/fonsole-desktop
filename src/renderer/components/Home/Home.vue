@@ -1,43 +1,67 @@
 <template>
   <div id="home" class="tabContents">
-    <div class="column">
+    <div class="column left">
       <div class="cell">
         <div class="cellHeader">
           <h2 class="cellHeaderTitle">{{ $localize('featured') }}</h2>
         </div>
-        <div class="cellContent">
+        <div class="cellContent featured">
+
+        </div>
+        <div class="cellCaption">
           <h2>say anything!</h2>
         </div>
       </div>
       <div class="cell">
         <div class="cellHeader">
           <h2 class="cellHeaderTitle">{{ $localize('promo') }}</h2>
+          <div v-for="n in 3" :key="n" class="slideSelector">
+
+          </div>
         </div>
-        <div class="cellContent">
+        <div class="cellContent shop">
+
+        </div>
+        <div class="cellCaption">
           <h2>save 50% off this!</h2>
         </div>
       </div>
     </div>
-    <div class="column">
+    <div class="column middle">
       <div class="cell">
         <div class="cellHeader">
           <h2 class="cellHeaderTitle">{{ $localize('quick') }}</h2>
         </div>
         <div class="cellContent quickPlay">
-          <fbutton width="22" height="6" type="install">install</fbutton>
-          <fbutton width="22" height="6" type="uninstall">uninstall</fbutton>
+          <div class="quickPlayButton lastPlayed clickable">
+            <div class="cellCaption">
+              <h2>
+                {{ $localize('last_played') }}
+              </h2>
+            </div>
+          </div>
+          <div class="quickPlayButton random clickable">
+            <div class="cellCaption">
+              <h2>
+                {{ $localize('random') }}
+              </h2>
+            </div>
+          </div>
         </div>
       </div>
       <div class="cell">
         <div class="cellHeader">
           <h2 class="cellHeaderTitle">{{ $localize('tutorials') }}</h2>
         </div>
-        <div class="cellContent">
-          <h2>creating your first fonsole game</h2>
+        <div class="cellContent tutorials">
+
+        </div>
+        <div class="cellCaption">
+          <h2>creating your first fonsole game pt. 1</h2>
         </div>
       </div>
     </div>
-    <div class="column restrict">
+    <div class="column right">
       <div class="verticalCell">
         <div class="cellHeader">
           <h2 class="cellHeaderTitle">{{ $localize('news') }}</h2>
@@ -89,7 +113,7 @@
 
 <style lang="sass" scoped>
   h2
-    font-size: 4.5vh
+    font-size: 2.5vw
     margin: 1vh
 
   #home
@@ -97,13 +121,35 @@
     width: 100%
     height: 100%
     // background-color: rgba(255,20,20,0.5)
+    justify-content: space-between
+
+    .clickable
+      transition: all 0.25s ease
+      &:hover
+        opacity: 0.6
+
+      &:active
+        filter: brightness(50%)
+
+    .cellCaption
+      position: absolute
+      bottom: 0
+      width: 100%
+      background: linear-gradient(to top, rgba(0,0,0,0.8), rgba(0,0,0,0))
+      margin: 0
 
     .column
       flex: 1 1 auto
       display: flex
       flex-direction: column
 
-      &.restrict
+      &.left
+        min-width: 30vw
+
+      &.middle
+        min-width: 30vw
+
+      &.right
         max-width: 25vw
 
       .cell, .verticalCell
@@ -114,12 +160,12 @@
         overflow: hidden
         display: flex
         flex-direction: column
+        position: relative
 
         .cellHeader
           flex: 0 1 auto
           display: flex
           flex-direction: row
-          justify-content: space-between
           height: 7.5vh
           min-height: 7.5vh
           clear: both
@@ -127,20 +173,54 @@
 
           .cellHeaderTitle
             font-size: 4.0vh
-            flex: 0.5 1 auto
             margin-left: 2vh
+
+          .slideSelector
+            width: 2vh
+            height: 2vh
+            background: #c7c746
+            border-radius: 1vh
+            margin-top: 2.9vh
+            margin-left: 1vh
 
         .cellContent
           max-width: 100%
           max-height: 100%
           display: flex
+          flex: 1 1 auto
+          box-shadow: 0 0 5vh rgba(0,0,0,0.9) inset
+          position: relative
+          background-position: center
+          background-size: cover
+          background-repeat: no-repeat
 
+          &.tutorials
+            background-image: url('~@/assets/testgame4.jpg')
+          &.shop
+            background-image: url('~@/assets/testgame3.jpg')
+          &.featured
+            background-image: url('~@/assets/testgame2.jpg')
           &.quickPlay
-            flex: 1 1 auto
-            background: url('~@/assets/preview_quickplay.png') center
-            background-size: cover
-            background-repeat: no-repeat
-            box-shadow: 0 0 5vh rgba(0,0,0,0.9) inset
+            .quickPlayButton
+              background-color: rgba(0,0,0,.3)
+              flex: 1 1 auto
+              position: relative
+              box-shadow: 0 0 5vh rgba(0,0,0,0.9) inset
+              position: relative
+
+              &.random
+                flex: 0.75 0 auto
+                background-image: url('~@/assets/preview_quickplay.png')
+                background-position: center
+                background-size: cover
+                background-repeat: no-repeat
+                text-align: center
+
+              &.lastPlayed
+                background-image: url('~@/assets/testgame.jpg')
+                background-position: center
+                background-size: cover
+                background-repeat: no-repeat
 
       .verticalCell
         display: flex

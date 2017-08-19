@@ -32,5 +32,7 @@
   "Home_quick" : "quick game",
   "Home_promo" : "shop promo",
   "Home_tutorials" : "tutorials",
-  "Home_news" : "news"
+  "Home_news" : "news",
+  "Home_last_played" : "last played",
+  "Home_random" : "random"
 }
