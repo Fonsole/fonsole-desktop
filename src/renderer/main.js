@@ -21,3 +21,7 @@ vm.$store.dispatch('init');
 
 // Open room
 vm.$store.dispatch('openRoom');
+
+// @ifdef DEBUG
+window.vm = vm;
+// @endif

@@ -16,7 +16,7 @@
     name: 'Shop',
     components: {
       fbutton: FButton,
-      'star-rating': StarRating,
+      StarRating,
     },
     data: () => ({
       rating: 3,

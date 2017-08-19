@@ -4,12 +4,24 @@
  */
 process.env.BABEL_ENV = 'renderer';
 
+const _ = require('lodash');
 const path = require('path');
 const webpack = require('webpack');
 
 const BabiliWebpackPlugin = require('babili-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
+
+const preprocessLoaderLine = `preprocess-loader?${JSON.stringify(_.pickBy({
+  // Assume that all code in .vue files will be js,
+  // because preprocess lib not supports vue completely.
+  ppOptions: { type: 'js' },
+
+  WEB: process.env.IS_WEB,
+  ELECTRON: !process.env.IS_WEB,
+  PRODUCTION: process.env.NODE_ENV === 'production' || process.env.NODE_ENV === 'testing',
+  DEBUG: process.env.NODE_ENV !== 'production' && process.env.NODE_ENV !== 'testing',
+}, Boolean))}`;
 
 const baseConfig = {
   devtool: '#cheap-module-eval-source-map',
@@ -24,6 +36,17 @@ const baseConfig = {
         },
       },
       {
+        test: /\.(sass|scss)$/,
+        use: ExtractTextPlugin.extract({
+          fallback: 'style-loader',
+          use: [
+            { loader: 'css-loader', options: { importLoaders: 1 } },
+            'postcss-loader',
+            'sass-loader',
+          ],
+        }),
+      },
+      {
         test: /\.css$/,
         use: ExtractTextPlugin.extract({
           fallback: 'style-loader',
@@ -35,7 +58,10 @@ const baseConfig = {
       },
       {
         test: /\.js$/,
-        use: 'babel-loader',
+        use: [
+          'babel-loader',
+          preprocessLoaderLine,
+        ],
         exclude: /node_modules/,
       },
       {
@@ -47,6 +73,9 @@ const baseConfig = {
             loaders: {
               sass: 'vue-style-loader!css-loader!sass-loader?indentedSyntax=1',
               scss: 'vue-style-loader!css-loader!sass-loader',
+            },
+            preLoaders: {
+              js: preprocessLoaderLine,
             },
           },
         },
@@ -78,9 +107,6 @@ const baseConfig = {
     __filename: process.env.NODE_ENV !== 'production',
   },
   plugins: [
-    new webpack.DefinePlugin({
-      'process.env.IS_WEB': !!process.env.IS_WEB,
-    }),
     new webpack.HotModuleReplacementPlugin(),
     new webpack.NoEmitOnErrorsPlugin(),
   ],
@@ -102,9 +128,6 @@ switch (process.env.NODE_ENV) {
     baseConfig.devtool = '#source-map';
 
     baseConfig.plugins.push(
-      new webpack.DefinePlugin({
-        'process.env.NODE_ENV': 'production',
-      }),
       new ExtractTextPlugin('style.css'),
       new BabiliWebpackPlugin({
         removeConsole: true,

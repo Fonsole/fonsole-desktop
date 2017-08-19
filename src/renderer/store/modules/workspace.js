@@ -1,14 +1,37 @@
+/**
+ * @file A store for development server & game development workspace.
+ */
+
+import Networking from 'fonsole-networking';
 import NetworkingAPI from 'fonsole-networking/client';
 
-const networking = new NetworkingAPI();
+const server = new Networking({
+  isLocal: true,
+  port: 46839,
+});
+server.listen();
+
+// Using other networking.
+// TODO Start a local server there.
+const networking = new NetworkingAPI({
+  forcedServer: 'http://127.0.0.1:46839/',
+});
 
 export default {
   state: {
     roomName: '',
+    gamePath: '',
+  },
+  getters: {
+    workspaceGameInfo: (state, getters, rootState, rootGetters) =>
+      state.gamePath && rootGetters.workshopGameInfo(state.gamePath),
   },
   mutations: {
     setRoomName: (state, roomName) => {
       state.roomName = roomName;
+    },
+    setWorkspaceGame(state, gamePath) {
+      state.gamePath = gamePath;
     },
   },
   actions: {

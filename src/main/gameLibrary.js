@@ -42,7 +42,6 @@ function loadGames(event) {
  * @todo Handle errors
  * @param {object} event Electron IPC event
  * @param {Number} gameId Required game ID
- * @returns {Promise}
  */
 function install(event, gameId) {
   // Wrap everything with try, so Vue can handle all other errors

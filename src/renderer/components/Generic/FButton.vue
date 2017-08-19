@@ -1,11 +1,9 @@
 <template>
   <div id="fbutton" :style="{width: this.width + 'vh', height: this.height + 'vh'}"
   :class="`${ this.type }` + ' ' + `${ this.disabled ? 'disabled' : 'enabled' }`">
-    <div id="background">
-    </div>
+    <div id="background"></div>
     <div id="button" :style="{fontSize: this.height/2 + 'vh'}" @click="handleClick">
-      <slot>
-      </slot>
+      <slot></slot>
     </div>
   </div>
 </template>

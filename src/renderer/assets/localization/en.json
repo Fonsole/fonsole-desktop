@@ -4,6 +4,7 @@
   "Topbar_shop" : "shop",
   "Topbar_community" : "community",
   "Topbar_settings" : "settings",
+  "Topbar_workshop": "workshop",
   "Topbar_room" : "ROOM CODE: {roomName}",
 
   "Settings_general" : "general",
@@ -34,5 +35,9 @@
   "Home_tutorials" : "tutorials",
   "Home_news" : "news",
   "Home_last_played" : "last played",
-  "Home_random" : "random"
+  "Home_random" : "random",
+  
+  "GameList_create_game": "CREATE GAME",
+  "GameList_local_games": "LOCAL GAMES",
+  "GamePreview_open": "OPEN"
 }
