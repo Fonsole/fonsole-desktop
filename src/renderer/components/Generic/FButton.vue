@@ -1,5 +1,5 @@
 <template>
-  <div id="fbutton" :style="{width: this.width + 'vh', height: this.height + 'vh'}"
+  <div id="fbutton" :style="{width: getWidth, height: this.height + 'vh'}"
   :class="`${ this.type }` + ' ' + `${ this.disabled ? 'disabled' : 'enabled' }`">
     <div id="background"></div>
     <div id="button" :style="{fontSize: this.height/2 + 'vh'}" @click="handleClick">
@@ -32,6 +32,14 @@
     data: () => ({
       colours: ['#69D2E7', '#A7DBD8', '#E0E4CC', '#F38630', '#FA6900', '#FF4E50', '#F9D423'],
     }),
+    computed: {
+      getWidth() {
+        if (this.width === 'auto') {
+          return '100%';
+        }
+        return `${this.width}vh`;
+      },
+    },
     methods: {
       handleClick(e) {
         this.$emit('click', e);
@@ -44,13 +52,61 @@
   $primary-background-width: 23.5vh
 
   #fbutton
-    margin: 10px
+    // margin: 10px
 
     & > div
       position: absolute
       top: 50%
       left: 50%
       transform: translate(-50%, -50%)
+
+    &.delete
+      box-shadow: 0px 5px 0px #222
+      background: #333
+      transition: transform 0.15s, box-shadow 0.15s
+      transform: rotateX(0deg) translateY(0)
+      -webkit-font-smoothing: antialiased
+
+      &:hover
+        box-shadow: 0px 5px 0px #222
+        transform: rotateX(0deg) translateY(0)
+
+      &:hover:active
+        box-shadow: 0 1px 0 #222
+        background: #333
+        transition: transform 0.05s, box-shadow 0.05s
+        transform: rotateX(15deg) translateY(4px)
+
+      > #background
+        visibility: collapse
+
+      &.disabled
+        box-shadow: 0px 5px 0px #222
+        opacity: 0.5
+
+    &.publish
+      box-shadow: 0px 5px 0px #1f2142
+      background: #3f4487
+      transition: transform 0.15s, box-shadow 0.15s
+      transform: rotateX(0deg) translateY(0)
+      -webkit-font-smoothing: antialiased
+
+      &:hover
+        box-shadow: 0px 5px 0px #1f2142
+        transform: rotateX(0deg) translateY(0)
+
+      &:hover:active
+        box-shadow: 0 1px 0 #1f2142
+        background: #3f4487
+        transition: transform 0.05s, box-shadow 0.05s
+        transform: rotateX(15deg) translateY(4px)
+
+      > #background
+        visibility: collapse
+
+      &.disabled
+        box-shadow: 0px 5px 0px #283329
+        opacity: 0.5
 
     &.play
       box-shadow: 0px 5px 0px #335E38

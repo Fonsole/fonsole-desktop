@@ -41,6 +41,11 @@
   "GameList_local_games": "LOCAL GAMES",
   "GameListEntry_create": "CREATE GAME",
   "GamePreview_open": "OPEN",
+  "GamePreview_publish": "publish",
   "GamePreview_delete": "delete",
-  "GamePreview_select": "select a workspace"
+  "GamePreview_select": "select a workspace",
+  "GamePreview_game_name": "game name",
+  "GamePreview_game_name_placeholder": "name placeholder",
+  "GamePreview_game_description": "game description",
+  "GamePreview_game_description_placeholder": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat."
 }
