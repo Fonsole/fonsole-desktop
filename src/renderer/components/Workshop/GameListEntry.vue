@@ -1,6 +1,19 @@
 <template>
-  <div class="game-list-entry">
-    {{ gameName }}
+  <div class="game-list-entry" v-if="!createButton">
+    <div class="inline">
+      <img src="~@/assets/testgame2.jpg">
+    </div>
+    <div class="inline content">
+      {{ gameName }}
+    </div>
+  </div>
+  <div class="game-list-entry create-button" v-else-if="createButton">
+    <div class="inline">
+      <img src="~@/assets/testgame5.jpg">
+    </div>
+    <div class="inline content">
+      {{ $localize('create') }}
+    </div>
   </div>
 </template>
 
@@ -8,6 +21,10 @@
   export default {
     name: 'GameListEntry',
     props: {
+      createButton: {
+        type: Boolean,
+        required: false,
+      },
       gamePath: {
         type: String,
         required: true,
@@ -22,17 +39,43 @@
 </script>
 
 <style lang="sass" scoped>
+  img
+    height: 6.575vh
+    margin: 0.5vh
+    border: 0.25vh solid rgba(25, 25, 25, 0.6)
+
   .game-list-entry
     box-sizing: border-box
     width: 100%
-    background-color: rgba(30, 30, 30, 0.6)
-    transition: transform 0.1s linear
-    font-size: 6vh
-    padding: 5px
+    height: 8vh
+    background-color: rgba(25, 25, 25, 0.6)
+    transition: all 0.1s linear
+    display: inline-block
+    border-bottom: 0.05vh solid rgba(25, 25, 25, 0.6)
+    // box-shadow: inset 0px -0.1vh 0 0.1vh rgba(15, 15, 15, 0.2)
+    border-left: 1vw none rgba(10, 120, 230, 0.7)
+
+    &.create-button
+      background: rgba(72,131,75,0.7)
+      box-shadow: inset 0 0 0.5vw rgba(25, 25, 25, 0.6)
+
+    .inline
+      vertical-align: middle
+      display: inline-block
+
+    .content
+      font-size: 3vh
 
     &:hover
-      transform: translateY(-0.2rem) translateX(-0.04rem)
+      border-left: 1vw solid rgba(10, 120, 230, 0.7)
 
     &:active
-      transform: translateY(0.2rem) translateX(0.04rem)
+      border-left: 1vw none rgba(10, 120, 230, 0.7)
+
+    &.create-button:hover
+      border-left: 1vw none rgba(10, 120, 230, 0.7)
+      opacity: 0.8
+
+    &.create-button:active
+      opacity: 1
 </style>

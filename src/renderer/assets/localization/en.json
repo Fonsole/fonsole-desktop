@@ -36,8 +36,11 @@
   "Home_news" : "news",
   "Home_last_played" : "last played",
   "Home_random" : "random",
-  
+
   "GameList_create_game": "CREATE GAME",
   "GameList_local_games": "LOCAL GAMES",
-  "GamePreview_open": "OPEN"
+  "GameListEntry_create": "CREATE GAME",
+  "GamePreview_open": "OPEN",
+  "GamePreview_delete": "delete",
+  "GamePreview_select": "select a workspace"
 }

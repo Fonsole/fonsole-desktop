@@ -1,5 +1,5 @@
 <template>
-  <div class="game-preview">
+  <div class="game-preview" v-if="gameName !== ''">
     <div class="game-title">
       {{ gameName }}
     </div>
@@ -28,6 +28,28 @@
     >
       {{ $localize('open') }}
     </fbutton>
+
+    <fbutton
+      class="delete-game"
+      height="8"
+      width="40"
+      type="uninstall"
+      :disabled="!gamePath"
+      @click="openWorkspace"
+    >
+      {{ $localize('delete') }}
+    </fbutton>
+  </div>
+  <div class="placeholder" v-else-if="gameName === ''">
+    <a class="logoContainer">
+      <div class="logo animateGears">
+        <div class="logoInner">
+          <div class="logoGear small"></div>
+          <div class="logoGear large"></div>
+        </div>
+      </div>
+    </a>
+    <h2>{{ $localize('select') }}</h2>
   </div>
 </template>
 
@@ -60,6 +82,15 @@
 </script>
 
 <style lang="sass" scoped>
+  @import "~@/assets/styles/global.sass"
+
+  .placeholder
+    display: flex
+    background-color: rgba(0, 0, 0, 0.4)
+    align-items: center
+    justify-content: center
+    flex-direction: column
+
   .game-preview
     display: flex
     background-color: rgba(0, 0, 0, 0.4)

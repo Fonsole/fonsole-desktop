@@ -1,9 +1,15 @@
 <template>
   <div class="game-list">
     <div class="header">
-      <h2 class="headerTitle game">{{ $localize('local_games') }}</h2>
+      <h2 class="headerTitle">{{ $localize('local_games') }}</h2>
     </div>
     <div class="games">
+      <game-list-entry
+        createButton
+        @click.native="createGame"
+        @mouseover.native="$emit('over', gamePath)"
+        @mouseout.native="$emit('out')"
+      ></game-list-entry>
       <game-list-entry
         v-for="gamePath in workshopGamePaths"
         :gamePath="gamePath"
@@ -15,13 +21,12 @@
     </div>
     <div class="create-new-game">
       <div class="create-game-info">
-        <a tabindex="-1" @click.prevent="openLink" href="https://developers.fonsole.com/api/">DOCS</a>
-        <a tabindex="-1" @click.prevent="openLink" href="https://developers.fonsole.com/community/">COMMUNITY</a>
-        <a tabindex="-1" @click.prevent="openLink" href="https://stackoverflow.com/questions/tagged/fonsole">STACK OVERFLOW</a>
+        <ul>
+          <li><a tabindex="-1" @click.prevent="openLink" href="https://developers.fonsole.com/api/">DOCS</a></li>
+          <li><a tabindex="-1" @click.prevent="openLink" href="https://developers.fonsole.com/community/">COMMUNITY</a></li>
+          <li><a tabindex="-1" @click.prevent="openLink" href="https://stackoverflow.com/questions/tagged/fonsole">STACK OVERFLOW</a></li>
+        </ul>
       </div>
-      <fbutton type="play" class="create-game-button" height="7" @click="createGame">
-        {{ $localize('create_game') }}
-      </fbutton>
     </div>
   </div>
 </template>
@@ -65,41 +70,109 @@
     flex-direction: column
 
   .header
-    background-color: rgba(20, 20, 20, 0.8)
+    flex: 0 1 auto
+    display: flex
+    flex-direction: row
+    height: 7.5vh
+    min-height: 7.5vh
+    clear: both
+    background-color: rgba(20,20,20,.8)
 
     .headerTitle
-      margin: 0.5rem 2vw
+      font-size: 4.0vh
+      margin: auto 0
+      margin-left: 2vh
 
   .games
     display: flex
     flex-direction: column
     background-color: rgba(40, 40, 40, 0.4)
-    height: 90%
+    flex: 1
+    1 auto
+    overflow: scroll
+    overflow-x: hidden
+    &::-webkit-scrollbar-track
+      // -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3)
+      background-color: rgba(0,0,0,0.1)
+
+    &::-webkit-scrollbar
+      width: 1vw
+      padding: 0
+      margin: 0
+      background-color: rgba(0,0,0,0.0)
+
+    &::-webkit-scrollbar-thumb
+      -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,.3)
+      background-color: rgba(78, 122, 135, 0.85)
 
   .game-list-entry
-    margin: 10px 0
+    margin: 0
 
     &:last-child
       margin-bottom: 0
 
   .create-new-game
-    margin-top: 4px
     display: flex
     width: 100%
 
   .create-game-info
     display: flex
-    padding: 4px
     background-color: rgba(0, 0, 0, 0.8)
-    height: 90%
+    min-height: 10vh
     margin: auto 0
     flex-direction: column
+    flex: 1 1 auto
+    position: relative
 
-    a
-      color: #bcbcbc
-      outline: none
+    ul
+      list-style-type: none
+      margin: 0
+      padding: 0
+      display: flex
+      flex-direction: row
+      justify-content: space-evenly
+      flex: 1 1 auto
+
+      li
+        flex: 1 1 0
+        float: left
+        vertical-align: middle
+        position: relative
+        display: flex
+        align-items: center
+        justify-content: center
+        flex-direction: column
+        margin-bottom: 0.7vh
+        transition: transform 0.05s, box-shadow 0.05s
+
+        &:nth-child(1)
+          background-color: #660000
+          box-shadow: 0px 0.7vh 0px #3D0000
+
+        &:nth-child(2)
+          background-color: #052C7F
+          box-shadow: 0px 0.7vh 0px #031A4C
+
+        &:nth-child(3)
+          background-color: #C3661C
+          box-shadow: 0px 0.7vh 0px #61330E
+
+        &:hover
+          // box-shadow: none
+          // margin-bottom: 0
+
+          box-shadow: 0 0 0 #111
+          background: radial-gradient(ellipse at center, #232530 0%,#232530 100%)
+          transform: rotateX(15deg) translateY(4px)
+
+        a
+          color: #f7e8e8
+          outline: none
+          font-size: 3vh
+          text-align: center
+          text-decoration: none
 
   .create-game-button
     flex: 1
-    margin: auto 0.2rem
+    margin: 0
 </style>
