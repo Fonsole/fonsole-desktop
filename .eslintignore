@@ -4,7 +4,3 @@ dist/*
 build/*
 
 src/renderer/assets/libs/*.js
-
-Slide.vue
-Carousel3d.vue
-Controls.vue

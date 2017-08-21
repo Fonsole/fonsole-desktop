@@ -1,5 +1,5 @@
 <template>
-  <div class="carousel-3d-slide" :style="slideStyle" :class="{ 'current': isCurrent }" @click="goTo()">
+  <div :style="slideStyle" :class="['carousel-3d-slide', { current: isCurrent }]" @click="goTo()">
     <preview :gameID="`${ this.gameID }`"></preview>
   </div>
 </template>
@@ -13,50 +13,43 @@
       preview: Preview,
     },
     props: {
-      index: {
-        type: Number,
-      },
-      gameID: {
-        type: Number,
-      },
+      index: Number,
+      gameID: Number,
     },
-    data() {
-      return {
-        parent: this.$parent,
-        styles: {},
-        zIndex: 999,
-      };
-    },
+    data: () => ({
+      styles: {},
+      zIndex: 999,
+    }),
     computed: {
       isCurrent() {
-        return this.index === this.parent.currentIndex;
+        return this.index === this.$parent.currentIndex;
       },
       slideStyle() {
         let styles = {};
 
         if (!this.isCurrent) {
-          const rIndex = this.getSideIndex(this.parent.rightIndices);
-          const lIndex = this.getSideIndex(this.parent.leftIndices);          
+          const rIndex = this.getSideIndex(this.$parent.rightIndices);
+          const lIndex = this.getSideIndex(this.$parent.leftIndices);
 
           if (rIndex >= 0 || lIndex >= 0) {
-            styles = rIndex >= 0 ? this.calculatePosition(rIndex, true, this.zIndex, this.parent.rightIndices.length) : 
-                                   this.calculatePosition(lIndex, false, this.zIndex, this.parent.leftIndices.length);
-            let idxInDeck = Math.max(rIndex, lIndex)
-            styles.opacity = 1.0 / (1.25 + idxInDeck * 0.75);
+            styles = rIndex >= 0 ?
+              this.calculatePosition(rIndex, true, this.zIndex, this.$parent.rightIndices.length) :
+              this.calculatePosition(lIndex, false, this.zIndex, this.$parent.leftIndices.length);
+            const idxInDeck = Math.max(rIndex, lIndex);
+            styles.opacity = 1.0 / (1.25 + (idxInDeck * 0.75));
             styles.visibility = 'visible';
-          }
-          else {
+          } else {
             styles.opacity = 0;
             styles.visibility = 'hidden';
           }
         }
 
         return Object.assign(styles, {
-          'border-width': `${this.parent.border}px`,
-          width: `${this.parent.slideWidth}vh`,
-          height: `${this.parent.slideHeight}vh`,
-          transition: ` transform ${this.parent.animationSpeed}ms, ` +
-                      ` opacity ${this.parent.animationSpeed}ms `,
+          'border-width': `${this.$parent.border}px`,
+          width: `${this.$parent.slideWidth}vh`,
+          height: `${this.$parent.slideHeight}vh`,
+          transition: ` transform ${this.$parent.animationSpeed}ms, ` +
+                      ` opacity ${this.$parent.animationSpeed}ms `,
         });
       },
     },
@@ -73,19 +66,19 @@
         return index;
       },
       matchIndex(index) {
-        return (index >= 0) ? this.index === index : (this.parent.total + index) === this.index;
+        return (index >= 0) ? this.index === index : (this.$parent.total + index) === this.index;
       },
-      calculatePosition(i, positive, zIndex, deckSize) {
+      calculatePosition(i, positive, zIndex /* , deckSize */) {
         const offsetInDeck = 10;
         const z = -75;
         const yAngle = 70;
-        const leftRemain = parseInt((this.parent.width * 0.8 + i * offsetInDeck), 10);
+        const leftRemain = parseInt(((this.$parent.width * 0.8) + (i * offsetInDeck)), 10);
         const transform = (positive)
                   ? `translateX(${leftRemain}vh) translateZ(${z}vh) ` +
               `rotateY(-${yAngle}deg)`
                   : `translateX(-${leftRemain}vh) translateZ(${z}vh) ` +
               `rotateY(${yAngle}deg)`;
-        const top = this.parent.space === 'auto' ? 0 : parseInt((i + 1) * (this.parent.space));
+        const top = this.$parent.space == null ? 0 : (i + 1) * this.$parent.space;
 
         return {
           transform,
@@ -96,10 +89,8 @@
       goTo() {
         if (this.isCurrent) {
           this.$store.commit('setPage', 'gameView');
-        } else {
-          if (this.parent.clickable === true) {
-            this.parent.goFar(this.index);
-          }
+        } else if (this.$parent.clickable === true) {
+          this.$parent.goFar(this.index);
         }
       },
     },

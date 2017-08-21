@@ -1,32 +1,33 @@
 <template>
   <div id="installed" ref="dick">
-    <carousel-3d height="50" width="80" :display="50" startIndex="3"
-    :controls-visible="true" :loop="false">
+    <carousel
+      :height="50"
+      :width="80"
+      :display="50"
+      :startIndex="3"
+      :controls-visible="true"
+      :loop="false"
+    >
       <slide v-for="(id,index) in installedGames" :index="index" :key="id" :gameID="id">
       </slide>
-    </carousel-3d>
+    </carousel>
   </div>
 </template>
 <script>
-  import Carousel3d from './Carousel3d';
+  import Carousel from './Carousel';
   import Slide from './Slide';
   import Preview from './Preview';
 
   export default {
     name: 'Installed',
     components: {
-      Carousel3d,
+      Carousel,
       Slide,
       Preview,
     },
     data: () => ({
       installedGames: [0, 1, 2, 3, 4, 5],
     }),
-    created() {
-      this.$nextTick(() => {
-        this.height = this.$parent.clientHeight;
-      });
-    },
   };
 </script>
 <style lang="sass" scoped>

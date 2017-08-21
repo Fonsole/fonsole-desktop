@@ -1,7 +1,7 @@
 <template>
   <div id="preview">
     <img src="~@/assets/preview_vignette.png" id="previewImage">
-    <label :id="'gameName'+gameID">{{ 'a game that is called ' + gameID }}</label>
+    <label :id="`gameName${gameID}`">{{ `a game that is called ${gameID}` }}</label>
   </div>
 </template>
 
@@ -9,8 +9,6 @@
   export default {
     name: 'Preview',
     props: ['gameID'],
-    methods: {
-    },
   };
 </script>
 
