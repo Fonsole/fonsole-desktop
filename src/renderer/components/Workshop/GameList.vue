@@ -20,9 +20,9 @@
     <div class="create-new-game">
       <div class="create-game-info">
         <ul>
-          <li><a tabindex="-1" @click.prevent="openLink" href="https://developers.fonsole.com/api/">DOCS</a></li>
-          <li><a tabindex="-1" @click.prevent="openLink" href="https://developers.fonsole.com/community/">COMMUNITY</a></li>
-          <li><a tabindex="-1" @click.prevent="openLink" href="https://stackoverflow.com/questions/tagged/fonsole">STACK OVERFLOW</a></li>
+          <li @click.prevent="openLink('https://developers.fonsole.com/api/')">DOCS</li>
+          <li @click.prevent="openLink('https://developers.fonsole.com/community/')">COMMUNITY</li>
+          <li @click.prevent="openLink('https://stackoverflow.com/questions/tagged/fonsole')">STACK OVERFLOW</li>
         </ul>
       </div>
     </div>
@@ -45,9 +45,7 @@
     },
     computed: mapGetters(['workshopGamePaths']),
     methods: {
-      openLink(event) {
-        // event.target contains reference to event emitter, so we can grab href here.
-        const url = event.target.href;
+      openLink(url) {
         // @ifdef ELECTRON
         shell.openExternal(url);
         // @endif
@@ -142,6 +140,10 @@
         flex-direction: column
         margin-bottom: 0.7vh
         transition: transform 0.05s, box-shadow 0.05s
+        color: #f7e8e8
+        font-size: 3vh
+        text-align: center
+        cursor: pointer
 
         &:nth-child(1)
           background-color: #660000
@@ -162,13 +164,6 @@
           box-shadow: 0 0 0 #111
           background: radial-gradient(ellipse at center, #232530 0%,#232530 100%)
           transform: rotateX(15deg) translateY(4px)
-
-        a
-          color: #f7e8e8
-          outline: none
-          font-size: 3vh
-          text-align: center
-          text-decoration: none
 
   .create-game-button
     flex: 1
