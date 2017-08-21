@@ -1,5 +1,5 @@
 <template>
-  <div class="game-preview" v-if="gameName !== ''">
+  <div class="preview-game">
     <div class="left">
       <div class="nameAndDescription">
         <h2>{{ $localize('game_name') }}</h2>
@@ -62,36 +62,28 @@
       </fbutton>
     </div>
   </div>
-  <div class="placeholder" v-else-if="gameName === ''">
-    <a class="logoContainer">
-      <div class="logo animateGears">
-        <div class="logoInner">
-          <div class="logoGear small"></div>
-          <div class="logoGear large"></div>
-        </div>
-      </div>
-    </a>
-    <h2>{{ $localize('select') }}</h2>
-  </div>
 </template>
 
 <script>
   import FButton from '@/components/Generic/FButton';
 
   export default {
-    name: 'GamePreview',
+    name: 'PreviewGame',
     components: {
       fbutton: FButton,
     },
     props: {
-      gamePath: String,
+      gamePath: {
+        type: String,
+        required: true,
+      },
     },
     computed: {
       gameInfo() {
-        return (this.gamePath && this.$store.getters.workshopGameInfo(this.gamePath)) || {};
+        return this.$store.getters.workshopGameInfo(this.gamePath) || {};
       },
       gameName() {
-        return this.gameInfo.name || '';
+        return this.gameInfo.name;
       },
     },
     methods: {
@@ -104,22 +96,11 @@
 </script>
 
 <style lang="sass" scoped>
-  @import "~@/assets/styles/global.sass"
-
   h2
     font-size: 4.5vh
     margin: 0
 
-  .placeholder
-    display: flex
-    background-color: rgba(0, 0, 0, 0.6)
-    align-items: center
-    justify-content: center
-    flex-direction: column
-
-  .game-preview
-    display: flex
-    background-color: rgba(0, 0, 0, 0.6)
+  .preview-game
     flex-direction: row
 
     .left

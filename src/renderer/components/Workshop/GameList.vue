@@ -5,14 +5,18 @@
     </div>
     <div class="games">
       <game-list-entry
-        createButton
-        @click.native="createGame"
+        :previewData="WORKSHOP_PREVIEW_TYPE.CREATE"
+        :selected="lockedPreviewData === WORKSHOP_PREVIEW_TYPE.CREATE"
+        @click.native="$emit('update', WORKSHOP_PREVIEW_TYPE.CREATE)"
+        @mouseover.native="$emit('over', WORKSHOP_PREVIEW_TYPE.CREATE)"
+        @mouseout.native="$emit('out')"
       ></game-list-entry>
       <game-list-entry
         v-for="gamePath in workshopGamePaths"
-        :gamePath="gamePath"
+        :previewData="gamePath"
+        :selected="lockedPreviewData === gamePath"
         :key="gamePath"
-        @click.native="$emit('game', gamePath)"
+        @click.native="$emit('update', gamePath)"
         @mouseover.native="$emit('over', gamePath)"
         @mouseout.native="$emit('out')"
       ></game-list-entry>
@@ -34,6 +38,7 @@
   import { shell } from 'electron';
   // @endif
   import { mapGetters } from 'vuex';
+  import { WORKSHOP_PREVIEW_TYPE } from '=/enums';
   import FButton from '@/components/Generic/FButton';
   import GameListEntry from './GameListEntry';
 
@@ -43,6 +48,13 @@
       GameListEntry,
       fbutton: FButton,
     },
+    props: {
+      lockedPreviewData: {
+        type: [String, Number],
+        required: true,
+      },
+    },
+    data: () => ({ WORKSHOP_PREVIEW_TYPE }),
     computed: mapGetters(['workshopGamePaths']),
     methods: {
       openLink(url) {
@@ -52,9 +64,6 @@
         // @ifdef WEB
         window.open(url, '_blank');
         // @endif
-      },
-      createGame() {
-        this.$store.commit('setPage', 'createGame');
       },
     },
   };

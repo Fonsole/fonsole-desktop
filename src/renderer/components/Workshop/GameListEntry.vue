@@ -1,5 +1,8 @@
 <template>
-  <div :class="['game-list-entry', {'create-button': createButton}]">
+  <div :class="['game-list-entry', {
+    'create-button': isCreateButton,
+    selected,
+  }]">
     <div class="inline">
       <img :src="coverImage">
     </div>
@@ -10,23 +13,29 @@
 </template>
 
 <script>
+  import { WORKSHOP_PREVIEW_TYPE } from '=/enums';
+
   export default {
     name: 'GameListEntry',
     props: {
-      createButton: {
-        type: Boolean,
-        default: false,
-      },
-      gamePath: String,
+      previewData: [String, Number],
+      selected: Boolean,
     },
     computed: {
+      isCreateButton() {
+        return this.previewData === WORKSHOP_PREVIEW_TYPE.CREATE;
+      },
       coverImage() {
-        if (this.createButton) return require('@/assets/testgame5.jpg');
+        if (this.isCreateButton) {
+          return require('@/assets/testgame5.jpg');
+        }
         return require('@/assets/testgame2.jpg');
       },
       gameName() {
-        if (this.createButton) return this.$localize('create');
-        return (this.$store.getters.workshopGameInfo(this.gamePath) || {}).name;
+        if (this.isCreateButton) {
+          return this.$localize('create');
+        }
+        return (this.$store.getters.workshopGameInfo(this.previewData) || {}).name;
       },
     },
   };
@@ -60,13 +69,15 @@
     .content
       font-size: 3vh
 
-    &:hover
+    &:hover,
+    &.selected
       border-left: 1vw solid rgba(10, 120, 230, 0.7)
 
     &:active
       border-left: 1vw none rgba(10, 120, 230, 0.7)
 
-    &.create-button:hover
+    &.create-button:hover,
+    &.create-button.selected
       border-left: 1vw none rgba(10, 120, 230, 0.7)
       opacity: 0.8
 

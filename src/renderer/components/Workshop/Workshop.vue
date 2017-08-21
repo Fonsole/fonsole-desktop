@@ -2,38 +2,60 @@
   <div id="workshop" class="tabContents">
     <game-list
       id="game-list"
-      @game="setPreviewGame"
-      @over="setHoverPreviewGame"
-      @out="resetHoverPreviewGame"
+      :lockedPreviewData="lockedData"
+      @update="setPreviewData"
+      @over="setHoverPreviewData"
+      @out="resetHoverPreviewData"
     ></game-list>
-    <game-preview id="game-preview" :gamePath="selectedGame"></game-preview>
+    <component
+      id="preview-container"
+      :is="previewComponent"
+      :gamePath="currentData"
+    ></component>
   </div>
 </template>
 
 <script>
+  import { WORKSHOP_PREVIEW_TYPE } from '=/enums';
   import GameList from './GameList';
-  import GamePreview from './GamePreview';
+  import PreviewPlaceholder from './PreviewPlaceholder';
+  import PreviewCreateGame from './PreviewCreateGame';
+  import PreviewGame from './PreviewGame';
 
   export default {
     name: 'Workshop',
     components: {
       GameList,
-      GamePreview,
+      PreviewGame,
+      PreviewPlaceholder,
+      PreviewCreateGame,
     },
     data: () => ({
-      selectedGame: null,
-      lockedSelectedGame: null,
+      currentData: WORKSHOP_PREVIEW_TYPE.PLACEHOLDER,
+      lockedData: WORKSHOP_PREVIEW_TYPE.PLACEHOLDER,
     }),
+    computed: {
+      previewComponent() {
+        switch (this.currentData) {
+          case WORKSHOP_PREVIEW_TYPE.PLACEHOLDER:
+            return 'PreviewPlaceholder';
+          case WORKSHOP_PREVIEW_TYPE.CREATE:
+            return 'PreviewCreateGame';
+          default:
+            return 'PreviewGame';
+        }
+      },
+    },
     methods: {
-      setPreviewGame(gamePath) {
-        this.lockedSelectedGame = gamePath;
-        this.selectedGame = gamePath;
+      setPreviewData(gamePath) {
+        this.lockedData = gamePath;
+        this.currentData = gamePath;
       },
-      setHoverPreviewGame(gamePath) {
-        this.selectedGame = gamePath;
+      setHoverPreviewData(gamePath) {
+        this.currentData = gamePath;
       },
-      resetHoverPreviewGame() {
-        this.selectedGame = this.lockedSelectedGame;
+      resetHoverPreviewData() {
+        this.currentData = this.lockedData;
       },
     },
   };
@@ -50,7 +72,9 @@
   #game-list
     width: 40vw
 
-  #game-preview
+  #preview-container
     flex: 1
     margin-left: 12px
+    display: flex
+    background-color: rgba(0, 0, 0, 0.6)
 </style>

@@ -31,7 +31,6 @@
   import Settings from '@/components/Settings/Settings';
   import Workshop from '@/components/Workshop/Workshop';
   import Workspace from '@/components/Workspace/Workspace';
-  import CreateGame from '@/components/Workshop/CreateGame';
 
   export default {
     name: 'App',
@@ -48,7 +47,6 @@
       settings: Settings,
       Workshop,
       Workspace,
-      createGame: CreateGame,
     },
     computed: {
       page() {
