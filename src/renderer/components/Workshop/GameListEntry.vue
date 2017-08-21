@@ -1,18 +1,10 @@
 <template>
-  <div class="game-list-entry" v-if="!createButton">
+  <div :class="['game-list-entry', {'create-button': createButton}]">
     <div class="inline">
-      <img src="~@/assets/testgame2.jpg">
+      <img :src="coverImage">
     </div>
     <div class="inline content">
       {{ gameName }}
-    </div>
-  </div>
-  <div class="game-list-entry create-button" v-else-if="createButton">
-    <div class="inline">
-      <img src="~@/assets/testgame5.jpg">
-    </div>
-    <div class="inline content">
-      {{ $localize('create') }}
     </div>
   </div>
 </template>
@@ -23,15 +15,17 @@
     props: {
       createButton: {
         type: Boolean,
-        required: false,
+        default: false,
       },
-      gamePath: {
-        type: String,
-        required: true,
-      },
+      gamePath: String,
     },
     computed: {
+      coverImage() {
+        if (this.createButton) return require('@/assets/testgame5.jpg');
+        return require('@/assets/testgame2.jpg');
+      },
       gameName() {
+        if (this.createButton) return this.$localize('create');
         return (this.$store.getters.workshopGameInfo(this.gamePath) || {}).name;
       },
     },

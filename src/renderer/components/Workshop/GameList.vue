@@ -7,8 +7,6 @@
       <game-list-entry
         createButton
         @click.native="createGame"
-        @mouseover.native="$emit('over', gamePath)"
-        @mouseout.native="$emit('out')"
       ></game-list-entry>
       <game-list-entry
         v-for="gamePath in workshopGamePaths"
