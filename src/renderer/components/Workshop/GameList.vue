@@ -20,9 +20,9 @@
     <div class="create-new-game">
       <div class="create-game-info">
         <ul>
-          <li @click.prevent="openLink('https://developers.fonsole.com/api/')">DOCS</li>
-          <li @click.prevent="openLink('https://developers.fonsole.com/community/')">COMMUNITY</li>
-          <li @click.prevent="openLink('https://stackoverflow.com/questions/tagged/fonsole')">STACK OVERFLOW</li>
+          <li @click="openLink('https://developers.fonsole.com/api/')">DOCS</li>
+          <li @click="openLink('https://developers.fonsole.com/community/')">COMMUNITY</li>
+          <li @click="openLink('https://stackoverflow.com/questions/tagged/fonsole')">STACK OVERFLOW</li>
         </ul>
       </div>
     </div>
