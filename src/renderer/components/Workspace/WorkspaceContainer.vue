@@ -1,48 +1,36 @@
 <template>
-  <grid-layout
-    class="workspace-container"
-    :layout="layout"
-  >
-    <grid-item
-      class="window"
-      v-for="item in layout"
-      :key="item.i"
-      :x="item.x"
-      :y="item.y"
-      :w="item.w"
-      :h="item.h"
-      :i="item.i"
-    >
-      {{`DEVICE: ${item.i}`}}
-    </grid-item>
-  </grid-layout>
+  <div class="workspace-container">
+    <device-window
+      v-for="(device, deviceIndex) in devices"
+      :isDesktop="deviceIndex === 0"
+      :key="device.session"
+      :session="device.session"
+    ></device-window>
+  </div>
 </template>
 
 <script>
-  import { GridLayout, GridItem } from 'vue-grid-layout/dist/vue-grid-layout.min';
+  import DeviceWindow from './DeviceWindow';
 
   export default {
     name: 'WorkspaceContainer',
     components: {
-      GridLayout,
-      GridItem,
+      DeviceWindow,
     },
     data: () => ({
-      layout: [
-        { x: 0, y: 0, w: 6, h: 2.5, i: 'DESKTOP' },
+      devices: [
+        { session: 'DESKTOP' },
       ],
     }),
     mounted() {
-      this.layout.push({ x: 0, y: 0, w: 3, h: 3, i: 'CONTROLLER1' });
+      this.devices.push({ session: 'CONTROLLER1' });
     },
   };
 </script>
 
 <style lang="sass" scoped>
   .workspace-container
-    flex: 1
+    flex: 1 1 auto
+    position: relative
     background-color: rgba(0, 0, 0, 0.4)
-
-  .window
-    background-color: #888
 </style>

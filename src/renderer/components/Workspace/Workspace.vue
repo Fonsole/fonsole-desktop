@@ -1,5 +1,5 @@
 <template>
-  <div class="workspace">
+  <div class="workspace tabContents">
     <workspace-toolbar></workspace-toolbar>
     <workspace-container></workspace-container>
   </div>
@@ -27,7 +27,6 @@
 <style lang="sass" scoped>
   .workspace
     width: 100%
-    height: 100vh
     display: flex
     flex-direction: column
     align-items: stretch
