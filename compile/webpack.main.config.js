@@ -9,6 +9,7 @@ const webpack = require('webpack');
 const BabiliWebpackPlugin = require('babili-webpack-plugin');
 
 const mainConfig = {
+  devtool: '#inline-source-map',
   entry: {
     main: path.join(__dirname, '../src/main/index.js'),
   },

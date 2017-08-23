@@ -24,7 +24,7 @@ const preprocessLoaderLine = `preprocess-loader?${JSON.stringify(_.pickBy({
 }, Boolean))}`;
 
 const baseConfig = {
-  devtool: '#cheap-module-eval-source-map',
+  devtool: '#inline-source-map',
   module: {
     rules: [
       {
