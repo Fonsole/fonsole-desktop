@@ -19,7 +19,7 @@
 
   export default {
     name: 'SettingCheckboxFullscreen',
-    extend: SettingCheckbox,
+    extends: SettingCheckbox,
     props: {
       title: {
         type: String,
@@ -41,13 +41,15 @@
         },
       },
     },
+// @endif
     mounted() {
+// @ifdef WEB
       screenfull.on('change', () => {
         this.isFullscreen = screenfull.isFullscreen;
       });
+// @endif
       this.$on('change', this.onFullscreenChange);
     },
-// @endif
     methods: {
       onFullscreenChange(value) {
 // @ifdef ELECTRON
