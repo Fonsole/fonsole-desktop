@@ -1,10 +1,9 @@
 /**
  * @file A module to manipulate local games.
+ *       This module will be loaded only on electron version.
  */
 
-// @ifdef ELECTRON
 import { ipcRenderer } from 'electron';
-// @endif
 
 const initialState = {
   games: [
@@ -40,7 +39,6 @@ const initialState = {
 const getters = {
   workshopGamePaths: state => state.games.map(game => game.path),
   workshopGameInfo: state => (gamePath) => {
-    if (!ipcRenderer) throw new Error('Workshop is available only in desktop client');
     const cachedGame = state.games.find(game => game.path === gamePath);
     if (cachedGame) return cachedGame;
     ipcRenderer.send('workshop:game:fetch', gamePath);
@@ -67,7 +65,6 @@ const actions = {
    *                     Rejects if something went wrong.
    */
   linkGame(/* store */) {
-    if (!ipcRenderer) throw new Error('Workshop is available only in desktop client');
   },
 
   /**
@@ -79,7 +76,6 @@ const actions = {
    *                     Rejects if something went wrong.
    */
   removeGame(/* store */) {
-    if (!ipcRenderer) throw new Error('Workshop is available only in desktop client');
   },
 };
 

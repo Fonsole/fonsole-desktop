@@ -29,8 +29,10 @@
   import Shop from '@/components/Shop/Shop';
   import Community from '@/components/Community/Community';
   import Settings from '@/components/Settings/Settings';
+// @ifdef ELECTRON
   import Workshop from '@/components/Workshop/Workshop';
   import Workspace from '@/components/Workspace/Workspace';
+// @endif
 
   export default {
     name: 'App',
@@ -45,8 +47,10 @@
       shop: Shop,
       community: Community,
       settings: Settings,
+// @ifdef ELECTRON
       Workshop,
       Workspace,
+// @endif
     },
     computed: {
       page() {

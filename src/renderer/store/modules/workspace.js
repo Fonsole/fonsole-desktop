@@ -1,5 +1,6 @@
 /**
  * @file A store for development server & game development workspace.
+ *       This module will be loaded only on electron version.
  */
 
 import Networking from 'fonsole-networking';

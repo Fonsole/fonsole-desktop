@@ -75,7 +75,7 @@ const actions = {
     // @endif
     // @ifdef WEB
     // Update locally stored settings
-    localStorage.settings = state;
+    localStorage.settings = JSON.stringify(state);
     // @endif
   },
 };

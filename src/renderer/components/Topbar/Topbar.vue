@@ -27,7 +27,16 @@
   export default {
     name: 'Topbar',
     data: () => ({
-      buttons: ['home', 'games', 'shop', 'community', 'settings', 'workshop'],
+      buttons: [
+        'home',
+        'games',
+        'shop',
+        'community',
+        'settings',
+// @ifdef ELECTRON
+        'workshop',
+// @endif
+      ],
     }),
     computed: {
       roomName() {

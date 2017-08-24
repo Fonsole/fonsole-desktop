@@ -4,12 +4,11 @@
       <h2 class="block-title">{{ $localize('general') }}</h2>
       <div class="divider"></div>
       <div class="settings-list">
-        <setting-checkbox
+        <setting-checkbox-fullscreen
           id="setting-fullscreen"
           setting="fullscreen"
           :title="$localize('fullscreen')"
-          @change="fullscreen"
-        ></setting-checkbox>
+        ></setting-checkbox-fullscreen>
       </div>
     </div>
     <div class="settings-profile">
@@ -19,36 +18,16 @@
   </div>
 </template>
 <script>
-  // @ifdef ELECTRON
-  import { remote } from 'electron';
-  // @endif
   import SettingCheckbox from './SettingCheckbox';
   import SettingDropdown from './SettingDropdown';
-
-  // @ifdef ELECTRON
-  const win = remote.getCurrentWindow();
-  // @endif
+  import SettingCheckboxFullscreen from './SettingCheckboxFullscreen';
 
   export default {
     name: 'Settings',
     components: {
       SettingCheckbox,
       SettingDropdown,
-    },
-    methods: {
-      fullscreen(value) {
-        console.log(value);
-        // @ifdef ELECTRON
-        win.setFullScreen(value);
-        // @endif
-        // @ifdef WEB
-        if (value) {
-          document.requestFullscreen();
-        } else {
-          document.cancelFullscreen();
-        }
-        // @endif
-      },
+      SettingCheckboxFullscreen,
     },
   };
 </script>

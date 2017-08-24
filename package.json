@@ -98,6 +98,7 @@
     "require-dir": "^0.3.2",
     "rimraf": "^2.6.0",
     "sass-loader": "^6.0.6",
+    "screenfull": "^3.3.1",
     "semver": "^5.3.0",
     "shelljs": "^0.7.6",
     "sinon": "^3.2.1",

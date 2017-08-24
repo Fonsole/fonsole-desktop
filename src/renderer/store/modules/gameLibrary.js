@@ -52,7 +52,7 @@ const actions = {
    * @param {Vuex.Store} store Vuex store
    */
   init(store) {
-    if (!ipcRenderer) {
+    if (typeof ipcRenderer === 'undefined') {
       // TODO Maybe give some predefined list?
       return;
     }
@@ -87,7 +87,7 @@ const actions = {
    *                     Rejects if something went wrong.
    */
   installGame(store, id) {
-    if (!ipcRenderer) throw new Error('Manipulating games is available only in desktop client');
+    if (typeof ipcRenderer === 'undefined') throw new Error('Manipulating games is available only in desktop client');
     const status = store.getters.getGameStatus(id);
     // This should be handled within components, but check it to ensure
     if (status === GAME_STATUS.INSTALLED) return;
@@ -118,7 +118,7 @@ const actions = {
    *                     Rejects if something went wrong.
    */
   async uninstallGame(store, id) {
-    if (!ipcRenderer) throw new Error('Manipulating games is available only in desktop client');
+    if (typeof ipcRenderer === 'undefined') throw new Error('Manipulating games is available only in desktop client');
     // This should be handled within components, but check it to ensure
     if (status !== GAME_STATUS.UNINSTALLED) return null;
     // Remove file with main process
