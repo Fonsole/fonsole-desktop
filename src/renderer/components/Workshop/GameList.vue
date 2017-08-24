@@ -34,9 +34,9 @@
 </template>
 
 <script>
-  // @ifdef ELECTRON
+// @ifdef ELECTRON
   import { shell } from 'electron';
-  // @endif
+// @endif
   import { mapGetters } from 'vuex';
   import { WORKSHOP_PREVIEW_TYPE } from '=/enums';
   import FButton from '@/components/Generic/FButton';
@@ -58,12 +58,12 @@
     computed: mapGetters(['workshopGamePaths']),
     methods: {
       openLink(url) {
-        // @ifdef ELECTRON
+// @ifdef ELECTRON
         shell.openExternal(url);
-        // @endif
-        // @ifdef WEB
+// @endif
+// @ifdef WEB
         window.open(url, '_blank');
-        // @endif
+// @endif
       },
     },
   };

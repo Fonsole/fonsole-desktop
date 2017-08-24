@@ -43,15 +43,15 @@ const actions = {
    * @param {Vuex.Store} store Vuex store
    */
   init({ commit }) {
-    // @ifdef ELECTRON
+// @ifdef ELECTRON
     ipcRenderer.on('settings:load', (event, settings) => {
       commit('setConfig', settings);
     });
     ipcRenderer.send('settings:load');
-    // @endif
-    // @ifdef WEB
+// @endif
+// @ifdef WEB
     commit('setConfig', JSON.parse(localStorage.settings || '{}'));
-    // @endif
+// @endif
   },
 
   /**
@@ -69,14 +69,14 @@ const actions = {
       key,
       value,
     });
-    // @ifdef ELECTRON
+// @ifdef ELECTRON
     // Update value in file system
     ipcRenderer.send('settings:set', key, value);
-    // @endif
-    // @ifdef WEB
+// @endif
+// @ifdef WEB
     // Update locally stored settings
     localStorage.settings = JSON.stringify(state);
-    // @endif
+// @endif
   },
 };
 
