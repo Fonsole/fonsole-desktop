@@ -1,22 +1,22 @@
 <template>
   <div id="checkbox">
     <label>{{ title }}</label>
-    <input type="checkbox" v-model="checkboxValue">
+    <input type="checkbox" v-model="value">
   </div>
 </template>
 <script>
-export default {
-  name: 'Checkbox',
-  props: ['title', 'value'],
-  data: () => ({
-    checkboxValue: false,
-  }),
-  watch: {
-    checkboxValue() {
-      this.$emit('input', this.checkboxValue);
+  import Setting from '@/components/Generic/Setting';
+
+  export default {
+    name: 'SettingCheckbox',
+    mixins: [Setting],
+    props: {
+      title: {
+        type: String,
+        default: '',
+      },
     },
-  },
-};
+  };
 </script>
 <style lang="sass" scoped>
   #checkbox

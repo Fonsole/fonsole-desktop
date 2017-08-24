@@ -1,7 +1,5 @@
 import { ipcMain } from 'electron';
 import _ from 'lodash';
-import fs from 'fs-extra';
-import { SETTINGS_PATH } from '=/paths';
 import SETTINGS_STORE from './store';
 import elements from './elements';
 import { Save, Load } from './saveLoad';
@@ -21,13 +19,13 @@ export async function initialLoad() {
     loadDefaults(),
     await Load(),
   );
-  try {
-    await fs.stat(SETTINGS_PATH);
-  } catch (err) {
-    if (err.code === 'ENOENT') {
-      Save();
+  _.each(SETTINGS_STORE, (value, key) => {
+    if (!elements[key]) {
+      delete SETTINGS_STORE[key];
     }
-  }
+  });
+  // Save config, so we can add default values for new unmodified properties
+  Save();
 }
 
 /**

@@ -1,6 +1,6 @@
 <template>
   <div class="setting-dropdown">
-    <label>{{ text }}</label>
+    <label>{{ title }}</label>
     <multiselect
       class="multiselect"
       v-model="value"
@@ -17,26 +17,26 @@
 </template>
 
 <script>
-import Multiselect from 'vue-multiselect';
-import Setting from '@/components/Generic/Setting';
+  import Multiselect from 'vue-multiselect';
+  import Setting from '@/components/Generic/Setting';
 
-export default {
-  name: 'SettingDropdown',
-  components: {
-    Multiselect,
-  },
-  mixins: [Setting],
-  props: {
-    text: {
-      type: String,
-      default: '',
+  export default {
+    name: 'SettingDropdown',
+    components: {
+      Multiselect,
     },
-    options: {
-      type: Array,
-      required: true,
+    mixins: [Setting],
+    props: {
+      title: {
+        type: String,
+        default: '',
+      },
+      options: {
+        type: Array,
+        required: true,
+      },
     },
-  },
-};
+  };
 </script>
 
 <style src="vue-multiselect/dist/vue-multiselect.min.css"></style>

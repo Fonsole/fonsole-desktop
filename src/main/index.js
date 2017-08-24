@@ -1,8 +1,9 @@
 import { app, BrowserWindow } from 'electron';
-import { stringToResolution } from '=/util';
 import ipcModules from './ipcModules';
 import { installIpc, initialLoad } from './settings';
 import SETTINGS_STORE from './settings/store';
+import setValue from './settings/setValue';
+import bounds from './settings/elements/bounds';
 
 /**
  * Set `__static` path to static files in production
@@ -20,18 +21,30 @@ const winURL = process.env.NODE_ENV === 'development'
 
 async function createWindow() {
   await initialLoad();
-  const resolution = stringToResolution(SETTINGS_STORE.resolution);
+  const defaultBounds = bounds.default();
   // Initial window options
   mainWindow = new BrowserWindow({
-    width: resolution[0],
-    height: resolution[1],
-    resizable: false,
+    minWidth: 400,
+    minHeight: 300,
+    width: defaultBounds.width,
+    height: defaultBounds.height,
   });
+  mainWindow.setFullScreen(SETTINGS_STORE.fullscreen);
+  if (SETTINGS_STORE.maximized) mainWindow.maximize();
+  if (SETTINGS_STORE.bounds) {
+    mainWindow.maximize();
+    mainWindow.setBounds(SETTINGS_STORE.bounds);
+  }
   mainWindow.setMenu(null);
   mainWindow.loadURL(winURL);
 
   ipcModules();
   installIpc();
+
+  mainWindow.on('close', () => {
+    setValue('bounds', mainWindow.getBounds());
+    setValue('maximized', mainWindow.isMaximized());
+  });
 
   mainWindow.on('closed', () => {
     mainWindow = null;
