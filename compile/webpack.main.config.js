@@ -31,6 +31,12 @@ const mainConfig = {
         use: 'babel-loader',
         exclude: /node_modules/,
       },
+      {
+        test: /\.(yml|yaml)$/,
+        use: {
+          loader: require.resolve('./yaml-loader'),
+        },
+      },
     ],
   },
   node: {
@@ -48,8 +54,9 @@ const mainConfig = {
   resolve: {
     alias: {
       '=': path.join(__dirname, '../src/shared'),
+      '@': path.join(__dirname, '../src/renderer'),
     },
-    extensions: ['.js', '.json'],
+    extensions: ['.js', '.json', '.yml', '.yaml'],
   },
   target: 'electron-main',
 };

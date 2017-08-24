@@ -1,0 +1,46 @@
+title: .fonsole.yml
+type: object
+required:
+  - desktop
+  - controller
+properties:
+  desktop:
+    description: A path to html page that will be displayed on desktop version of your game
+    type: string
+    minLength: 1
+
+  controller:
+    description: A path to html page that will be displayed on game controllers
+    type: string
+    minLength: 1
+
+  version:
+    description: Version of your game in a "X.Y.Z" format
+    pattern: ^\d\.\d\.\d$
+
+  tags:
+    description: Array of
+    type: array
+    items:
+      - { type: string }
+    maxItems: 10
+    uniqueItems: true
+
+  images:
+    description: Array of relative pathes to game preview images. First element will be used as cover of your game.
+    type: array
+    items:
+      - { type: string }
+    maxItems: 10
+    uniqueItems: true
+
+  players:
+    description: A 2 sized array with [minPlayers, maxPlayers] counts. Both elements should be safe integers. If array contains only one item it will be used for both
+    type: array
+    items:
+      - { type: integer }
+      - { type: integer }
+    additionalItems: false
+    minItems: 1
+    maxItems: 2
+    uniqueItems: true

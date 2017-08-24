@@ -100,6 +100,10 @@ const baseConfig = {
           },
         },
       },
+      {
+        test: /\.(yml|yaml)$/,
+        loader: require.resolve('./yaml-loader'),
+      },
     ],
   },
   node: {
@@ -119,7 +123,7 @@ const baseConfig = {
       '@': path.join(__dirname, '../src/renderer'),
       vue$: 'vue/dist/vue.esm.js',
     },
-    extensions: ['.js', '.vue', '.json', '.css'],
+    extensions: ['.js', '.vue', '.json', '.css', '.yml', '.yaml'],
   },
 };
 
