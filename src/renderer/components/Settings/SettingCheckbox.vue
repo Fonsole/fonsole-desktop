@@ -1,13 +1,13 @@
 <template>
   <div id="checkbox">
-    <label>{{ text }}</label>
+    <label>{{ title }}</label>
     <input type="checkbox" v-model="checkboxValue">
   </div>
 </template>
 <script>
 export default {
   name: 'Checkbox',
-  props: ['text', 'value'],
+  props: ['title', 'value'],
   data: () => ({
     checkboxValue: false,
   }),

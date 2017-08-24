@@ -1,99 +1,95 @@
 <template>
   <div id="settings" class="tabContents">
-    <div class="block">
-      <h2>{{ $localize('general') }}</h2>
+    <div class="settings-general">
+      <h2 class="block-title">{{ $localize('general') }}</h2>
       <div class="divider"></div>
-      <checkbox class="row"
-        id="fullscreenCheckbox"
-        :text="$localize('fullscreen')"
-        v-model="isFullscreen"
-      ></checkbox>
-      <dropdown class="row"
-        id="resolutionDropdown"
-        :text="$localize('resolution')"
-        v-model="resolution"
-        :closeAfterClick="true">
-        <label slot="toggle">{{ `◂${getCurrentResolution()}▸` }}</label>
-        <div
-          v-for="(resolution,index) in getAvailableResolutions"
-          class="s-dropdown-item"
-          @click="changeResolution(resolution)"
-          :id="resolution"
-          :key="resolution">{{resolution}}</div>
-      </dropdown>
+      <div class="settings-list">
+        <!--<setting-checkbox
+          id="fullscreen-checkbox"
+          :title="$localize('fullscreen')"
+          v-model="isFullscreen"
+        ></setting-checkbox>
+        <setting-dropdown
+          id="resolution-dropdown"
+          text="TYPE:"
+          :title="$localize('resolution')"
+          :options="allResolutions"
+          setting="resolution"
+          @change="changeResolution"
+        ></setting-dropdown>-->
+        <setting-dropdown
+          id="resolution-dropdown"
+          text="RESOLUTION:"
+          :title="$localize('resolution')"
+          :options="allResolutions"
+          setting="resolution"
+          @change="changeResolution"
+        ></setting-dropdown>
+      </div>
     </div>
-    <div class="block">
-      <h2>{{ $localize('profile') }}</h2>
+    <div class="settings-profile">
+      <h2 class="block-title">{{ $localize('profile') }}</h2>
       <div class="divider"></div>
     </div>
   </div>
 </template>
 <script>
+  import { stringToResolution } from '=/util';
   // @ifdef ELECTRON
   import { remote } from 'electron';
   // @endif
-  import Checkbox from './Checkbox';
-  import Dropdown from './Dropdown';
+  import SettingCheckbox from './SettingCheckbox';
+  import SettingDropdown from './SettingDropdown';
+
+  const win = remote.getCurrentWindow();
 
   export default {
     name: 'Settings',
     components: {
-      checkbox: Checkbox,
-      dropdown: Dropdown,
+      SettingCheckbox,
+      SettingDropdown,
     },
     data: () => ({
-      isFullscreen: remote.getCurrentWindow().isFullScreen(),
-      resolution: remote.getCurrentWindow().getSize(),
+      isFullscreen: win.isFullScreen(),
+      resolution: win.getSize(),
       allResolutions: ['1280x720', '1280x800', '1280x1024', '1600x900', '1920x1080'],
     }),
-    computed: {
-      getAvailableResolutions() {
-        return this.allResolutions;
-      },
-    },
     watch: {
       isFullscreen() {
-        remote.getCurrentWindow().setFullScreen(this.isFullscreen);
+        win.setFullScreen(this.isFullscreen);
       },
     },
     methods: {
-      stringToResolution(s) {
-        return s.split('x').map(Number);
-      },
-      resolutionToString(s) {
-        return `${s[0]}x${s[1]}`;
-      },
-      getCurrentResolution() {
-        return this.resolutionToString(remote.getCurrentWindow().getSize());
-      },
-      changeResolution(r) {
-        const width = this.stringToResolution(r)[0];
-        const height = this.stringToResolution(r)[1];
-
-        remote.getCurrentWindow().setSize(width, height, true);
-
-        this.resolution = this.getCurrentResolution();
+      changeResolution(newValue) {
+        const resolution = stringToResolution(newValue);
+        const width = resolution[0];
+        const height = resolution[1];
+        win.setSize(width, height, true);
       },
     },
   };
 </script>
 
 <style lang="sass" scoped>
-  h2
-    font-size: 4.5vh
-    margin: 0px
-
   #settings
-    background-color: rgba(20,20,20,.8)
+    background-color: rgba(20, 20, 20, 0.8)
     text-transform: uppercase
     padding: 20px
 
-    flex-direction: row
+    flex-flow: row
     display: flex
 
-    .block:nth-child(1)
-      flex: 0.4 1 auto
+    .settings-general
+      flex: 0.4
 
-    .block:nth-child(2)
-      flex: 0.6 1 auto
+    .settings-profile
+      flex: 0.6
+
+  .block-title
+    font-size: 4.5vh
+    margin: 0px
+
+  .settings-list
+    display: flex
+    flex-flow: column
 </style>

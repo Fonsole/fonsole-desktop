@@ -5,8 +5,9 @@
  *  environment.
  */
 import { app } from 'electron';
+import installExtension, { VUEJS_DEVTOOLS } from 'electron-devtools-installer';
 
-const installExtension = require('electron-devtools-installer');
+require('source-map-support').install();
 
 // Set environment for development
 process.env.NODE_ENV = 'development';
@@ -17,7 +18,7 @@ require('electron-debug')({ showDevTools: true });
 // Install `vue-devtools`
 app.on('ready', async () => {
   try {
-    await installExtension.default(installExtension.VUEJS_DEVTOOLS);
+    await installExtension(VUEJS_DEVTOOLS);
   } catch (err) {
     console.log('Unable to install `vue-devtools`: \n', err);
   }

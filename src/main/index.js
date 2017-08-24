@@ -1,6 +1,8 @@
 import { app, BrowserWindow } from 'electron';
-import gameLibrary from './gameLibrary';
-import workshop from './workshop';
+import { stringToResolution } from '=/util';
+import ipcModules from './ipcModules';
+import { installIpc, initialLoad } from './settings';
+import SETTINGS_STORE from './settings/store';
 
 /**
  * Set `__static` path to static files in production
@@ -16,16 +18,20 @@ const winURL = process.env.NODE_ENV === 'development'
   ? 'http://localhost:8080'
   : `file://${__dirname}/index.html`;
 
-function createWindow() {
-  /**
-   * Initial window options
-   */
-  mainWindow = new BrowserWindow({ width: 1280, height: 720, resizable: false });
+async function createWindow() {
+  await initialLoad();
+  const resolution = stringToResolution(SETTINGS_STORE.resolution);
+  // Initial window options
+  mainWindow = new BrowserWindow({
+    width: resolution[0],
+    height: resolution[1],
+    resizable: false,
+  });
   mainWindow.setMenu(null);
   mainWindow.loadURL(winURL);
 
-  gameLibrary();
-  workshop();
+  ipcModules();
+  installIpc();
 
   mainWindow.on('closed', () => {
     mainWindow = null;
