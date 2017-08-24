@@ -1,30 +1,38 @@
 title: .fonsole.yml
 type: object
+additionalProperties: false
 required:
   - desktop
   - controller
+  - version
+
 properties:
   desktop:
-    description: A path to html page that will be displayed on desktop version of your game
+    description: A path to html page that will be displayed on desktop version of your game.
     type: string
     minLength: 1
 
   controller:
-    description: A path to html page that will be displayed on game controllers
+    description: A path to html page that will be displayed on game controllers.
     type: string
     minLength: 1
 
   version:
-    description: Version of your game in a "X.Y.Z" format
-    pattern: ^\d\.\d\.\d$
+    description: Version of your game in a "X.Y.Z" format.
+    pattern: ^\d+\.\d+\.\d+$
 
-  tags:
-    description: Array of
+  genres:
+    description: Array of game genres.
     type: array
     items:
-      - { type: string }
-    maxItems: 10
+      - type: string
     uniqueItems: true
+    enum:
+      - genre1
+      - genre2
+      - genre3
+      - genre4
+      - genre5
 
   images:
     description: Array of relative pathes to game preview images. First element will be used as cover of your game.
@@ -35,11 +43,15 @@ properties:
     uniqueItems: true
 
   players:
-    description: A 2 sized array with [minPlayers, maxPlayers] counts. Both elements should be safe integers. If array contains only one item it will be used for both
+    description: A 2 sized array with [minPlayers, maxPlayers] counts. Both elements should be safe integers. If array contains only one item it will be used for both values.
     type: array
     items:
-      - { type: integer }
-      - { type: integer }
+      - type: integer
+        minimum: 1
+        maximum: 999
+      - type: integer
+        minimum: 1
+        maximum: 999
     additionalItems: false
     minItems: 1
     maxItems: 2
