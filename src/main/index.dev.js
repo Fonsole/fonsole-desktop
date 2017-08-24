@@ -15,6 +15,11 @@ process.env.NODE_ENV = 'development';
 // Install `electron-debug` with `devtron`
 require('electron-debug')({ showDevTools: true });
 
+// Treat promise rejections as errors
+process.on('unhandledRejection', (err) => {
+  throw err;
+});
+
 // Install `vue-devtools`
 app.on('ready', async () => {
   try {
