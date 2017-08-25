@@ -14,6 +14,6 @@ export default {
   ),
   default() {
     const screenBounds = screen.getPrimaryDisplay().bounds;
-    return _.mapValues(screenBounds, value => value * 0.75);
+    return _.mapValues(screenBounds, value => Math.round(value * 0.75));
   },
 };
