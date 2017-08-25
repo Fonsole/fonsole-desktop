@@ -68,7 +68,8 @@
           if (this.gamePath === '') return '';
 
           // Path should be absolute
-          if (!path.isAbsolute(this.gamePath)) return 'absolute';
+          if (!path.isAbsolute(this.gamePath) ||
+            path.normalize(this.gamePath) !== this.gamePath) return 'absolute';
 
           // If directory not exists we don't need to check it's files
           if (!fs.existsSync(this.gamePath)) return null;
@@ -105,7 +106,12 @@
         if (paths.length === 1) this.gamePath = this.normalizePath(paths[0]);
       },
       normalizePath(gamePath) {
-        return gamePath.replace(/\\/g, '/');
+        // Get path separator, used on platform other than current
+        const otherSep = path.sep === path.posix.sep ? path.win32.sep : path.posix.sep;
+        // Replace wrong path separators
+        // We also can reach same effect by using path.normalize,
+        // but it also resolves '..' and '.' segments, which we don't need
+        return gamePath.replace(otherSep, path.sep);
       },
     },
   };
