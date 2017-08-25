@@ -16,8 +16,20 @@
         class="error-reason"
       >{{ $localize(errorReason) }}</div>
     </div>
-    <div v-if="isLinkableGame">
-      Link game
+    <div
+      v-if="isLinkableGame"
+      class="link-container"
+    >
+      <div class="link-text">
+        Specified path already contains valid Fonsole game.
+        You can add this game to your list.
+      </div>
+      <fbutton
+        type="play"
+        width="80"
+        height="10"
+        @click="linkGame"
+      >LINK GAME</fbutton>
     </div>
     <div v-else>
       Generator options
@@ -28,11 +40,15 @@
 <script>
   import { remote } from 'electron';
   import path from 'path';
+  import FButton from '@/components/Generic/FButton';
 
   const fs = remote.require('fs-extra');
 
   export default {
     name: 'PreviewCreateGame',
+    components: {
+      fbutton: FButton,
+    },
     data: () => ({
       gamePath: '',
     }),
@@ -113,6 +129,9 @@
         // but it also resolves '..' and '.' segments, which we don't need
         return gamePath.replace(otherSep, path.sep);
       },
+      linkGame() {
+        this.$store.dispatch('addGame', this.gamePath);
+      },
     },
   };
 </script>
@@ -187,4 +206,14 @@
     &.is-ok > *
       border-color: $border-color-ok
 
+  .link-container
+    display: flex
+    flex-flow: column
+    align-items: center
+
+  .link-text
+    font-size: 2vw
+    text-align: center
+    white-space: pre-line
+    margin-bottom: 2vh
 </style>
