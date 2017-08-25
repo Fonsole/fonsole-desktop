@@ -3,10 +3,24 @@
     <h2 class="header">CREATE NEW GAME</h2>
     <div class="game-path">
       <div :class="['game-path-input-line', pathBorderClass]">
-        <input type="text" v-model="gamePath" tabindex="-1">
+        <input
+          type="text"
+          :value="gamePath"
+          @input="gamePath = normalizePath($event.target.value)"
+          tabindex="-1"
+        >
         <button @click="selectDirectory" tabindex="-1">...</button>
       </div>
-      <div v-show="errorReason" class="error-reason">{{ $localize(errorReason) }}</div>
+      <div
+        :style="{opacity: errorReason ? 1 : 0}"
+        class="error-reason"
+      >{{ $localize(errorReason) }}</div>
+    </div>
+    <div v-if="isLinkableGame">
+      Link game
+    </div>
+    <div v-else>
+      Generator options
     </div>
   </div>
 </template>
@@ -14,6 +28,8 @@
 <script>
   import { remote } from 'electron';
   import path from 'path';
+
+  const fs = remote.require('fs-extra');
 
   export default {
     name: 'PreviewCreateGame',
@@ -24,37 +40,72 @@
       pathBorderClass() {
         if (!this.gamePath) return 'is-clear';
         if (this.errorReason) return 'is-error';
-        if (this.isValidGameDirectory) return 'is-link';
+        if (this.isLinkableGame) return 'is-link';
         return 'is-ok';
       },
-      errorReason() {
-        if (this.gamePath === '') return '';
-        if (!path.isAbsolute(this.gamePath)) return 'absoulte';
-        return null;
-      },
-      isValidGameDirectory() {
+      isLinkableGame() {
         // Path should be valid
-        if (this.errorReason) return true;
+        if (!this.errorReason) {
+          // Directory should exist
+          if (fs.existsSync(this.gamePath)) {
+            const gameIndexPath = path.join(this.gamePath, '.fonsole.yml');
+            // Directory should contain .fonsole.yml file
+            if (fs.existsSync(gameIndexPath)) {
+              return true;
+            }
+          }
+        }
+        // If some of conditions fails return false
         return false;
       },
     },
-    watch: {
-      gamePath() {
-        if (this.errorReason === 'null') {
-          // todo
-        }
+    asyncComputed: {
+      errorReason() {
+        // A hack to keep correct scope
+        // This bug is caused by something in Babel chain, so we should remove it once fixed
+        return (async () => {
+          // We don't need to show error for empty path
+          if (this.gamePath === '') return '';
+
+          // Path should be absolute
+          if (!path.isAbsolute(this.gamePath)) return 'absolute';
+
+          // If directory not exists we don't need to check it's files
+          if (!fs.existsSync(this.gamePath)) return null;
+
+          // Readdir throws error when we try to read file, so provide other error before it
+          if ((await fs.lstat(this.gamePath)).isFile()) return 'file_exists';
+
+          try {
+            // Synchronously read all files from directory
+            const files = await fs.readdir(this.gamePath);
+            // Directory is empty, treat it as non-existing directory
+            if (files.length === 0) return null;
+            // Directory contains game index file, so it should be considered as a valid game.
+            if (files.includes('.fonsole.yml')) return null;
+            return 'directory_not_empty';
+          } catch (err) {
+            console.error(err);
+            return err.message;
+          }
+        })();
       },
     },
     methods: {
       selectDirectory() {
-        this.gamePath = remote.dialog.showOpenDialog(remote.getCurrentWindow(), {
-          title: 'asd',
+        const paths = remote.dialog.showOpenDialog(remote.getCurrentWindow(), {
+          title: this.$localize('open_game_directory'),
           properties: [
             'openDirectory',
             'createDirectory',
             'promptToCreate',
           ],
-        })[0];
+        });
+        // If nothing was selected, dialog returns empty array, so ignore this case
+        if (paths.length === 1) this.gamePath = this.normalizePath(paths[0]);
+      },
+      normalizePath(gamePath) {
+        return gamePath.replace(/\\/g, '/');
       },
     },
   };
