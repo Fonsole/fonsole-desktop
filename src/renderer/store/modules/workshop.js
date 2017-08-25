@@ -6,7 +6,7 @@
 import { ipcRenderer } from 'electron';
 
 const initialState = {
-  games: [
+  cachedGames: [
     {
       path: 'd:/dev/fonsole/games/game1',
 
@@ -36,10 +36,12 @@ const initialState = {
   gameUpdateListeners: {},
 };
 
-const getters = {
-  workshopGamePaths: state => state.games.map(game => game.path),
+const initialGetters = {
+  // Game paths are stored in settings, so just return value from settings module
+  workshopGamePaths: (state, getters, rootState) => rootState.settings.workshopGames || [],
+  // Either return already fetched information, or run fetching process
   workshopGameInfo: state => (gamePath) => {
-    const cachedGame = state.games.find(game => game.path === gamePath);
+    const cachedGame = state.cachedGames.find(game => game.path === gamePath);
     if (cachedGame) return cachedGame;
     ipcRenderer.send('workshop:game:fetch', gamePath);
     if (!state.fetchGameInfo[gamePath]) state.fetchGameInfo[gamePath] = [];
@@ -57,31 +59,36 @@ const mutations = {};
 
 const actions = {
   /**
-   * Adds existing game to list
+   * Adds existing game to list.
    *
    * @param {Vuex.Store} store Vuex store
    * @param {string} gamePath New game path
    * @returns {?Promise} Promise that resolves when game is successfully linked.
    *                     Rejects if something went wrong.
    */
-  linkGame(/* store */) {
+  addGame(store, gamePath) {
+    ipcRenderer.emit('workshop:game:add', gamePath);
   },
 
   /**
-   * Removes game
+   * Removes game.
    *
    * @param {Vuex.Store} store Vuex store
-   * @param {string} gamePath Uninstalled game path
+   * @param {object} payload Action payload
+   * @param {string} payload.gamePath Uninstalled game path
+   * @param {?boolean} payload.removeFiles If true removes game files,
+   *                                       otherwise removes only link to game.
    * @returns {?Promise} Promise that resolves when game is successfully removed.
    *                     Rejects if something went wrong.
    */
-  removeGame(/* store */) {
+  removeGame(store, payload) {
+    ipcRenderer.emit('workshop:game:remove', payload.gamePath, payload.removeFiles);
   },
 };
 
 export default {
   state: initialState,
-  getters,
+  getters: initialGetters,
   actions,
   mutations,
 };
