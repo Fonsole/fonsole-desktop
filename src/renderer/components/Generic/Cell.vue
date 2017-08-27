@@ -2,37 +2,60 @@
   <div class="cell">
     <div class="cellHeader">
       <h2 class="cellHeaderTitle">{{ header }}</h2>
-      <ul>
-        <li v-for="n in 3" :key="n">
-          <input type="radio" v-model="currentSlide" :id="'selector' + n" :value="n">
-          <label :for="'selector' + n"></label>
-          <div class="check">
-            <div class="inside">
+      <template :v-if="showSelector">
+        <ul>
+          <li v-for="n in slidesCount" :key="n">
+            <input type="radio" v-model="currentSlide" :id="'selector' + n" :value="n">
+            <label :for="'selector' + n"></label>
+            <div class="check">
+              <div class="inside">
+              </div>
             </div>
-          </div>
-        </li>
-      </ul>
+          </li>
+        </ul>
+      </template>
     </div>
     <div class="slot">
       <slot>
-
+        <cell-slide v-for="(slide,n) in slides" :key="n"
+        :caption="$localize(slide.caption)" :backgroundURL="slide.backgroundURL"
+        :style="{ opacity: currentSlide == n + 1 ? '1.0' : '0.0' }">
+        </cell-slide>
       </slot>
     </div>
   </div>
 </template>
 
 <script>
+  import CellSlide from '@/components/Generic/CellSlide';
+
   export default {
     name: 'Cell',
+    components: {
+      'cell-slide': CellSlide,
+    },
     props: {
       header: {
         type: String,
         default: 'Header!',
       },
+      slides: {
+        type: Array,
+        default: [{ caption: 'save_50', backgroundURL: 'testgame3.jpg' }],
+      },
     },
     data: () => ({
       currentSlide: 1,
     }),
+    computed: {
+      showSelector() {
+        console.log(this.slides);
+        return this.slides > 1;
+      },
+      slidesCount() {
+        return this.slides.length;
+      },
+    },
   };
 </script>
 
@@ -115,5 +138,5 @@
 
     .slot
       flex: 1 1 auto
-      display: flex
+      position: relative
 </style>

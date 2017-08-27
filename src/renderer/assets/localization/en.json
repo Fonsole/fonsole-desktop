@@ -46,5 +46,8 @@
   "PreviewGame_game_name": "game name",
   "PreviewGame_game_name_placeholder": "name placeholder",
   "PreviewGame_game_description": "game description",
-  "PreviewGame_game_description_placeholder": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat."
+  "PreviewGame_game_description_placeholder": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
+
+  "Cell_save_50": "Save 50% of this!",
+  "Cell_save_75": "Save 75% of this!"
 }

@@ -40,12 +40,15 @@
     margin: 1vh
 
   .cellSlide
-    flex: 1 1 auto
+    // flex: 1 1 auto
     background-color: rgba(20,20,20,0.8)
     overflow: hidden
     display: flex
     flex-direction: column
-    position: relative
+    position: absolute
+    height: 100%
+    width: 100%
+    transition: all 0.3s ease
 
     .cellCaption
       position: absolute
