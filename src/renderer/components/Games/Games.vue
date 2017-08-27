@@ -50,7 +50,7 @@
 
   #games
     background-color: rgba(20,20,20,.8)
-    padding: 10px
+    // padding: 10px
     display: flex
     flex-direction: column
     align-items: left

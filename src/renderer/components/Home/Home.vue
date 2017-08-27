@@ -13,18 +13,10 @@
         </div>
       </div>
       <div class="cell marginTop">
-        <div class="cellHeader">
-          <h2 class="cellHeaderTitle">{{ $localize('promo') }}</h2>
-          <div v-for="n in 3" :key="n" class="slideSelector">
-
-          </div>
-        </div>
-        <div class="cellContent shop">
-
-        </div>
-        <div class="cellCaption">
-          <h2>save 50% off this!</h2>
-        </div>
+        <cell :header="$localize('promo')">
+          <cell-slide caption="Save 50% of this!">
+          </cell-slide>
+        </cell>
       </div>
     </div>
     <div class="column middle marginRight marginLeft">
@@ -82,12 +74,16 @@
 </template>
 
 <script>
+  import Cell from '@/components/Generic/Cell';
+  import CellSlide from '@/components/Generic/CellSlide';
   import FButton from '@/components/Generic/FButton';
 
   export default {
     name: 'Home',
     components: {
       fbutton: FButton,
+      cell: Cell,
+      'cell-slide': CellSlide,
     },
     data: () => ({
       news: [{
