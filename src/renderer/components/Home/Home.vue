@@ -1,7 +1,7 @@
 <template>
   <div id="home" class="tabContents">
-    <div class="column left">
-      <div class="cell">
+    <div class="column left marginRight">
+      <div class="cell marginBottom">
         <div class="cellHeader">
           <h2 class="cellHeaderTitle">{{ $localize('featured') }}</h2>
         </div>
@@ -12,7 +12,7 @@
           <h2>say anything!</h2>
         </div>
       </div>
-      <div class="cell">
+      <div class="cell marginTop">
         <div class="cellHeader">
           <h2 class="cellHeaderTitle">{{ $localize('promo') }}</h2>
           <div v-for="n in 3" :key="n" class="slideSelector">
@@ -27,8 +27,8 @@
         </div>
       </div>
     </div>
-    <div class="column middle">
-      <div class="cell">
+    <div class="column middle marginRight marginLeft">
+      <div class="cell marginBottom">
         <div class="cellHeader">
           <h2 class="cellHeaderTitle">{{ $localize('quick') }}</h2>
         </div>
@@ -49,7 +49,7 @@
           </div>
         </div>
       </div>
-      <div class="cell">
+      <div class="cell marginTop">
         <div class="cellHeader">
           <h2 class="cellHeaderTitle">{{ $localize('tutorials') }}</h2>
         </div>
@@ -61,7 +61,7 @@
         </div>
       </div>
     </div>
-    <div class="column right">
+    <div class="column right marginLeft">
       <div class="verticalCell">
         <div class="cellHeader">
           <h2 class="cellHeaderTitle">{{ $localize('news') }}</h2>
@@ -116,11 +116,24 @@
     font-size: 2.5vw
     margin: 1vh
 
+  .marginLeft
+    margin-left: 1vh
+
+  .marginRight
+    margin-right: 1vh
+
+  .marginTop
+    margin-top: 1vh
+
+  .marginBottom
+    margin-bottom: 1vh
+
   #home
     display: flex
     width: 100%
     height: 100%
     // background-color: rgba(255,20,20,0.5)
+    box-shadow: none
     justify-content: space-between
 
     .clickable
@@ -154,7 +167,6 @@
 
       .cell, .verticalCell
         flex: 1 1 auto
-        margin: 2vh
         background-color: rgba(20,20,20,0.8)
         box-shadow: 0 0 1vh rgba(0,0,0,0.5)
         overflow: hidden
@@ -225,6 +237,7 @@
       .verticalCell
         display: flex
         flex-direction: column
+
         .newsContainer
           flex: 0 1 auto
           overflow: scroll

@@ -108,6 +108,7 @@
     .tabContents
       flex: 1 1 auto
       margin: 0px
+      box-shadow: 0 0 1vh rgba(0,0,0,0.5)
 
   .divider
     margin-top: 6px
