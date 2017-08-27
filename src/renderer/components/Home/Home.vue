@@ -2,18 +2,11 @@
   <div id="home" class="tabContents">
     <div class="column left marginRight">
       <div class="cell marginBottom">
-        <div class="cellHeader">
-          <h2 class="cellHeaderTitle">{{ $localize('featured') }}</h2>
-        </div>
-        <div class="cellContent featured">
-
-        </div>
-        <div class="cellCaption">
-          <h2>say anything!</h2>
-        </div>
+        <cell :header="$localize('featured')" :slides="featuredSlides" name="featured">
+        </cell>
       </div>
       <div class="cell marginTop">
-        <cell :header="$localize('promo')" :slides="promoSlides">
+        <cell :header="$localize('promo')" :slides="promoSlides" name="promo">
         </cell>
       </div>
     </div>
@@ -40,15 +33,8 @@
         </div>
       </div>
       <div class="cell marginTop">
-        <div class="cellHeader">
-          <h2 class="cellHeaderTitle">{{ $localize('tutorials') }}</h2>
-        </div>
-        <div class="cellContent tutorials">
-
-        </div>
-        <div class="cellCaption">
-          <h2>creating your first fonsole game pt. 1</h2>
-        </div>
+        <cell :header="$localize('tutorials')" :slides="tutorialSlides" name="tutorials">
+        </cell>
       </div>
     </div>
     <div class="column right marginLeft">
@@ -84,12 +70,23 @@
       'cell-slide': CellSlide,
     },
     data: () => ({
+      featuredSlides: [{
+        caption: 'featured_game_1',
+        backgroundURL: 'testgame2.jpg',
+      }],
+      tutorialSlides: [{
+        caption: 'creating_1',
+        backgroundURL: 'testgame4.jpg',
+      }, {
+        caption: 'creating_2',
+        backgroundURL: 'testgame5.jpg',
+      }],
       promoSlides: [{
         caption: 'save_50',
         backgroundURL: 'testgame3.jpg',
       }, {
         caption: 'save_75',
-        backgroundURL: 'testgame4.jpg',
+        backgroundURL: 'testgame6.jpg',
       }],
       news: [{
         title: 'we rollback\'d something',

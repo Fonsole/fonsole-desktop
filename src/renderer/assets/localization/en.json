@@ -49,5 +49,8 @@
   "PreviewGame_game_description_placeholder": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
 
   "Cell_save_50": "Save 50% of this!",
-  "Cell_save_75": "Save 75% of this!"
+  "Cell_save_75": "Save 75% of this!",
+  "Cell_creating_1": "creating your first game",
+  "Cell_creating_2": "using 3rd party engines",
+  "Cell_featured_game_1": "say anything!"
 }

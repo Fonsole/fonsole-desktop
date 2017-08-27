@@ -2,11 +2,11 @@
   <div class="cell">
     <div class="cellHeader">
       <h2 class="cellHeaderTitle">{{ header }}</h2>
-      <template :v-if="showSelector">
+      <template v-if="showSelector">
         <ul>
           <li v-for="n in slidesCount" :key="n">
-            <input type="radio" v-model="currentSlide" :id="'selector' + n" :value="n">
-            <label :for="'selector' + n"></label>
+            <input type="radio" v-model="currentSlide" :id="cellName + n" :value="n">
+            <label :for="cellName + n"></label>
             <div class="check">
               <div class="inside">
               </div>
@@ -35,6 +35,10 @@
       'cell-slide': CellSlide,
     },
     props: {
+      name: {
+        type: String,
+        default: 'cell_name',
+      },
       header: {
         type: String,
         default: 'Header!',
@@ -49,11 +53,14 @@
     }),
     computed: {
       showSelector() {
-        console.log(this.slides);
-        return this.slides > 1;
+        console.log(this.slides.length > 1);
+        return this.slides.length > 1;
       },
       slidesCount() {
         return this.slides.length;
+      },
+      cellName() {
+        return this.name;
       },
     },
   };
