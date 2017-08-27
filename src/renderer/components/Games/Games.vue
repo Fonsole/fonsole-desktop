@@ -2,21 +2,21 @@
   <div id="games" class="tabContents">
     <ul id="categories">
       <li>
-        <input type="radio" v-model="showInstalled" value="0" id="radio1" checked="true"></input>
-        <label for="radio1">{{ $localize('installed') }}</label>
+        <input type="radio" v-model="showLibrary" value="1" id="radio2"></input>
+        <label for="radio2">{{ $localize('library') }}</label>
       </li>
       <li>
         <label style="opacity: 0.5">|</label>
       </li>
       <li>
-        <input type="radio" v-model="showInstalled" value="1" id="radio2"></input>
-        <label for="radio2">{{ $localize('library') }}</label>
+        <input type="radio" v-model="showLibrary" value="0" id="radio1" checked="true"></input>
+        <label for="radio1">{{ $localize('installed') }}</label>
       </li>
     </ul>
     <!-- <div class="divider"></div> -->
     <div class="contents">
       <component
-        :is="showInstalled == 1 ? 'library' : 'installed'"
+        :is="showLibrary == 1 ? 'library' : 'installed'"
         transition="fade"
         transition-mode="out-in"
       ></component>
@@ -35,7 +35,7 @@
       library: Library,
     },
     data: () => ({
-      showInstalled: 0,
+      showLibrary: 1,
     }),
   };
 </script>

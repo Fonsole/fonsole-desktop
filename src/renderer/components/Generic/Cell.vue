@@ -53,7 +53,6 @@
     }),
     computed: {
       showSelector() {
-        console.log(this.slides.length > 1);
         return this.slides.length > 1;
       },
       slidesCount() {
