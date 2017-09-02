@@ -7,11 +7,11 @@
           <topbar></topbar>
         </div>
         <div id="routerContainer">
-          <component
-            :is="page"
-            transition="fade"
-            transition-mode="out-in"
-          ></component>
+          <transition name="fade" mode="out-in">
+            <component
+              :is="page"
+            ></component>
+          </transition>
         </div>
       </div>
     </body>
@@ -118,9 +118,10 @@
     height: 0.20vh
     background: linear-gradient(to right, $dividerColor 0%, $dividerColor 5%, $dividerColor 50%, $dividerColorTransparent 95%, $dividerColorTransparent 100%)
 
-  .fade-transition
-    transition: opacity 0.2s ease
+  .fade-enter-active, .fade-leave-active
+    transition: all .3s
 
-  .fade-enter, .fade-leave
+  .fade-enter, .fade-leave-to
+    transform: translateY(4vh)
     opacity: 0
 </style>

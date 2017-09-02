@@ -62,5 +62,10 @@
   "Cell_save_75": "Save 75% of this!",
   "Cell_creating_1": "creating your first game",
   "Cell_creating_2": "using 3rd party engines",
-  "Cell_featured_game_1": "say anything!"
+  "Cell_featured_game_1": "say anything!",
+
+  "Shop_mtx": "microtransactions",
+  "Shop_purchase_coins": "purchase coins",
+  "Shop_games": "games",
+  "Shop_cosmetics": "cosmetics"
 }
