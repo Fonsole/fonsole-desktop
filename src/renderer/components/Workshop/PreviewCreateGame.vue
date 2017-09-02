@@ -1,6 +1,15 @@
 <template>
   <div class="preview-create-game">
-    <h2 class="header">CREATE NEW GAME</h2>
+    <div class="header">
+      <h2 class="headerTitle">{{ $localize('create_new_game') }}</h2>
+    </div>
+    <h2>{{ $localize('game_name') }}</h2>
+    <div class="name">
+      <textarea maxlength="32" rows="1"
+      :placeholder="$localize('game_name_placeholder')" class="name">
+      </textarea>
+    </div>
+    <h2>{{ $localize('working_directory') }}</h2>
     <div class="game-path">
       <div :class="['game-path-input-line', pathBorderClass]">
         <input
@@ -32,8 +41,55 @@
       >LINK GAME</fbutton>
     </div>
     <div v-else>
-      Generator options
+      <h2>{{ $localize('generator_options') }}</h2>
+      <div class="generator-options">
+        <checkbox
+          id="setting-placeholders"
+          class="checkbox"
+          :title="$localize('placeholders')"
+        ></checkbox>
+        <checkbox
+          id="setting-assets"
+          class="checkbox"
+          :title="$localize('assets')"
+        ></checkbox>
+        <checkbox
+          id="setting-controller"
+          class="checkbox"
+          :title="$localize('controller')"
+        ></checkbox>
+        <checkbox
+          id="setting-framework"
+          class="checkbox"
+          v-model="showFrameworks"
+          :title="$localize('framework')"
+        ></checkbox>
+        <transition name="fade">
+          <div v-show="showFrameworks" class="generator-options-frameworks">
+            <checkbox
+              id="setting-controller"
+              class="checkbox"
+              title="crafty.js"
+            ></checkbox>
+            <checkbox
+              id="setting-framework"
+              class="checkbox"
+              title="phaser"
+            ></checkbox>
+          </div>
+        </transition>
+      </div>
     </div>
+    <fbutton
+      class="create-game"
+      height="10"
+      width="auto"
+      type="publish"
+      :disabled="!gamePath"
+      @click="createGame"
+    >
+      {{ $localize('create') }}
+    </fbutton>
   </div>
 </template>
 
@@ -41,6 +97,7 @@
   import { remote } from 'electron';
   import path from 'path';
   import FButton from '@/components/Generic/FButton';
+  import Checkbox from '@/components/Generic/Checkbox';
 
   const fs = remote.require('fs-extra');
 
@@ -48,9 +105,11 @@
     name: 'PreviewCreateGame',
     components: {
       fbutton: FButton,
+      checkbox: Checkbox,
     },
     data: () => ({
       gamePath: '',
+      showFrameworks: false,
     }),
     computed: {
       pathBorderClass() {
@@ -132,19 +191,73 @@
       linkGame() {
         this.$store.dispatch('addGame', this.gamePath);
       },
+      createGame() {
+
+      },
     },
   };
 </script>
 
 <style lang="sass" scoped>
+  h2
+    margin-left: 2vw
+    margin-bottom: 1vh
+    font-size: 3vh
+
+  .checkbox
+    margin-left: 3vw
+    margin-right: 2vw
+    margin-bottom: 0.25vw
+
+    color: #B7B7B7
+
+  .generator-options-frameworks
+    margin-left: 2vw
+
+  textarea
+    resize: none
+    background: none
+    outline: none
+    font-family: zekton
+    text-transform: uppercase
+    font-size: 2.5vh
+    border: none
+    color: white
+    overflow: hidden
+    margin: 1vh 2vw
+    display: flex
+    flex-flow: column
+
+    background-color: rgba(0, 0, 0, 0.4)
+    border: solid 1px rgba(0, 0, 0, 0.4)
+    border-radius: 0
+    outline: none
+    padding: 0
+
+    &::placeholder
+      color: #6B90B5
+      padding-left: 3px
+
+    &::content
+      padding-left: 3px
+
   .preview-create-game
     display: flex
     flex-flow: column
 
   .header
-    align-self: center
-    font-size: 9vh
-    margin: 1vh 0
+    flex: 0 1 auto
+    display: flex
+    flex-direction: row
+    height: 7.5vh
+    min-height: 7.5vh
+    clear: both
+    background-color: rgba(20,20,20,.8)
+
+    .headerTitle
+      font-size: 4.0vh
+      margin: auto 0
+      margin-left: 2vh
 
   .game-path
     margin: 12px 2vw
@@ -158,11 +271,12 @@
       font-size: 20px
       color: #ff5555
       font-weight: bold
+      display: none
 
   .game-path-input-line
     display: flex
     flex-flow: row
-    $height: 24px * 1.3
+    $height: 3.2vh
     height: $height
 
     $border-color-error: red
@@ -176,23 +290,28 @@
       flex: 1
       font-size: $height / 1.3
       box-sizing: border-box
-      border: 2px solid $border-color-clear
-      border-right: none
-      border-radius: 5px 0 0 5px
       outline: none
-      background: rgba(#000, 0.2)
       color: white
+      font-family: zekton
+
+      background-color: rgba(0, 0, 0, 0.4)
+      border: solid 1px rgba(0, 0, 0, 0.4)
+      border-radius: 0
+      outline: none
+      padding: 0
 
     > button
       width: $height
       height: 100%
-      background: rgba(#000, 0.2)
-      border: 2px solid $border-color-clear
-      border-left: none
-      border-radius: 0 5px 5px 0
       transition: background 0.2s ease-in
       outline: none
       color: white
+      background-color: rgba(0, 0, 0, 0.4)
+      border: solid 1px rgba(0, 0, 0, 0.4)
+      border-radius: 0
+      outline: none
+      padding: 0
+      border-left: none
 
       &:hover
         background: rgba(#666, 0.2)
@@ -216,4 +335,19 @@
     text-align: center
     white-space: pre-line
     margin-bottom: 2vh
+
+  .generator-options
+    display: flex
+    flex-flow: column
+
+  .create-game
+    margin-top: auto
+    margin-bottom: 0.5vh
+
+  .fade-enter-active, .fade-leave-active
+    transition: all .5s
+
+  .fade-enter, .fade-leave-to
+    height: 0
+    opacity: 0
 </style>

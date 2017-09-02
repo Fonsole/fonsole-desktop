@@ -119,11 +119,12 @@
   .create-new-game
     display: flex
     width: 100%
+    margin-bottom: 0.5vh
 
   .create-game-info
     display: flex
     background-color: rgba(0, 0, 0, 0.8)
-    min-height: 10vh
+    height: 10vh
     margin: auto 0
     flex-direction: column
     flex: 1 1 auto
@@ -147,7 +148,6 @@
         align-items: center
         justify-content: center
         flex-direction: column
-        margin-bottom: 0.7vh
         transition: transform 0.05s, box-shadow 0.05s
         color: #f7e8e8
         font-size: 3vh
@@ -156,15 +156,15 @@
 
         &:nth-child(1)
           background-color: #660000
-          box-shadow: 0px 0.7vh 0px #3D0000
+          box-shadow: 0px 0.5vh 0px #3D0000
 
         &:nth-child(2)
           background-color: #052C7F
-          box-shadow: 0px 0.7vh 0px #031A4C
+          box-shadow: 0px 0.5vh 0px #031A4C
 
         &:nth-child(3)
           background-color: #C3661C
-          box-shadow: 0px 0.7vh 0px #61330E
+          box-shadow: 0px 0.5vh 0px #61330E
 
         &:hover
           // box-shadow: none

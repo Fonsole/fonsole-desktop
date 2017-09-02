@@ -68,13 +68,16 @@
     height: 100%
     flex-direction: row
     align-items: stretch
+    box-shadow: none
 
   #game-list
     width: 40vw
+    box-shadow: 0 0 1vh rgba(0,0,0,0.5)
 
   #preview-container
     flex: 1
-    margin-left: 12px
+    margin-left: 1vw
     display: flex
     background-color: rgba(0, 0, 0, 0.6)
+    box-shadow: 0 0 1vh rgba(0,0,0,0.5)
 </style>

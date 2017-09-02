@@ -27,7 +27,6 @@
 
   input
     float: right
-    margin-right: 20px
     width: 1.8vh
     height: 1.8vh
 </style>
